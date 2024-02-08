@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34525.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileLockerLibrary", "FileLockerLibrary\FileLockerLibrary.csproj", "{2DDC45AA-4D1D-4FBF-8DC4-9AB84C767B5E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsUI", "WinFormsUI\WinFormsUI.csproj", "{B66ACF8F-BBDC-4E50-95D1-C5B59D37B4FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2DDC45AA-4D1D-4FBF-8DC4-9AB84C767B5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DDC45AA-4D1D-4FBF-8DC4-9AB84C767B5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DDC45AA-4D1D-4FBF-8DC4-9AB84C767B5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DDC45AA-4D1D-4FBF-8DC4-9AB84C767B5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B66ACF8F-BBDC-4E50-95D1-C5B59D37B4FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B66ACF8F-BBDC-4E50-95D1-C5B59D37B4FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B66ACF8F-BBDC-4E50-95D1-C5B59D37B4FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B66ACF8F-BBDC-4E50-95D1-C5B59D37B4FC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BCDE1455-B355-4BD7-B975-D0CD16FC4F55}
+	EndGlobalSection
+EndGlobal

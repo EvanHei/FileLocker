@@ -16,7 +16,7 @@ namespace FileLockerLibrary
         /// <returns>The plaintext converted to bytes.</returns>
         /// <exception cref="ArgumentNullException">Thrown when the plaintext or key is null.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the plaintext or key has invalid length.</exception>
-        public byte[] Encrypt(string plaintext, byte[] key)
+        public byte[] Encrypt(byte[] plaintext, byte[] key)
         {
             if (plaintext == null)
                 throw new ArgumentNullException("Plaintext is null.");
@@ -24,10 +24,10 @@ namespace FileLockerLibrary
                 throw new ArgumentNullException("Key is null.");
             if (plaintext.Length < 0)
                 throw new ArgumentOutOfRangeException("Plaintext has invalid length.");
-            if (key.Length < 1)
-                throw new ArgumentOutOfRangeException("Key has invalid length.");
+            if (key.Length != 32)
+                throw new ArgumentOutOfRangeException("Key must be 32 bytes (256 bits) long.");
 
-            return Encoding.UTF8.GetBytes(plaintext);
+            return plaintext;
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace FileLockerLibrary
         /// <returns>The decrypted string.</returns>
         /// <exception cref="ArgumentNullException">Thrown when the ciphertext or key is null.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the ciphertext or key has invalid length.</exception>
-        public string Decrypt(byte[] ciphertext, byte[] key)
+        public byte[] Decrypt(byte[] ciphertext, byte[] key)
         {
             if (ciphertext == null)
                 throw new ArgumentNullException("Ciphertext is null.");
@@ -46,10 +46,10 @@ namespace FileLockerLibrary
                 throw new ArgumentNullException("Key is null.");
             if (ciphertext.Length < 0)
                 throw new ArgumentOutOfRangeException("Ciphertext has invalid length.");
-            if (key.Length < 1)
-                throw new ArgumentOutOfRangeException("Key has invalid length.");
+            if (key.Length != 32)
+                throw new ArgumentOutOfRangeException("Key must be 32 bytes (256 bits) long.");
 
-            return Encoding.UTF8.GetString(ciphertext);
+            return ciphertext;
         }
     }
 }

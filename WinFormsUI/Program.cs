@@ -1,3 +1,6 @@
+using FileLockerLibrary;
+using System.Text;
+
 namespace WinFormsUI
 {
     internal static class Program
@@ -8,6 +11,7 @@ namespace WinFormsUI
         [STAThread]
         static void Main()
         {
+
 
             ApplicationConfiguration.Initialize();
             Application.Run(new DashboardForm());

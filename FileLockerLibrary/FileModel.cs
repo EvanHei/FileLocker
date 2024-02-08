@@ -49,8 +49,7 @@ namespace FileLockerLibrary
             if (EncryptionStatus == true)
                 return;
 
-            //Content = GlobalConfig.Encryptor.Encrypt(Content, EncryptionKey);
-
+            Content = GlobalConfig.Encryptor.Encrypt(Content, EncryptionKey);
             EncryptionStatus = true;
         }
 
@@ -77,6 +76,8 @@ namespace FileLockerLibrary
         {
             Path = path;
             Password = password;
+
+            // TODO - implement error checking
             Content = File.ReadAllBytes(path);
 
             EncryptionKeySalt = GlobalConfig.KeyDeriver.GenerateSalt();

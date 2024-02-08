@@ -49,9 +49,7 @@ namespace FileLockerLibrary
             if (EncryptionStatus == true)
                 return;
 
-            // TODO - implement 
-            //AesEncryptor encryptor = new AesEncryptor(); // remove padding?
-            //Content = encryptor.encrypt(Content, EncryptionKey);
+            //Content = GlobalConfig.Encryptor.Encrypt(Content, EncryptionKey);
 
             EncryptionStatus = true;
         }
@@ -81,9 +79,8 @@ namespace FileLockerLibrary
             Password = password;
             Content = File.ReadAllBytes(path);
 
-            // TODO - implement 
-            //EncryptionKeySalt = GlobalConfig.KeyDeriver.GenerateSalt();
-            //EncryptionKey = GlobalConfig.KeyDeriver.DeriveKey(password, EncryptionKeySalt);
+            EncryptionKeySalt = GlobalConfig.KeyDeriver.GenerateSalt();
+            EncryptionKey = GlobalConfig.KeyDeriver.DeriveKey(password, EncryptionKeySalt);
         }
     }
 }

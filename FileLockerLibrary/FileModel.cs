@@ -14,17 +14,33 @@ namespace FileLockerLibrary
         /// <summary>
         /// The content of the file.
         /// </summary>
-        public byte[] Content { get; private set; }
+        public byte[] Content { get; set; }
 
         /// <summary>
         /// The path of the file.
         /// </summary>
         public string Path { get; set; }
 
+        private string password;
+
         /// <summary>
         /// The password used for encryption and decryption.
+        /// Setting the password also updates the password hash.
         /// </summary>
-        public string Password { get; set; }
+        public string Password
+        {
+            get { return password; }
+            set
+            {
+                password = value;
+                PasswordHash = GlobalConfig.Hasher.HashPassword(value);
+            }
+        }
+
+        /// <summary>
+        /// The hashed password.
+        /// </summary>
+        public string PasswordHash { get; set; }
 
         /// <summary>
         /// The encryption key used for encryption and decryption.
@@ -39,7 +55,7 @@ namespace FileLockerLibrary
         /// <summary>
         /// The status of encryption for the file.
         /// </summary>
-        public bool EncryptionStatus { get; private set; }
+        public bool EncryptionStatus { get; set; }
 
         /// <summary>
         /// Encrypts the content of the file.
@@ -65,23 +81,6 @@ namespace FileLockerLibrary
             //Content = encryptor.decrypt(Content, EncryptionKey);
 
             EncryptionStatus = false;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FileModel"/> class with the specified path and password.
-        /// </summary>
-        /// <param name="path">The path of the file.</param>
-        /// <param name="password">The password used for encryption and decryption.</param>
-        FileModel(string path, string password)
-        {
-            Path = path;
-            Password = password;
-
-            // TODO - implement error checking
-            Content = File.ReadAllBytes(path);
-
-            EncryptionKeySalt = GlobalConfig.KeyDeriver.GenerateSalt();
-            EncryptionKey = GlobalConfig.KeyDeriver.DeriveKey(password, EncryptionKeySalt);
         }
     }
 }

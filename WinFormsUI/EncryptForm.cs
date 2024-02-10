@@ -8,13 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WinFormsUI
+namespace WinFormsUI;
+
+public partial class EncryptForm : Form
 {
-    public partial class EncryptForm : Form
+    public EncryptForm()
     {
-        public EncryptForm()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

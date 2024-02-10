@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EncryptForm));
             PasswordMaskedTextBox = new MaskedTextBox();
             PasswordLabel = new Label();
             EightCharacterLabel = new Label();
@@ -45,7 +46,7 @@
             PasswordMaskedTextBox.Location = new Point(122, 61);
             PasswordMaskedTextBox.Name = "PasswordMaskedTextBox";
             PasswordMaskedTextBox.Size = new Size(277, 26);
-            PasswordMaskedTextBox.TabIndex = 4;
+            PasswordMaskedTextBox.TabIndex = 1;
             PasswordMaskedTextBox.UseSystemPasswordChar = true;
             // 
             // PasswordLabel
@@ -115,7 +116,7 @@
             EyeballLabel.Location = new Point(405, 64);
             EyeballLabel.Name = "EyeballLabel";
             EyeballLabel.Size = new Size(25, 20);
-            EyeballLabel.TabIndex = 10;
+            EyeballLabel.TabIndex = 2;
             EyeballLabel.Text = "👁";
             // 
             // EncryptForm
@@ -133,6 +134,7 @@
             Controls.Add(PasswordMaskedTextBox);
             Controls.Add(PasswordLabel);
             Font = new Font("Microsoft Sans Serif", 12F);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4);
             Name = "EncryptForm";
             StartPosition = FormStartPosition.CenterScreen;

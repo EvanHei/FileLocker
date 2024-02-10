@@ -90,12 +90,13 @@ public class AesEncryptor : IEncryptor
             aes.Key = key;
             aes.IV = iv;
 
-            using (MemoryStream msDecrypt = new MemoryStream(ciphertextAndIv, 16, ciphertextAndIv.Length - 16))
+            using (MemoryStream msDecrypt = new MemoryStream(ciphertextAndIv, iv.Length, ciphertextAndIv.Length - iv.Length))
             {
                 using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, aes.CreateDecryptor(), CryptoStreamMode.Read))
                 {
                     using (MemoryStream plaintextStream = new MemoryStream())
                     {
+                        // TODO - throws padding error
                         csDecrypt.CopyTo(plaintextStream);
                         plaintextBytes = plaintextStream.ToArray();
                     }

@@ -12,11 +12,6 @@ namespace FileLockerLibrary;
 public class FileModel
 {
     /// <summary>
-    /// The content of the file.
-    /// </summary>
-    public byte[] Content { get; set; }
-
-    /// <summary>
     /// The path of the file.
     /// </summary>
     public string Path { get; set; }
@@ -38,7 +33,7 @@ public class FileModel
     }
 
     /// <summary>
-    /// The hashed password.
+    /// The hashed password. Automatically computed when the password is set.
     /// </summary>
     public string PasswordHash { get; set; }
 
@@ -55,18 +50,43 @@ public class FileModel
     /// <summary>
     /// The status of encryption for the file.
     /// </summary>
-    public bool EncryptionStatus { get; set; }
+    public bool EncryptionStatus
+    {
+        get
+        {
+            return System.IO.Path.GetExtension(Path).Equals(FileConstants.EncryptedExtension, StringComparison.OrdinalIgnoreCase);
+        }
+    }
+
+    /// <summary>
+    /// The display name of the file, which is the file name without the directory path.
+    /// </summary>
+    public string DisplayName
+    {
+        get
+        {
+            return System.IO.Path.GetFileName(Path);
+        }
+    }
 
     /// <summary>
     /// Encrypts the content of the file.
     /// </summary>
     public void Encrypt()
     {
+        if (!File.Exists(Path))
+            throw new FileNotFoundException("The file could not be found.", Path);
         if (EncryptionStatus == true)
             return;
 
-        Content = GlobalConfig.Encryptor.Encrypt(Content, EncryptionKey);
-        EncryptionStatus = true;
+        string plaintextPath = Path;
+        Path = Path + FileConstants.EncryptedExtension;
+
+        byte[] content = File.ReadAllBytes(plaintextPath);
+        byte[] ciphertext = GlobalConfig.Encryptor.Encrypt(content, EncryptionKey);
+
+        File.WriteAllBytes(Path, ciphertext);
+        File.Delete(plaintextPath);
     }
 
     /// <summary>
@@ -74,10 +94,22 @@ public class FileModel
     /// </summary>
     public void Decrypt()
     {
+        if (!File.Exists(Path))
+            throw new FileNotFoundException("The file could not be found.", Path);
         if (EncryptionStatus == false)
             return;
 
-        Content = GlobalConfig.Encryptor.Decrypt(Content, EncryptionKey);
-        EncryptionStatus = false;
+        string ciphertextPath = Path;
+        Path = System.IO.Path.ChangeExtension(Path, null);
+
+        byte[] content = File.ReadAllBytes(ciphertextPath);
+        byte[] plaintext = GlobalConfig.Encryptor.Decrypt(content, EncryptionKey);
+        File.WriteAllBytes(Path, plaintext);
+        File.Delete(ciphertextPath);
+    }
+
+    public FileModel(string path)
+    {
+        Path = path;
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DecryptForm));
             PasswordLabel = new Label();
             PasswordMaskedTextBox = new MaskedTextBox();
             EyeballLabel = new Label();
@@ -50,7 +51,7 @@
             PasswordMaskedTextBox.Location = new Point(122, 61);
             PasswordMaskedTextBox.Name = "PasswordMaskedTextBox";
             PasswordMaskedTextBox.Size = new Size(277, 26);
-            PasswordMaskedTextBox.TabIndex = 2;
+            PasswordMaskedTextBox.TabIndex = 1;
             PasswordMaskedTextBox.UseSystemPasswordChar = true;
             // 
             // EyeballLabel
@@ -60,7 +61,7 @@
             EyeballLabel.Location = new Point(405, 64);
             EyeballLabel.Name = "EyeballLabel";
             EyeballLabel.Size = new Size(25, 20);
-            EyeballLabel.TabIndex = 3;
+            EyeballLabel.TabIndex = 2;
             EyeballLabel.Text = "👁";
             // 
             // DecryptForm
@@ -73,6 +74,7 @@
             Controls.Add(PasswordMaskedTextBox);
             Controls.Add(PasswordLabel);
             Font = new Font("Microsoft Sans Serif", 12F);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4);
             Name = "DecryptForm";
             StartPosition = FormStartPosition.CenterScreen;

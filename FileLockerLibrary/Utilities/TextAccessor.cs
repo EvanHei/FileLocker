@@ -14,49 +14,77 @@ public class TextAccessor
     //      |   +-- Path.txt
     //      |   +-- Encryption.salt
     //      |   +-- Password.hash
-    //      |   +-- EncryptionStatus.txt
     //      +-- ...
-
-    private const string FILE_PATH_FILE_NAME = "Path.txt";
-    private const string ENCRYPTION_KEY_SALT_FILE_NAME = "EncryptionKey.salt";
-    private const string PASSWORD_HASH_FILE_NAME = "Password.hash";
-    private const string ENCRYPTION_STATUS_FILE_NAME = "EncryptionStatus.txt";
 
     private string FileModelsDirectoryPath { get; set; }
     private string FileDirectoryPath { get; set; }
     private string FilePathPath { get; set; }
     private string PasswordHashPath { get; set; }
     private string EncryptionKeySaltPath { get; set; }
-    private string EncryptionStatusPath { get; set; }
 
     /// <summary>
-    /// Saves the file model.
+    /// Creates a file model.
     /// </summary>
-    /// <param name="model">The file model to be saved.</param>
+    /// <param name="model">The file model to be created.</param>
     /// <exception cref="ArgumentNullException">Thrown if the file model is null.</exception>
-    /// <exception cref="ArgumentException">Thrown if the file path or encryption salt is null or empty.</exception>
+    /// <exception cref="ArgumentException">Thrown if the file path is null or empty.</exception>
     /// <exception cref="InvalidOperationException">Thrown if the directory already exists.</exception>
-    public void SaveFileModel(FileModel model)
+    public void CreateFileModel(FileModel model)
     {
         if (model == null)
-            throw new ArgumentNullException(nameof(model));
+            throw new ArgumentNullException("Model cannot be null.", nameof(model));
         if (string.IsNullOrEmpty(model.Path))
-            throw new ArgumentException("File path cannot be null or empty.", nameof(model.Path));
-        if (model.EncryptionKeySalt == null || model.EncryptionKeySalt.Length == 0)
-            throw new ArgumentException("Encryption salt cannot be null or empty.", nameof(model.EncryptionKeySalt));
+            throw new ArgumentException("Path cannot be null or empty.", nameof(model.Path));
 
-        InitializePaths(Path.GetFileName(model.Path));
+        if (model.EncryptionStatus == true)
+            InitializePaths(Path.GetFileNameWithoutExtension(model.Path));
+        else
+            InitializePaths(Path.GetFileName(model.Path));
 
         // if the file name already exists
         if (Directory.Exists(FileDirectoryPath))
             throw new InvalidOperationException($"Directory '{Path.GetFileName(model.Path)}' already exists.");
 
+        // populate model
+        model.EncryptionKeySalt = GlobalConfig.KeyDeriver.GenerateSalt();
+
         // write to the files
         Directory.CreateDirectory(FileDirectoryPath);
         File.WriteAllText(FilePathPath, model.Path);
-        File.WriteAllText(PasswordHashPath, model.PasswordHash);
         File.WriteAllBytes(EncryptionKeySaltPath, model.EncryptionKeySalt);
-        File.WriteAllText(EncryptionStatusPath, model.EncryptionStatus.ToString());
+        if (model.PasswordHash != null)
+            File.WriteAllText(PasswordHashPath, model.PasswordHash);
+    }
+
+
+    /// <summary>
+    /// Saves a file model.
+    /// </summary>
+    /// <param name="model">The file model to be saved.</param>
+    /// <exception cref="ArgumentNullException">Thrown if the file model is null.</exception>
+    /// <exception cref="ArgumentException">Thrown if the file path is null or empty.</exception>
+    /// <exception cref="InvalidOperationException">Thrown if the directory already exists.</exception>
+    public void SaveFileModel(FileModel model)
+    {
+        if (model == null)
+            throw new ArgumentNullException("Model cannot be null.", nameof(model));
+        if (string.IsNullOrEmpty(model.Path))
+            throw new ArgumentException("Path cannot be null or empty.", nameof(model.Path));
+
+        if (model.EncryptionStatus == true)
+            InitializePaths(Path.GetFileNameWithoutExtension(model.Path));
+        else
+            InitializePaths(Path.GetFileName(model.Path));
+
+        // if the directory doesn't exist
+        if (!Directory.Exists(FileDirectoryPath))
+            throw new InvalidOperationException($"Directory '{Path.GetFileName(model.Path)}' does not exist.");
+
+        // write to the files
+        File.WriteAllText(FilePathPath, model.Path);
+        File.WriteAllBytes(EncryptionKeySaltPath, model.EncryptionKeySalt);
+        if (model.PasswordHash != null)
+            File.WriteAllText(PasswordHashPath, model.PasswordHash);
     }
 
     /// <summary>
@@ -70,19 +98,17 @@ public class TextAccessor
         foreach (string fileName in GetAllFileNames())
         {
             string fileDirectoryPath = Path.Combine(FileModelsDirectoryPath, fileName);
-            string filePathPath = Path.Combine(fileDirectoryPath, FILE_PATH_FILE_NAME);
-            string encryptionSaltPath = Path.Combine(fileDirectoryPath, ENCRYPTION_KEY_SALT_FILE_NAME);
-            string passwordHashPath = Path.Combine(fileDirectoryPath, PASSWORD_HASH_FILE_NAME);
-            string encryptionStatusPath = Path.Combine(fileDirectoryPath, ENCRYPTION_STATUS_FILE_NAME);
+            string filePathPath = Path.Combine(fileDirectoryPath, FileConstants.FilePathFileName);
+            string encryptionSaltPath = Path.Combine(fileDirectoryPath, FileConstants.EncryptionKeySaltFileName);
+            string passwordHashPath = Path.Combine(fileDirectoryPath, FileConstants.PasswordHashFileName);
 
             // TODO - add error checking
 
-            FileModel temp = new FileModel();
-            temp.Path = File.ReadAllText(filePathPath);
-            temp.Content = File.ReadAllBytes(temp.Path);
-            temp.PasswordHash = File.ReadAllText(passwordHashPath);
+            string path = File.ReadAllText(filePathPath);
+            FileModel temp = new FileModel(path);
             temp.EncryptionKeySalt = File.ReadAllBytes(encryptionSaltPath);
-            temp.EncryptionStatus = bool.Parse(File.ReadAllText(encryptionStatusPath));
+            if (File.Exists(passwordHashPath))
+                temp.PasswordHash = File.ReadAllText(passwordHashPath);
 
             output.Add(temp);
         }
@@ -115,10 +141,9 @@ public class TextAccessor
     private void InitializePaths(string fileName)
     {
         FileDirectoryPath = Path.Combine(FileModelsDirectoryPath, fileName);
-        FilePathPath = Path.Combine(FileDirectoryPath, FILE_PATH_FILE_NAME);
-        EncryptionKeySaltPath = Path.Combine(FileDirectoryPath, ENCRYPTION_KEY_SALT_FILE_NAME);
-        PasswordHashPath = Path.Combine(FileDirectoryPath, PASSWORD_HASH_FILE_NAME);
-        EncryptionStatusPath = Path.Combine(FileDirectoryPath, ENCRYPTION_STATUS_FILE_NAME);
+        FilePathPath = Path.Combine(FileDirectoryPath, FileConstants.FilePathFileName);
+        EncryptionKeySaltPath = Path.Combine(FileDirectoryPath, FileConstants.EncryptionKeySaltFileName);
+        PasswordHashPath = Path.Combine(FileDirectoryPath, FileConstants.PasswordHashFileName);
     }
 
     /// <summary>

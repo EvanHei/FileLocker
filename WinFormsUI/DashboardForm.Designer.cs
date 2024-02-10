@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DashboardForm));
             FileLabel = new Label();
             StatusLabel = new Label();
             FileListBox = new ListBox();
@@ -36,6 +37,12 @@
             TrashButton = new Button();
             AddButton = new Button();
             DashboardLabel = new Label();
+            MenuStrip = new MenuStrip();
+            FileMenuItem = new ToolStripMenuItem();
+            ExitMenuItem = new ToolStripMenuItem();
+            HelpMenuItem = new ToolStripMenuItem();
+            UserGuideMenuItem = new ToolStripMenuItem();
+            MenuStrip.SuspendLayout();
             SuspendLayout();
             // 
             // FileLabel
@@ -67,7 +74,7 @@
             FileListBox.Location = new Point(61, 112);
             FileListBox.Name = "FileListBox";
             FileListBox.Size = new Size(833, 204);
-            FileListBox.TabIndex = 2;
+            FileListBox.TabIndex = 1;
             // 
             // EncryptButton
             // 
@@ -76,7 +83,7 @@
             EncryptButton.Location = new Point(404, 322);
             EncryptButton.Name = "EncryptButton";
             EncryptButton.Size = new Size(81, 35);
-            EncryptButton.TabIndex = 3;
+            EncryptButton.TabIndex = 2;
             EncryptButton.Text = "Encrypt";
             EncryptButton.UseVisualStyleBackColor = false;
             EncryptButton.Click += EncryptButton_Click;
@@ -88,7 +95,7 @@
             DecryptButton.Location = new Point(491, 322);
             DecryptButton.Name = "DecryptButton";
             DecryptButton.Size = new Size(81, 35);
-            DecryptButton.TabIndex = 4;
+            DecryptButton.TabIndex = 3;
             DecryptButton.Text = "Decrypt";
             DecryptButton.UseVisualStyleBackColor = false;
             DecryptButton.Click += DecryptButton_Click;
@@ -112,7 +119,7 @@
             AddButton.Location = new Point(860, 322);
             AddButton.Name = "AddButton";
             AddButton.Size = new Size(34, 35);
-            AddButton.TabIndex = 6;
+            AddButton.TabIndex = 4;
             AddButton.Text = "+";
             AddButton.UseVisualStyleBackColor = false;
             AddButton.Click += AddButton_Click;
@@ -122,11 +129,56 @@
             DashboardLabel.AutoSize = true;
             DashboardLabel.Font = new Font("Microsoft Sans Serif", 20.25F);
             DashboardLabel.ForeColor = SystemColors.ButtonFace;
-            DashboardLabel.Location = new Point(404, 30);
+            DashboardLabel.Location = new Point(414, 38);
             DashboardLabel.Name = "DashboardLabel";
             DashboardLabel.Size = new Size(147, 31);
             DashboardLabel.TabIndex = 7;
             DashboardLabel.Text = "Dashboard";
+            // 
+            // MenuStrip
+            // 
+            MenuStrip.BackColor = Color.FromArgb(32, 32, 32);
+            MenuStrip.Font = new Font("Microsoft Sans Serif", 9F);
+            MenuStrip.Items.AddRange(new ToolStripItem[] { FileMenuItem, HelpMenuItem });
+            MenuStrip.Location = new Point(0, 0);
+            MenuStrip.Name = "MenuStrip";
+            MenuStrip.Size = new Size(966, 24);
+            MenuStrip.TabIndex = 8;
+            MenuStrip.Text = "menuStrip1";
+            // 
+            // FileMenuItem
+            // 
+            FileMenuItem.BackColor = Color.FromArgb(32, 32, 32);
+            FileMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ExitMenuItem });
+            FileMenuItem.ForeColor = SystemColors.AppWorkspace;
+            FileMenuItem.Name = "FileMenuItem";
+            FileMenuItem.Size = new Size(39, 20);
+            FileMenuItem.Text = "&File";
+            // 
+            // ExitMenuItem
+            // 
+            ExitMenuItem.BackColor = SystemColors.Control;
+            ExitMenuItem.ForeColor = SystemColors.ControlText;
+            ExitMenuItem.Name = "ExitMenuItem";
+            ExitMenuItem.Size = new Size(180, 22);
+            ExitMenuItem.Text = "E&xit";
+            // 
+            // HelpMenuItem
+            // 
+            HelpMenuItem.BackColor = Color.FromArgb(32, 32, 32);
+            HelpMenuItem.DropDownItems.AddRange(new ToolStripItem[] { UserGuideMenuItem });
+            HelpMenuItem.ForeColor = SystemColors.AppWorkspace;
+            HelpMenuItem.Name = "HelpMenuItem";
+            HelpMenuItem.Size = new Size(45, 20);
+            HelpMenuItem.Text = "&Help";
+            // 
+            // UserGuideMenuItem
+            // 
+            UserGuideMenuItem.BackColor = SystemColors.Control;
+            UserGuideMenuItem.ForeColor = SystemColors.ControlText;
+            UserGuideMenuItem.Name = "UserGuideMenuItem";
+            UserGuideMenuItem.Size = new Size(180, 22);
+            UserGuideMenuItem.Text = "User &Guide";
             // 
             // DashboardForm
             // 
@@ -142,11 +194,16 @@
             Controls.Add(FileListBox);
             Controls.Add(StatusLabel);
             Controls.Add(FileLabel);
+            Controls.Add(MenuStrip);
             Font = new Font("Microsoft Sans Serif", 12F);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MainMenuStrip = MenuStrip;
             Margin = new Padding(4);
             Name = "DashboardForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FileLocker";
+            MenuStrip.ResumeLayout(false);
+            MenuStrip.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -161,5 +218,10 @@
         private Button TrashButton;
         private Button AddButton;
         private Label DashboardLabel;
+        private MenuStrip MenuStrip;
+        private ToolStripMenuItem FileMenuItem;
+        private ToolStripMenuItem ExitMenuItem;
+        private ToolStripMenuItem HelpMenuItem;
+        private ToolStripMenuItem UserGuideMenuItem;
     }
 }

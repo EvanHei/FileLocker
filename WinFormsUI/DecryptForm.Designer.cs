@@ -32,6 +32,7 @@
             PasswordLabel = new Label();
             PasswordMaskedTextBox = new MaskedTextBox();
             EyeballLabel = new Label();
+            EnterButton = new Button();
             SuspendLayout();
             // 
             // PasswordLabel
@@ -57,12 +58,25 @@
             // EyeballLabel
             // 
             EyeballLabel.AutoSize = true;
+            EyeballLabel.BackColor = Color.FromArgb(52, 52, 52);
             EyeballLabel.ForeColor = SystemColors.ButtonFace;
-            EyeballLabel.Location = new Point(405, 64);
+            EyeballLabel.Location = new Point(369, 64);
             EyeballLabel.Name = "EyeballLabel";
             EyeballLabel.Size = new Size(25, 20);
             EyeballLabel.TabIndex = 2;
             EyeballLabel.Text = "👁";
+            // 
+            // EnterButton
+            // 
+            EnterButton.BackColor = Color.FromArgb(52, 52, 52);
+            EnterButton.ForeColor = SystemColors.ButtonFace;
+            EnterButton.Location = new Point(405, 57);
+            EnterButton.Name = "EnterButton";
+            EnterButton.Size = new Size(34, 35);
+            EnterButton.TabIndex = 11;
+            EnterButton.Text = "→\n";
+            EnterButton.UseVisualStyleBackColor = false;
+            EnterButton.Click += EnterButton_Click;
             // 
             // DecryptForm
             // 
@@ -70,6 +84,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(32, 32, 32);
             ClientSize = new Size(470, 153);
+            Controls.Add(EnterButton);
             Controls.Add(EyeballLabel);
             Controls.Add(PasswordMaskedTextBox);
             Controls.Add(PasswordLabel);
@@ -88,5 +103,6 @@
         private Label PasswordLabel;
         private MaskedTextBox PasswordMaskedTextBox;
         private Label EyeballLabel;
+        private Button EnterButton;
     }
 }

@@ -78,7 +78,7 @@
             // 
             // EncryptButton
             // 
-            EncryptButton.BackColor = Color.FromArgb(40, 40, 40);
+            EncryptButton.BackColor = Color.Silver;
             EncryptButton.ForeColor = SystemColors.ButtonFace;
             EncryptButton.Location = new Point(286, 322);
             EncryptButton.Name = "EncryptButton";
@@ -90,7 +90,7 @@
             // 
             // DecryptButton
             // 
-            DecryptButton.BackColor = Color.FromArgb(40, 40, 40);
+            DecryptButton.BackColor = Color.Silver;
             DecryptButton.ForeColor = SystemColors.ButtonFace;
             DecryptButton.Location = new Point(373, 322);
             DecryptButton.Name = "DecryptButton";
@@ -102,7 +102,7 @@
             // 
             // TrashButton
             // 
-            TrashButton.BackColor = Color.FromArgb(40, 40, 40);
+            TrashButton.BackColor = Color.Silver;
             TrashButton.ForeColor = SystemColors.ButtonFace;
             TrashButton.Location = new Point(61, 322);
             TrashButton.Name = "TrashButton";

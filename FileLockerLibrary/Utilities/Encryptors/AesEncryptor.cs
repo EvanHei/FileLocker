@@ -96,7 +96,6 @@ public class AesEncryptor : IEncryptor
                 {
                     using (MemoryStream plaintextStream = new MemoryStream())
                     {
-                        // TODO - throws padding error
                         csDecrypt.CopyTo(plaintextStream);
                         plaintextBytes = plaintextStream.ToArray();
                     }

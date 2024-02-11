@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -33,7 +34,7 @@ public class FileModel
     }
 
     /// <summary>
-    /// The hashed password. Automatically computed when the password is set.
+    /// The hashed password. Automatically computed when the password is set, or can be read from memory.
     /// </summary>
     public string PasswordHash { get; set; }
 
@@ -92,6 +93,8 @@ public class FileModel
     /// <summary>
     /// Decrypts the content of the file.
     /// </summary>
+    /// <exception cref="FileNotFoundException">Thrown the file could not be found.</exception>
+    /// <exception cref="CryptographicException">Thrown when decryption fails.</exception>
     public void Decrypt()
     {
         if (!File.Exists(Path))
@@ -99,15 +102,27 @@ public class FileModel
         if (EncryptionStatus == false)
             return;
 
-        string ciphertextPath = Path;
-        Path = System.IO.Path.ChangeExtension(Path, null);
+        try
+        {
+            string ciphertextPath = Path;
+            Path = System.IO.Path.ChangeExtension(Path, null);
 
-        byte[] content = File.ReadAllBytes(ciphertextPath);
-        byte[] plaintext = GlobalConfig.Encryptor.Decrypt(content, EncryptionKey);
-        File.WriteAllBytes(Path, plaintext);
-        File.Delete(ciphertextPath);
+            byte[] content = File.ReadAllBytes(ciphertextPath);
+            byte[] plaintext = GlobalConfig.Encryptor.Decrypt(content, EncryptionKey);
+
+            File.WriteAllBytes(Path, plaintext);
+            File.Delete(ciphertextPath);
+        }
+        catch (Exception ex)
+        {
+            throw new CryptographicException("Unable to decrypt.", ex);
+        }
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="FileModel"/> class with the specified file path.
+    /// </summary>
+    /// <param name="path">The path of the file.</param>
     public FileModel(string path)
     {
         Path = path;

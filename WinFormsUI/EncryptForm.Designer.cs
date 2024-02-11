@@ -37,13 +37,16 @@
             UppercaseLetterLabel = new Label();
             SpecialCharacterLabel = new Label();
             EyeballLabel = new Label();
+            EnterButton = new Button();
+            ConfirmPasswordMaskedTextBox = new MaskedTextBox();
+            ConfirmPasswordLabel = new Label();
             SuspendLayout();
             // 
             // PasswordMaskedTextBox
             // 
             PasswordMaskedTextBox.BackColor = Color.FromArgb(52, 52, 52);
             PasswordMaskedTextBox.ForeColor = SystemColors.ButtonFace;
-            PasswordMaskedTextBox.Location = new Point(122, 61);
+            PasswordMaskedTextBox.Location = new Point(171, 54);
             PasswordMaskedTextBox.Name = "PasswordMaskedTextBox";
             PasswordMaskedTextBox.Size = new Size(277, 26);
             PasswordMaskedTextBox.TabIndex = 1;
@@ -53,7 +56,7 @@
             // 
             PasswordLabel.AutoSize = true;
             PasswordLabel.ForeColor = SystemColors.ButtonFace;
-            PasswordLabel.Location = new Point(34, 64);
+            PasswordLabel.Location = new Point(83, 57);
             PasswordLabel.Name = "PasswordLabel";
             PasswordLabel.Size = new Size(82, 20);
             PasswordLabel.TabIndex = 3;
@@ -63,7 +66,7 @@
             // 
             EightCharacterLabel.AutoSize = true;
             EightCharacterLabel.ForeColor = SystemColors.AppWorkspace;
-            EightCharacterLabel.Location = new Point(122, 99);
+            EightCharacterLabel.Location = new Point(171, 131);
             EightCharacterLabel.Name = "EightCharacterLabel";
             EightCharacterLabel.Size = new Size(97, 20);
             EightCharacterLabel.TabIndex = 5;
@@ -73,7 +76,7 @@
             // 
             DigitLabel.AutoSize = true;
             DigitLabel.ForeColor = SystemColors.AppWorkspace;
-            DigitLabel.Location = new Point(122, 119);
+            DigitLabel.Location = new Point(171, 191);
             DigitLabel.Name = "DigitLabel";
             DigitLabel.Size = new Size(41, 20);
             DigitLabel.TabIndex = 6;
@@ -83,7 +86,7 @@
             // 
             LowercaseLetterLabel.AutoSize = true;
             LowercaseLetterLabel.ForeColor = SystemColors.AppWorkspace;
-            LowercaseLetterLabel.Location = new Point(122, 159);
+            LowercaseLetterLabel.Location = new Point(171, 171);
             LowercaseLetterLabel.Name = "LowercaseLetterLabel";
             LowercaseLetterLabel.Size = new Size(126, 20);
             LowercaseLetterLabel.TabIndex = 8;
@@ -93,7 +96,7 @@
             // 
             UppercaseLetterLabel.AutoSize = true;
             UppercaseLetterLabel.ForeColor = SystemColors.AppWorkspace;
-            UppercaseLetterLabel.Location = new Point(122, 139);
+            UppercaseLetterLabel.Location = new Point(171, 151);
             UppercaseLetterLabel.Name = "UppercaseLetterLabel";
             UppercaseLetterLabel.Size = new Size(127, 20);
             UppercaseLetterLabel.TabIndex = 7;
@@ -103,7 +106,7 @@
             // 
             SpecialCharacterLabel.AutoSize = true;
             SpecialCharacterLabel.ForeColor = SystemColors.AppWorkspace;
-            SpecialCharacterLabel.Location = new Point(122, 179);
+            SpecialCharacterLabel.Location = new Point(171, 211);
             SpecialCharacterLabel.Name = "SpecialCharacterLabel";
             SpecialCharacterLabel.Size = new Size(132, 20);
             SpecialCharacterLabel.TabIndex = 9;
@@ -112,20 +115,56 @@
             // EyeballLabel
             // 
             EyeballLabel.AutoSize = true;
+            EyeballLabel.BackColor = Color.FromArgb(52, 52, 52);
             EyeballLabel.ForeColor = SystemColors.ButtonFace;
-            EyeballLabel.Location = new Point(405, 64);
+            EyeballLabel.Location = new Point(418, 89);
             EyeballLabel.Name = "EyeballLabel";
             EyeballLabel.Size = new Size(25, 20);
             EyeballLabel.TabIndex = 2;
             EyeballLabel.Text = "👁";
+            // 
+            // EnterButton
+            // 
+            EnterButton.BackColor = Color.FromArgb(52, 52, 52);
+            EnterButton.ForeColor = SystemColors.ButtonFace;
+            EnterButton.Location = new Point(454, 82);
+            EnterButton.Name = "EnterButton";
+            EnterButton.Size = new Size(34, 35);
+            EnterButton.TabIndex = 10;
+            EnterButton.Text = "→\n";
+            EnterButton.UseVisualStyleBackColor = false;
+            EnterButton.Click += EnterButton_Click;
+            // 
+            // ConfirmPasswordMaskedTextBox
+            // 
+            ConfirmPasswordMaskedTextBox.BackColor = Color.FromArgb(52, 52, 52);
+            ConfirmPasswordMaskedTextBox.ForeColor = SystemColors.ButtonFace;
+            ConfirmPasswordMaskedTextBox.Location = new Point(171, 86);
+            ConfirmPasswordMaskedTextBox.Name = "ConfirmPasswordMaskedTextBox";
+            ConfirmPasswordMaskedTextBox.Size = new Size(277, 26);
+            ConfirmPasswordMaskedTextBox.TabIndex = 11;
+            ConfirmPasswordMaskedTextBox.UseSystemPasswordChar = true;
+            // 
+            // ConfirmPasswordLabel
+            // 
+            ConfirmPasswordLabel.AutoSize = true;
+            ConfirmPasswordLabel.ForeColor = SystemColors.ButtonFace;
+            ConfirmPasswordLabel.Location = new Point(24, 89);
+            ConfirmPasswordLabel.Name = "ConfirmPasswordLabel";
+            ConfirmPasswordLabel.Size = new Size(141, 20);
+            ConfirmPasswordLabel.TabIndex = 12;
+            ConfirmPasswordLabel.Text = "Confirm Password:";
             // 
             // EncryptForm
             // 
             AutoScaleDimensions = new SizeF(9F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(32, 32, 32);
-            ClientSize = new Size(470, 227);
+            ClientSize = new Size(541, 265);
             Controls.Add(EyeballLabel);
+            Controls.Add(ConfirmPasswordMaskedTextBox);
+            Controls.Add(ConfirmPasswordLabel);
+            Controls.Add(EnterButton);
             Controls.Add(SpecialCharacterLabel);
             Controls.Add(LowercaseLetterLabel);
             Controls.Add(UppercaseLetterLabel);
@@ -153,5 +192,8 @@
         private Label UppercaseLetterLabel;
         private Label SpecialCharacterLabel;
         private Label EyeballLabel;
+        private Button EnterButton;
+        private MaskedTextBox ConfirmPasswordMaskedTextBox;
+        private Label ConfirmPasswordLabel;
     }
 }

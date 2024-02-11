@@ -23,7 +23,7 @@ public class TextAccessor
     private string EncryptionKeySaltPath { get; set; }
 
     /// <summary>
-    /// Creates a file model.
+    /// Creates a file model and populates the EncryptionSalt property.
     /// </summary>
     /// <param name="model">The file model to be created.</param>
     /// <exception cref="ArgumentNullException">Thrown if the file model is null.</exception>

@@ -5,13 +5,50 @@ using System.Security.Principal;
 
 namespace WinFormsUI;
 
-public partial class DashboardForm : Form
+public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCaller
 {
     public DashboardForm()
     {
         InitializeComponent();
 
+        FileListBox.SelectedIndexChanged += FileListBox_SelectedIndexChanged;
+
         PopulateForm();
+    }
+
+    private void FileListBox_SelectedIndexChanged(object? sender, EventArgs e)
+    {
+        if (FileListBox.SelectedItem == null)
+        {
+            TrashButton.BackColor = Color.Silver;
+            EncryptButton.BackColor = Color.Silver;
+            DecryptButton.BackColor = Color.Silver;
+        }
+        else
+        {
+            FileModel model = (FileModel)FileListBox.SelectedItem;
+
+            if (model.EncryptionStatus == true)
+            {
+                TrashButton.Enabled = false;
+                EncryptButton.Enabled = false;
+                DecryptButton.Enabled = true;
+
+                TrashButton.BackColor = Color.Silver;
+                EncryptButton.BackColor = Color.Silver;
+                DecryptButton.BackColor = Color.FromArgb(0, 84, 168);
+            }
+            else
+            {
+                TrashButton.Enabled = true;
+                EncryptButton.Enabled = true;
+                DecryptButton.Enabled = false;
+
+                TrashButton.BackColor = Color.DarkRed;
+                EncryptButton.BackColor = Color.FromArgb(0, 84, 168);
+                DecryptButton.BackColor = Color.Silver;
+            }
+        }
     }
 
     /// <summary>
@@ -21,40 +58,31 @@ public partial class DashboardForm : Form
     {
         FileListBox.DataSource = GlobalConfig.DataAccessor.LoadAllFileModels();
         FileListBox.DisplayMember = "FileName";
-
-        // FileListBox selected item
-        if (FileListBox.SelectedItem == null)
-        {
-            TrashButton.BackColor = Color.FromArgb(40, 40, 40);
-            EncryptButton.BackColor = Color.FromArgb(40, 40, 40);
-            DecryptButton.BackColor = Color.FromArgb(40, 40, 40);
-            return;
-        }
-
-        FileModel model = (FileModel)FileListBox.SelectedItem;
-
-        if (model.EncryptionStatus == true)
-        {
-            TrashButton.BackColor = Color.FromArgb(40, 40, 40);
-            EncryptButton.BackColor = Color.FromArgb(40, 40, 40);
-            DecryptButton.BackColor = Color.FromArgb(0, 84, 168);
-        }
-        else
-        {
-            TrashButton.BackColor = Color.DarkRed;
-            EncryptButton.BackColor = Color.FromArgb(0, 84, 168);
-            DecryptButton.BackColor = Color.FromArgb(40, 40, 40);
-        }
     }
 
     private void EncryptButton_Click(object sender, EventArgs e)
     {
-        // must set the FileModel.EncryptionKeySalt property with a newly generated salt
+        if (FileListBox.SelectedItem == null)
+            return;
+
+        FileModel model = (FileModel)FileListBox.SelectedItem;
+
+        EncryptForm encryptForm = new EncryptForm(this, model);
+        encryptForm.ShowDialog();
     }
 
     private void DecryptButton_Click(object sender, EventArgs e)
     {
+        if (FileListBox.SelectedItem == null)
+            return;
 
+        FileModel model = (FileModel)FileListBox.SelectedItem;
+
+        if (model.EncryptionStatus == false)
+            return;
+
+        DecryptForm decryptForm = new DecryptForm(this, model);
+        decryptForm.ShowDialog();
     }
 
     private void TrashButton_Click(object sender, EventArgs e)
@@ -103,8 +131,16 @@ public partial class DashboardForm : Form
             }
         }
 
-        // call EncryptForm
+        PopulateForm();
+    }
 
+    public void EncryptionComplete()
+    {
+        PopulateForm();
+    }
+
+    public void DecryptionComplete()
+    {
         PopulateForm();
     }
 }

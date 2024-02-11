@@ -54,14 +54,14 @@ public class FileModel
     {
         get
         {
-            return System.IO.Path.GetExtension(Path).Equals(FileConstants.EncryptedExtension, StringComparison.OrdinalIgnoreCase);
+            return System.IO.Path.GetExtension(Path).Equals(Constants.EncryptedExtension, StringComparison.OrdinalIgnoreCase);
         }
     }
 
     /// <summary>
-    /// The display name of the file, which is the file name without the directory path.
+    /// The file name without the directory path.
     /// </summary>
-    public string DisplayName
+    public string FileName
     {
         get
         {
@@ -80,7 +80,7 @@ public class FileModel
             return;
 
         string plaintextPath = Path;
-        Path = Path + FileConstants.EncryptedExtension;
+        Path = Path + Constants.EncryptedExtension;
 
         byte[] content = File.ReadAllBytes(plaintextPath);
         byte[] ciphertext = GlobalConfig.Encryptor.Encrypt(content, EncryptionKey);

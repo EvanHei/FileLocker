@@ -15,50 +15,61 @@ internal static class Program
 
 
 
-        // CREATE A FILE
-        string path = @"C:\Users\Evan\Desktop\test.txt";
-        if (!File.Exists(path) && !File.Exists(path + FileConstants.EncryptedExtension))
-            File.WriteAllText(path, "Hello, World!");
+        //// CREATE A FILE
+        //string path = @"C:\Users\Evan\Desktop\test.txt";
+        //if (!File.Exists(path))
+        //    File.WriteAllText(path, "Hello, World!");
 
 
 
-        // ADD A NEW FILEMODEL (saved to C:\Users\Evan\AppData\Roaming\FileLocker) - - - - - - - - - - - - - - -
-        FileModel model = new FileModel(path);
+        //// ADD A NEW FILEMODEL (saved to C:\Users\Evan\AppData\Roaming\FileLocker) - - - - - - - - - - - - - - -
+        //FileModel model = new FileModel(path);
 
-        try
-        {
-            GlobalConfig.DataAccessor.CreateFileModel(model);
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.Message);
-        }
-
-
-
-
-        // GET ALL FILEMODELS - - - - - - - - - - - - - - -
-        List<FileModel> models = GlobalConfig.DataAccessor.LoadAllFileModels();
-        model = models.Where(model => model.Path == @"C:\Users\Evan\Desktop\test.txt" || model.Path == @"C:\Users\Evan\Desktop\test.txt.ciphertext").First();
+        //try
+        //{
+        //    GlobalConfig.DataAccessor.CreateFileModel(model);
+        //}
+        //catch (Exception ex)
+        //{
+        //    MessageBox.Show(ex.Message);
+        //}
 
 
 
 
-        // ENCRYPT - - - - - - - - - - - - - - -
-        model.Password = "password";
-        model.EncryptionKey = GlobalConfig.KeyDeriver.DeriveKey(model.Password, model.EncryptionKeySalt);
-        model.Encrypt();
-        GlobalConfig.DataAccessor.SaveFileModel(model);
+        //// GET ALL FILEMODELS - - - - - - - - - - - - - - -
+        //List<FileModel> models = GlobalConfig.DataAccessor.LoadAllFileModels();
+        //model = models.Where(model => model.Path == @"C:\Users\Evan\Desktop\test.txt" || model.Path == @"C:\Users\Evan\Desktop\test.txt.ciphertext").First();
 
 
 
 
-        // DECRYPT - - - - - - - - - - - - - - -
-        model.Password = "password";
-        model.EncryptionKey = GlobalConfig.KeyDeriver.DeriveKey(model.Password, model.EncryptionKeySalt);
-        model.Decrypt();
-        GlobalConfig.DataAccessor.SaveFileModel(model);
+        //// ENCRYPT - - - - - - - - - - - - - - -
+        //model.Password = "password";
+        //model.EncryptionKey = GlobalConfig.KeyDeriver.DeriveKey(model.Password, model.EncryptionKeySalt);
+        //model.Encrypt();
+        //GlobalConfig.DataAccessor.SaveFileModel(model);
 
+
+
+
+        //// DECRYPT - - - - - - - - - - - - - - -
+        //model.Password = "password";
+        //model.EncryptionKey = GlobalConfig.KeyDeriver.DeriveKey(model.Password, model.EncryptionKeySalt);
+        //model.Decrypt();
+        //GlobalConfig.DataAccessor.SaveFileModel(model);
+
+
+
+        //// DELETE FILEMODEL - - - - - - - - - - - - - - -
+        //try
+        //{
+        //    GlobalConfig.DataAccessor.DeleteFileModel(model);
+        //}
+        //catch (Exception ex)
+        //{
+        //    MessageBox.Show(ex.Message);
+        //}
 
 
 

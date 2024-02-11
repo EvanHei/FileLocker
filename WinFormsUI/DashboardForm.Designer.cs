@@ -59,7 +59,7 @@
             // 
             StatusLabel.AutoSize = true;
             StatusLabel.ForeColor = SystemColors.ButtonFace;
-            StatusLabel.Location = new Point(838, 89);
+            StatusLabel.Location = new Point(582, 89);
             StatusLabel.Name = "StatusLabel";
             StatusLabel.Size = new Size(56, 20);
             StatusLabel.TabIndex = 1;
@@ -73,14 +73,14 @@
             FileListBox.ItemHeight = 20;
             FileListBox.Location = new Point(61, 112);
             FileListBox.Name = "FileListBox";
-            FileListBox.Size = new Size(833, 204);
+            FileListBox.Size = new Size(577, 204);
             FileListBox.TabIndex = 1;
             // 
             // EncryptButton
             // 
-            EncryptButton.BackColor = Color.FromArgb(28, 28, 28);
+            EncryptButton.BackColor = Color.FromArgb(40, 40, 40);
             EncryptButton.ForeColor = SystemColors.ButtonFace;
-            EncryptButton.Location = new Point(404, 322);
+            EncryptButton.Location = new Point(286, 322);
             EncryptButton.Name = "EncryptButton";
             EncryptButton.Size = new Size(81, 35);
             EncryptButton.TabIndex = 2;
@@ -90,9 +90,9 @@
             // 
             // DecryptButton
             // 
-            DecryptButton.BackColor = Color.FromArgb(28, 28, 28);
+            DecryptButton.BackColor = Color.FromArgb(40, 40, 40);
             DecryptButton.ForeColor = SystemColors.ButtonFace;
-            DecryptButton.Location = new Point(491, 322);
+            DecryptButton.Location = new Point(373, 322);
             DecryptButton.Name = "DecryptButton";
             DecryptButton.Size = new Size(81, 35);
             DecryptButton.TabIndex = 3;
@@ -102,7 +102,7 @@
             // 
             // TrashButton
             // 
-            TrashButton.BackColor = Color.FromArgb(28, 28, 28);
+            TrashButton.BackColor = Color.FromArgb(40, 40, 40);
             TrashButton.ForeColor = SystemColors.ButtonFace;
             TrashButton.Location = new Point(61, 322);
             TrashButton.Name = "TrashButton";
@@ -116,7 +116,7 @@
             // 
             AddButton.BackColor = Color.DarkGreen;
             AddButton.ForeColor = SystemColors.ButtonFace;
-            AddButton.Location = new Point(860, 322);
+            AddButton.Location = new Point(604, 322);
             AddButton.Name = "AddButton";
             AddButton.Size = new Size(34, 35);
             AddButton.TabIndex = 4;
@@ -129,7 +129,7 @@
             DashboardLabel.AutoSize = true;
             DashboardLabel.Font = new Font("Microsoft Sans Serif", 20.25F);
             DashboardLabel.ForeColor = SystemColors.ButtonFace;
-            DashboardLabel.Location = new Point(414, 38);
+            DashboardLabel.Location = new Point(298, 44);
             DashboardLabel.Name = "DashboardLabel";
             DashboardLabel.Size = new Size(147, 31);
             DashboardLabel.TabIndex = 7;
@@ -142,7 +142,7 @@
             MenuStrip.Items.AddRange(new ToolStripItem[] { FileMenuItem, HelpMenuItem });
             MenuStrip.Location = new Point(0, 0);
             MenuStrip.Name = "MenuStrip";
-            MenuStrip.Size = new Size(966, 24);
+            MenuStrip.Size = new Size(711, 24);
             MenuStrip.TabIndex = 8;
             MenuStrip.Text = "menuStrip1";
             // 
@@ -160,7 +160,7 @@
             ExitMenuItem.BackColor = SystemColors.Control;
             ExitMenuItem.ForeColor = SystemColors.ControlText;
             ExitMenuItem.Name = "ExitMenuItem";
-            ExitMenuItem.Size = new Size(180, 22);
+            ExitMenuItem.Size = new Size(94, 22);
             ExitMenuItem.Text = "E&xit";
             // 
             // HelpMenuItem
@@ -177,7 +177,7 @@
             UserGuideMenuItem.BackColor = SystemColors.Control;
             UserGuideMenuItem.ForeColor = SystemColors.ControlText;
             UserGuideMenuItem.Name = "UserGuideMenuItem";
-            UserGuideMenuItem.Size = new Size(180, 22);
+            UserGuideMenuItem.Size = new Size(136, 22);
             UserGuideMenuItem.Text = "User &Guide";
             // 
             // DashboardForm
@@ -185,7 +185,7 @@
             AutoScaleDimensions = new SizeF(9F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(32, 32, 32);
-            ClientSize = new Size(966, 438);
+            ClientSize = new Size(711, 438);
             Controls.Add(DashboardLabel);
             Controls.Add(AddButton);
             Controls.Add(TrashButton);

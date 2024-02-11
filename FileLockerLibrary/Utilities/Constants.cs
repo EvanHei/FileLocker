@@ -9,7 +9,7 @@ namespace FileLockerLibrary;
 /// <summary>
 /// Provides constants for files.
 /// </summary>
-public static class FileConstants
+public static class Constants
 {
     public const string EncryptedExtension = ".ciphertext";
     public const string FilePathFileName = "Path.txt";

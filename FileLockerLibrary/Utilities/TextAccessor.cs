@@ -39,11 +39,11 @@ public class TextAccessor
         if (model.EncryptionStatus == true)
             InitializePaths(Path.GetFileNameWithoutExtension(model.Path));
         else
-            InitializePaths(Path.GetFileName(model.Path));
+            InitializePaths(model.FileName);
 
         // if the file name already exists
         if (Directory.Exists(FileDirectoryPath))
-            throw new InvalidOperationException($"Directory '{Path.GetFileName(model.Path)}' already exists.");
+            throw new InvalidOperationException($"Directory '{model.FileName}' already exists.");
 
         // populate model
         model.EncryptionKeySalt = GlobalConfig.KeyDeriver.GenerateSalt();
@@ -63,7 +63,7 @@ public class TextAccessor
     /// <param name="model">The file model to be saved.</param>
     /// <exception cref="ArgumentNullException">Thrown if the file model is null.</exception>
     /// <exception cref="ArgumentException">Thrown if the file path is null or empty.</exception>
-    /// <exception cref="InvalidOperationException">Thrown if the directory already exists.</exception>
+    /// <exception cref="DirectoryNotFoundException">Thrown if the directory does not exist.</exception>
     public void SaveFileModel(FileModel model)
     {
         if (model == null)
@@ -74,11 +74,11 @@ public class TextAccessor
         if (model.EncryptionStatus == true)
             InitializePaths(Path.GetFileNameWithoutExtension(model.Path));
         else
-            InitializePaths(Path.GetFileName(model.Path));
+            InitializePaths(model.FileName);
 
         // if the directory doesn't exist
         if (!Directory.Exists(FileDirectoryPath))
-            throw new InvalidOperationException($"Directory '{Path.GetFileName(model.Path)}' does not exist.");
+            throw new DirectoryNotFoundException($"Directory '{model.FileName}' does not exist.");
 
         // write to the files
         File.WriteAllText(FilePathPath, model.Path);
@@ -98,9 +98,9 @@ public class TextAccessor
         foreach (string fileName in GetAllFileNames())
         {
             string fileDirectoryPath = Path.Combine(FileModelsDirectoryPath, fileName);
-            string filePathPath = Path.Combine(fileDirectoryPath, FileConstants.FilePathFileName);
-            string encryptionSaltPath = Path.Combine(fileDirectoryPath, FileConstants.EncryptionKeySaltFileName);
-            string passwordHashPath = Path.Combine(fileDirectoryPath, FileConstants.PasswordHashFileName);
+            string filePathPath = Path.Combine(fileDirectoryPath, Constants.FilePathFileName);
+            string encryptionSaltPath = Path.Combine(fileDirectoryPath, Constants.EncryptionKeySaltFileName);
+            string passwordHashPath = Path.Combine(fileDirectoryPath, Constants.PasswordHashFileName);
 
             // TODO - add error checking
 
@@ -117,6 +117,24 @@ public class TextAccessor
     }
 
     /// <summary>
+    /// Deletes a file model.
+    /// </summary>
+    /// <param name="model">The file model to be deleted.</param>
+    /// <exception cref="InvalidOperationException">Thrown if the file is encrypted.</exception>
+    /// <exception cref="DirectoryNotFoundException">Thrown if the directory does not exist.</exception>
+    public void DeleteFileModel(FileModel model)
+    {
+        if (model.EncryptionStatus == true)
+            throw new InvalidOperationException("Cannot delete a file that is encrypted.");
+        if (!GetAllFileNames().Contains(model.FileName))
+            throw new DirectoryNotFoundException($"Directory '{model.FileName}' does not exist.");
+
+        InitializePaths(model.FileName);
+
+        Directory.Delete(FileDirectoryPath, true);
+    }
+
+    /// <summary>
     /// Retrieves all file names.
     /// </summary>
     /// <returns>A list of file names.</returns>
@@ -128,7 +146,7 @@ public class TextAccessor
 
         List<string> output = Directory
             .GetDirectories(FileModelsDirectoryPath)
-            .Select(path => Path.GetFileName(path))
+            .Select(Path.GetFileName)
             .ToList();
 
         return output;
@@ -141,9 +159,9 @@ public class TextAccessor
     private void InitializePaths(string fileName)
     {
         FileDirectoryPath = Path.Combine(FileModelsDirectoryPath, fileName);
-        FilePathPath = Path.Combine(FileDirectoryPath, FileConstants.FilePathFileName);
-        EncryptionKeySaltPath = Path.Combine(FileDirectoryPath, FileConstants.EncryptionKeySaltFileName);
-        PasswordHashPath = Path.Combine(FileDirectoryPath, FileConstants.PasswordHashFileName);
+        FilePathPath = Path.Combine(FileDirectoryPath, Constants.FilePathFileName);
+        EncryptionKeySaltPath = Path.Combine(FileDirectoryPath, Constants.EncryptionKeySaltFileName);
+        PasswordHashPath = Path.Combine(FileDirectoryPath, Constants.PasswordHashFileName);
     }
 
     /// <summary>

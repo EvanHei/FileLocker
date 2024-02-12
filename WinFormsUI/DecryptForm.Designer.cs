@@ -93,7 +93,7 @@
             Margin = new Padding(4);
             Name = "DecryptForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "FileLocker";
+            Text = "Decrypt";
             ResumeLayout(false);
             PerformLayout();
         }

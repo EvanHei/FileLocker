@@ -177,7 +177,7 @@
             Margin = new Padding(4);
             Name = "EncryptForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "FileLocker";
+            Text = "Encrypt";
             ResumeLayout(false);
             PerformLayout();
         }

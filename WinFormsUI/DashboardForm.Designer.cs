@@ -36,7 +36,7 @@
             DecryptButton = new Button();
             TrashButton = new Button();
             AddButton = new Button();
-            DashboardLabel = new Label();
+            FileLockerLabel = new Label();
             MenuStrip = new MenuStrip();
             FileMenuItem = new ToolStripMenuItem();
             ExitMenuItem = new ToolStripMenuItem();
@@ -68,6 +68,7 @@
             // FileListBox
             // 
             FileListBox.BackColor = Color.FromArgb(40, 40, 40);
+            FileListBox.DrawMode = DrawMode.OwnerDrawFixed;
             FileListBox.ForeColor = SystemColors.ButtonFace;
             FileListBox.FormattingEnabled = true;
             FileListBox.ItemHeight = 20;
@@ -75,6 +76,8 @@
             FileListBox.Name = "FileListBox";
             FileListBox.Size = new Size(577, 204);
             FileListBox.TabIndex = 1;
+            FileListBox.DrawItem += FileListBox_DrawItem;
+            FileListBox.SelectedIndexChanged += FileListBox_SelectedIndexChanged;
             // 
             // EncryptButton
             // 
@@ -124,16 +127,16 @@
             AddButton.UseVisualStyleBackColor = false;
             AddButton.Click += AddButton_Click;
             // 
-            // DashboardLabel
+            // FileLockerLabel
             // 
-            DashboardLabel.AutoSize = true;
-            DashboardLabel.Font = new Font("Microsoft Sans Serif", 20.25F);
-            DashboardLabel.ForeColor = SystemColors.ButtonFace;
-            DashboardLabel.Location = new Point(298, 44);
-            DashboardLabel.Name = "DashboardLabel";
-            DashboardLabel.Size = new Size(147, 31);
-            DashboardLabel.TabIndex = 7;
-            DashboardLabel.Text = "Dashboard";
+            FileLockerLabel.AutoSize = true;
+            FileLockerLabel.Font = new Font("Microsoft Sans Serif", 20.25F);
+            FileLockerLabel.ForeColor = SystemColors.ButtonFace;
+            FileLockerLabel.Location = new Point(298, 44);
+            FileLockerLabel.Name = "FileLockerLabel";
+            FileLockerLabel.Size = new Size(140, 31);
+            FileLockerLabel.TabIndex = 7;
+            FileLockerLabel.Text = "FileLocker";
             // 
             // MenuStrip
             // 
@@ -186,7 +189,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(32, 32, 32);
             ClientSize = new Size(711, 438);
-            Controls.Add(DashboardLabel);
+            Controls.Add(FileLockerLabel);
             Controls.Add(AddButton);
             Controls.Add(TrashButton);
             Controls.Add(DecryptButton);
@@ -201,7 +204,7 @@
             Margin = new Padding(4);
             Name = "DashboardForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "FileLocker";
+            Text = "Dashboard";
             MenuStrip.ResumeLayout(false);
             MenuStrip.PerformLayout();
             ResumeLayout(false);
@@ -217,7 +220,7 @@
         private Button DecryptButton;
         private Button TrashButton;
         private Button AddButton;
-        private Label DashboardLabel;
+        private Label FileLockerLabel;
         private MenuStrip MenuStrip;
         private ToolStripMenuItem FileMenuItem;
         private ToolStripMenuItem ExitMenuItem;

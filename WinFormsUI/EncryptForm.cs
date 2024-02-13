@@ -15,6 +15,7 @@ public partial class EncryptForm : Form
 {
     private IEncryptFormCaller caller;
     private FileModel model;
+    private bool isEyeballLabelClicked = false;
 
     public EncryptForm(IEncryptFormCaller caller, FileModel model)
     {
@@ -57,9 +58,9 @@ public partial class EncryptForm : Form
     {
         bool output = true;
 
-        if (PasswordMaskedTextBox.Text.Length < 8)
+        if (PasswordMaskedTextBox.Text.Length < 8 || PasswordMaskedTextBox.Text.Length > 20)
         {
-            MessageBox.Show("Password must be at least 8 characters long.", "Invalid Input", MessageBoxButtons.OK);
+            MessageBox.Show("Password must be 8 - 20 characters long.", "Invalid Input", MessageBoxButtons.OK);
             output = false;
         }
         if (!PasswordMaskedTextBox.Text.Any(char.IsUpper))
@@ -89,5 +90,27 @@ public partial class EncryptForm : Form
         }
 
         return output;
+    }
+
+    private void EyeballLabel_Click(object sender, EventArgs e)
+    {
+        // toggle off
+        if (isEyeballLabelClicked)
+        {
+            PasswordMaskedTextBox.UseSystemPasswordChar = true;
+            ConfirmPasswordMaskedTextBox.UseSystemPasswordChar = true;
+            EyeballLabel.ForeColor = SystemColors.ButtonFace;
+
+            isEyeballLabelClicked = false;
+        }
+        // toggle on
+        else
+        {
+            PasswordMaskedTextBox.UseSystemPasswordChar = false;
+            ConfirmPasswordMaskedTextBox.UseSystemPasswordChar = false;
+            EyeballLabel.ForeColor = SystemColors.Highlight;
+
+            isEyeballLabelClicked = true;
+        }
     }
 }

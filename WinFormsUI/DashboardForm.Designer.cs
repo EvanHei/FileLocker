@@ -163,7 +163,7 @@
             ExitMenuItem.BackColor = SystemColors.Control;
             ExitMenuItem.ForeColor = SystemColors.ControlText;
             ExitMenuItem.Name = "ExitMenuItem";
-            ExitMenuItem.Size = new Size(94, 22);
+            ExitMenuItem.Size = new Size(180, 22);
             ExitMenuItem.Text = "E&xit";
             // 
             // HelpMenuItem
@@ -180,15 +180,16 @@
             UserGuideMenuItem.BackColor = SystemColors.Control;
             UserGuideMenuItem.ForeColor = SystemColors.ControlText;
             UserGuideMenuItem.Name = "UserGuideMenuItem";
-            UserGuideMenuItem.Size = new Size(136, 22);
+            UserGuideMenuItem.Size = new Size(180, 22);
             UserGuideMenuItem.Text = "User &Guide";
+            UserGuideMenuItem.Click += UserGuideMenuItem_Click;
             // 
             // DashboardForm
             // 
             AutoScaleDimensions = new SizeF(9F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(32, 32, 32);
-            ClientSize = new Size(711, 438);
+            ClientSize = new Size(711, 392);
             Controls.Add(FileLockerLabel);
             Controls.Add(AddButton);
             Controls.Add(TrashButton);

@@ -65,6 +65,7 @@
             EyeballLabel.Size = new Size(25, 20);
             EyeballLabel.TabIndex = 2;
             EyeballLabel.Text = "👁";
+            EyeballLabel.Click += EyeballLabel_Click;
             // 
             // EnterButton
             // 

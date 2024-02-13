@@ -1,5 +1,6 @@
 using FileLockerLibrary;
 using Microsoft.VisualBasic.ApplicationServices;
+using System.Diagnostics;
 using System.Reflection;
 using System.Security.Principal;
 using System.Windows.Forms;
@@ -110,7 +111,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         }
 
         if (fileAlreadySelected)
-            MessageBox.Show("File(s) already selected.", "Error", MessageBoxButtons.OK);
+            MessageBox.Show("Some file(s) already selected.", "Error", MessageBoxButtons.OK);
 
         PopulateForm();
     }
@@ -127,8 +128,6 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
     private void FileListBox_DrawItem(object sender, DrawItemEventArgs row)
     {
-        if (row == null)
-            return;
         if (row.Index < 0 || row.Index >= FileListBox.Items.Count)
             return;
 
@@ -139,9 +138,9 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
             backgroundColor = SystemColors.Highlight;
         else
             if (row.Index % 2 == 0)
-                backgroundColor = Color.FromArgb(50, 50, 50);
-            else
-                backgroundColor = Color.FromArgb(40, 40, 40);
+            backgroundColor = Color.FromArgb(50, 50, 50);
+        else
+            backgroundColor = Color.FromArgb(40, 40, 40);
 
         row.DrawBackground();
 
@@ -178,5 +177,18 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
             EncryptButton.BackColor = SystemColors.Highlight;
             DecryptButton.BackColor = Color.Silver;
         }
+    }
+
+    private void UserGuideMenuItem_Click(object sender, EventArgs e)
+    {
+        string url = "https://github.com/EvanHei/FileLocker";
+
+        ProcessStartInfo processStartInfo = new ProcessStartInfo
+        {
+            FileName = url,
+            UseShellExecute = true
+        };
+
+        Process.Start(processStartInfo);
     }
 }

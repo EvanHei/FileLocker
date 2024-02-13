@@ -15,6 +15,7 @@ public partial class DecryptForm : Form
 {
     private IDecryptFormCaller caller;
     private FileModel model;
+    private bool isEyeballLabelClicked = false;
 
     public DecryptForm(IDecryptFormCaller caller, FileModel model)
     {
@@ -75,5 +76,25 @@ public partial class DecryptForm : Form
         }
 
         return output;
+    }
+
+    private void EyeballLabel_Click(object sender, EventArgs e)
+    {
+        // toggle off
+        if (isEyeballLabelClicked)
+        {
+            PasswordMaskedTextBox.UseSystemPasswordChar = true;
+            EyeballLabel.ForeColor = SystemColors.ButtonFace;
+
+            isEyeballLabelClicked = false;
+        }
+        // toggle on
+        else
+        {
+            PasswordMaskedTextBox.UseSystemPasswordChar = false;
+            EyeballLabel.ForeColor = SystemColors.Highlight;
+
+            isEyeballLabelClicked = true;
+        }
     }
 }

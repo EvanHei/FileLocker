@@ -181,14 +181,17 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
     private void UserGuideMenuItem_Click(object sender, EventArgs e)
     {
-        string url = "https://github.com/EvanHei/FileLocker";
-
         ProcessStartInfo processStartInfo = new ProcessStartInfo
         {
-            FileName = url,
+            FileName = Constants.GitHubUrl,
             UseShellExecute = true
         };
 
         Process.Start(processStartInfo);
+    }
+
+    private void ExitMenuItem_Click(object sender, EventArgs e)
+    {
+        Application.Exit();
     }
 }

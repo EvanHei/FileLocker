@@ -15,4 +15,5 @@ public static class Constants
     public const string FilePathFileName = "Path.txt";
     public const string EncryptionKeySaltFileName = "EncryptionKey.salt";
     public const string PasswordHashFileName = "Password.hash";
+    public const string GitHubUrl = "https://github.com/EvanHei/FileLocker";
 }

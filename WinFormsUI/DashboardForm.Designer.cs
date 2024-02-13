@@ -165,6 +165,7 @@
             ExitMenuItem.Name = "ExitMenuItem";
             ExitMenuItem.Size = new Size(180, 22);
             ExitMenuItem.Text = "E&xit";
+            ExitMenuItem.Click += ExitMenuItem_Click;
             // 
             // HelpMenuItem
             // 
@@ -180,7 +181,7 @@
             UserGuideMenuItem.BackColor = SystemColors.Control;
             UserGuideMenuItem.ForeColor = SystemColors.ControlText;
             UserGuideMenuItem.Name = "UserGuideMenuItem";
-            UserGuideMenuItem.Size = new Size(180, 22);
+            UserGuideMenuItem.Size = new Size(136, 22);
             UserGuideMenuItem.Text = "User &Guide";
             UserGuideMenuItem.Click += UserGuideMenuItem_Click;
             // 

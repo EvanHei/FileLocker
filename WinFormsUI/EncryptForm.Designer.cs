@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EncryptForm));
             PasswordMaskedTextBox = new MaskedTextBox();
             PasswordLabel = new Label();
-            EightCharacterLabel = new Label();
+            NumberOfCharactersLabel = new Label();
             DigitLabel = new Label();
             LowercaseLetterLabel = new Label();
             UppercaseLetterLabel = new Label();
@@ -51,6 +51,7 @@
             PasswordMaskedTextBox.Size = new Size(277, 26);
             PasswordMaskedTextBox.TabIndex = 1;
             PasswordMaskedTextBox.UseSystemPasswordChar = true;
+            PasswordMaskedTextBox.TextChanged += PasswordMaskedTextBox_TextChanged;
             // 
             // PasswordLabel
             // 
@@ -62,15 +63,15 @@
             PasswordLabel.TabIndex = 3;
             PasswordLabel.Text = "Password:";
             // 
-            // EightCharacterLabel
+            // NumberOfCharactersLabel
             // 
-            EightCharacterLabel.AutoSize = true;
-            EightCharacterLabel.ForeColor = SystemColors.AppWorkspace;
-            EightCharacterLabel.Location = new Point(171, 131);
-            EightCharacterLabel.Name = "EightCharacterLabel";
-            EightCharacterLabel.Size = new Size(97, 20);
-            EightCharacterLabel.TabIndex = 5;
-            EightCharacterLabel.Text = "8 characters";
+            NumberOfCharactersLabel.AutoSize = true;
+            NumberOfCharactersLabel.ForeColor = SystemColors.AppWorkspace;
+            NumberOfCharactersLabel.Location = new Point(171, 131);
+            NumberOfCharactersLabel.Name = "NumberOfCharactersLabel";
+            NumberOfCharactersLabel.Size = new Size(140, 20);
+            NumberOfCharactersLabel.TabIndex = 5;
+            NumberOfCharactersLabel.Text = "• 8 - 20 characters";
             // 
             // DigitLabel
             // 
@@ -78,9 +79,9 @@
             DigitLabel.ForeColor = SystemColors.AppWorkspace;
             DigitLabel.Location = new Point(171, 191);
             DigitLabel.Name = "DigitLabel";
-            DigitLabel.Size = new Size(41, 20);
+            DigitLabel.Size = new Size(53, 20);
             DigitLabel.TabIndex = 6;
-            DigitLabel.Text = "Digit";
+            DigitLabel.Text = "• Digit";
             // 
             // LowercaseLetterLabel
             // 
@@ -88,9 +89,9 @@
             LowercaseLetterLabel.ForeColor = SystemColors.AppWorkspace;
             LowercaseLetterLabel.Location = new Point(171, 171);
             LowercaseLetterLabel.Name = "LowercaseLetterLabel";
-            LowercaseLetterLabel.Size = new Size(126, 20);
+            LowercaseLetterLabel.Size = new Size(138, 20);
             LowercaseLetterLabel.TabIndex = 8;
-            LowercaseLetterLabel.Text = "Lowercase letter";
+            LowercaseLetterLabel.Text = "• Lowercase letter";
             // 
             // UppercaseLetterLabel
             // 
@@ -98,9 +99,9 @@
             UppercaseLetterLabel.ForeColor = SystemColors.AppWorkspace;
             UppercaseLetterLabel.Location = new Point(171, 151);
             UppercaseLetterLabel.Name = "UppercaseLetterLabel";
-            UppercaseLetterLabel.Size = new Size(127, 20);
+            UppercaseLetterLabel.Size = new Size(139, 20);
             UppercaseLetterLabel.TabIndex = 7;
-            UppercaseLetterLabel.Text = "Uppercase letter";
+            UppercaseLetterLabel.Text = "• Uppercase letter";
             // 
             // SpecialCharacterLabel
             // 
@@ -108,9 +109,9 @@
             SpecialCharacterLabel.ForeColor = SystemColors.AppWorkspace;
             SpecialCharacterLabel.Location = new Point(171, 211);
             SpecialCharacterLabel.Name = "SpecialCharacterLabel";
-            SpecialCharacterLabel.Size = new Size(132, 20);
+            SpecialCharacterLabel.Size = new Size(144, 20);
             SpecialCharacterLabel.TabIndex = 9;
-            SpecialCharacterLabel.Text = "Special character";
+            SpecialCharacterLabel.Text = "• Special character";
             // 
             // EyeballLabel
             // 
@@ -170,7 +171,7 @@
             Controls.Add(LowercaseLetterLabel);
             Controls.Add(UppercaseLetterLabel);
             Controls.Add(DigitLabel);
-            Controls.Add(EightCharacterLabel);
+            Controls.Add(NumberOfCharactersLabel);
             Controls.Add(PasswordMaskedTextBox);
             Controls.Add(PasswordLabel);
             Font = new Font("Microsoft Sans Serif", 12F);
@@ -187,7 +188,7 @@
 
         private MaskedTextBox PasswordMaskedTextBox;
         private Label PasswordLabel;
-        private Label EightCharacterLabel;
+        private Label NumberOfCharactersLabel;
         private Label DigitLabel;
         private Label LowercaseLetterLabel;
         private Label UppercaseLetterLabel;

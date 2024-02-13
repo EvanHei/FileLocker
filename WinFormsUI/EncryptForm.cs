@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -57,37 +58,21 @@ public partial class EncryptForm : Form
     private bool ValidateInputFields()
     {
         bool output = true;
+        string password = PasswordMaskedTextBox.Text;
+        string confirmPassword = ConfirmPasswordMaskedTextBox.Text;
 
-        if (PasswordMaskedTextBox.Text.Length < 8 || PasswordMaskedTextBox.Text.Length > 20)
-        {
-            MessageBox.Show("Password must be 8 - 20 characters long.", "Invalid Input", MessageBoxButtons.OK);
+        if (password.Length < 8 || password.Length > 20)
             output = false;
-        }
-        if (!PasswordMaskedTextBox.Text.Any(char.IsUpper))
-        {
-            MessageBox.Show("Password must contain at least one uppercase letter.", "Invalid Input", MessageBoxButtons.OK);
+        if (!password.Any(char.IsUpper))
             output = false;
-        }
-        if (!PasswordMaskedTextBox.Text.Any(char.IsLower))
-        {
-            MessageBox.Show("Password must contain at least one lowercase letter.", "Invalid Input", MessageBoxButtons.OK);
+        if (!password.Any(char.IsLower))
             output = false;
-        }
-        if (!PasswordMaskedTextBox.Text.Any(char.IsDigit))
-        {
-            MessageBox.Show("Password must contain at least one digit.", "Invalid Input", MessageBoxButtons.OK);
+        if (!password.Any(char.IsDigit))
             output = false;
-        }
-        if (!PasswordMaskedTextBox.Text.Any(ch => !char.IsLetterOrDigit(ch)))
-        {
-            MessageBox.Show("Password must contain at least one special character.", "Invalid Input", MessageBoxButtons.OK);
+        if (!password.Any(ch => !char.IsLetterOrDigit(ch)))
             output = false;
-        }
-        if (PasswordMaskedTextBox.Text != ConfirmPasswordMaskedTextBox.Text)
-        {
-            MessageBox.Show("Confirm password field does not match password field.", "Invalid Input", MessageBoxButtons.OK);
+        if (password != confirmPassword)
             output = false;
-        }
 
         return output;
     }
@@ -111,6 +96,87 @@ public partial class EncryptForm : Form
             EyeballLabel.ForeColor = SystemColors.Highlight;
 
             isEyeballLabelClicked = true;
+        }
+    }
+
+    private void PasswordMaskedTextBox_TextChanged(object sender, EventArgs e)
+    {
+        MaskedTextBox passwordMaskedTextBox = (MaskedTextBox)sender;
+        string password = passwordMaskedTextBox.Text;
+
+        // NumberOfCharactersLabel
+        if (password.Length >= 8 && password.Length <= 20)
+        {
+            if (NumberOfCharactersLabel.Text.Contains('•'))
+            {
+                NumberOfCharactersLabel.Text = '✓' + NumberOfCharactersLabel.Text.Substring(1);
+                NumberOfCharactersLabel.ForeColor = Color.Green;
+            }
+        }
+        else if (NumberOfCharactersLabel.Text[0] == '✓')
+        {
+            NumberOfCharactersLabel.Text = '•' + NumberOfCharactersLabel.Text.Substring(1);
+            NumberOfCharactersLabel.ForeColor = SystemColors.AppWorkspace;
+        }
+
+        // UppercaseLetterLabel
+        if (password.Any(char.IsUpper))
+        {
+            if (UppercaseLetterLabel.Text.Contains('•'))
+            {
+                UppercaseLetterLabel.Text = '✓' + UppercaseLetterLabel.Text.Substring(1);
+                UppercaseLetterLabel.ForeColor = Color.Green;
+            }
+        }
+        else if (UppercaseLetterLabel.Text[0] == '✓')
+        {
+            UppercaseLetterLabel.Text = '•' + UppercaseLetterLabel.Text.Substring(1);
+            UppercaseLetterLabel.ForeColor = SystemColors.AppWorkspace;
+        }
+
+        // LowercaseLetterLabel
+        if (password.Any(char.IsLower))
+        {
+            if (LowercaseLetterLabel.Text.Contains('•'))
+            {
+                LowercaseLetterLabel.Text = '✓' + LowercaseLetterLabel.Text.Substring(1);
+                LowercaseLetterLabel.ForeColor = Color.Green;
+            }
+        }
+        else if (LowercaseLetterLabel.Text[0] == '✓')
+        {
+            LowercaseLetterLabel.Text = '•' + LowercaseLetterLabel.Text.Substring(1);
+            LowercaseLetterLabel.ForeColor = SystemColors.AppWorkspace;
+        }
+
+        // DigitLabel
+        if (password.Any(char.IsDigit))
+        {
+            if (DigitLabel.Text.Contains('•'))
+            {
+                DigitLabel.Text = '✓' + DigitLabel.Text.Substring(1);
+                DigitLabel.ForeColor = Color.Green;
+            }
+        }
+        else if (DigitLabel.Text.Length > 0 && DigitLabel.Text[0] == '✓')
+        {
+            DigitLabel.Text = '•' + DigitLabel.Text.Substring(1);
+            DigitLabel.ForeColor = SystemColors.AppWorkspace;
+        }
+
+        // SpecialCharacterLabel
+        if (password.Any(ch => !char.IsLetterOrDigit(ch)))
+        {
+            if (SpecialCharacterLabel.Text.Contains('•'))
+            {
+                SpecialCharacterLabel.Text = '✓' + SpecialCharacterLabel.Text.Substring(1);
+                SpecialCharacterLabel.ForeColor = Color.Green;
+            }
+        }
+        else if (SpecialCharacterLabel.Text[0] == '✓')
+        {
+            SpecialCharacterLabel.Text = '•' + SpecialCharacterLabel.Text.Substring(1);
+            SpecialCharacterLabel.ForeColor = SystemColors.AppWorkspace;
         }
     }
 }

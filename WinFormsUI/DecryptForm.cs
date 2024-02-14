@@ -27,23 +27,14 @@ public partial class DecryptForm : Form
 
     private void EnterButton_Click(object sender, EventArgs e)
     {
-        if (model.PasswordHash == null)
-            throw new ArgumentNullException("Password hash cannot be null.", nameof(model.PasswordHash));
         if (model.EncryptionKeySalt == null)
             throw new ArgumentNullException("Encryption key salt cannot be null.", nameof(model.EncryptionKeySalt));
         if (!ValidateInputFields())
             return;
 
-        // validate password hash
-        model.Password = PasswordMaskedTextBox.Text;
-        if (!GlobalConfig.Hasher.VerifyPassword(model.Password, model.PasswordHash))
-        {
-            MessageBox.Show("Invalid password.", "Error", MessageBoxButtons.OK);
-            return;
-        }
-
         try
         {
+            model.Password = PasswordMaskedTextBox.Text;
             model.EncryptionKey = GlobalConfig.KeyDeriver.DeriveKey(model.Password, model.EncryptionKeySalt);
             model.Decrypt();
             GlobalConfig.DataAccessor.SaveFileModel(model);

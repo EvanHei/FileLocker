@@ -22,11 +22,6 @@ public static class GlobalConfig
     public static IEncryptor Encryptor { get; set; } = new AesEncryptor();
 
     /// <summary>
-    /// The hasher used for hashing passwords.
-    /// </summary>
-    public static BCryptHasher Hasher { get; set; } = new BCryptHasher();
-
-    /// <summary>
     /// The key deriver used for deriving keys.
     /// </summary>
     public static Pbkdf2KeyDeriver KeyDeriver { get; set; } = new Pbkdf2KeyDeriver();

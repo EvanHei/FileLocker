@@ -17,26 +17,10 @@ public class FileModel
     /// </summary>
     public string Path { get; set; }
 
-    private string password;
-
     /// <summary>
     /// The password used for encryption and decryption.
-    /// Setting the password also updates the password hash.
     /// </summary>
-    public string Password
-    {
-        get { return password; }
-        set
-        {
-            password = value;
-            PasswordHash = GlobalConfig.Hasher.HashPassword(value);
-        }
-    }
-
-    /// <summary>
-    /// The hashed password. Automatically computed when the password is set, or can be read from memory.
-    /// </summary>
-    public string PasswordHash { get; set; }
+    public string Password { get; set; }
 
     /// <summary>
     /// The encryption key used for encryption and decryption.
@@ -105,11 +89,10 @@ public class FileModel
         try
         {
             string ciphertextPath = Path;
-            Path = System.IO.Path.ChangeExtension(Path, null);
-
             byte[] content = File.ReadAllBytes(ciphertextPath);
             byte[] plaintext = GlobalConfig.Encryptor.Decrypt(content, EncryptionKey);
 
+            Path = System.IO.Path.ChangeExtension(Path, null);
             File.WriteAllBytes(Path, plaintext);
             File.Delete(ciphertextPath);
         }

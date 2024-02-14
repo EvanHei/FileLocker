@@ -19,7 +19,6 @@ public class TextAccessor
     private string FileModelsDirectoryPath { get; set; }
     private string FileDirectoryPath { get; set; }
     private string FilePathPath { get; set; }
-    private string PasswordHashPath { get; set; }
     private string EncryptionKeySaltPath { get; set; }
 
     /// <summary>
@@ -52,8 +51,6 @@ public class TextAccessor
         Directory.CreateDirectory(FileDirectoryPath);
         File.WriteAllText(FilePathPath, model.Path);
         File.WriteAllBytes(EncryptionKeySaltPath, model.EncryptionKeySalt);
-        if (model.PasswordHash != null)
-            File.WriteAllText(PasswordHashPath, model.PasswordHash);
     }
 
 
@@ -83,8 +80,6 @@ public class TextAccessor
         // write to the files
         File.WriteAllText(FilePathPath, model.Path);
         File.WriteAllBytes(EncryptionKeySaltPath, model.EncryptionKeySalt);
-        if (model.PasswordHash != null)
-            File.WriteAllText(PasswordHashPath, model.PasswordHash);
     }
 
     /// <summary>
@@ -100,15 +95,12 @@ public class TextAccessor
             string fileDirectoryPath = Path.Combine(FileModelsDirectoryPath, fileName);
             string filePathPath = Path.Combine(fileDirectoryPath, Constants.FilePathFileName);
             string encryptionSaltPath = Path.Combine(fileDirectoryPath, Constants.EncryptionKeySaltFileName);
-            string passwordHashPath = Path.Combine(fileDirectoryPath, Constants.PasswordHashFileName);
 
             // TODO - add error checking
 
             string path = File.ReadAllText(filePathPath);
             FileModel temp = new FileModel(path);
             temp.EncryptionKeySalt = File.ReadAllBytes(encryptionSaltPath);
-            if (File.Exists(passwordHashPath))
-                temp.PasswordHash = File.ReadAllText(passwordHashPath);
 
             output.Add(temp);
         }
@@ -161,7 +153,6 @@ public class TextAccessor
         FileDirectoryPath = Path.Combine(FileModelsDirectoryPath, fileName);
         FilePathPath = Path.Combine(FileDirectoryPath, Constants.FilePathFileName);
         EncryptionKeySaltPath = Path.Combine(FileDirectoryPath, Constants.EncryptionKeySaltFileName);
-        PasswordHashPath = Path.Combine(FileDirectoryPath, Constants.PasswordHashFileName);
     }
 
     /// <summary>

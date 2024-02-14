@@ -127,7 +127,8 @@
             // 
             // EnterButton
             // 
-            EnterButton.BackColor = Color.FromArgb(52, 52, 52);
+            EnterButton.BackColor = Color.Silver;
+            EnterButton.Enabled = false;
             EnterButton.ForeColor = SystemColors.ButtonFace;
             EnterButton.Location = new Point(454, 82);
             EnterButton.Name = "EnterButton";
@@ -146,6 +147,7 @@
             ConfirmPasswordMaskedTextBox.Size = new Size(277, 26);
             ConfirmPasswordMaskedTextBox.TabIndex = 11;
             ConfirmPasswordMaskedTextBox.UseSystemPasswordChar = true;
+            ConfirmPasswordMaskedTextBox.TextChanged += ConfirmPasswordMaskedTextBox_TextChanged;
             // 
             // ConfirmPasswordLabel
             // 

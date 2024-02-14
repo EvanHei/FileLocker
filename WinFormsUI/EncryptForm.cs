@@ -9,6 +9,7 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskBand;
 
 namespace WinFormsUI;
 
@@ -101,8 +102,8 @@ public partial class EncryptForm : Form
 
     private void PasswordMaskedTextBox_TextChanged(object sender, EventArgs e)
     {
-        MaskedTextBox passwordMaskedTextBox = (MaskedTextBox)sender;
-        string password = passwordMaskedTextBox.Text;
+        string password = PasswordMaskedTextBox.Text;
+        string confirmPassword = ConfirmPasswordMaskedTextBox.Text;
 
         // NumberOfCharactersLabel
         if (password.Length >= 8 && password.Length <= 20)
@@ -158,7 +159,7 @@ public partial class EncryptForm : Form
                 DigitLabel.ForeColor = Color.Green;
             }
         }
-        else if (DigitLabel.Text.Length > 0 && DigitLabel.Text[0] == '✓')
+        else if (DigitLabel.Text[0] == '✓')
         {
             DigitLabel.Text = '•' + DigitLabel.Text.Substring(1);
             DigitLabel.ForeColor = SystemColors.AppWorkspace;
@@ -177,6 +178,31 @@ public partial class EncryptForm : Form
         {
             SpecialCharacterLabel.Text = '•' + SpecialCharacterLabel.Text.Substring(1);
             SpecialCharacterLabel.ForeColor = SystemColors.AppWorkspace;
+        }
+
+        if (ValidateInputFields())
+        {
+            EnterButton.BackColor = Color.FromArgb(52, 52, 52);
+            EnterButton.Enabled = true;
+        }
+        else
+        {
+            EnterButton.BackColor = Color.Silver;
+            EnterButton.Enabled = false;
+        }
+    }
+
+    private void ConfirmPasswordMaskedTextBox_TextChanged(object sender, EventArgs e)
+    {
+        if (ValidateInputFields())
+        {
+            EnterButton.BackColor = Color.FromArgb(52, 52, 52);
+            EnterButton.Enabled = true;
+        }
+        else
+        {
+            EnterButton.BackColor = Color.Silver;
+            EnterButton.Enabled = false;
         }
     }
 }

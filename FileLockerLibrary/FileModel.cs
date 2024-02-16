@@ -9,20 +9,24 @@ using System.Threading.Tasks;
 
 namespace FileLockerLibrary;
 
-/// <summary>
-/// Represents a file model containing content, path, password, and encryption-related properties and methods.
-/// </summary>
 public class FileModel
 {
-    /// <summary>
-    /// The path of the file.
-    /// </summary>
     public string Path { get; set; }
 
-    /// <summary>
-    /// The password used for encryption and decryption.
-    /// </summary>
-    public string Password { get; set; }
+    private string password;
+    public string Password
+    {
+        get { return password; }
+        set
+        {
+            password = value;
+
+            if (EncryptionKeySalt != null)
+                EncryptionKey = GlobalConfig.KeyDeriver.DeriveKey(Password, EncryptionKeySalt);
+            if (MacKeySalt != null)
+                MacKey = GlobalConfig.KeyDeriver.DeriveKey(Password, MacKeySalt);
+        }
+    }
 
     private byte[] encryptionKey;
     public byte[] EncryptionKey
@@ -42,14 +46,20 @@ public class FileModel
         }
     }
 
-    /// <summary>
-    /// The salt used in deriving the encryption key.
-    /// </summary>
-    public byte[] EncryptionKeySalt { get; set; }
+    private byte[] encryptionKeySalt;
 
-    /// <summary>
-    /// The status of encryption for the file.
-    /// </summary>
+    public byte[] EncryptionKeySalt
+    {
+        get { return encryptionKeySalt; }
+        set
+        {
+            encryptionKeySalt = value;
+
+            if (Password != null && value != null)
+                EncryptionKey = GlobalConfig.KeyDeriver.DeriveKey(Password, EncryptionKeySalt);
+        }
+    }
+
     public bool EncryptionStatus
     {
         get
@@ -58,22 +68,32 @@ public class FileModel
         }
     }
 
-    public bool IntegrityStatus
+    private bool tamperedStatus;
+    public bool TamperedStatus
     {
         get
         {
-            bool output = false;
-
             if (Mac != null && MacKey != null)
-                output = ValidateMac();
+                tamperedStatus = !ValidateMac();
 
-            return output;
+            return tamperedStatus;
         }
 
-        private set { IntegrityStatus = value; }
+        private set { tamperedStatus = value; }
     }
 
-    public byte[] MacKeySalt { get; set; }
+    private byte[] macKeySalt;
+    public byte[] MacKeySalt
+    {
+        get { return macKeySalt; }
+        set
+        {
+            macKeySalt = value;
+
+            if (Password != null && value != null)
+                MacKey = GlobalConfig.KeyDeriver.DeriveKey(Password, MacKeySalt);
+        }
+    }
 
     private byte[] macKey;
     public byte[] MacKey
@@ -114,8 +134,11 @@ public class FileModel
 
             if (EncryptionStatus == true)
                 output += "🔐";
-            else
-                output += "     ";
+            else if (EncryptionStatus == false)
+                output += "📄 ";
+
+            if (TamperedStatus == true)
+                output = "❌";
 
             string fileName = FileName.Length > 50 ? FileName.Substring(0, 47) + "..." : FileName;
             output += $" {fileName}";
@@ -124,9 +147,6 @@ public class FileModel
         }
     }
 
-    /// <summary>
-    /// The file name without the directory path.
-    /// </summary>
     public string FileName
     {
         get
@@ -163,7 +183,6 @@ public class FileModel
 
         // encrypt
         EncryptionKeySalt = GlobalConfig.KeyDeriver.GenerateSalt();
-        EncryptionKey = GlobalConfig.KeyDeriver.DeriveKey(Password, EncryptionKeySalt);
         byte[] ciphertext = GlobalConfig.Encryptor.Encrypt(content, EncryptionKey);
 
         // overwrite plaintext
@@ -177,8 +196,6 @@ public class FileModel
             throw new FileNotFoundException("The file could not be found.", Path);
         if (Password == null)
             throw new NullReferenceException("Password must be set.");
-        if (EncryptionKeySalt == null)
-            throw new NullReferenceException("Encryption key salt must be set.");
         if (EncryptionStatus == false)
             return;
 
@@ -189,7 +206,6 @@ public class FileModel
             byte[] content = File.ReadAllBytes(ciphertextPath);
 
             // decrypt
-            EncryptionKey = GlobalConfig.KeyDeriver.DeriveKey(Password, EncryptionKeySalt);
             byte[] plaintext = GlobalConfig.Encryptor.Decrypt(content, EncryptionKey);
 
             // write plaintext
@@ -216,7 +232,7 @@ public class FileModel
             return;
 
         MacKeySalt = GlobalConfig.KeyDeriver.GenerateSalt();
-        MacKey = GlobalConfig.KeyDeriver.DeriveKey(Password, MacKeySalt);
+
         GlobalConfig.MacGenerator.Key = MacKey;
 
         byte[] content = File.ReadAllBytes(Path);
@@ -233,6 +249,7 @@ public class FileModel
         byte[] content = File.ReadAllBytes(Path);
         GlobalConfig.MacGenerator.Key = MacKey;
         bool output = GlobalConfig.MacGenerator.ValidateMac(content, Mac);
+        TamperedStatus = !output;
 
         return output;
     }
@@ -243,10 +260,6 @@ public class FileModel
         MacKeySalt = null;
     }
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="FileModel"/> class with the specified file path.
-    /// </summary>
-    /// <param name="path">The path of the file.</param>
     public FileModel(string path)
     {
         Path = path;

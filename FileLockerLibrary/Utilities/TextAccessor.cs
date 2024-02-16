@@ -12,10 +12,9 @@ public class TextAccessor
     /// +-- FileModels/
     //      +-- <file>/
     //      |   +-- Path.txt
-    //      |   +-- Encryption.salt
-    //      |   +-- MACs/
-    //      |       +-- Path.txt.hmac
-    //      |       +-- Encryption.salt.hmac
+    //      |   +-- EncryptionKey.salt
+    //      |   +-- MacKey.salt
+    //      |   +-- Content.mac
     //      +-- ...
 
     private string FileModelsDirectoryPath { get; set; }
@@ -99,23 +98,18 @@ public class TextAccessor
 
         foreach (string fileName in GetAllFileNames())
         {
-            // TODO - use Initialize()
-            string fileDirectoryPath = Path.Combine(FileModelsDirectoryPath, fileName);
-            string filePathPath = Path.Combine(fileDirectoryPath, Constants.FilePathFileName);
-            string encryptionSaltPath = Path.Combine(fileDirectoryPath, Constants.EncryptionKeySaltFileName);
-            string macSaltPath = Path.Combine(fileDirectoryPath, Constants.MacKeySaltFileName);
-            string macPath = Path.Combine(fileDirectoryPath, Constants.MacFileName);
+            InitializePaths(fileName);
 
             // TODO - add error checking
-            string path = File.ReadAllText(filePathPath);
+            string path = File.ReadAllText(FilePathPath);
             FileModel temp = new FileModel(path);
 
-            if (File.Exists(encryptionSaltPath))
-                temp.EncryptionKeySalt = File.ReadAllBytes(encryptionSaltPath);
-            if (File.Exists(macSaltPath))
-                temp.MacKeySalt = File.ReadAllBytes(macSaltPath);
-            if (File.Exists(macPath))
-                temp.Mac = File.ReadAllBytes(macPath);
+            if (File.Exists(EncryptionKeySaltPath))
+                temp.EncryptionKeySalt = File.ReadAllBytes(EncryptionKeySaltPath);
+            if (File.Exists(MacKeySaltPath))
+                temp.MacKeySalt = File.ReadAllBytes(MacKeySaltPath);
+            if (File.Exists(MacPath))
+                temp.Mac = File.ReadAllBytes(MacPath);
 
             output.Add(temp);
         }
@@ -139,50 +133,6 @@ public class TextAccessor
         InitializePaths(model.FileName);
 
         Directory.Delete(FileDirectoryPath, true);
-    }
-
-    /// <summary>
-    /// Generates MACs for all files in the specified directory using the provided key.
-    /// </summary>
-    /// <param name="key">The key for the MAC generation.</param>
-    private void GenerateMacFiles(byte[] key)
-    {
-        GlobalConfig.MacGenerator.Key = key;
-
-        foreach (string filePath in Directory.GetFiles(FileDirectoryPath))
-        {
-            byte[] data = File.ReadAllBytes(filePath);
-            byte[] mac = GlobalConfig.MacGenerator.GenerateMac(data);
-            string macFilePath = Path.Combine(MacPath, Path.GetFileName(filePath) + ".hmac");
-
-            File.WriteAllBytes(macFilePath, mac);
-        }
-    }
-
-    /// <summary>
-    /// Validates MAC files for all files in the user directory using the configured encryption key.
-    /// </summary>
-    /// <param name="key">The key for the MAC generation.</param>
-    /// <returns>True if all MAC files are valid; otherwise, false.</returns>
-    private bool ValidateMacFiles(byte[] key)
-    {
-        GlobalConfig.MacGenerator.Key = key;
-
-        foreach (string filePath in Directory.GetFiles(FileDirectoryPath))
-        {
-            byte[] data = File.ReadAllBytes(filePath);
-            string macFilePath = Path.Combine(MacPath, Path.GetFileNameWithoutExtension(filePath) + ".hmac");
-
-            if (!File.Exists(macFilePath))
-                return false;
-
-            byte[] mac = File.ReadAllBytes(macFilePath);
-
-            if (!GlobalConfig.MacGenerator.ValidateMac(data, mac))
-                return false;
-        }
-
-        return true;
     }
 
     /// <summary>
@@ -211,9 +161,7 @@ public class TextAccessor
     {
         FileDirectoryPath = Path.Combine(FileModelsDirectoryPath, fileName);
         FilePathPath = Path.Combine(FileDirectoryPath, Constants.FilePathFileName);
-
         EncryptionKeySaltPath = Path.Combine(FileDirectoryPath, Constants.EncryptionKeySaltFileName);
-
         MacPath = Path.Combine(FileDirectoryPath, Constants.MacFileName);
         MacKeySaltPath = Path.Combine(FileDirectoryPath, Constants.MacKeySaltFileName);
     }

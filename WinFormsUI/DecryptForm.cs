@@ -35,15 +35,16 @@ public partial class DecryptForm : Form
         try
         {
             model.Password = PasswordMaskedTextBox.Text;
-            model.MacKey = GlobalConfig.KeyDeriver.DeriveKey(model.Password, model.MacKeySalt);
 
-            if (model.IntegrityStatus == true)
+            if (model.TamperedStatus == false)
             {
                 model.Unlock();
                 GlobalConfig.DataAccessor.SaveFileModel(model);
             }
             else
+            {
                 MessageBox.Show("Tampering dectected.", "Error", MessageBoxButtons.OK);
+            }
         }
         catch (Exception ex)
         {
@@ -56,12 +57,6 @@ public partial class DecryptForm : Form
         }
     }
 
-    /// <summary>
-    /// Validates the input fields on the form.
-    /// </summary>
-    /// <returns>
-    /// True if the input fields are valid; otherwise, false.
-    /// </returns>
     private bool ValidateInputFields()
     {
         bool output = true;

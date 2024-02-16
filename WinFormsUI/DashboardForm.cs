@@ -16,10 +16,6 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         PopulateForm();
     }
 
-
-    /// <summary>
-    /// Populates the form with data.
-    /// </summary>
     private void PopulateForm()
     {
         FileListBox.DataSource = GlobalConfig.DataAccessor.LoadAllFileModels();
@@ -123,7 +119,8 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
     public void DecryptionComplete()
     {
-        PopulateForm();
+        FileListBox.Refresh();
+        FileListBox_SelectedIndexChanged(null, EventArgs.Empty);
     }
 
     private void FileListBox_DrawItem(object sender, DrawItemEventArgs row)

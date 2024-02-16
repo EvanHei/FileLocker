@@ -35,8 +35,7 @@ public partial class EncryptForm : Form
         try
         {
             model.Password = PasswordMaskedTextBox.Text;
-            model.EncryptionKey = GlobalConfig.KeyDeriver.DeriveKey(model.Password, model.EncryptionKeySalt);
-            model.Encrypt();
+            model.Lock();
             GlobalConfig.DataAccessor.SaveFileModel(model);
         }
         catch (Exception ex)
@@ -182,7 +181,7 @@ public partial class EncryptForm : Form
 
         if (ValidateInputFields())
         {
-            EnterButton.BackColor = Color.FromArgb(52, 52, 52);
+            EnterButton.BackColor = SystemColors.Highlight;
             EnterButton.Enabled = true;
         }
         else
@@ -196,7 +195,7 @@ public partial class EncryptForm : Form
     {
         if (ValidateInputFields())
         {
-            EnterButton.BackColor = Color.FromArgb(52, 52, 52);
+            EnterButton.BackColor = SystemColors.Highlight;
             EnterButton.Enabled = true;
         }
         else

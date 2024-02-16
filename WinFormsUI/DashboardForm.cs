@@ -23,7 +23,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
     private void PopulateForm()
     {
         FileListBox.DataSource = GlobalConfig.DataAccessor.LoadAllFileModels();
-        FileListBox.DisplayMember = "FileName";
+        FileListBox.DisplayMember = "DisplayName";
 
         if (FileListBox.Items.Count == 0)
         {
@@ -147,7 +147,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         using (SolidBrush brush = new SolidBrush(backgroundColor))
             row.Graphics.FillRectangle(brush, row.Bounds);
         using (SolidBrush brush = new SolidBrush(row.ForeColor))
-            row.Graphics.DrawString(model.FileName, row.Font, brush, row.Bounds);
+            row.Graphics.DrawString(model.DisplayName, row.Font, brush, row.Bounds);
     }
 
     private void FileListBox_SelectedIndexChanged(object? sender, EventArgs e)

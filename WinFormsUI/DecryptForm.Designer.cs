@@ -38,20 +38,22 @@
             // PasswordLabel
             // 
             PasswordLabel.AutoSize = true;
+            PasswordLabel.Font = new Font("Segoe UI Emoji", 12F);
             PasswordLabel.ForeColor = SystemColors.ButtonFace;
-            PasswordLabel.Location = new Point(34, 64);
+            PasswordLabel.Location = new Point(34, 67);
             PasswordLabel.Name = "PasswordLabel";
-            PasswordLabel.Size = new Size(82, 20);
+            PasswordLabel.Size = new Size(80, 21);
             PasswordLabel.TabIndex = 1;
             PasswordLabel.Text = "Password:";
             // 
             // PasswordMaskedTextBox
             // 
             PasswordMaskedTextBox.BackColor = Color.FromArgb(52, 52, 52);
+            PasswordMaskedTextBox.Font = new Font("Segoe UI Emoji", 12F);
             PasswordMaskedTextBox.ForeColor = SystemColors.ButtonFace;
-            PasswordMaskedTextBox.Location = new Point(122, 61);
+            PasswordMaskedTextBox.Location = new Point(122, 64);
             PasswordMaskedTextBox.Name = "PasswordMaskedTextBox";
-            PasswordMaskedTextBox.Size = new Size(277, 26);
+            PasswordMaskedTextBox.Size = new Size(277, 29);
             PasswordMaskedTextBox.TabIndex = 1;
             PasswordMaskedTextBox.UseSystemPasswordChar = true;
             // 
@@ -59,21 +61,23 @@
             // 
             EyeballLabel.AutoSize = true;
             EyeballLabel.BackColor = Color.FromArgb(52, 52, 52);
+            EyeballLabel.Font = new Font("Segoe UI Emoji", 12F);
             EyeballLabel.ForeColor = SystemColors.ButtonFace;
-            EyeballLabel.Location = new Point(369, 64);
+            EyeballLabel.Location = new Point(365, 67);
             EyeballLabel.Name = "EyeballLabel";
-            EyeballLabel.Size = new Size(25, 20);
+            EyeballLabel.Size = new Size(32, 21);
             EyeballLabel.TabIndex = 2;
             EyeballLabel.Text = "👁";
             EyeballLabel.Click += EyeballLabel_Click;
             // 
             // EnterButton
             // 
-            EnterButton.BackColor = Color.FromArgb(52, 52, 52);
+            EnterButton.BackColor = SystemColors.Highlight;
+            EnterButton.Font = new Font("Segoe UI Emoji", 12F);
             EnterButton.ForeColor = SystemColors.ButtonFace;
-            EnterButton.Location = new Point(405, 57);
+            EnterButton.Location = new Point(405, 60);
             EnterButton.Name = "EnterButton";
-            EnterButton.Size = new Size(34, 35);
+            EnterButton.Size = new Size(34, 37);
             EnterButton.TabIndex = 11;
             EnterButton.Text = "→\n";
             EnterButton.UseVisualStyleBackColor = false;
@@ -81,15 +85,15 @@
             // 
             // DecryptForm
             // 
-            AutoScaleDimensions = new SizeF(9F, 20F);
+            AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(32, 32, 32);
-            ClientSize = new Size(470, 153);
+            ClientSize = new Size(470, 161);
             Controls.Add(EnterButton);
             Controls.Add(EyeballLabel);
             Controls.Add(PasswordMaskedTextBox);
             Controls.Add(PasswordLabel);
-            Font = new Font("Microsoft Sans Serif", 12F);
+            Font = new Font("Segoe UI Emoji", 12F);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4);
             Name = "DecryptForm";

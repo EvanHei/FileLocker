@@ -35,9 +35,15 @@ public partial class DecryptForm : Form
         try
         {
             model.Password = PasswordMaskedTextBox.Text;
-            model.EncryptionKey = GlobalConfig.KeyDeriver.DeriveKey(model.Password, model.EncryptionKeySalt);
-            model.Decrypt();
-            GlobalConfig.DataAccessor.SaveFileModel(model);
+            model.MacKey = GlobalConfig.KeyDeriver.DeriveKey(model.Password, model.MacKeySalt);
+
+            if (model.IntegrityStatus == true)
+            {
+                model.Unlock();
+                GlobalConfig.DataAccessor.SaveFileModel(model);
+            }
+            else
+                MessageBox.Show("Tampering dectected.", "Error", MessageBoxButtons.OK);
         }
         catch (Exception ex)
         {

@@ -25,4 +25,6 @@ public static class GlobalConfig
     /// The key deriver used for deriving keys.
     /// </summary>
     public static Pbkdf2KeyDeriver KeyDeriver { get; set; } = new Pbkdf2KeyDeriver();
+
+    public static HmacGenerator MacGenerator { get; set; } = new HmacGenerator();
 }

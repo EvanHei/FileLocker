@@ -6,7 +6,7 @@ namespace FileLockerLibrary;
 /// <summary>
 /// Represents a class for Password-Based Key Derivation Function 2 (PBKDF2) key derivation.
 /// </summary>
-public class Pbkdf2KeyDeriver
+public class Pbkdf2KeyDeriver : IKeyDeriver
 {
     /// <summary>
     /// Generates a 32-byte random salt for cryptographic operations.

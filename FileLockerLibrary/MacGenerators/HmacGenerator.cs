@@ -3,18 +3,12 @@ using System.Security.Cryptography;
 
 namespace FileLockerLibrary;
 
-/// <summary>
-/// Provides functionality for generating a HMAC-based digest.
-/// </summary>
-public class HmacGenerator
+public class HmacGenerator : IMacGenerator
 {
     private HMACSHA256 Hmac = new HMACSHA256();
 
     private bool keyIsSet = false;
 
-    /// <summary>
-    /// The 32-byte key used for the HMAC.
-    /// </summary>
     public byte[] Key
     {
         get
@@ -37,13 +31,6 @@ public class HmacGenerator
         }
     }
 
-    /// <summary>
-    /// Computes the HMAC for the specified data.
-    /// </summary>
-    /// <param name="data">The data for which to generate the HMAC.</param>
-    /// <returns>The generated HMAC.</returns>
-    /// <exception cref="ArgumentNullException">Thrown if the data is null.</exception>
-    /// <exception cref="NullReferenceException">Thrown if the key has not been set.</exception>
     public byte[] GenerateMac(byte[] data)
     {
         if (data == null)
@@ -59,14 +46,6 @@ public class HmacGenerator
         return output;
     }
 
-    /// <summary>
-    /// Validates the HMAC for the specified data against the expected HMAC.
-    /// </summary>
-    /// <param name="data">The data for which to validate the HMAC.</param>
-    /// <param name="expectedHmac">The expected HMAC to compare against.</param>
-    /// <returns>True if the HMAC is valid, false otherwise.</returns>
-    /// <exception cref="ArgumentNullException">Thrown if the data or expectedHmac is null.</exception>
-    /// <exception cref="NullReferenceException">Thrown if the key has not been set.</exception>
     public bool ValidateMac(byte[] data, byte[] expectedHmac)
     {
         if (data == null)
@@ -81,13 +60,6 @@ public class HmacGenerator
         return output;
     }
 
-    /// <summary>
-    /// Performs a constant-time comparison between two byte arrays.
-    /// </summary>
-    /// <param name="first">The first byte array.</param>
-    /// <param name="second">The second byte array.</param>
-    /// <returns>True if the arrays are equal, false otherwise.</returns>
-    /// <exception cref="ArgumentNullException">Thrown if either array is null.</exception>
     private static bool AreEqual(byte[] first, byte[] second)
     {
         if (first == null || second == null)

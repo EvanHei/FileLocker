@@ -232,7 +232,6 @@ public class FileModel
             return;
 
         MacKeySalt = GlobalConfig.KeyDeriver.GenerateSalt();
-
         GlobalConfig.MacGenerator.Key = MacKey;
 
         byte[] content = File.ReadAllBytes(Path);

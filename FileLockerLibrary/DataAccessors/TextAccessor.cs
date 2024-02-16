@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FileLockerLibrary;
 
-public class TextAccessor
+public class TextAccessor : IDataAccessor
 {
     // File structure:
     /// +-- FileModels/

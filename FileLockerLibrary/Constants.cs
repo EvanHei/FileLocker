@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace FileLockerLibrary;
 
-/// <summary>
-/// Provides constants for files.
-/// </summary>
 public static class Constants
 {
-    public const string EncryptedExtension = ".ciphertext";
+    public const string EncryptedExtension = ".locked";
     public const string FilePathFileName = "Path.txt";
     public const string EncryptionKeySaltFileName = "EncryptionKey.salt";
     public const string MacFileName = "Content.mac";

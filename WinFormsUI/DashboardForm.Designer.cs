@@ -86,7 +86,7 @@
             // 
             // TrashButton
             // 
-            TrashButton.BackColor = Color.Silver;
+            TrashButton.BackColor = SystemColors.Highlight;
             TrashButton.Font = new Font("Segoe UI Emoji", 12F);
             TrashButton.ForeColor = SystemColors.ButtonFace;
             TrashButton.Location = new Point(48, 329);

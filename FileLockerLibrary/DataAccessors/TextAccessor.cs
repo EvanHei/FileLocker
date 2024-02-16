@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,28 +27,20 @@ public class TextAccessor : IDataAccessor
     private string MacKeySaltPath { get; set; }
 
 
-    /// <summary>
-    /// Creates a file model and populates the salt properties.
-    /// </summary>
-    /// <param name="model">The file model to be created.</param>
-    /// <exception cref="ArgumentNullException">Thrown if the file model is null.</exception>
-    /// <exception cref="ArgumentException">Thrown if the file path is null or empty.</exception>
-    /// <exception cref="InvalidOperationException">Thrown if the directory already exists.</exception>
     public void CreateFileModel(FileModel model)
     {
         if (model == null)
             throw new ArgumentNullException("Model cannot be null.", nameof(model));
         if (string.IsNullOrEmpty(model.Path))
             throw new ArgumentException("Path cannot be null or empty.", nameof(model.Path));
-
         if (model.EncryptionStatus == true)
-            InitializePaths(Path.GetFileNameWithoutExtension(model.Path));
-        else
-            InitializePaths(model.FileName);
+            throw new InvalidOperationException("File cannot already be locked.");
+
+        InitializePaths(model.FileName);
 
         // if the file name already exists
         if (Directory.Exists(FileDirectoryPath))
-            throw new InvalidOperationException($"Directory '{model.FileName}' already exists.");
+            throw new InvalidOperationException($"{model.FileName} already added.");
 
         // write to the files
         Directory.CreateDirectory(FileDirectoryPath);
@@ -88,10 +82,6 @@ public class TextAccessor : IDataAccessor
             File.Delete(MacPath);
     }
 
-    /// <summary>
-    /// Loads all file models.
-    /// </summary>
-    /// <returns>A list of file models.</returns>
     public List<FileModel> LoadAllFileModels()
     {
         List<FileModel> output = new List<FileModel>();
@@ -117,29 +107,17 @@ public class TextAccessor : IDataAccessor
         return output;
     }
 
-    /// <summary>
-    /// Deletes a file model.
-    /// </summary>
-    /// <param name="model">The file model to be deleted.</param>
-    /// <exception cref="InvalidOperationException">Thrown if the file is encrypted.</exception>
-    /// <exception cref="DirectoryNotFoundException">Thrown if the directory does not exist.</exception>
     public void DeleteFileModel(FileModel model)
     {
-        if (model.EncryptionStatus == true)
-            throw new InvalidOperationException("Cannot delete a file that is encrypted.");
-        if (!GetAllFileNames().Contains(model.FileName))
-            throw new DirectoryNotFoundException($"Directory '{model.FileName}' does not exist.");
+        string fileName = (model.EncryptionStatus == true) ? Path.GetFileNameWithoutExtension(model.FileName) : model.FileName;
+        if (!GetAllFileNames().Contains(fileName))
+            throw new DirectoryNotFoundException($"{model.FileName} is not added.");
 
         InitializePaths(model.FileName);
 
         Directory.Delete(FileDirectoryPath, true);
     }
 
-    /// <summary>
-    /// Retrieves all file names.
-    /// </summary>
-    /// <returns>A list of file names.</returns>
-    /// <exception cref="DirectoryNotFoundException">Thrown if the directory containing file models is not found.</exception>
     private List<string> GetAllFileNames()
     {
         if (!Directory.Exists(FileModelsDirectoryPath))
@@ -153,12 +131,10 @@ public class TextAccessor : IDataAccessor
         return output;
     }
 
-    /// <summary>
-    /// Initializes paths.
-    /// </summary>
-    /// <param name="fileName">The file for which file paths are to be initialized.</param>
     private void InitializePaths(string fileName)
     {
+        fileName = (Path.GetExtension(fileName) == Constants.EncryptedExtension) ? Path.GetFileNameWithoutExtension(fileName) : fileName;
+
         FileDirectoryPath = Path.Combine(FileModelsDirectoryPath, fileName);
         FilePathPath = Path.Combine(FileDirectoryPath, Constants.FilePathFileName);
         EncryptionKeySaltPath = Path.Combine(FileDirectoryPath, Constants.EncryptionKeySaltFileName);
@@ -166,9 +142,6 @@ public class TextAccessor : IDataAccessor
         MacKeySaltPath = Path.Combine(FileDirectoryPath, Constants.MacKeySaltFileName);
     }
 
-    /// <summary>
-    /// Initializes a new instance of the TextAccessor class.
-    /// </summary>
     public TextAccessor()
     {
         string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);

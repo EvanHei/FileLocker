@@ -65,6 +65,14 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
         FileModel model = (FileModel)FileListBox.SelectedItem;
 
+        if (model.EncryptionStatus == true)
+        {
+            DialogResult result = MessageBox.Show("Removing a locked file means it can never be unlocked. Are you sure you want to proceed?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (result != DialogResult.Yes)
+                return;
+        }
+
         try
         {
             GlobalConfig.DataAccessor.DeleteFileModel(model);
@@ -85,8 +93,6 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         openFileDialog1.Multiselect = true;
         openFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-        bool fileAlreadySelected = false;
-
         // select file(s)
         DialogResult result = openFileDialog1.ShowDialog();
         if (result != DialogResult.OK)
@@ -100,14 +106,11 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
             {
                 GlobalConfig.DataAccessor.CreateFileModel(model);
             }
-            catch (InvalidOperationException)
+            catch (Exception ex)
             {
-                fileAlreadySelected = true;
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
             }
         }
-
-        if (fileAlreadySelected)
-            MessageBox.Show("Some file(s) already selected.", "Error", MessageBoxButtons.OK);
 
         PopulateForm();
     }
@@ -156,11 +159,11 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
         if (model.EncryptionStatus == true)
         {
-            TrashButton.Enabled = false;
+            TrashButton.Enabled = true;
             EncryptButton.Enabled = false;
             DecryptButton.Enabled = true;
 
-            TrashButton.BackColor = Color.Silver;
+            TrashButton.BackColor = Color.DarkRed;
             EncryptButton.BackColor = Color.Silver;
             DecryptButton.BackColor = SystemColors.Highlight;
         }
@@ -170,7 +173,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
             EncryptButton.Enabled = true;
             DecryptButton.Enabled = false;
 
-            TrashButton.BackColor = Color.DarkRed;
+            TrashButton.BackColor = SystemColors.Highlight;
             EncryptButton.BackColor = SystemColors.Highlight;
             DecryptButton.BackColor = Color.Silver;
         }

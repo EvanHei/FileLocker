@@ -37,9 +37,11 @@
             FileLockerLabel = new Label();
             MenuStrip = new MenuStrip();
             FileMenuItem = new ToolStripMenuItem();
+            ExportMenuItem = new ToolStripMenuItem();
             ExitMenuItem = new ToolStripMenuItem();
             HelpMenuItem = new ToolStripMenuItem();
             UserGuideMenuItem = new ToolStripMenuItem();
+            ImportMenuItem = new ToolStripMenuItem();
             MenuStrip.SuspendLayout();
             SuspendLayout();
             // 
@@ -135,19 +137,26 @@
             // FileMenuItem
             // 
             FileMenuItem.BackColor = Color.FromArgb(32, 32, 32);
-            FileMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ExitMenuItem });
+            FileMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ImportMenuItem, ExportMenuItem, ExitMenuItem });
             FileMenuItem.Font = new Font("Segoe UI Emoji", 9F);
             FileMenuItem.ForeColor = SystemColors.AppWorkspace;
             FileMenuItem.Name = "FileMenuItem";
             FileMenuItem.Size = new Size(37, 20);
             FileMenuItem.Text = "&File";
             // 
+            // ExportMenuItem
+            // 
+            ExportMenuItem.Name = "ExportMenuItem";
+            ExportMenuItem.Size = new Size(180, 22);
+            ExportMenuItem.Text = "&Export File";
+            ExportMenuItem.Click += ExportMenuItem_Click;
+            // 
             // ExitMenuItem
             // 
             ExitMenuItem.BackColor = SystemColors.Control;
             ExitMenuItem.ForeColor = SystemColors.ControlText;
             ExitMenuItem.Name = "ExitMenuItem";
-            ExitMenuItem.Size = new Size(92, 22);
+            ExitMenuItem.Size = new Size(180, 22);
             ExitMenuItem.Text = "E&xit";
             ExitMenuItem.Click += ExitMenuItem_Click;
             // 
@@ -166,9 +175,16 @@
             UserGuideMenuItem.BackColor = SystemColors.Control;
             UserGuideMenuItem.ForeColor = SystemColors.ControlText;
             UserGuideMenuItem.Name = "UserGuideMenuItem";
-            UserGuideMenuItem.Size = new Size(131, 22);
+            UserGuideMenuItem.Size = new Size(180, 22);
             UserGuideMenuItem.Text = "User &Guide";
             UserGuideMenuItem.Click += UserGuideMenuItem_Click;
+            // 
+            // ImportMenuItem
+            // 
+            ImportMenuItem.Name = "ImportMenuItem";
+            ImportMenuItem.Size = new Size(180, 22);
+            ImportMenuItem.Text = "&Import File";
+            ImportMenuItem.Click += ImportMenuItem_Click;
             // 
             // DashboardForm
             // 
@@ -208,5 +224,7 @@
         private ToolStripMenuItem ExitMenuItem;
         private ToolStripMenuItem HelpMenuItem;
         private ToolStripMenuItem UserGuideMenuItem;
+        private ToolStripMenuItem ExportMenuItem;
+        private ToolStripMenuItem ImportMenuItem;
     }
 }

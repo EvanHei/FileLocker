@@ -73,6 +73,7 @@ public class FileModel
     {
         get
         {
+            // if password is correct and fails validation, then tampering
             if (Mac != null && MacKey != null)
                 tamperedStatus = !ValidateMac();
 

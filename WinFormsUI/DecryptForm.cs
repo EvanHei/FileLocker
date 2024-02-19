@@ -42,9 +42,7 @@ public partial class DecryptForm : Form
                 GlobalConfig.DataAccessor.SaveFileModel(model);
             }
             else
-            {
-                MessageBox.Show("Tampering dectected.", "Error", MessageBoxButtons.OK);
-            }
+                MessageBox.Show("Unable to decrypt. If the password was correct, the data has been tampered.", "Error", MessageBoxButtons.OK);
         }
         catch (Exception ex)
         {

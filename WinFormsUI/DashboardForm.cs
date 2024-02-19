@@ -194,4 +194,64 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
     {
         Application.Exit();
     }
+
+    private void ExportMenuItem_Click(object sender, EventArgs e)
+    {
+        if (FileListBox.SelectedItem == null)
+            return;
+
+        FileModel model = (FileModel)FileListBox.SelectedItem;
+
+        SaveFileDialog saveFileDialog = new SaveFileDialog();
+        saveFileDialog.Title = "Save File";
+        saveFileDialog.Filter = "Zip files (*.zip)|*.zip";
+        saveFileDialog.FileName = model.FileName + ".zip";
+        saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        saveFileDialog.OverwritePrompt = true;
+
+        DialogResult result = saveFileDialog.ShowDialog();
+        if (result != DialogResult.OK)
+            return;
+
+        // TODO - surround with try/catch
+        GlobalConfig.DataAccessor.ExportZipFileModel(model, saveFileDialog.FileName);
+    }
+
+    private void ImportMenuItem_Click(object sender, EventArgs e)
+    {
+        // select archive
+        OpenFileDialog openFileDialog = new OpenFileDialog();
+        openFileDialog.Title = "Import Archive";
+        openFileDialog.Filter = "Zip files (*.zip)|*.zip";
+        openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+        DialogResult openFileDialogResult = openFileDialog.ShowDialog();
+        if (openFileDialogResult != DialogResult.OK)
+            return;
+
+        // choose where to save content file
+        SaveFileDialog saveFileDialog = new SaveFileDialog();
+        saveFileDialog.Title = "Save File";
+        saveFileDialog.Filter = "Any file (*.*)|*.*";
+        saveFileDialog.FileName = Path.GetFileNameWithoutExtension(openFileDialog.FileName);
+        saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        saveFileDialog.OverwritePrompt = true;
+
+        DialogResult saveFileDialogResult = saveFileDialog.ShowDialog();
+        if (saveFileDialogResult != DialogResult.OK)
+            return;
+
+        try
+        {
+            GlobalConfig.DataAccessor.ImportZipFileModel(openFileDialog.FileName, saveFileDialog.FileName);
+
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        PopulateForm();
+    }
 }

@@ -1,5 +1,4 @@
-﻿using FileLockerLibrary;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WinFormsUI;
 
-public interface IDecryptFormCaller
+public interface IImportFormCaller
 {
-    void DecryptionComplete();
+    void ImportComplete();
 }

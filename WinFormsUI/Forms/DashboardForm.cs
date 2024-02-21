@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace WinFormsUI;
 
-public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCaller
+public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCaller, IImportFormCaller
 {
     public DashboardForm()
     {
@@ -203,7 +203,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         FileModel model = (FileModel)FileListBox.SelectedItem;
 
         SaveFileDialog saveFileDialog = new SaveFileDialog();
-        saveFileDialog.Title = "Save File";
+        saveFileDialog.Title = "Save Archive";
         saveFileDialog.Filter = "Zip files (*.zip)|*.zip";
         saveFileDialog.FileName = model.FileName + ".zip";
         saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
@@ -213,45 +213,24 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         if (result != DialogResult.OK)
             return;
 
-        // TODO - surround with try/catch
-        GlobalConfig.DataAccessor.ExportZipFileModel(model, saveFileDialog.FileName);
+        try
+        {
+            GlobalConfig.DataAccessor.ExportZipFileModel(model, saveFileDialog.FileName);
+        }
+        catch
+        {
+            MessageBox.Show("Could not export.", "Error", MessageBoxButtons.OK);
+        }
     }
 
     private void ImportMenuItem_Click(object sender, EventArgs e)
     {
-        // select archive
-        OpenFileDialog openFileDialog = new OpenFileDialog();
-        openFileDialog.Title = "Import Archive";
-        openFileDialog.Filter = "Zip files (*.zip)|*.zip";
-        openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        ImportForm importForm = new ImportForm(this);
+        importForm.ShowDialog();
+    }
 
-        DialogResult openFileDialogResult = openFileDialog.ShowDialog();
-        if (openFileDialogResult != DialogResult.OK)
-            return;
-
-        // choose where to save content file
-        SaveFileDialog saveFileDialog = new SaveFileDialog();
-        saveFileDialog.Title = "Save File";
-        saveFileDialog.Filter = "Any file (*.*)|*.*";
-        saveFileDialog.FileName = Path.GetFileNameWithoutExtension(openFileDialog.FileName);
-        saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-        saveFileDialog.OverwritePrompt = true;
-
-        DialogResult saveFileDialogResult = saveFileDialog.ShowDialog();
-        if (saveFileDialogResult != DialogResult.OK)
-            return;
-
-        try
-        {
-            GlobalConfig.DataAccessor.ImportZipFileModel(openFileDialog.FileName, saveFileDialog.FileName);
-
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
-        }
-
+    public void ImportComplete()
+    {
         PopulateForm();
     }
 }

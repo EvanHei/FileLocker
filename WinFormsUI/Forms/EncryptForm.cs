@@ -49,12 +49,6 @@ public partial class EncryptForm : Form
         }
     }
 
-    /// <summary>
-    /// Validates the input fields on the form.
-    /// </summary>
-    /// <returns>
-    /// True if the input fields are valid; otherwise, false.
-    /// </returns>
     private bool ValidateInputFields()
     {
         bool output = true;

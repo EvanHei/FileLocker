@@ -9,8 +9,6 @@ namespace FileLockerLibrary;
 /// </summary>
 public class AesEncryptor : IEncryptor
 {
-    private const int PADDING_LENGTH = 10000;
-
     /// <summary>
     /// Encrypts plaintext using a symmetric key.
     /// </summary>
@@ -31,29 +29,24 @@ public class AesEncryptor : IEncryptor
         byte[] iv;
         byte[] ciphertext;
 
-        using (Aes aes = Aes.Create())
+        using Aes aes = Aes.Create();
+        aes.Key = key;
+        aes.GenerateIV();
+        iv = aes.IV;
+
+        using MemoryStream msEncrypt = new();
+        using (CryptoStream csEncrypt = new(msEncrypt, aes.CreateEncryptor(aes.Key, aes.IV), CryptoStreamMode.Write))
         {
-            aes.Key = key;
-            aes.GenerateIV();
-            iv = aes.IV;
-
-            using (MemoryStream msEncrypt = new MemoryStream())
-            {
-                using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, aes.CreateEncryptor(aes.Key, aes.IV), CryptoStreamMode.Write))
-                {
-                    csEncrypt.Write(plaintext, 0, plaintext.Length);
-
-                }
-                ciphertext = msEncrypt.ToArray();
-
-                // create output variable with correct length and data
-                byte[] ivAndCiphertext = new byte[iv.Length + ciphertext.Length];
-                Buffer.BlockCopy(iv, 0, ivAndCiphertext, 0, iv.Length);
-                Buffer.BlockCopy(ciphertext, 0, ivAndCiphertext, iv.Length, ciphertext.Length);
-    
-                return ivAndCiphertext;
-            }
+            csEncrypt.Write(plaintext, 0, plaintext.Length);
         }
+        ciphertext = msEncrypt.ToArray();
+
+        // create output variable with correct length and data
+        byte[] ivAndCiphertext = new byte[iv.Length + ciphertext.Length];
+        Buffer.BlockCopy(iv, 0, ivAndCiphertext, 0, iv.Length);
+        Buffer.BlockCopy(ciphertext, 0, ivAndCiphertext, iv.Length, ciphertext.Length);
+
+        return ivAndCiphertext;
     }
 
     /// <summary>
@@ -90,17 +83,11 @@ public class AesEncryptor : IEncryptor
             aes.Key = key;
             aes.IV = iv;
 
-            using (MemoryStream msDecrypt = new MemoryStream(ciphertextAndIv, iv.Length, ciphertextAndIv.Length - iv.Length))
-            {
-                using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, aes.CreateDecryptor(), CryptoStreamMode.Read))
-                {
-                    using (MemoryStream plaintextStream = new MemoryStream())
-                    {
-                        csDecrypt.CopyTo(plaintextStream);
-                        plaintextBytes = plaintextStream.ToArray();
-                    }
-                }
-            }
+            using MemoryStream msDecrypt = new(ciphertextAndIv, iv.Length, ciphertextAndIv.Length - iv.Length);
+            using CryptoStream csDecrypt = new(msDecrypt, aes.CreateDecryptor(), CryptoStreamMode.Read);
+            using MemoryStream plaintextStream = new();
+            csDecrypt.CopyTo(plaintextStream);
+            plaintextBytes = plaintextStream.ToArray();
         }
 
         return plaintextBytes;

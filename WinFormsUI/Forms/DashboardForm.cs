@@ -41,7 +41,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
         FileModel model = (FileModel)FileListBox.SelectedItem;
 
-        EncryptForm encryptForm = new EncryptForm(this, model);
+        EncryptForm encryptForm = new(this, model);
         encryptForm.ShowDialog();
     }
 
@@ -55,7 +55,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         if (model.EncryptionStatus == false)
             return;
 
-        DecryptForm decryptForm = new DecryptForm(this, model);
+        DecryptForm decryptForm = new(this, model);
         decryptForm.ShowDialog();
     }
 
@@ -89,20 +89,21 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
     private void AddButton_Click(object sender, EventArgs e)
     {
-        OpenFileDialog openFileDialog1 = new OpenFileDialog();
-        openFileDialog1.Title = "Select File(s)";
-        openFileDialog1.Multiselect = true;
-        openFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        using OpenFileDialog openFileDialog = new();
+        openFileDialog.Title = "Select File(s)";
+        openFileDialog.Multiselect = true;
+        openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-        // select file(s)
-        DialogResult result = openFileDialog1.ShowDialog();
+        // Select file(s)
+        DialogResult result = openFileDialog.ShowDialog();
         if (result != DialogResult.OK)
             return;
 
         // for each selected file
-        foreach (string fileName in openFileDialog1.FileNames)
+        foreach (string fileName in openFileDialog.FileNames)
         {
-            FileModel model = new FileModel(fileName);
+            FileModel model = new(fileName);
+
             try
             {
                 GlobalConfig.DataAccessor.CreateFileModel(model);
@@ -145,10 +146,11 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
         row.DrawBackground();
 
-        using (SolidBrush brush = new SolidBrush(backgroundColor))
-            row.Graphics.FillRectangle(brush, row.Bounds);
-        using (SolidBrush brush = new SolidBrush(row.ForeColor))
-            row.Graphics.DrawString(model.DisplayName, row.Font, brush, row.Bounds);
+        using SolidBrush backgroundBrush = new(backgroundColor);
+        row.Graphics.FillRectangle(backgroundBrush, row.Bounds);
+
+        using SolidBrush foregroundBrush = new(row.ForeColor);
+        row.Graphics.DrawString(model.DisplayName, row.Font, foregroundBrush, row.Bounds);
     }
 
     private void FileListBox_SelectedIndexChanged(object? sender, EventArgs e)
@@ -182,7 +184,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
     private void UserGuideMenuItem_Click(object sender, EventArgs e)
     {
-        ProcessStartInfo processStartInfo = new ProcessStartInfo
+        ProcessStartInfo processStartInfo = new()
         {
             FileName = Constants.GitHubUrl,
             UseShellExecute = true
@@ -203,7 +205,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
         FileModel model = (FileModel)FileListBox.SelectedItem;
 
-        SaveFileDialog saveFileDialog = new SaveFileDialog();
+        using SaveFileDialog saveFileDialog = new();
         saveFileDialog.Title = "Save Archive";
         saveFileDialog.Filter = "Zip files (*.zip)|*.zip";
         saveFileDialog.FileName = model.FileName + ".zip";
@@ -226,7 +228,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
     private void ImportMenuItem_Click(object sender, EventArgs e)
     {
-        ImportForm importForm = new ImportForm(this);
+        ImportForm importForm = new(this);
         importForm.ShowDialog();
     }
 

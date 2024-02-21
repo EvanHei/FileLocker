@@ -88,7 +88,7 @@ public class TextAccessor : IDataAccessor
 
     public List<FileModel> LoadAllFileModels()
     {
-        List<FileModel> output = new List<FileModel>();
+        List<FileModel> output = new();
 
         foreach (string fileName in GetAllFileNames())
         {
@@ -96,7 +96,7 @@ public class TextAccessor : IDataAccessor
 
             // TODO - add error checking
             string path = File.ReadAllText(FilePathPath);
-            FileModel temp = new FileModel(path);
+            FileModel temp = new(path);
 
             if (File.Exists(EncryptionKeySaltPath))
                 temp.EncryptionKeySalt = File.ReadAllBytes(EncryptionKeySaltPath);
@@ -149,7 +149,10 @@ public class TextAccessor : IDataAccessor
             File.Copy(path, destinationPath, overwrite: true);
         }
 
-        ZipFile.CreateFromDirectory(TempExportDirectoryPath, zipPath);
+        if (File.Exists(zipPath))
+            File.Delete(zipPath);
+
+        ZipFile.CreateFromDirectory(TempExportDirectoryPath, zipPath);        
         Directory.Delete(TempExportDirectoryPath, recursive: true);
     }
 
@@ -158,73 +161,71 @@ public class TextAccessor : IDataAccessor
         if (string.IsNullOrEmpty(zipPath))
             throw new ArgumentException("Zip path cannot be null or empty.", nameof(zipPath));
 
-        using (ZipArchive archive = ZipFile.OpenRead(zipPath))
+        using ZipArchive archive = ZipFile.OpenRead(zipPath);
+        // get all entries in the zip file
+        List<string> zipEntriesToProcess = new();
+        foreach (ZipArchiveEntry entry in archive.Entries)
+            zipEntriesToProcess.Add(entry.FullName);
+
+        // error checking
+        if (zipEntriesToProcess.Count < 1 || zipEntriesToProcess.Count > 5)
+            throw new FileNotFoundException($"Archive has invalid number of files.");
+
+        FileModel model = new(savePath);
+
+        // if the file is locked, populate the model
+        string[] filesToCheck = { Constants.EncryptionKeySaltFileName, Constants.MacFileName, Constants.MacKeySaltFileName };
+        if (zipEntriesToProcess.Any(entry => entry.EndsWith(Constants.EncryptedExtension, StringComparison.OrdinalIgnoreCase)) &&
+            filesToCheck.All(zipEntriesToProcess.Contains))
         {
-            // get all entries in the zip file
-            List<string> zipEntriesToProcess = new List<string>();
-            foreach (ZipArchiveEntry entry in archive.Entries)
-                zipEntriesToProcess.Add(entry.FullName);
+            ZipArchiveEntry encryptionKeySaltEntry = archive.GetEntry(Constants.EncryptionKeySaltFileName);
+            ZipArchiveEntry macKeySaltEntry = archive.GetEntry(Constants.MacKeySaltFileName);
+            ZipArchiveEntry macEntry = archive.GetEntry(Constants.MacFileName);
 
-            // error checking
-            if (zipEntriesToProcess.Count < 1 || zipEntriesToProcess.Count > 5)
-                throw new FileNotFoundException($"Archive has invalid number of files.");
-            
-            FileModel model = new FileModel(savePath);
-
-            // if the file is locked, populate the model
-            string[] filesToCheck = { Constants.EncryptionKeySaltFileName, Constants.MacFileName, Constants.MacKeySaltFileName };
-            if (zipEntriesToProcess.Any(entry => entry.EndsWith(Constants.EncryptedExtension, StringComparison.OrdinalIgnoreCase)) &&
-                filesToCheck.All(zipEntriesToProcess.Contains))
-            {
-                ZipArchiveEntry encryptionKeySaltEntry = archive.GetEntry(Constants.EncryptionKeySaltFileName);
-                ZipArchiveEntry macKeySaltEntry = archive.GetEntry(Constants.MacKeySaltFileName);
-                ZipArchiveEntry macEntry = archive.GetEntry(Constants.MacFileName);
-
-                // read the encryption key salt
-                using (MemoryStream ms = new MemoryStream())
-                using (Stream stream = encryptionKeySaltEntry.Open())
-                {
-                    stream.CopyTo(ms);
-                    model.EncryptionKeySalt = ms.ToArray();
-                    zipEntriesToProcess.Remove(Constants.EncryptionKeySaltFileName);
-                }
-
-                // read the MAC key salt
-                using (MemoryStream ms = new MemoryStream())
-                using (Stream stream = macKeySaltEntry.Open())
-                {
-                    stream.CopyTo(ms);
-                    model.MacKeySalt = ms.ToArray();
-                    zipEntriesToProcess.Remove(Constants.MacKeySaltFileName);
-                }
-
-                // read the MAC
-                using (MemoryStream ms = new MemoryStream())
-                using (Stream stream = macEntry.Open())
-                {
-                    stream.CopyTo(ms);
-                    model.Mac = ms.ToArray();
-                    zipEntriesToProcess.Remove(Constants.MacFileName);
-                }
-            }
-
-            byte[] content;
-            ZipArchiveEntry contentEntry = archive.GetEntry(zipEntriesToProcess.First());
-
-            // read the content and save to the choosen path
-            using (MemoryStream ms = new MemoryStream())
-            using (Stream stream = contentEntry.Open())
+            // read the encryption key salt
+            using (MemoryStream ms = new())
+            using (Stream stream = encryptionKeySaltEntry.Open())
             {
                 stream.CopyTo(ms);
-                content = ms.ToArray();
-                zipEntriesToProcess.Clear();
+                model.EncryptionKeySalt = ms.ToArray();
+                zipEntriesToProcess.Remove(Constants.EncryptionKeySaltFileName);
             }
-            File.WriteAllBytes(model.Path, content);
 
-            // create file model and save
-            CreateFileModel(model);
-            SaveFileModel(model);
+            // read the MAC key salt
+            using (MemoryStream ms = new())
+            using (Stream stream = macKeySaltEntry.Open())
+            {
+                stream.CopyTo(ms);
+                model.MacKeySalt = ms.ToArray();
+                zipEntriesToProcess.Remove(Constants.MacKeySaltFileName);
+            }
+
+            // read the MAC
+            using (MemoryStream ms = new())
+            using (Stream stream = macEntry.Open())
+            {
+                stream.CopyTo(ms);
+                model.Mac = ms.ToArray();
+                zipEntriesToProcess.Remove(Constants.MacFileName);
+            }
         }
+
+        byte[] content;
+        ZipArchiveEntry contentEntry = archive.GetEntry(zipEntriesToProcess.First());
+
+        // read the content and save to the choosen path
+        using (MemoryStream ms = new())
+        using (Stream stream = contentEntry.Open())
+        {
+            stream.CopyTo(ms);
+            content = ms.ToArray();
+            zipEntriesToProcess.Clear();
+        }
+        File.WriteAllBytes(model.Path, content);
+
+        // create file model and save
+        CreateFileModel(model);
+        SaveFileModel(model);
     }
 
     public void DeleteFileModel(FileModel model)

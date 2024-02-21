@@ -36,27 +36,34 @@ public partial class ImportForm : Form
         }
         if (openPath != null)
         {
-            OpenLabel.Text = openPath.Length > 50 ? openPath.Substring(0, 47) + "..." : openPath;
+            OpenLabel.Text = Path.GetFileName(openPath);
 
             SaveToButton.Enabled = true;
             SaveToButton.BackColor = SystemColors.Highlight;
         }
         if (savePath != null)
-            SaveToLabel.Text = savePath.Length > 50 ? savePath.Substring(0, 47) + "..." : savePath;
+        {
+            string directoryName = Path.GetDirectoryName(savePath);
+            string directoryPath = directoryName.Length > 50 ? directoryName.Substring(0, 47) + "..." : directoryName;
+            SaveToLabel.Text = directoryPath;
+        }
     }
 
     private void OpenButton_Click(object sender, EventArgs e)
     {
-        OpenFileDialog openFileDialog = new OpenFileDialog();
-        openFileDialog.Title = "Select Archive";
-        openFileDialog.Filter = "Zip files (*.zip)|*.zip";
-        openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        using (OpenFileDialog openFileDialog = new())
+        {
+            openFileDialog.Title = "Select Archive";
+            openFileDialog.Filter = "Zip files (*.zip)|*.zip";
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-        DialogResult openFileDialogResult = openFileDialog.ShowDialog();
-        if (openFileDialogResult != DialogResult.OK)
-            return;
+            DialogResult openFileDialogResult = openFileDialog.ShowDialog();
+            if (openFileDialogResult != DialogResult.OK)
+                return;
 
-        openPath = openFileDialog.FileName;
+            openPath = openFileDialog.FileName;
+        }
+
         PopulateForm();
     }
 
@@ -65,7 +72,7 @@ public partial class ImportForm : Form
         if (openPath == "")
             return;
 
-        SaveFileDialog saveFileDialog = new SaveFileDialog();
+        SaveFileDialog saveFileDialog = new();
         saveFileDialog.Title = "Select Save Location";
         saveFileDialog.Filter = "Any file (*.*)|*.*";
         saveFileDialog.FileName = Path.GetFileNameWithoutExtension(openPath);

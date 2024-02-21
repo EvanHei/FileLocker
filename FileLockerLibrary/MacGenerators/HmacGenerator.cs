@@ -5,7 +5,7 @@ namespace FileLockerLibrary;
 
 public class HmacGenerator : IMacGenerator
 {
-    private HMACSHA256 Hmac = new HMACSHA256();
+    private HMACSHA256 Hmac = new();
 
     private bool keyIsSet = false;
 

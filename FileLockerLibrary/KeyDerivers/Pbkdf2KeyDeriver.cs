@@ -14,12 +14,10 @@ public class Pbkdf2KeyDeriver : IKeyDeriver
     /// <returns>A byte array representing the generated salt.</returns>
     public byte[] GenerateSalt()
     {
-        using (var rng = RandomNumberGenerator.Create())
-        {
-            byte[] salt = new byte[32];
-            rng.GetBytes(salt);
-            return salt;
-        }
+        using var rng = RandomNumberGenerator.Create();
+        byte[] salt = new byte[32];
+        rng.GetBytes(salt);
+        return salt;
     }
 
     /// <summary>
@@ -35,9 +33,7 @@ public class Pbkdf2KeyDeriver : IKeyDeriver
         if (salt == null)
             throw new ArgumentNullException("Salt cannot be null.");
 
-        using (var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000, HashAlgorithmName.SHA256))
-        {
-            return pbkdf2.GetBytes(32);
-        }
+        using var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000, HashAlgorithmName.SHA256);
+        return pbkdf2.GetBytes(32);
     }
 }

@@ -37,11 +37,11 @@
             FileLockerLabel = new Label();
             MenuStrip = new MenuStrip();
             FileMenuItem = new ToolStripMenuItem();
+            ImportMenuItem = new ToolStripMenuItem();
             ExportMenuItem = new ToolStripMenuItem();
             ExitMenuItem = new ToolStripMenuItem();
             HelpMenuItem = new ToolStripMenuItem();
             UserGuideMenuItem = new ToolStripMenuItem();
-            ImportMenuItem = new ToolStripMenuItem();
             MenuStrip.SuspendLayout();
             SuspendLayout();
             // 
@@ -144,10 +144,17 @@
             FileMenuItem.Size = new Size(37, 20);
             FileMenuItem.Text = "&File";
             // 
+            // ImportMenuItem
+            // 
+            ImportMenuItem.Name = "ImportMenuItem";
+            ImportMenuItem.Size = new Size(131, 22);
+            ImportMenuItem.Text = "&Import File";
+            ImportMenuItem.Click += ImportMenuItem_Click;
+            // 
             // ExportMenuItem
             // 
             ExportMenuItem.Name = "ExportMenuItem";
-            ExportMenuItem.Size = new Size(180, 22);
+            ExportMenuItem.Size = new Size(131, 22);
             ExportMenuItem.Text = "&Export File";
             ExportMenuItem.Click += ExportMenuItem_Click;
             // 
@@ -156,7 +163,7 @@
             ExitMenuItem.BackColor = SystemColors.Control;
             ExitMenuItem.ForeColor = SystemColors.ControlText;
             ExitMenuItem.Name = "ExitMenuItem";
-            ExitMenuItem.Size = new Size(180, 22);
+            ExitMenuItem.Size = new Size(131, 22);
             ExitMenuItem.Text = "E&xit";
             ExitMenuItem.Click += ExitMenuItem_Click;
             // 
@@ -175,16 +182,9 @@
             UserGuideMenuItem.BackColor = SystemColors.Control;
             UserGuideMenuItem.ForeColor = SystemColors.ControlText;
             UserGuideMenuItem.Name = "UserGuideMenuItem";
-            UserGuideMenuItem.Size = new Size(180, 22);
+            UserGuideMenuItem.Size = new Size(131, 22);
             UserGuideMenuItem.Text = "User &Guide";
             UserGuideMenuItem.Click += UserGuideMenuItem_Click;
-            // 
-            // ImportMenuItem
-            // 
-            ImportMenuItem.Name = "ImportMenuItem";
-            ImportMenuItem.Size = new Size(180, 22);
-            ImportMenuItem.Text = "&Import File";
-            ImportMenuItem.Click += ImportMenuItem_Click;
             // 
             // DashboardForm
             // 

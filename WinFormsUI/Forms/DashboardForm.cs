@@ -1,5 +1,6 @@
 using FileLockerLibrary;
 using Microsoft.VisualBasic.ApplicationServices;
+using Microsoft.Win32;
 using System.Diagnostics;
 using System.Reflection;
 using System.Security.Principal;

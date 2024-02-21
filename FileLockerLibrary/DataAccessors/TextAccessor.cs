@@ -128,8 +128,11 @@ public class TextAccessor : IDataAccessor
         if (!Directory.Exists(FileDirectoryPath))
             throw new DirectoryNotFoundException($"Directory '{FileDirectoryPath}' does not exist.");
 
-        // write necessary files to a temporarily export file
+        // write necessary files to a temporary hidden export file
         Directory.CreateDirectory(TempExportDirectoryPath);
+        FileAttributes attributes = File.GetAttributes(TempExportDirectoryPath);
+        attributes |= FileAttributes.Hidden;
+        File.SetAttributes(TempExportDirectoryPath, attributes);
 
         byte[] content = File.ReadAllBytes(model.Path);
         string tempContentPath = Path.Combine(TempExportDirectoryPath, model.FileName);
@@ -266,6 +269,10 @@ public class TextAccessor : IDataAccessor
         FileModelsDirectoryPath = Path.Combine(appDirectoryPath, Constants.FileModelsDirectoryName);
         TempExportDirectoryPath = Path.Combine(appDirectoryPath, Constants.TempExportDirectoryName);
 
+        // create data directory and hide it
         Directory.CreateDirectory(FileModelsDirectoryPath);
+        FileAttributes attributes = File.GetAttributes(FileModelsDirectoryPath);
+        attributes |= FileAttributes.Hidden;
+        File.SetAttributes(FileModelsDirectoryPath, attributes);
     }
 }

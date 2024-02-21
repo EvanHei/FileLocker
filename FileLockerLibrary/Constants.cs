@@ -11,6 +11,7 @@ public static class Constants
     public const string AppDirectoryName = "FileLocker";
     public const string FileModelsDirectoryName = "FileModels";
     public const string TempExportDirectoryName = "TempExport";
+    public const string LogDirectoryName = "Logs";
     public const string EncryptedExtension = ".locked";
     public const string FilePathFileName = "Path.txt";
     public const string EncryptionKeySaltFileName = "EncryptionKey.salt";

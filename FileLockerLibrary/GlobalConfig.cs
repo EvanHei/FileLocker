@@ -8,11 +8,13 @@ namespace FileLockerLibrary;
 
 public static class GlobalConfig
 {
-    public static IDataAccessor DataAccessor { get; set; } = new TextAccessor();
+    public static IDataAccessor DataAccessor = new TextAccessor();
 
-    public static IEncryptor Encryptor { get; set; } = new AesEncryptor();
+    public static IEncryptor Encryptor = new AesEncryptor();
 
-    public static IKeyDeriver KeyDeriver { get; set; } = new Pbkdf2KeyDeriver();
+    public static IKeyDeriver KeyDeriver = new Pbkdf2KeyDeriver();
 
-    public static IMacGenerator MacGenerator { get; set; } = new HmacGenerator();
+    public static IMacGenerator MacGenerator = new HmacGenerator();
+
+    public static ILogger Logger = new SerilogLogger();
 }

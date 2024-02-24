@@ -152,8 +152,12 @@ public class TextAccessor : IDataAccessor
         if (File.Exists(zipPath))
             File.Delete(zipPath);
 
-        ZipFile.CreateFromDirectory(TempExportDirectoryPath, zipPath);        
+        ZipFile.CreateFromDirectory(TempExportDirectoryPath, zipPath);
         Directory.Delete(TempExportDirectoryPath, recursive: true);
+
+        // change extension
+        string newFilePath = Path.ChangeExtension(zipPath, Constants.ExportExtension);
+        File.Move(zipPath, newFilePath);
     }
 
     public void ImportZipFileModel(string zipPath, string savePath)
@@ -162,6 +166,7 @@ public class TextAccessor : IDataAccessor
             throw new ArgumentException("Zip path cannot be null or empty.", nameof(zipPath));
 
         using ZipArchive archive = ZipFile.OpenRead(zipPath);
+
         // get all entries in the zip file
         List<string> zipEntriesToProcess = new();
         foreach (ZipArchiveEntry entry in archive.Entries)

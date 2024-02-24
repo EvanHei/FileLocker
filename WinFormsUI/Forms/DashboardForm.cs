@@ -27,10 +27,40 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
             TrashButton.Enabled = false;
             EncryptButton.Enabled = false;
             DecryptButton.Enabled = false;
+            ExportMenuItem.Enabled = false;
 
             TrashButton.BackColor = Color.Silver;
             EncryptButton.BackColor = Color.Silver;
             DecryptButton.BackColor = Color.Silver;
+            ExportMenuItem.BackColor = Color.Silver;
+        }
+        else
+        {
+            FileModel model = (FileModel)FileListBox.SelectedItem;
+
+            ExportMenuItem.Enabled = true;
+            ExportMenuItem.BackColor = SystemColors.Control;
+
+            if (model.EncryptionStatus == true)
+            {
+                TrashButton.Enabled = true;
+                EncryptButton.Enabled = false;
+                DecryptButton.Enabled = true;
+
+                TrashButton.BackColor = Color.DarkRed;
+                EncryptButton.BackColor = Color.Silver;
+                DecryptButton.BackColor = SystemColors.Highlight;
+            }
+            else
+            {
+                TrashButton.Enabled = true;
+                EncryptButton.Enabled = true;
+                DecryptButton.Enabled = false;
+
+                TrashButton.BackColor = SystemColors.Highlight;
+                EncryptButton.BackColor = SystemColors.Highlight;
+                DecryptButton.BackColor = Color.Silver;
+            }
         }
     }
 
@@ -155,31 +185,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
     private void FileListBox_SelectedIndexChanged(object? sender, EventArgs e)
     {
-        if (FileListBox.SelectedItem == null)
-            return;
-
-        FileModel model = (FileModel)FileListBox.SelectedItem;
-
-        if (model.EncryptionStatus == true)
-        {
-            TrashButton.Enabled = true;
-            EncryptButton.Enabled = false;
-            DecryptButton.Enabled = true;
-
-            TrashButton.BackColor = Color.DarkRed;
-            EncryptButton.BackColor = Color.Silver;
-            DecryptButton.BackColor = SystemColors.Highlight;
-        }
-        else
-        {
-            TrashButton.Enabled = true;
-            EncryptButton.Enabled = true;
-            DecryptButton.Enabled = false;
-
-            TrashButton.BackColor = SystemColors.Highlight;
-            EncryptButton.BackColor = SystemColors.Highlight;
-            DecryptButton.BackColor = Color.Silver;
-        }
+        PopulateForm();
     }
 
     private void UserGuideMenuItem_Click(object sender, EventArgs e)

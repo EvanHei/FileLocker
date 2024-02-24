@@ -13,6 +13,7 @@ public static class Constants
     public const string TempExportDirectoryName = "TempExport";
     public const string LogDirectoryName = "Logs";
     public const string EncryptedExtension = ".locked";
+    public const string ExportExtension = ".filelocker";
     public const string FilePathFileName = "Path.txt";
     public const string EncryptionKeySaltFileName = "EncryptionKey.salt";
     public const string MacFileName = "Content.mac";

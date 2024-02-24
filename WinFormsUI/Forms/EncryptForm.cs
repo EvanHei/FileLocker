@@ -37,6 +37,8 @@ public partial class EncryptForm : Form
             model.Password = PasswordMaskedTextBox.Text;
             model.Lock();
             GlobalConfig.DataAccessor.SaveFileModel(model);
+
+            MessageBox.Show("If your password is lost, your data cannot be recovered.", "Warning", MessageBoxButtons.OK);
         }
         catch (Exception ex)
         {

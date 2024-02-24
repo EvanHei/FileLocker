@@ -57,9 +57,9 @@
             SaveToLabel.ForeColor = SystemColors.ButtonFace;
             SaveToLabel.Location = new Point(119, 138);
             SaveToLabel.Name = "SaveToLabel";
-            SaveToLabel.Size = new Size(227, 21);
+            SaveToLabel.Size = new Size(143, 21);
             SaveToLabel.TabIndex = 7;
-            SaveToLabel.Text = "                     (no folder selected)";
+            SaveToLabel.Text = "(no folder selected)";
             // 
             // OpenLabel
             // 
@@ -68,9 +68,9 @@
             OpenLabel.ForeColor = SystemColors.ButtonFace;
             OpenLabel.Location = new Point(119, 86);
             OpenLabel.Name = "OpenLabel";
-            OpenLabel.Size = new Size(215, 21);
+            OpenLabel.Size = new Size(123, 21);
             OpenLabel.TabIndex = 9;
-            OpenLabel.Text = "                       (no file selected)";
+            OpenLabel.Text = "(no file selected)";
             // 
             // OpenButton
             // 

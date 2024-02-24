@@ -51,18 +51,16 @@ public partial class ImportForm : Form
 
     private void OpenButton_Click(object sender, EventArgs e)
     {
-        using (OpenFileDialog openFileDialog = new())
-        {
-            openFileDialog.Title = "Select Archive";
-            openFileDialog.Filter = "Zip files (*.zip)|*.zip";
-            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        using OpenFileDialog openFileDialog = new();
+        openFileDialog.Title = "Select Archive";
+        openFileDialog.Filter = "FileLocker files (*.filelocker)|*.filelocker";
+        openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-            DialogResult openFileDialogResult = openFileDialog.ShowDialog();
-            if (openFileDialogResult != DialogResult.OK)
-                return;
+        DialogResult openFileDialogResult = openFileDialog.ShowDialog();
+        if (openFileDialogResult != DialogResult.OK)
+            return;
 
-            openPath = openFileDialog.FileName;
-        }
+        openPath = openFileDialog.FileName;
 
         PopulateForm();
     }

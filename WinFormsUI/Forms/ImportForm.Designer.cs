@@ -40,6 +40,7 @@
             // 
             SaveToButton.BackColor = Color.Silver;
             SaveToButton.Enabled = false;
+            SaveToButton.FlatStyle = FlatStyle.Flat;
             SaveToButton.Font = new Font("Segoe UI Emoji", 12F);
             SaveToButton.ForeColor = SystemColors.ButtonFace;
             SaveToButton.Location = new Point(36, 130);
@@ -75,6 +76,7 @@
             // OpenButton
             // 
             OpenButton.BackColor = SystemColors.Highlight;
+            OpenButton.FlatStyle = FlatStyle.Flat;
             OpenButton.Font = new Font("Segoe UI Emoji", 12F);
             OpenButton.ForeColor = SystemColors.ButtonFace;
             OpenButton.Location = new Point(36, 78);
@@ -89,6 +91,7 @@
             // 
             ImportButton.BackColor = Color.Silver;
             ImportButton.Enabled = false;
+            ImportButton.FlatStyle = FlatStyle.Flat;
             ImportButton.Font = new Font("Segoe UI Emoji", 12F);
             ImportButton.ForeColor = SystemColors.ButtonFace;
             ImportButton.Location = new Point(227, 205);

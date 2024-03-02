@@ -47,6 +47,7 @@
             // 
             // FileListBox
             // 
+            FileListBox.AllowDrop = true;
             FileListBox.BackColor = Color.FromArgb(40, 40, 40);
             FileListBox.DrawMode = DrawMode.OwnerDrawFixed;
             FileListBox.Font = new Font("Segoe UI Emoji", 12F);
@@ -55,14 +56,19 @@
             FileListBox.ItemHeight = 20;
             FileListBox.Location = new Point(48, 109);
             FileListBox.Name = "FileListBox";
-            FileListBox.Size = new Size(577, 204);
+            FileListBox.Size = new Size(577, 184);
             FileListBox.TabIndex = 1;
             FileListBox.DrawItem += FileListBox_DrawItem;
             FileListBox.SelectedIndexChanged += FileListBox_SelectedIndexChanged;
+            FileListBox.DragDrop += FileListBox_DragDrop;
+            FileListBox.DragEnter += FileListBox_DragEnter;
+            FileListBox.DragOver += FileListBox_DragOver;
+            FileListBox.DragLeave += FileListBox_DragLeave;
             // 
             // EncryptButton
             // 
             EncryptButton.BackColor = Color.Silver;
+            EncryptButton.FlatStyle = FlatStyle.Flat;
             EncryptButton.Font = new Font("Segoe UI Emoji", 12F);
             EncryptButton.ForeColor = SystemColors.ButtonFace;
             EncryptButton.Location = new Point(273, 329);
@@ -76,6 +82,7 @@
             // DecryptButton
             // 
             DecryptButton.BackColor = Color.Silver;
+            DecryptButton.FlatStyle = FlatStyle.Flat;
             DecryptButton.Font = new Font("Segoe UI Emoji", 12F);
             DecryptButton.ForeColor = SystemColors.ButtonFace;
             DecryptButton.Location = new Point(360, 329);
@@ -89,6 +96,7 @@
             // TrashButton
             // 
             TrashButton.BackColor = SystemColors.Highlight;
+            TrashButton.FlatStyle = FlatStyle.Flat;
             TrashButton.Font = new Font("Segoe UI Emoji", 12F);
             TrashButton.ForeColor = SystemColors.ButtonFace;
             TrashButton.Location = new Point(48, 329);
@@ -102,6 +110,7 @@
             // AddButton
             // 
             AddButton.BackColor = Color.DarkGreen;
+            AddButton.FlatStyle = FlatStyle.Flat;
             AddButton.Font = new Font("Segoe UI Emoji", 12F);
             AddButton.ForeColor = SystemColors.ButtonFace;
             AddButton.Location = new Point(534, 329);

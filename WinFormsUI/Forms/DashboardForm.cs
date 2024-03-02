@@ -2,6 +2,7 @@ using FileLockerLibrary;
 using Microsoft.VisualBasic.ApplicationServices;
 using Microsoft.Win32;
 using System.Diagnostics;
+using System.IO;
 using System.Reflection;
 using System.Security.Principal;
 using System.Windows.Forms;
@@ -15,6 +16,37 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         InitializeComponent();
 
         PopulateForm();
+    }
+
+    private void FileListBox_DragDrop(object? sender, DragEventArgs e)
+    {
+        FileListBox.BackColor = Color.FromArgb(40, 40, 40);
+        string[] paths = (string[])e.Data.GetData(DataFormats.FileDrop);
+        AddFiles(paths);
+    }
+
+    private void FileListBox_DragEnter(object? sender, DragEventArgs e)
+    {
+        if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            e.Effect = DragDropEffects.Copy;
+        else
+            e.Effect = DragDropEffects.None;
+    }
+
+    private void FileListBox_DragOver(object sender, DragEventArgs e)
+    {
+        if (e.Data.GetDataPresent(DataFormats.FileDrop))
+        {
+            FileListBox.BackColor = Color.DarkGreen;
+            e.Effect = DragDropEffects.Copy;
+        }
+        else
+            e.Effect = DragDropEffects.None;
+    }
+
+    private void FileListBox_DragLeave(object sender, EventArgs e)
+    {
+        FileListBox.BackColor = Color.FromArgb(40, 40, 40);
     }
 
     private void PopulateForm()
@@ -134,34 +166,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         if (result != DialogResult.OK)
             return;
 
-        bool fileTooLarge = false;
-
-        // for each selected file
-        foreach (string path in openFileDialog.FileNames)
-        {
-            FileInfo fileInfo = new FileInfo(path);
-            if (fileInfo.Length > Constants.MaxFileSize)
-            {
-                fileTooLarge = true;
-                continue;
-            }
-
-            FileModel model = new(path);
-
-            try
-            {
-                GlobalConfig.DataAccessor.CreateFileModel(model);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
-            }
-        }
-
-        if (fileTooLarge)
-            MessageBox.Show($"Some files exceeded the max size of 10MB.", "Error", MessageBoxButtons.OK);
-
-        PopulateForm();
+        AddFiles(openFileDialog.FileNames);
     }
 
     private void FileListBox_DrawItem(object sender, DrawItemEventArgs row)
@@ -242,6 +247,38 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
     {
         ImportForm importForm = new(this);
         importForm.ShowDialog();
+    }
+
+    private void AddFiles(string[] paths)
+    {
+        bool fileTooLarge = false;
+
+        // for each selected file
+        foreach (string path in paths)
+        {
+            FileInfo fileInfo = new FileInfo(path);
+            if (fileInfo.Length > Constants.MaxFileSize)
+            {
+                fileTooLarge = true;
+                continue;
+            }
+
+            FileModel model = new(path);
+
+            try
+            {
+                GlobalConfig.DataAccessor.CreateFileModel(model);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
+            }
+        }
+
+        if (fileTooLarge)
+            MessageBox.Show($"Some files exceeded the max size of {Constants.MaxFileSize} bytes.", "Error", MessageBoxButtons.OK);
+
+        PopulateForm();
     }
 
     public void ImportComplete()

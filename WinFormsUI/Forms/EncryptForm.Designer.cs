@@ -137,6 +137,7 @@
             // 
             EnterButton.BackColor = Color.Silver;
             EnterButton.Enabled = false;
+            EnterButton.FlatStyle = FlatStyle.Flat;
             EnterButton.Font = new Font("Segoe UI Emoji", 12F);
             EnterButton.ForeColor = SystemColors.ButtonFace;
             EnterButton.Location = new Point(454, 86);

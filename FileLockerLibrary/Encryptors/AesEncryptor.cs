@@ -9,14 +9,9 @@ namespace FileLockerLibrary;
 /// </summary>
 public class AesEncryptor : IEncryptor
 {
-    /// <summary>
-    /// Encrypts plaintext using a symmetric key.
-    /// </summary>
-    /// <param name="plaintext">Plaintext to be encrypted.</param>
-    /// <param name="key">The 32-byte key to use.</param>
-    /// <returns>Bytes of ciphtertext with the intialization vector appended to the front.</returns>
-    /// <exception cref="ArgumentNullException">Thrown when the plaintext or key is null.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown when the plaintext or key has invalid length.</exception>
+    private const long MaxFileSize = Constants.MaxFileSize;
+    private const int PaddingFieldLength = sizeof(long);
+
     public byte[] Encrypt(byte[] plaintext, byte[] key)
     {
         if (plaintext == null)
@@ -26,6 +21,7 @@ public class AesEncryptor : IEncryptor
         if (key.Length != 32)
             throw new ArgumentOutOfRangeException("Key must be 32 bytes (256 bits) long.");
 
+        byte[] paddedData = PadData(plaintext);
         byte[] iv;
         byte[] ciphertext;
 
@@ -37,7 +33,7 @@ public class AesEncryptor : IEncryptor
         using MemoryStream msEncrypt = new();
         using (CryptoStream csEncrypt = new(msEncrypt, aes.CreateEncryptor(aes.Key, aes.IV), CryptoStreamMode.Write))
         {
-            csEncrypt.Write(plaintext, 0, plaintext.Length);
+            csEncrypt.Write(paddedData, 0, paddedData.Length);
         }
         ciphertext = msEncrypt.ToArray();
 
@@ -49,14 +45,6 @@ public class AesEncryptor : IEncryptor
         return ivAndCiphertext;
     }
 
-    /// <summary>
-    /// Decrypts ciphertext using a provided key.
-    /// </summary>
-    /// <param name="ciphertextAndIv">The ciphertext with the initialization vector appended to the front.</param>
-    /// <param name="key">32-character key to use when decrypting.</param>
-    /// <returns>String of plaintext.</returns>
-    /// <exception cref="ArgumentNullException">Thrown when the ciphertext or key is null.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown when the ciphertext or key has invalid length.</exception>
     public byte[] Decrypt(byte[] ciphertextAndIv, byte[] key)
     {
         if (ciphertextAndIv == null)
@@ -72,7 +60,7 @@ public class AesEncryptor : IEncryptor
         if (ciphertextAndIv.Length == 0)
             return new byte[0];
 
-        byte[] plaintextBytes;
+        byte[] paddedData;
 
         using (Aes aes = Aes.Create())
         {
@@ -87,9 +75,45 @@ public class AesEncryptor : IEncryptor
             using CryptoStream csDecrypt = new(msDecrypt, aes.CreateDecryptor(), CryptoStreamMode.Read);
             using MemoryStream plaintextStream = new();
             csDecrypt.CopyTo(plaintextStream);
-            plaintextBytes = plaintextStream.ToArray();
+            paddedData = plaintextStream.ToArray();
         }
 
-        return plaintextBytes;
+        byte[] unpaddedData = UnpadData(paddedData);
+
+        return unpaddedData;
+    }
+
+    private byte[] PadData(byte[] data)
+    {
+        if (data.Length > MaxFileSize)
+            throw new ArgumentOutOfRangeException(nameof(data), "Data size exceeds the maximum allowed size of 100 MB.");
+
+        long paddingLength = MaxFileSize - data.Length;
+        byte[] paddedData = new byte[MaxFileSize + PaddingFieldLength]; 
+
+        Buffer.BlockCopy(data, 0, paddedData, 0, data.Length);
+
+        // add the padding length field
+        Buffer.BlockCopy(BitConverter.GetBytes(paddingLength), 0, paddedData, data.Length + (int)paddingLength, PaddingFieldLength);
+
+        return paddedData;
+    }
+
+    private byte[] UnpadData(byte[] paddedData)
+    {
+        if (paddedData.Length < MaxFileSize + PaddingFieldLength)
+            throw new ArgumentException("Invalid padded data size.");
+
+        // extract the padding length field
+        long paddingLength = BitConverter.ToInt64(paddedData, paddedData.Length - PaddingFieldLength);
+
+        if (paddingLength < 0 || paddingLength > MaxFileSize)
+            throw new ArgumentException("Invalid padding length.");
+
+        byte[] unpaddedData = new byte[MaxFileSize - paddingLength];
+
+        Buffer.BlockCopy(paddedData, 0, unpaddedData, 0, unpaddedData.Length);
+
+        return unpaddedData;
     }
 }

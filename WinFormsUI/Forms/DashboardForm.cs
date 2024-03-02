@@ -22,6 +22,11 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         FileListBox.DataSource = GlobalConfig.DataAccessor.LoadAllFileModels();
         FileListBox.DisplayMember = "DisplayName";
 
+        UpdateControls();
+    }
+
+    private void UpdateControls()
+    {
         if (FileListBox.Items.Count == 0)
         {
             TrashButton.Enabled = false;
@@ -129,10 +134,19 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         if (result != DialogResult.OK)
             return;
 
+        bool fileTooLarge = false;
+
         // for each selected file
-        foreach (string fileName in openFileDialog.FileNames)
+        foreach (string path in openFileDialog.FileNames)
         {
-            FileModel model = new(fileName);
+            FileInfo fileInfo = new FileInfo(path);
+            if (fileInfo.Length > Constants.MaxFileSize)
+            {
+                fileTooLarge = true;
+                continue;
+            }
+
+            FileModel model = new(path);
 
             try
             {
@@ -144,18 +158,10 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
             }
         }
 
-        PopulateForm();
-    }
+        if (fileTooLarge)
+            MessageBox.Show($"Some files exceeded the max size of 10MB.", "Error", MessageBoxButtons.OK);
 
-    public void EncryptionComplete()
-    {
         PopulateForm();
-    }
-
-    public void DecryptionComplete()
-    {
-        FileListBox.Refresh();
-        FileListBox_SelectedIndexChanged(null, EventArgs.Empty);
     }
 
     private void FileListBox_DrawItem(object sender, DrawItemEventArgs row)
@@ -185,7 +191,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
     private void FileListBox_SelectedIndexChanged(object? sender, EventArgs e)
     {
-        PopulateForm();
+        UpdateControls();
     }
 
     private void UserGuideMenuItem_Click(object sender, EventArgs e)
@@ -228,7 +234,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         }
         catch
         {
-            MessageBox.Show("Could not export.", "Error", MessageBoxButtons.OK);
+            MessageBox.Show("Could not export, the file may be missing.", "Error", MessageBoxButtons.OK);
         }
     }
 
@@ -241,5 +247,16 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
     public void ImportComplete()
     {
         PopulateForm();
+    }
+
+    public void EncryptionComplete()
+    {
+        PopulateForm();
+    }
+
+    public void DecryptionComplete()
+    {
+        FileListBox.Refresh();
+        FileListBox_SelectedIndexChanged(null, EventArgs.Empty);
     }
 }

@@ -40,6 +40,7 @@
             EnterButton = new Button();
             ConfirmPasswordMaskedTextBox = new MaskedTextBox();
             ConfirmPasswordLabel = new Label();
+            GenerateRandomButton = new Button();
             SuspendLayout();
             // 
             // PasswordMaskedTextBox
@@ -72,9 +73,9 @@
             NumberOfCharactersLabel.ForeColor = SystemColors.AppWorkspace;
             NumberOfCharactersLabel.Location = new Point(171, 138);
             NumberOfCharactersLabel.Name = "NumberOfCharactersLabel";
-            NumberOfCharactersLabel.Size = new Size(137, 21);
+            NumberOfCharactersLabel.Size = new Size(158, 21);
             NumberOfCharactersLabel.TabIndex = 5;
-            NumberOfCharactersLabel.Text = "• 8 - 20 characters";
+            NumberOfCharactersLabel.Text = "• <range> characters";
             // 
             // DigitLabel
             // 
@@ -171,12 +172,27 @@
             ConfirmPasswordLabel.TabIndex = 12;
             ConfirmPasswordLabel.Text = "Confirm Password:";
             // 
+            // GenerateRandomButton
+            // 
+            GenerateRandomButton.BackColor = SystemColors.Highlight;
+            GenerateRandomButton.FlatStyle = FlatStyle.Flat;
+            GenerateRandomButton.Font = new Font("Segoe UI Emoji", 12F);
+            GenerateRandomButton.ForeColor = SystemColors.ButtonFace;
+            GenerateRandomButton.Location = new Point(235, 265);
+            GenerateRandomButton.Name = "GenerateRandomButton";
+            GenerateRandomButton.Size = new Size(148, 37);
+            GenerateRandomButton.TabIndex = 13;
+            GenerateRandomButton.Text = "Generate Random";
+            GenerateRandomButton.UseVisualStyleBackColor = false;
+            GenerateRandomButton.Click += GenerateRandomButton_Click;
+            // 
             // EncryptForm
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(32, 32, 32);
-            ClientSize = new Size(541, 278);
+            ClientSize = new Size(541, 314);
+            Controls.Add(GenerateRandomButton);
             Controls.Add(EyeballLabel);
             Controls.Add(ConfirmPasswordMaskedTextBox);
             Controls.Add(ConfirmPasswordLabel);
@@ -211,5 +227,6 @@
         private Button EnterButton;
         private MaskedTextBox ConfirmPasswordMaskedTextBox;
         private Label ConfirmPasswordLabel;
+        private Button GenerateRandomButton;
     }
 }

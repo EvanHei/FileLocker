@@ -62,8 +62,6 @@
             FileListBox.SelectedIndexChanged += FileListBox_SelectedIndexChanged;
             FileListBox.DragDrop += FileListBox_DragDrop;
             FileListBox.DragEnter += FileListBox_DragEnter;
-            FileListBox.DragOver += FileListBox_DragOver;
-            FileListBox.DragLeave += FileListBox_DragLeave;
             // 
             // EncryptButton
             // 
@@ -156,15 +154,15 @@
             // ImportMenuItem
             // 
             ImportMenuItem.Name = "ImportMenuItem";
-            ImportMenuItem.Size = new Size(131, 22);
-            ImportMenuItem.Text = "&Import File";
+            ImportMenuItem.Size = new Size(180, 22);
+            ImportMenuItem.Text = "&Import Archive";
             ImportMenuItem.Click += ImportMenuItem_Click;
             // 
             // ExportMenuItem
             // 
             ExportMenuItem.Name = "ExportMenuItem";
-            ExportMenuItem.Size = new Size(131, 22);
-            ExportMenuItem.Text = "&Export File";
+            ExportMenuItem.Size = new Size(180, 22);
+            ExportMenuItem.Text = "&Export Archive";
             ExportMenuItem.Click += ExportMenuItem_Click;
             // 
             // ExitMenuItem
@@ -172,7 +170,7 @@
             ExitMenuItem.BackColor = SystemColors.Control;
             ExitMenuItem.ForeColor = SystemColors.ControlText;
             ExitMenuItem.Name = "ExitMenuItem";
-            ExitMenuItem.Size = new Size(131, 22);
+            ExitMenuItem.Size = new Size(180, 22);
             ExitMenuItem.Text = "E&xit";
             ExitMenuItem.Click += ExitMenuItem_Click;
             // 

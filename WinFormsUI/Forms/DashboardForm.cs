@@ -33,22 +33,6 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
             e.Effect = DragDropEffects.None;
     }
 
-    private void FileListBox_DragOver(object sender, DragEventArgs e)
-    {
-        if (e.Data.GetDataPresent(DataFormats.FileDrop))
-        {
-            FileListBox.BackColor = Color.DarkGreen;
-            e.Effect = DragDropEffects.Copy;
-        }
-        else
-            e.Effect = DragDropEffects.None;
-    }
-
-    private void FileListBox_DragLeave(object sender, EventArgs e)
-    {
-        FileListBox.BackColor = Color.FromArgb(40, 40, 40);
-    }
-
     private void PopulateForm()
     {
         FileListBox.DataSource = GlobalConfig.DataAccessor.LoadAllFileModels();

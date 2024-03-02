@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Reflection.Emit;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -22,6 +23,8 @@ public partial class EncryptForm : Form
     public EncryptForm(IEncryptFormCaller caller, FileModel model)
     {
         InitializeComponent();
+
+        NumberOfCharactersLabel.Text = $"• {Constants.MinPasswordLength} - {Constants.MaxPasswordLength} characters";
 
         this.caller = caller;
         this.model = model;
@@ -57,7 +60,7 @@ public partial class EncryptForm : Form
         string password = PasswordMaskedTextBox.Text;
         string confirmPassword = ConfirmPasswordMaskedTextBox.Text;
 
-        if (password.Length < 8 || password.Length > 20)
+        if (password.Length < Constants.MinPasswordLength || password.Length > Constants.MaxPasswordLength)
             output = false;
         if (!password.Any(char.IsUpper))
             output = false;
@@ -101,7 +104,7 @@ public partial class EncryptForm : Form
         string confirmPassword = ConfirmPasswordMaskedTextBox.Text;
 
         // NumberOfCharactersLabel
-        if (password.Length >= 8 && password.Length <= 20)
+        if (password.Length >= Constants.MinPasswordLength && password.Length <= Constants.MaxPasswordLength)
         {
             if (NumberOfCharactersLabel.Text.Contains('•'))
             {
@@ -199,5 +202,60 @@ public partial class EncryptForm : Form
             EnterButton.BackColor = Color.Silver;
             EnterButton.Enabled = false;
         }
+    }
+
+    static string GenerateRandomPassword()
+    {
+        const string lowerCaseChars = "abcdefghijklmnopqrstuvwxyz";
+        const string upperCaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const string digits = "0123456789";
+        const string specialChars = "!@#$%^&*()_+-=[]{}|;:,.<>?";
+        string validChars = lowerCaseChars + upperCaseChars + digits + specialChars;
+        Random rng = new();
+
+        // generate password length within the specified range
+        int length = rng.Next(Constants.MinPasswordLength, Constants.MaxPasswordLength + 1);
+
+        // choose characters
+        char[] passwordChars = new char[length];
+        for (int i = 0; i < length; i++)
+        {
+            int index = rng.Next(0, validChars.Length);
+            passwordChars[i] = validChars[index];
+        }
+
+        // check password validity
+        if (!passwordChars.Any(char.IsUpper))
+            passwordChars[rng.Next(0, length)] = upperCaseChars[rng.Next(0, upperCaseChars.Length)];
+
+        if (!passwordChars.Any(char.IsLower))
+            passwordChars[rng.Next(0, length)] = lowerCaseChars[rng.Next(0, lowerCaseChars.Length)];
+
+        if (!passwordChars.Any(char.IsDigit))
+            passwordChars[rng.Next(0, length)] = digits[rng.Next(0, digits.Length)];
+
+        if (!passwordChars.Any(ch => specialChars.Contains(ch)))
+            passwordChars[rng.Next(0, length)] = specialChars[rng.Next(0, specialChars.Length)];
+
+        // shuffle the characters
+        for (int i = length - 1; i > 0; i--)
+        {
+            int swapIndex = rng.Next(0, i + 1);
+            char temp = passwordChars[i];
+            passwordChars[i] = passwordChars[swapIndex];
+            passwordChars[swapIndex] = temp;
+        }
+
+        return new string(passwordChars);
+    }
+
+    private void GenerateRandomButton_Click(object sender, EventArgs e)
+    {
+        string password = GenerateRandomPassword();
+        PasswordMaskedTextBox.Text = password;
+        ConfirmPasswordMaskedTextBox.Text = password;
+
+        if (!isEyeballLabelClicked)
+            EyeballLabel_Click(null, null);
     }
 }

@@ -38,13 +38,10 @@ public class TextAccessor : IDataAccessor
             throw new ArgumentException("Path cannot be null or empty.", nameof(model.Path));
         if (model.EncryptionStatus == true && model.EncryptionKeySalt == null)
             throw new InvalidOperationException("File is missing data to be unlocked.");
+        if (GetAllFileNames().Contains(model.FileName))
+            throw new InvalidOperationException($"{model.FileName} already added.");
 
         InitializePaths(model.FileName);
-
-        // TODO - change to use GetAllFilenames()?
-        // if the file name already exists
-        if (Directory.Exists(FileDirectoryPath))
-            throw new InvalidOperationException($"{model.FileName} already added.");
 
         // write to the files
         Directory.CreateDirectory(FileDirectoryPath);
@@ -86,6 +83,17 @@ public class TextAccessor : IDataAccessor
             File.Delete(MacPath);
     }
 
+    public void DeleteFileModel(FileModel model)
+    {
+        string fileName = (model.EncryptionStatus == true) ? Path.GetFileNameWithoutExtension(model.FileName) : model.FileName;
+        if (!GetAllFileNames().Contains(fileName))
+            throw new DirectoryNotFoundException($"{model.FileName} is not added.");
+
+        InitializePaths(model.FileName);
+
+        Directory.Delete(FileDirectoryPath, true);
+    }
+
     public List<FileModel> LoadAllFileModels()
     {
         List<FileModel> output = new();
@@ -109,6 +117,35 @@ public class TextAccessor : IDataAccessor
         }
 
         return output;
+    }
+
+    public void ShredFile(FileModel model)
+    {
+        if (string.IsNullOrEmpty(model.Path))
+            throw new ArgumentException("Path cannot be null or empty.", nameof(model.Path));
+        if (!File.Exists(model.Path))
+            throw new FileNotFoundException("File not found.", model.Path);
+
+        using (FileStream stream = new(model.Path, FileMode.Open, FileAccess.Write))
+        {
+            byte[] buffer = new byte[1024];
+            Random random = new();
+
+            // overwrite with random data
+            long remainingBytes = stream.Length;
+            while (remainingBytes > 0)
+            {
+                // calculate the size of the next chunk to overwrite
+                int chunkSize = (int)Math.Min(buffer.Length, remainingBytes);
+                random.NextBytes(buffer);
+                stream.Write(buffer, 0, chunkSize);
+                remainingBytes -= chunkSize;
+            }
+        }
+
+        File.Delete(model.Path);
+
+        DeleteFileModel(model);
     }
 
     public void ExportZipFileModel(FileModel model, string zipPath)
@@ -231,17 +268,6 @@ public class TextAccessor : IDataAccessor
         // create file model and save
         CreateFileModel(model);
         SaveFileModel(model);
-    }
-
-    public void DeleteFileModel(FileModel model)
-    {
-        string fileName = (model.EncryptionStatus == true) ? Path.GetFileNameWithoutExtension(model.FileName) : model.FileName;
-        if (!GetAllFileNames().Contains(fileName))
-            throw new DirectoryNotFoundException($"{model.FileName} is not added.");
-
-        InitializePaths(model.FileName);
-
-        Directory.Delete(FileDirectoryPath, true);
     }
 
     private List<string> GetAllFileNames()

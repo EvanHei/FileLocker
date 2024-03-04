@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DashboardForm));
             FileListBox = new ListBox();
             EncryptButton = new Button();
@@ -42,7 +43,10 @@
             ExitMenuItem = new ToolStripMenuItem();
             HelpMenuItem = new ToolStripMenuItem();
             UserGuideMenuItem = new ToolStripMenuItem();
+            FileListBoxItemContextMenuStrip = new ContextMenuStrip(components);
+            RemoveFileItem = new ToolStripMenuItem();
             MenuStrip.SuspendLayout();
+            FileListBoxItemContextMenuStrip.SuspendLayout();
             SuspendLayout();
             // 
             // FileListBox
@@ -62,6 +66,7 @@
             FileListBox.SelectedIndexChanged += FileListBox_SelectedIndexChanged;
             FileListBox.DragDrop += FileListBox_DragDrop;
             FileListBox.DragEnter += FileListBox_DragEnter;
+            FileListBox.MouseDown += FileListBox_MouseDown;
             // 
             // EncryptButton
             // 
@@ -93,7 +98,7 @@
             // 
             // TrashButton
             // 
-            TrashButton.BackColor = SystemColors.Highlight;
+            TrashButton.BackColor = Color.DarkRed;
             TrashButton.FlatStyle = FlatStyle.Flat;
             TrashButton.Font = new Font("Segoe UI Emoji", 12F);
             TrashButton.ForeColor = SystemColors.ButtonFace;
@@ -154,14 +159,14 @@
             // ImportMenuItem
             // 
             ImportMenuItem.Name = "ImportMenuItem";
-            ImportMenuItem.Size = new Size(180, 22);
+            ImportMenuItem.Size = new Size(153, 22);
             ImportMenuItem.Text = "&Import Archive";
             ImportMenuItem.Click += ImportMenuItem_Click;
             // 
             // ExportMenuItem
             // 
             ExportMenuItem.Name = "ExportMenuItem";
-            ExportMenuItem.Size = new Size(180, 22);
+            ExportMenuItem.Size = new Size(153, 22);
             ExportMenuItem.Text = "&Export Archive";
             ExportMenuItem.Click += ExportMenuItem_Click;
             // 
@@ -170,7 +175,7 @@
             ExitMenuItem.BackColor = SystemColors.Control;
             ExitMenuItem.ForeColor = SystemColors.ControlText;
             ExitMenuItem.Name = "ExitMenuItem";
-            ExitMenuItem.Size = new Size(180, 22);
+            ExitMenuItem.Size = new Size(153, 22);
             ExitMenuItem.Text = "E&xit";
             ExitMenuItem.Click += ExitMenuItem_Click;
             // 
@@ -192,6 +197,21 @@
             UserGuideMenuItem.Size = new Size(131, 22);
             UserGuideMenuItem.Text = "User &Guide";
             UserGuideMenuItem.Click += UserGuideMenuItem_Click;
+            // 
+            // FileListBoxItemContextMenuStrip
+            // 
+            FileListBoxItemContextMenuStrip.Items.AddRange(new ToolStripItem[] { RemoveFileItem });
+            FileListBoxItemContextMenuStrip.Name = "FileListBoxItemContextMenuStrip";
+            FileListBoxItemContextMenuStrip.Size = new Size(139, 26);
+            FileListBoxItemContextMenuStrip.Tag = "FileListBox";
+            FileListBoxItemContextMenuStrip.Text = "Remove File";
+            // 
+            // RemoveFileItem
+            // 
+            RemoveFileItem.Name = "RemoveFileItem";
+            RemoveFileItem.Size = new Size(138, 22);
+            RemoveFileItem.Text = "Remove File";
+            RemoveFileItem.Click += RemoveFileItem_Click;
             // 
             // DashboardForm
             // 
@@ -215,6 +235,7 @@
             Text = "Dashboard";
             MenuStrip.ResumeLayout(false);
             MenuStrip.PerformLayout();
+            FileListBoxItemContextMenuStrip.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -233,5 +254,7 @@
         private ToolStripMenuItem UserGuideMenuItem;
         private ToolStripMenuItem ExportMenuItem;
         private ToolStripMenuItem ImportMenuItem;
+        private ContextMenuStrip FileListBoxItemContextMenuStrip;
+        private ToolStripMenuItem RemoveFileItem;
     }
 }

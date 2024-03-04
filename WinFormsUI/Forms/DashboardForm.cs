@@ -15,6 +15,8 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
     {
         InitializeComponent();
 
+        FileListBox.ContextMenuStrip = FileListBoxItemContextMenuStrip;
+
         PopulateForm();
     }
 
@@ -78,7 +80,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
                 EncryptButton.Enabled = true;
                 DecryptButton.Enabled = false;
 
-                TrashButton.BackColor = SystemColors.Highlight;
+                TrashButton.BackColor = Color.DarkRed;
                 EncryptButton.BackColor = SystemColors.Highlight;
                 DecryptButton.BackColor = Color.Silver;
             }
@@ -115,27 +117,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         if (FileListBox.SelectedItem == null)
             return;
 
-        FileModel model = (FileModel)FileListBox.SelectedItem;
-
-        if (model.EncryptionStatus == true)
-        {
-            DialogResult result = MessageBox.Show("Removing a locked file means it can never be unlocked. Are you sure you want to proceed?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-            if (result != DialogResult.Yes)
-                return;
-        }
-
-        try
-        {
-            GlobalConfig.DataAccessor.DeleteFileModel(model);
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
-        }
-
-        PopulateForm();
+        ShredFile();
     }
 
     private void AddButton_Click(object sender, EventArgs e)
@@ -237,7 +219,6 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
     {
         bool fileTooLarge = false;
 
-        // for each selected file
         foreach (string path in paths)
         {
             FileInfo fileInfo = new FileInfo(path);
@@ -265,6 +246,53 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         PopulateForm();
     }
 
+    private void RemoveFile()
+    {
+        FileModel model = (FileModel)FileListBox.SelectedItem;
+
+        if (model.EncryptionStatus == true)
+        {
+            DialogResult result = MessageBox.Show("Removing a locked file means it can never be unlocked. Are you sure you want to proceed?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (result != DialogResult.Yes)
+                return;
+        }
+
+        try
+        {
+            GlobalConfig.DataAccessor.DeleteFileModel(model);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        PopulateForm();
+    }
+
+    private void ShredFile()
+    {
+        DialogResult result = MessageBox.Show("This will delete the file permanently. Are you sure you want to proceed?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+        if (result != DialogResult.Yes)
+            return;
+
+        FileModel model = (FileModel)FileListBox.SelectedItem;
+
+        try
+        {
+            GlobalConfig.DataAccessor.ShredFile(model);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        PopulateForm();
+
+    }
+
     public void ImportComplete()
     {
         PopulateForm();
@@ -279,5 +307,22 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
     {
         FileListBox.Refresh();
         FileListBox_SelectedIndexChanged(null, EventArgs.Empty);
+    }
+
+    private void FileListBox_MouseDown(object sender, MouseEventArgs e)
+    {
+        if (e.Button == MouseButtons.Right)
+        {
+            FileListBox.SelectedIndex = FileListBox.IndexFromPoint(e.Location);
+            FileListBox.ContextMenuStrip.Show(FileListBox, e.Location);
+        }
+    }
+
+    private void RemoveFileItem_Click(object sender, EventArgs e)
+    {
+        if (FileListBox.SelectedIndex == -1)
+            return;
+
+        RemoveFile();
     }
 }

@@ -34,37 +34,36 @@ public class TextAccessor : IDataAccessor
     {
         if (model == null)
             throw new ArgumentNullException("Model cannot be null.", nameof(model));
-        if (string.IsNullOrEmpty(model.Path))
-            throw new ArgumentException("Path cannot be null or empty.", nameof(model.Path));
-        if (model.EncryptionStatus == true && model.EncryptionKeySalt == null)
-            throw new InvalidOperationException("File is missing data to be unlocked.");
         if (GetAllFileNames().Contains(model.FileName))
             throw new InvalidOperationException($"{model.FileName} already added.");
 
         InitializePaths(model.FileName);
 
-        // write to the files
         Directory.CreateDirectory(FileDirectoryPath);
-        File.WriteAllText(FilePathPath, model.Path);
+        WriteFileModelToFiles(model);
     }
 
     public void SaveFileModel(FileModel model)
     {
         if (model == null)
             throw new ArgumentNullException("Model cannot be null.", nameof(model));
+
+        InitializePaths(model.FileName);
+
+        WriteFileModelToFiles(model);
+    }
+
+    private void WriteFileModelToFiles(FileModel model)
+    {
+        if (model == null)
+            throw new ArgumentNullException("Model cannot be null.", nameof(model));
         if (string.IsNullOrEmpty(model.Path))
             throw new ArgumentException("Path cannot be null or empty.", nameof(model.Path));
-
-        if (model.EncryptionStatus == true)
-            InitializePaths(Path.GetFileNameWithoutExtension(model.Path));
-        else
-            InitializePaths(model.FileName);
-
-        // if the directory doesn't exist
         if (!Directory.Exists(FileDirectoryPath))
             throw new DirectoryNotFoundException($"Directory '{FileDirectoryPath}' does not exist.");
+        if (model.EncryptionStatus == true && model.EncryptionKeySalt == null)
+            throw new InvalidOperationException("File is missing data to be unlocked.");
 
-        // write to the files
         File.WriteAllText(FilePathPath, model.Path);
 
         if (model.EncryptionKeySalt != null)
@@ -85,13 +84,10 @@ public class TextAccessor : IDataAccessor
 
     public void DeleteFileModel(FileModel model)
     {
-        string fileName = (model.EncryptionStatus == true) ? Path.GetFileNameWithoutExtension(model.FileName) : model.FileName;
-        if (!GetAllFileNames().Contains(fileName))
-            throw new DirectoryNotFoundException($"{model.FileName} is not added.");
-
         InitializePaths(model.FileName);
 
-        Directory.Delete(FileDirectoryPath, true);
+        if (Directory.Exists(FileDirectoryPath))
+            Directory.Delete(FileDirectoryPath, true);
     }
 
     public List<FileModel> LoadAllFileModels()
@@ -105,18 +101,21 @@ public class TextAccessor : IDataAccessor
             // TODO - add error checking
             string path = File.ReadAllText(FilePathPath);
             FileModel temp = new(path);
-
-            if (File.Exists(EncryptionKeySaltPath))
-                temp.EncryptionKeySalt = File.ReadAllBytes(EncryptionKeySaltPath);
-            if (File.Exists(MacKeySaltPath))
-                temp.MacKeySalt = File.ReadAllBytes(MacKeySaltPath);
-            if (File.Exists(MacPath))
-                temp.Mac = File.ReadAllBytes(MacPath);
-
+            ReadFileModelFromFiles(temp);
             output.Add(temp);
         }
 
         return output;
+    }
+
+    private void ReadFileModelFromFiles(FileModel model)
+    {
+        if (File.Exists(EncryptionKeySaltPath))
+            model.EncryptionKeySalt = File.ReadAllBytes(EncryptionKeySaltPath);
+        if (File.Exists(MacKeySaltPath))
+            model.MacKeySalt = File.ReadAllBytes(MacKeySaltPath);
+        if (File.Exists(MacPath))
+            model.Mac = File.ReadAllBytes(MacPath);
     }
 
     public void ShredFile(FileModel model)
@@ -124,12 +123,15 @@ public class TextAccessor : IDataAccessor
         if (string.IsNullOrEmpty(model.Path))
             throw new ArgumentException("Path cannot be null or empty.", nameof(model.Path));
         if (!File.Exists(model.Path))
-            throw new FileNotFoundException("File not found.", model.Path);
+        {
+            DeleteFileModel(model);
+            return;
+        }
 
         using (FileStream stream = new(model.Path, FileMode.Open, FileAccess.Write))
         {
-            byte[] buffer = new byte[1024];
             Random random = new();
+            byte[] buffer = new byte[1024];
 
             // overwrite with random data
             long remainingBytes = stream.Length;
@@ -144,7 +146,6 @@ public class TextAccessor : IDataAccessor
         }
 
         File.Delete(model.Path);
-
         DeleteFileModel(model);
     }
 
@@ -152,30 +153,31 @@ public class TextAccessor : IDataAccessor
     {
         if (model == null)
             throw new ArgumentNullException("Model cannot be null.", nameof(model));
+
+        InitializePaths(model.FileName);
+
+        GenerateExportDirectory(model);
+
+        CreateArchiveFromExportDirectory(zipPath);
+
+        Directory.Delete(TempExportDirectoryPath, recursive: true);
+    }
+
+    private void GenerateExportDirectory(FileModel model)
+    {
         if (string.IsNullOrEmpty(model.Path))
             throw new ArgumentException("Path cannot be null or empty.", nameof(model.Path));
-        if (string.IsNullOrEmpty(zipPath))
-            throw new ArgumentException("Zip path cannot be null or empty.", nameof(zipPath));
-
-        if (model.EncryptionStatus == true)
-            InitializePaths(Path.GetFileNameWithoutExtension(model.Path));
-        else
-            InitializePaths(model.FileName);
-
         if (!Directory.Exists(FileDirectoryPath))
             throw new DirectoryNotFoundException($"Directory '{FileDirectoryPath}' does not exist.");
 
-        // write necessary files to a temporary hidden export file
-        Directory.CreateDirectory(TempExportDirectoryPath);
-        FileAttributes attributes = File.GetAttributes(TempExportDirectoryPath);
-        attributes |= FileAttributes.Hidden;
-        File.SetAttributes(TempExportDirectoryPath, attributes);
+        CreateExportDirectory();
 
+        // copy source file data to TempExportDirectoryPath
         byte[] content = File.ReadAllBytes(model.Path);
         string tempContentPath = Path.Combine(TempExportDirectoryPath, model.FileName);
         File.WriteAllBytes(tempContentPath, content);
 
-        // copy all files in the model's directory to the export directory, except the path file
+        // copy all files in the model's directory to TempExportDirectoryPath, except the path file
         foreach (string path in Directory.GetFiles(FileDirectoryPath))
         {
             if (Path.GetFileName(path) == Constants.FilePathFileName)
@@ -185,14 +187,28 @@ public class TextAccessor : IDataAccessor
             string destinationPath = Path.Combine(TempExportDirectoryPath, fileName);
             File.Copy(path, destinationPath, overwrite: true);
         }
+    }
+
+    private void CreateExportDirectory()
+    {
+        Directory.CreateDirectory(TempExportDirectoryPath);
+        FileAttributes attributes = File.GetAttributes(TempExportDirectoryPath);
+        attributes |= FileAttributes.Hidden;
+        File.SetAttributes(TempExportDirectoryPath, attributes);
+    }
+
+    private void CreateArchiveFromExportDirectory(string zipPath)
+    {
+        if (string.IsNullOrEmpty(zipPath))
+            throw new ArgumentException("Zip path cannot be null or empty.", nameof(zipPath));
 
         if (File.Exists(zipPath))
             File.Delete(zipPath);
 
+        // create archive
         ZipFile.CreateFromDirectory(TempExportDirectoryPath, zipPath);
-        Directory.Delete(TempExportDirectoryPath, recursive: true);
 
-        // change extension
+        // change .zip extension
         string newFilePath = Path.ChangeExtension(zipPath, Constants.ExportExtension);
         File.Move(zipPath, newFilePath);
     }
@@ -204,10 +220,7 @@ public class TextAccessor : IDataAccessor
 
         using ZipArchive archive = ZipFile.OpenRead(zipPath);
 
-        // get all entries in the zip file
-        List<string> zipEntriesToProcess = new();
-        foreach (ZipArchiveEntry entry in archive.Entries)
-            zipEntriesToProcess.Add(entry.FullName);
+        List<string> zipEntriesToProcess = GetZipEntryNames(archive);
 
         // error checking
         if (zipEntriesToProcess.Count < 1 || zipEntriesToProcess.Count > 5)
@@ -215,6 +228,7 @@ public class TextAccessor : IDataAccessor
 
         FileModel model = new(savePath);
 
+        // TODO - refactor if the model's encryption files are still written even if its unlocked
         // if the file is locked, populate the model
         string[] filesToCheck = { Constants.EncryptionKeySaltFileName, Constants.MacFileName, Constants.MacKeySaltFileName };
         if (zipEntriesToProcess.Any(entry => entry.EndsWith(Constants.EncryptedExtension, StringComparison.OrdinalIgnoreCase)) &&
@@ -270,6 +284,16 @@ public class TextAccessor : IDataAccessor
         SaveFileModel(model);
     }
 
+    private List<string> GetZipEntryNames(ZipArchive archive)
+    {
+        List<string> output = new();
+
+        foreach (ZipArchiveEntry entry in archive.Entries)
+            output.Add(entry.FullName);
+
+        return output;
+    }
+
     private List<string> GetAllFileNames()
     {
         if (!Directory.Exists(FileModelsDirectoryPath))
@@ -286,7 +310,6 @@ public class TextAccessor : IDataAccessor
     private void InitializePaths(string fileName)
     {
         fileName = (Path.GetExtension(fileName) == Constants.EncryptedExtension) ? Path.GetFileNameWithoutExtension(fileName) : fileName;
-
         FileDirectoryPath = Path.Combine(FileModelsDirectoryPath, fileName);
         FilePathPath = Path.Combine(FileDirectoryPath, Constants.FilePathFileName);
         EncryptionKeySaltPath = Path.Combine(FileDirectoryPath, Constants.EncryptionKeySaltFileName);

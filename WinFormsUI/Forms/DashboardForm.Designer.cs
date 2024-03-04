@@ -44,7 +44,7 @@
             HelpMenuItem = new ToolStripMenuItem();
             UserGuideMenuItem = new ToolStripMenuItem();
             FileListBoxItemContextMenuStrip = new ContextMenuStrip(components);
-            RemoveFileItem = new ToolStripMenuItem();
+            RemoveFromListItem = new ToolStripMenuItem();
             MenuStrip.SuspendLayout();
             FileListBoxItemContextMenuStrip.SuspendLayout();
             SuspendLayout();
@@ -200,18 +200,18 @@
             // 
             // FileListBoxItemContextMenuStrip
             // 
-            FileListBoxItemContextMenuStrip.Items.AddRange(new ToolStripItem[] { RemoveFileItem });
+            FileListBoxItemContextMenuStrip.Items.AddRange(new ToolStripItem[] { RemoveFromListItem });
             FileListBoxItemContextMenuStrip.Name = "FileListBoxItemContextMenuStrip";
-            FileListBoxItemContextMenuStrip.Size = new Size(139, 26);
+            FileListBoxItemContextMenuStrip.Size = new Size(181, 48);
             FileListBoxItemContextMenuStrip.Tag = "FileListBox";
             FileListBoxItemContextMenuStrip.Text = "Remove File";
             // 
-            // RemoveFileItem
+            // RemoveFromListItem
             // 
-            RemoveFileItem.Name = "RemoveFileItem";
-            RemoveFileItem.Size = new Size(138, 22);
-            RemoveFileItem.Text = "Remove File";
-            RemoveFileItem.Click += RemoveFileItem_Click;
+            RemoveFromListItem.Name = "RemoveFromListItem";
+            RemoveFromListItem.Size = new Size(180, 22);
+            RemoveFromListItem.Text = "Remove From List";
+            RemoveFromListItem.Click += RemoveFileItem_Click;
             // 
             // DashboardForm
             // 
@@ -255,6 +255,6 @@
         private ToolStripMenuItem ExportMenuItem;
         private ToolStripMenuItem ImportMenuItem;
         private ContextMenuStrip FileListBoxItemContextMenuStrip;
-        private ToolStripMenuItem RemoveFileItem;
+        private ToolStripMenuItem RemoveFromListItem;
     }
 }

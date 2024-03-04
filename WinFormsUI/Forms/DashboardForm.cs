@@ -117,7 +117,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         if (FileListBox.SelectedItem == null)
             return;
 
-        ShredFile();
+        ShredSelectedFile();
     }
 
     private void AddButton_Click(object sender, EventArgs e)
@@ -246,7 +246,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         PopulateForm();
     }
 
-    private void RemoveFile()
+    private void RemoveSelectedFile()
     {
         FileModel model = (FileModel)FileListBox.SelectedItem;
 
@@ -271,7 +271,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         PopulateForm();
     }
 
-    private void ShredFile()
+    private void ShredSelectedFile()
     {
         DialogResult result = MessageBox.Show("This will delete the file permanently. Are you sure you want to proceed?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
         if (result != DialogResult.Yes)
@@ -323,6 +323,6 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         if (FileListBox.SelectedIndex == -1)
             return;
 
-        RemoveFile();
+        RemoveSelectedFile();
     }
 }

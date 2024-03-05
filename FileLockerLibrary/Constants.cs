@@ -16,7 +16,8 @@ public static class Constants
     public const string FileModelsDirectoryName = "FileModels";
     public const string TempExportDirectoryName = "TempExport";
     public const string LogDirectoryName = "Logs";
-    public const string EncryptedExtension = ".locked";
+    public const string AesExtension = ".aes";
+    public const string TripleDesExtension = ".3des";
     public const string ExportExtension = ".filelocker";
     public const string FilePathFileName = "Path.txt";
     public const string EncryptionKeySaltFileName = "EncryptionKey.salt";

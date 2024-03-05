@@ -25,6 +25,7 @@ public partial class EncryptForm : Form
         InitializeComponent();
 
         NumberOfCharactersLabel.Text = $"• {Constants.MinPasswordLength} - {Constants.MaxPasswordLength} characters";
+        EncryptionAlgorithmComboBox.DataSource = Enum.GetNames(typeof(EncryptionAlgorithm));
 
         this.caller = caller;
         this.model = model;
@@ -37,6 +38,8 @@ public partial class EncryptForm : Form
 
         try
         {
+            Enum.TryParse(EncryptionAlgorithmComboBox.SelectedItem.ToString(), out EncryptionAlgorithm algorithm);
+            model.EncryptionAlgorithm = algorithm;
             model.Password = PasswordMaskedTextBox.Text;
             model.Lock();
             GlobalConfig.DataAccessor.SaveFileModel(model);
@@ -71,6 +74,9 @@ public partial class EncryptForm : Form
         if (!password.Any(ch => !char.IsLetterOrDigit(ch)))
             output = false;
         if (password != confirmPassword)
+            output = false;
+        if (EncryptionAlgorithmComboBox.SelectedItem == null ||
+            !Enum.TryParse(EncryptionAlgorithmComboBox.SelectedItem.ToString(), out EncryptionAlgorithm algorithm))
             output = false;
 
         return output;
@@ -178,6 +184,7 @@ public partial class EncryptForm : Form
             SpecialCharacterLabel.ForeColor = SystemColors.AppWorkspace;
         }
 
+        // TODO - refactor into a separate method
         if (ValidateInputFields())
         {
             EnterButton.BackColor = SystemColors.Highlight;
@@ -192,6 +199,22 @@ public partial class EncryptForm : Form
 
     private void ConfirmPasswordMaskedTextBox_TextChanged(object sender, EventArgs e)
     {
+        // TODO - refactor into a separate method
+        if (ValidateInputFields())
+        {
+            EnterButton.BackColor = SystemColors.Highlight;
+            EnterButton.Enabled = true;
+        }
+        else
+        {
+            EnterButton.BackColor = Color.Silver;
+            EnterButton.Enabled = false;
+        }
+    }
+
+    private void EncryptionAlgorithmComboBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        // TODO - refactor into a separate method
         if (ValidateInputFields())
         {
             EnterButton.BackColor = SystemColors.Highlight;

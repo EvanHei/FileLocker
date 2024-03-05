@@ -10,11 +10,22 @@ public static class GlobalConfig
 {
     public static IDataAccessor DataAccessor = new TextAccessor();
 
-    public static IEncryptor Encryptor = new AesEncryptor();
-
     public static IKeyDeriver KeyDeriver = new Pbkdf2KeyDeriver();
 
     public static IMacGenerator MacGenerator = new HmacGenerator();
 
     public static ILogger Logger = new SerilogLogger();
+
+    public static IEncryptor Encryptor(EncryptionAlgorithm algorithm)
+    {
+        switch (algorithm)
+        {
+            case EncryptionAlgorithm.Aes:
+                return new AesEncryptor();
+            case EncryptionAlgorithm.TripleDes:
+                return new TripleDesEncryptor();
+            default:
+                throw new ArgumentException("Unsupported encryption algorithm.", nameof(algorithm));
+        }
+    }
 }

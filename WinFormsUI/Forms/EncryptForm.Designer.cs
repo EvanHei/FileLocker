@@ -41,6 +41,8 @@
             ConfirmPasswordMaskedTextBox = new MaskedTextBox();
             ConfirmPasswordLabel = new Label();
             GenerateRandomButton = new Button();
+            EncryptionAlgorithmLabel = new Label();
+            EncryptionAlgorithmComboBox = new ComboBox();
             SuspendLayout();
             // 
             // PasswordMaskedTextBox
@@ -71,7 +73,7 @@
             NumberOfCharactersLabel.AutoSize = true;
             NumberOfCharactersLabel.Font = new Font("Segoe UI Emoji", 12F);
             NumberOfCharactersLabel.ForeColor = SystemColors.AppWorkspace;
-            NumberOfCharactersLabel.Location = new Point(171, 138);
+            NumberOfCharactersLabel.Location = new Point(171, 185);
             NumberOfCharactersLabel.Name = "NumberOfCharactersLabel";
             NumberOfCharactersLabel.Size = new Size(158, 21);
             NumberOfCharactersLabel.TabIndex = 5;
@@ -82,7 +84,7 @@
             DigitLabel.AutoSize = true;
             DigitLabel.Font = new Font("Segoe UI Emoji", 12F);
             DigitLabel.ForeColor = SystemColors.AppWorkspace;
-            DigitLabel.Location = new Point(171, 201);
+            DigitLabel.Location = new Point(171, 248);
             DigitLabel.Name = "DigitLabel";
             DigitLabel.Size = new Size(54, 21);
             DigitLabel.TabIndex = 6;
@@ -93,7 +95,7 @@
             LowercaseLetterLabel.AutoSize = true;
             LowercaseLetterLabel.Font = new Font("Segoe UI Emoji", 12F);
             LowercaseLetterLabel.ForeColor = SystemColors.AppWorkspace;
-            LowercaseLetterLabel.Location = new Point(171, 180);
+            LowercaseLetterLabel.Location = new Point(171, 227);
             LowercaseLetterLabel.Name = "LowercaseLetterLabel";
             LowercaseLetterLabel.Size = new Size(134, 21);
             LowercaseLetterLabel.TabIndex = 8;
@@ -104,7 +106,7 @@
             UppercaseLetterLabel.AutoSize = true;
             UppercaseLetterLabel.Font = new Font("Segoe UI Emoji", 12F);
             UppercaseLetterLabel.ForeColor = SystemColors.AppWorkspace;
-            UppercaseLetterLabel.Location = new Point(171, 159);
+            UppercaseLetterLabel.Location = new Point(171, 206);
             UppercaseLetterLabel.Name = "UppercaseLetterLabel";
             UppercaseLetterLabel.Size = new Size(134, 21);
             UppercaseLetterLabel.TabIndex = 7;
@@ -115,7 +117,7 @@
             SpecialCharacterLabel.AutoSize = true;
             SpecialCharacterLabel.Font = new Font("Segoe UI Emoji", 12F);
             SpecialCharacterLabel.ForeColor = SystemColors.AppWorkspace;
-            SpecialCharacterLabel.Location = new Point(171, 222);
+            SpecialCharacterLabel.Location = new Point(171, 269);
             SpecialCharacterLabel.Name = "SpecialCharacterLabel";
             SpecialCharacterLabel.Size = new Size(138, 21);
             SpecialCharacterLabel.TabIndex = 9;
@@ -178,7 +180,7 @@
             GenerateRandomButton.FlatStyle = FlatStyle.Flat;
             GenerateRandomButton.Font = new Font("Segoe UI Emoji", 12F);
             GenerateRandomButton.ForeColor = SystemColors.ButtonFace;
-            GenerateRandomButton.Location = new Point(208, 265);
+            GenerateRandomButton.Location = new Point(208, 312);
             GenerateRandomButton.Name = "GenerateRandomButton";
             GenerateRandomButton.Size = new Size(148, 37);
             GenerateRandomButton.TabIndex = 13;
@@ -186,12 +188,37 @@
             GenerateRandomButton.UseVisualStyleBackColor = false;
             GenerateRandomButton.Click += GenerateRandomButton_Click;
             // 
+            // EncryptionAlgorithmLabel
+            // 
+            EncryptionAlgorithmLabel.AutoSize = true;
+            EncryptionAlgorithmLabel.Font = new Font("Segoe UI Emoji", 12F);
+            EncryptionAlgorithmLabel.ForeColor = SystemColors.ButtonFace;
+            EncryptionAlgorithmLabel.Location = new Point(4, 128);
+            EncryptionAlgorithmLabel.Name = "EncryptionAlgorithmLabel";
+            EncryptionAlgorithmLabel.Size = new Size(161, 21);
+            EncryptionAlgorithmLabel.TabIndex = 14;
+            EncryptionAlgorithmLabel.Text = "Encryption Algorithm:";
+            // 
+            // EncryptionAlgorithmComboBox
+            // 
+            EncryptionAlgorithmComboBox.BackColor = Color.FromArgb(52, 52, 52);
+            EncryptionAlgorithmComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            EncryptionAlgorithmComboBox.ForeColor = SystemColors.ButtonFace;
+            EncryptionAlgorithmComboBox.FormattingEnabled = true;
+            EncryptionAlgorithmComboBox.Location = new Point(171, 125);
+            EncryptionAlgorithmComboBox.Name = "EncryptionAlgorithmComboBox";
+            EncryptionAlgorithmComboBox.Size = new Size(277, 29);
+            EncryptionAlgorithmComboBox.TabIndex = 15;
+            EncryptionAlgorithmComboBox.SelectedIndexChanged += EncryptionAlgorithmComboBox_SelectedIndexChanged;
+            // 
             // EncryptForm
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(32, 32, 32);
-            ClientSize = new Size(541, 314);
+            ClientSize = new Size(541, 367);
+            Controls.Add(EncryptionAlgorithmComboBox);
+            Controls.Add(EncryptionAlgorithmLabel);
             Controls.Add(GenerateRandomButton);
             Controls.Add(EyeballLabel);
             Controls.Add(ConfirmPasswordMaskedTextBox);
@@ -228,5 +255,7 @@
         private MaskedTextBox ConfirmPasswordMaskedTextBox;
         private Label ConfirmPasswordLabel;
         private Button GenerateRandomButton;
+        private Label EncryptionAlgorithmLabel;
+        private ComboBox EncryptionAlgorithmComboBox;
     }
 }

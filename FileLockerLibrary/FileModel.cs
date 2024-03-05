@@ -21,12 +21,19 @@ public class FileModel
         {
             password = value;
 
+            // TODO - test
             if (EncryptionKeySalt != null)
-                EncryptionKey = GlobalConfig.KeyDeriver.DeriveKey(Password, EncryptionKeySalt);
+                if (EncryptionAlgorithm == EncryptionAlgorithm.Aes)
+                    EncryptionKey = GlobalConfig.KeyDeriver.DeriveKey(Password, EncryptionKeySalt, 32);
+                else if (EncryptionAlgorithm == EncryptionAlgorithm.TripleDes)
+                    EncryptionKey = GlobalConfig.KeyDeriver.DeriveKey(Password, EncryptionKeySalt, 24);
+
             if (MacKeySalt != null)
                 MacKey = GlobalConfig.KeyDeriver.DeriveKey(Password, MacKeySalt);
         }
     }
+
+    public EncryptionAlgorithm EncryptionAlgorithm { get; set; }
 
     private byte[] encryptionKey;
     public byte[] EncryptionKey
@@ -39,8 +46,8 @@ public class FileModel
         {
             if (value == null)
                 throw new ArgumentNullException("Encryption key cannot be null.");
-            if (value.Length != 32)
-                throw new ArgumentException("Invalid encryption key length. Expected 32 bytes.");
+            if (value.Length != 32 && value.Length != 24)
+                throw new ArgumentException("Invalid encryption key length. Expected 32 or 24 bytes.");
 
             encryptionKey = value;
         }
@@ -56,7 +63,10 @@ public class FileModel
             encryptionKeySalt = value;
 
             if (Password != null && value != null)
-                EncryptionKey = GlobalConfig.KeyDeriver.DeriveKey(Password, EncryptionKeySalt);
+                if (EncryptionAlgorithm == EncryptionAlgorithm.Aes)
+                    EncryptionKey = GlobalConfig.KeyDeriver.DeriveKey(Password, EncryptionKeySalt, 32);
+                else if (EncryptionAlgorithm == EncryptionAlgorithm.TripleDes)
+                    EncryptionKey = GlobalConfig.KeyDeriver.DeriveKey(Password, EncryptionKeySalt, 24);
         }
     }
 
@@ -64,7 +74,13 @@ public class FileModel
     {
         get
         {
-            return System.IO.Path.GetExtension(Path).Equals(Constants.EncryptedExtension, StringComparison.OrdinalIgnoreCase);
+            bool output = false;
+
+            if (System.IO.Path.GetExtension(Path).Equals(Constants.AesExtension) ||
+                System.IO.Path.GetExtension(Path).Equals(Constants.TripleDesExtension))
+                output = true;
+
+            return output;
         }
     }
 
@@ -180,11 +196,23 @@ public class FileModel
         // read plaintext
         string plaintextPath = Path;
         byte[] content = File.ReadAllBytes(Path);
-        Path += Constants.EncryptedExtension;
+
+        // TODO - test
+        switch (EncryptionAlgorithm)
+        {
+            case EncryptionAlgorithm.Aes:
+                Path += Constants.AesExtension;
+                break;
+            case EncryptionAlgorithm.TripleDes:
+                Path += Constants.TripleDesExtension;
+                break;
+            default:
+                throw new ArgumentException("Unsupported encryption algorithm.", nameof(EncryptionAlgorithm));
+        }
 
         // encrypt
         EncryptionKeySalt = GlobalConfig.KeyDeriver.GenerateSalt();
-        byte[] ciphertext = GlobalConfig.Encryptor.Encrypt(content, EncryptionKey);
+        byte[] ciphertext = GlobalConfig.Encryptor(EncryptionAlgorithm).Encrypt(content, EncryptionKey);
 
         // overwrite plaintext
         File.WriteAllBytes(Path, ciphertext);
@@ -207,14 +235,14 @@ public class FileModel
             byte[] content = File.ReadAllBytes(ciphertextPath);
 
             // decrypt
-            byte[] plaintext = GlobalConfig.Encryptor.Decrypt(content, EncryptionKey);
+            byte[] plaintext = GlobalConfig.Encryptor(EncryptionAlgorithm).Decrypt(content, EncryptionKey);
 
             // write plaintext
             Path = System.IO.Path.ChangeExtension(Path, null);
             File.WriteAllBytes(Path, plaintext);
 
             // cleanup
-            EncryptionKeySalt = null;
+            EncryptionKeySalt = new byte[0];
             File.Delete(ciphertextPath);
         }
         catch (Exception ex)
@@ -256,12 +284,26 @@ public class FileModel
 
     private void RemoveMac()
     {
-        Mac = null;
-        MacKeySalt = null;
+        Mac = new byte[0];
+        MacKeySalt = new byte[0];
     }
 
     public FileModel(string path)
     {
         Path = path;
+        encryptionKeySalt = new byte[0];
+        macKeySalt = new byte[0];
+        mac = new byte[0];
+
+        string extension = System.IO.Path.GetExtension(path).ToLower();
+        switch (extension)
+        {
+            case Constants.AesExtension:
+                EncryptionAlgorithm = EncryptionAlgorithm.Aes;
+                break;
+            case Constants.TripleDesExtension:
+                EncryptionAlgorithm = EncryptionAlgorithm.TripleDes;
+                break;
+        }
     }
 }

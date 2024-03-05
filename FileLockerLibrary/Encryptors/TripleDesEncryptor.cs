@@ -1,13 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
-using System.IO;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace FileLockerLibrary;
 
-/// <summary>
-/// Provides functionality to encrypt and decrypt text using the Advanced Encryption Standard (AES) algorithm.
-/// </summary>
-public class AesEncryptor : IEncryptor
+public class TripleDesEncryptor : IEncryptor
 {
     private const long MaxFileSize = Constants.MaxFileSize;
     private const int PaddingFieldLength = sizeof(long);
@@ -15,15 +15,15 @@ public class AesEncryptor : IEncryptor
     public byte[] Encrypt(byte[] plaintext, byte[] key)
     {
         if (plaintext == null)
-            throw new ArgumentNullException("Plaintext is null.");
+            throw new ArgumentNullException(nameof(plaintext), "Plaintext is null.");
         if (key == null)
-            throw new ArgumentNullException("Key is null.");
-        if (key.Length != 32)
-            throw new ArgumentOutOfRangeException("Key must be 32 bytes long.");
+            throw new ArgumentNullException(nameof(key), "Key is null.");
+        if (key.Length != 24)
+            throw new ArgumentOutOfRangeException(nameof(key), "Key must be 24 bytes long.");
 
-        using Aes aes = Aes.Create();
-        aes.GenerateIV();
-        ICryptoTransform encryptor = aes.CreateEncryptor(key, aes.IV);
+        using TripleDES tripleDes = TripleDES.Create();
+        tripleDes.GenerateIV();
+        ICryptoTransform encryptor = tripleDes.CreateEncryptor(key, tripleDes.IV);
 
         using MemoryStream msEncrypt = new();
         using (CryptoStream csEncrypt = new(msEncrypt, encryptor, CryptoStreamMode.Write))
@@ -34,9 +34,9 @@ public class AesEncryptor : IEncryptor
         byte[] ciphertext = msEncrypt.ToArray();
 
         // create output variable with correct length and data
-        byte[] ivAndCiphertext = new byte[aes.IV.Length + ciphertext.Length];
-        Buffer.BlockCopy(aes.IV, 0, ivAndCiphertext, 0, aes.IV.Length);
-        Buffer.BlockCopy(ciphertext, 0, ivAndCiphertext, aes.IV.Length, ciphertext.Length);
+        byte[] ivAndCiphertext = new byte[tripleDes.IV.Length + ciphertext.Length];
+        Buffer.BlockCopy(tripleDes.IV, 0, ivAndCiphertext, 0, tripleDes.IV.Length);
+        Buffer.BlockCopy(ciphertext, 0, ivAndCiphertext, tripleDes.IV.Length, ciphertext.Length);
 
         return ivAndCiphertext;
     }
@@ -44,39 +44,37 @@ public class AesEncryptor : IEncryptor
     public byte[] Decrypt(byte[] ciphertextAndIv, byte[] key)
     {
         if (ciphertextAndIv == null)
-            throw new ArgumentNullException("Ciphertext is null.");
+            throw new ArgumentNullException(nameof(ciphertextAndIv), "Ciphertext is null.");
         if (key == null)
-            throw new ArgumentNullException("Key is null.");
-        if (ciphertextAndIv.Length < 16 && ciphertextAndIv.Length != 0)
-            throw new ArgumentOutOfRangeException("Ciphertext has invalid length.");
-        if (key.Length != 32)
-            throw new ArgumentOutOfRangeException("Key must be 32 bytes long.");
+            throw new ArgumentNullException(nameof(key), "Key is null.");
+        if (ciphertextAndIv.Length < 8 && ciphertextAndIv.Length != 0)
+            throw new ArgumentOutOfRangeException(nameof(ciphertextAndIv), "Ciphertext has invalid length.");
+        if (key.Length != 24)
+            throw new ArgumentOutOfRangeException(nameof(key), "Key must be 24 bytes long.");
 
         // empty byte array for empty ciphertext
         if (ciphertextAndIv.Length == 0)
             return new byte[0];
 
-        byte[] paddedData;
-
-        // extract the IV (first 16 bytes)
-        byte[] iv = new byte[16];
+        // extract the IV (first 8 bytes)
+        byte[] iv = new byte[8];
         Buffer.BlockCopy(ciphertextAndIv, 0, iv, 0, iv.Length);
 
         // get the ciphertext
         byte[] ciphertext = new byte[ciphertextAndIv.Length - iv.Length];
         Buffer.BlockCopy(ciphertextAndIv, iv.Length, ciphertext, 0, ciphertext.Length);
 
-        using Aes aes = Aes.Create();
-        aes.Key = key;
-        aes.IV = iv;
-        ICryptoTransform decryptor = aes.CreateDecryptor();
+        using TripleDES tripleDes = TripleDES.Create();
+        tripleDes.Key = key;
+        tripleDes.IV = iv;
+        ICryptoTransform decryptor = tripleDes.CreateDecryptor();
 
         using MemoryStream msDecrypt = new(ciphertext);
         using CryptoStream csDecrypt = new(msDecrypt, decryptor, CryptoStreamMode.Read);
         using MemoryStream plaintextStream = new();
         csDecrypt.CopyTo(plaintextStream);
 
-        paddedData = plaintextStream.ToArray();
+        byte[] paddedData = plaintextStream.ToArray();
         byte[] unpaddedData = UnpadData(paddedData);
 
         return unpaddedData;
@@ -88,7 +86,7 @@ public class AesEncryptor : IEncryptor
             throw new ArgumentOutOfRangeException(nameof(data), "Data size exceeds the maximum allowed size of 100 MB.");
 
         long paddingLength = MaxFileSize - data.Length;
-        byte[] paddedData = new byte[MaxFileSize + PaddingFieldLength]; 
+        byte[] paddedData = new byte[MaxFileSize + PaddingFieldLength];
 
         Buffer.BlockCopy(data, 0, paddedData, 0, data.Length);
 

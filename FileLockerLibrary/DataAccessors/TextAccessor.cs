@@ -61,25 +61,13 @@ public class TextAccessor : IDataAccessor
             throw new ArgumentException("Path cannot be null or empty.", nameof(model.Path));
         if (!Directory.Exists(FileDirectoryPath))
             throw new DirectoryNotFoundException($"Directory '{FileDirectoryPath}' does not exist.");
-        if (model.EncryptionStatus == true && model.EncryptionKeySalt == null)
+        if (model.EncryptionStatus == true && model.EncryptionKeySalt.Length == 0)
             throw new InvalidOperationException("File is missing data to be unlocked.");
 
         File.WriteAllText(FilePathPath, model.Path);
-
-        if (model.EncryptionKeySalt != null)
-            File.WriteAllBytes(EncryptionKeySaltPath, model.EncryptionKeySalt);
-        else
-            File.Delete(EncryptionKeySaltPath);
-
-        if (model.MacKeySalt != null)
-            File.WriteAllBytes(MacKeySaltPath, model.MacKeySalt);
-        else
-            File.Delete(MacKeySaltPath);
-
-        if (model.Mac != null)
-            File.WriteAllBytes(MacPath, model.Mac);
-        else
-            File.Delete(MacPath);
+        File.WriteAllBytes(EncryptionKeySaltPath, model.EncryptionKeySalt);
+        File.WriteAllBytes(MacKeySaltPath, model.MacKeySalt);
+        File.WriteAllBytes(MacPath, model.Mac);
     }
 
     public void DeleteFileModel(FileModel model)
@@ -108,14 +96,12 @@ public class TextAccessor : IDataAccessor
         return output;
     }
 
+    // TODO - check if files exist before
     private void ReadFileModelFromFiles(FileModel model)
     {
-        if (File.Exists(EncryptionKeySaltPath))
-            model.EncryptionKeySalt = File.ReadAllBytes(EncryptionKeySaltPath);
-        if (File.Exists(MacKeySaltPath))
-            model.MacKeySalt = File.ReadAllBytes(MacKeySaltPath);
-        if (File.Exists(MacPath))
-            model.Mac = File.ReadAllBytes(MacPath);
+        model.EncryptionKeySalt = File.ReadAllBytes(EncryptionKeySaltPath);
+        model.MacKeySalt = File.ReadAllBytes(MacKeySaltPath);
+        model.Mac = File.ReadAllBytes(MacPath);
     }
 
     public void ShredFile(FileModel model)
@@ -228,42 +214,36 @@ public class TextAccessor : IDataAccessor
 
         FileModel model = new(savePath);
 
-        // TODO - refactor if the model's encryption files are still written even if its unlocked
-        // if the file is locked, populate the model
-        string[] filesToCheck = { Constants.EncryptionKeySaltFileName, Constants.MacFileName, Constants.MacKeySaltFileName };
-        if (zipEntriesToProcess.Any(entry => entry.EndsWith(Constants.EncryptedExtension, StringComparison.OrdinalIgnoreCase)) &&
-            filesToCheck.All(zipEntriesToProcess.Contains))
+        // TODO - refactor to adhere to the SRP
+        ZipArchiveEntry encryptionKeySaltEntry = archive.GetEntry(Constants.EncryptionKeySaltFileName);
+        ZipArchiveEntry macKeySaltEntry = archive.GetEntry(Constants.MacKeySaltFileName);
+        ZipArchiveEntry macEntry = archive.GetEntry(Constants.MacFileName);
+
+        // read the encryption key salt
+        using (MemoryStream ms = new())
+        using (Stream stream = encryptionKeySaltEntry.Open())
         {
-            ZipArchiveEntry encryptionKeySaltEntry = archive.GetEntry(Constants.EncryptionKeySaltFileName);
-            ZipArchiveEntry macKeySaltEntry = archive.GetEntry(Constants.MacKeySaltFileName);
-            ZipArchiveEntry macEntry = archive.GetEntry(Constants.MacFileName);
+            stream.CopyTo(ms);
+            model.EncryptionKeySalt = ms.ToArray();
+            zipEntriesToProcess.Remove(Constants.EncryptionKeySaltFileName);
+        }
 
-            // read the encryption key salt
-            using (MemoryStream ms = new())
-            using (Stream stream = encryptionKeySaltEntry.Open())
-            {
-                stream.CopyTo(ms);
-                model.EncryptionKeySalt = ms.ToArray();
-                zipEntriesToProcess.Remove(Constants.EncryptionKeySaltFileName);
-            }
+        // read the MAC key salt
+        using (MemoryStream ms = new())
+        using (Stream stream = macKeySaltEntry.Open())
+        {
+            stream.CopyTo(ms);
+            model.MacKeySalt = ms.ToArray();
+            zipEntriesToProcess.Remove(Constants.MacKeySaltFileName);
+        }
 
-            // read the MAC key salt
-            using (MemoryStream ms = new())
-            using (Stream stream = macKeySaltEntry.Open())
-            {
-                stream.CopyTo(ms);
-                model.MacKeySalt = ms.ToArray();
-                zipEntriesToProcess.Remove(Constants.MacKeySaltFileName);
-            }
-
-            // read the MAC
-            using (MemoryStream ms = new())
-            using (Stream stream = macEntry.Open())
-            {
-                stream.CopyTo(ms);
-                model.Mac = ms.ToArray();
-                zipEntriesToProcess.Remove(Constants.MacFileName);
-            }
+        // read the MAC
+        using (MemoryStream ms = new())
+        using (Stream stream = macEntry.Open())
+        {
+            stream.CopyTo(ms);
+            model.Mac = ms.ToArray();
+            zipEntriesToProcess.Remove(Constants.MacFileName);
         }
 
         byte[] content;
@@ -309,7 +289,8 @@ public class TextAccessor : IDataAccessor
 
     private void InitializePaths(string fileName)
     {
-        fileName = (Path.GetExtension(fileName) == Constants.EncryptedExtension) ? Path.GetFileNameWithoutExtension(fileName) : fileName;
+        string extension = Path.GetExtension(fileName);
+        fileName = (extension == Constants.AesExtension || extension == Constants.TripleDesExtension) ? Path.GetFileNameWithoutExtension(fileName) : fileName;
         FileDirectoryPath = Path.Combine(FileModelsDirectoryPath, fileName);
         FilePathPath = Path.Combine(FileDirectoryPath, Constants.FilePathFileName);
         EncryptionKeySaltPath = Path.Combine(FileDirectoryPath, Constants.EncryptionKeySaltFileName);

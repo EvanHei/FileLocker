@@ -3,15 +3,8 @@ using System.Security.Cryptography;
 
 namespace FileLockerLibrary;
 
-/// <summary>
-/// Represents a class for Password-Based Key Derivation Function 2 (PBKDF2) key derivation.
-/// </summary>
 public class Pbkdf2KeyDeriver : IKeyDeriver
 {
-    /// <summary>
-    /// Generates a 32-byte random salt for cryptographic operations.
-    /// </summary>
-    /// <returns>A byte array representing the generated salt.</returns>
     public byte[] GenerateSalt()
     {
         using var rng = RandomNumberGenerator.Create();
@@ -20,13 +13,8 @@ public class Pbkdf2KeyDeriver : IKeyDeriver
         return salt;
     }
 
-    /// <summary>
-    /// Derives a 32-byte cryptographic key using PBKDF2 with the specified password and salt.
-    /// </summary>
-    /// <param name="password">The password to derive the key from.</param>
-    /// <param name="salt">The randomly generated salt used in key derivation.</param>
-    /// <returns>A byte array representing the derived key.</returns>
-    public byte[] DeriveKey(string password, byte[] salt)
+    // TODO - test with 24 byte keys
+    public byte[] DeriveKey(string password, byte[] salt, int length = 32)
     {
         if (password == null)
             throw new ArgumentNullException("Password cannot be null.");
@@ -34,6 +22,6 @@ public class Pbkdf2KeyDeriver : IKeyDeriver
             throw new ArgumentNullException("Salt cannot be null.");
 
         using var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000, HashAlgorithmName.SHA256);
-        return pbkdf2.GetBytes(32);
+        return pbkdf2.GetBytes(length);
     }
 }

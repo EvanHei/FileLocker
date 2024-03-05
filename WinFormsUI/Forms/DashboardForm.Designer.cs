@@ -210,7 +210,7 @@
             // 
             RemoveFromListItem.Name = "RemoveFromListItem";
             RemoveFromListItem.Size = new Size(180, 22);
-            RemoveFromListItem.Text = "Remove From List";
+            RemoveFromListItem.Text = "Remove from list";
             RemoveFromListItem.Click += RemoveFileItem_Click;
             // 
             // DashboardForm

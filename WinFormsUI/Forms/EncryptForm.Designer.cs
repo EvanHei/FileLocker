@@ -178,7 +178,7 @@
             GenerateRandomButton.FlatStyle = FlatStyle.Flat;
             GenerateRandomButton.Font = new Font("Segoe UI Emoji", 12F);
             GenerateRandomButton.ForeColor = SystemColors.ButtonFace;
-            GenerateRandomButton.Location = new Point(235, 265);
+            GenerateRandomButton.Location = new Point(208, 265);
             GenerateRandomButton.Name = "GenerateRandomButton";
             GenerateRandomButton.Size = new Size(148, 37);
             GenerateRandomButton.TabIndex = 13;

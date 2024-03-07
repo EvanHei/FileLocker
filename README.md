@@ -102,9 +102,11 @@ The Decrypt Form allows users to decrypt a file with the correct password.
 - **Confidentiality**: Encrypts files with AES256.
 - **Integrity**: Uses HMACs to ensure the integrity of stored or transmitted data.
 - **Password Strength Policy**: Sets a strong password to mitigate brute-force attacks.
+- **Password Generator**: Generates a password without the need to manually type, mitigating the effect of keystroke logging malware.
 - **Password Management**: Hashes and salts passwords to protect against rainbow table attacks.
 - **Password-Based Key Derivation**: Derives encryption keys from passwords.
 - **Logging**: Uses Serilog to track application events.
 - **Constant-Time Comparison**: Uses libraries with constant-time comparison to mitigate timing attacks.
 - **File Shredder**: Deletes files without leaving traces by overwriting with random data.
+- **Customizable Encryption**: Allows users to choose different encryption algorithms.
 - **SOLID Principles**: Follows SOLID principles to facilitate quick code updates in the case of a new exploit.

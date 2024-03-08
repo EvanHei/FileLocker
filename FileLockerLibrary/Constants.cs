@@ -11,7 +11,7 @@ public static class Constants
     // 10MB
     public const long MaxFileSize = 10 * 1024 * 1024;
     public const int MinPasswordLength = 8;
-    public const int MaxPasswordLength = 20;
+    public const int MaxPasswordLength = 64;
     public const string AppDirectoryName = "FileLocker";
     public const string FileModelsDirectoryName = "FileModels";
     public const string TempExportDirectoryName = "TempExport";

@@ -46,9 +46,6 @@ public partial class EncryptForm : Form
                 model.Lock();
                 GlobalConfig.DataAccessor.SaveFileModel(model);
             }
-
-            // TODO - replace with a label in EncryptForm
-            MessageBox.Show("If your password is lost, your data cannot be recovered.", "Warning", MessageBoxButtons.OK);
         }
         catch (Exception ex)
         {
@@ -92,11 +89,13 @@ public partial class EncryptForm : Form
         {
             EnterButton.BackColor = SystemColors.Highlight;
             EnterButton.Enabled = true;
+            PasswordWarningLabel.Visible = true;
         }
         else
         {
             EnterButton.BackColor = Color.Silver;
             EnterButton.Enabled = false;
+            PasswordWarningLabel.Visible = false;
         }
     }
 
@@ -220,7 +219,7 @@ public partial class EncryptForm : Form
         const string lowerCaseChars = "abcdefghijklmnopqrstuvwxyz";
         const string upperCaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         const string digits = "0123456789";
-        const string specialChars = "!@#$%^&*()_+-=[]{}|;:,.<>?";
+        const string specialChars = " !@#$%^&*()_+-=[]{}|;:,.<>?";
         string validChars = lowerCaseChars + upperCaseChars + digits + specialChars;
         Random rng = new();
 

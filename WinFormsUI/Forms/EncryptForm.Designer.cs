@@ -43,6 +43,7 @@
             GenerateRandomButton = new Button();
             EncryptionAlgorithmLabel = new Label();
             EncryptionAlgorithmComboBox = new ComboBox();
+            PasswordWarningLabel = new Label();
             SuspendLayout();
             // 
             // PasswordMaskedTextBox
@@ -211,12 +212,25 @@
             EncryptionAlgorithmComboBox.TabIndex = 15;
             EncryptionAlgorithmComboBox.SelectedIndexChanged += EncryptionAlgorithmComboBox_SelectedIndexChanged;
             // 
+            // PasswordWarningLabel
+            // 
+            PasswordWarningLabel.AutoSize = true;
+            PasswordWarningLabel.Font = new Font("Segoe UI Emoji", 10F);
+            PasswordWarningLabel.ForeColor = Color.Red;
+            PasswordWarningLabel.Location = new Point(185, 157);
+            PasswordWarningLabel.Name = "PasswordWarningLabel";
+            PasswordWarningLabel.Size = new Size(250, 19);
+            PasswordWarningLabel.TabIndex = 16;
+            PasswordWarningLabel.Text = "If your password is lost, so is your data.";
+            PasswordWarningLabel.Visible = false;
+            // 
             // EncryptForm
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(32, 32, 32);
             ClientSize = new Size(541, 367);
+            Controls.Add(PasswordWarningLabel);
             Controls.Add(EncryptionAlgorithmComboBox);
             Controls.Add(EncryptionAlgorithmLabel);
             Controls.Add(GenerateRandomButton);
@@ -257,5 +271,6 @@
         private Button GenerateRandomButton;
         private Label EncryptionAlgorithmLabel;
         private ComboBox EncryptionAlgorithmComboBox;
+        private Label PasswordWarningLabel;
     }
 }

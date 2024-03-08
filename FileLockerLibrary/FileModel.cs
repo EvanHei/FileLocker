@@ -21,11 +21,10 @@ public class FileModel
         {
             password = value;
 
-            // TODO - test
             if (EncryptionKeySalt != null)
-                if (EncryptionAlgorithm == EncryptionAlgorithm.Aes)
+                if (EncryptionAlgorithm == EncryptionAlgorithm.AES)
                     EncryptionKey = GlobalConfig.KeyDeriver.DeriveKey(Password, EncryptionKeySalt, 32);
-                else if (EncryptionAlgorithm == EncryptionAlgorithm.TripleDes)
+                else if (EncryptionAlgorithm == EncryptionAlgorithm.TripleDES)
                     EncryptionKey = GlobalConfig.KeyDeriver.DeriveKey(Password, EncryptionKeySalt, 24);
 
             if (MacKeySalt != null)
@@ -63,9 +62,9 @@ public class FileModel
             encryptionKeySalt = value;
 
             if (Password != null && value != null)
-                if (EncryptionAlgorithm == EncryptionAlgorithm.Aes)
+                if (EncryptionAlgorithm == EncryptionAlgorithm.AES)
                     EncryptionKey = GlobalConfig.KeyDeriver.DeriveKey(Password, EncryptionKeySalt, 32);
-                else if (EncryptionAlgorithm == EncryptionAlgorithm.TripleDes)
+                else if (EncryptionAlgorithm == EncryptionAlgorithm.TripleDES)
                     EncryptionKey = GlobalConfig.KeyDeriver.DeriveKey(Password, EncryptionKeySalt, 24);
         }
     }
@@ -194,16 +193,15 @@ public class FileModel
             return;
 
         // read plaintext
-        string plaintextPath = Path;
+        string plaintextFilePath = Path;
         byte[] content = File.ReadAllBytes(Path);
 
-        // TODO - test
         switch (EncryptionAlgorithm)
         {
-            case EncryptionAlgorithm.Aes:
+            case EncryptionAlgorithm.AES:
                 Path += Constants.AesExtension;
                 break;
-            case EncryptionAlgorithm.TripleDes:
+            case EncryptionAlgorithm.TripleDES:
                 Path += Constants.TripleDesExtension;
                 break;
             default:
@@ -216,7 +214,7 @@ public class FileModel
 
         // overwrite plaintext
         File.WriteAllBytes(Path, ciphertext);
-        File.Delete(plaintextPath);
+        GlobalConfig.DataAccessor.ShredFile(plaintextFilePath);
     }
 
     private void Decrypt()
@@ -299,10 +297,10 @@ public class FileModel
         switch (extension)
         {
             case Constants.AesExtension:
-                EncryptionAlgorithm = EncryptionAlgorithm.Aes;
+                EncryptionAlgorithm = EncryptionAlgorithm.AES;
                 break;
             case Constants.TripleDesExtension:
-                EncryptionAlgorithm = EncryptionAlgorithm.TripleDes;
+                EncryptionAlgorithm = EncryptionAlgorithm.TripleDES;
                 break;
         }
     }

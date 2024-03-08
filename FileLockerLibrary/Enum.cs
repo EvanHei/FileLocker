@@ -8,6 +8,6 @@ namespace FileLockerLibrary;
 
 public enum EncryptionAlgorithm
 {
-    Aes,
-    TripleDes
+    AES,
+    TripleDES
 }

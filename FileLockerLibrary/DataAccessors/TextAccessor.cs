@@ -86,7 +86,6 @@ public class TextAccessor : IDataAccessor
         {
             InitializePaths(fileName);
 
-            // TODO - add error checking
             string path = File.ReadAllText(FilePathPath);
             FileModel temp = new(path);
             ReadFileModelFromFiles(temp);
@@ -96,7 +95,6 @@ public class TextAccessor : IDataAccessor
         return output;
     }
 
-    // TODO - check if files exist before
     private void ReadFileModelFromFiles(FileModel model)
     {
         model.EncryptionKeySalt = File.ReadAllBytes(EncryptionKeySaltPath);
@@ -104,17 +102,12 @@ public class TextAccessor : IDataAccessor
         model.Mac = File.ReadAllBytes(MacPath);
     }
 
-    public void ShredFile(FileModel model)
+    public void ShredFile(string path)
     {
-        if (string.IsNullOrEmpty(model.Path))
-            throw new ArgumentException("Path cannot be null or empty.", nameof(model.Path));
-        if (!File.Exists(model.Path))
-        {
-            DeleteFileModel(model);
-            return;
-        }
+        if (string.IsNullOrEmpty(path))
+            throw new ArgumentException("Path cannot be null or empty.", nameof(path));
 
-        using (FileStream stream = new(model.Path, FileMode.Open, FileAccess.Write))
+        using (FileStream stream = new(path, FileMode.Open, FileAccess.Write))
         {
             Random random = new();
             byte[] buffer = new byte[1024];
@@ -131,8 +124,7 @@ public class TextAccessor : IDataAccessor
             }
         }
 
-        File.Delete(model.Path);
-        DeleteFileModel(model);
+        File.Delete(path);
     }
 
     public void ExportZipFileModel(FileModel model, string zipPath)

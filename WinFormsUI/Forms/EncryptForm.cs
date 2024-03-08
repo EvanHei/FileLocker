@@ -17,10 +17,10 @@ namespace WinFormsUI;
 public partial class EncryptForm : Form
 {
     private IEncryptFormCaller caller;
-    private FileModel model;
+    private List<FileModel> models;
     private bool isEyeballLabelClicked = false;
 
-    public EncryptForm(IEncryptFormCaller caller, FileModel model)
+    public EncryptForm(IEncryptFormCaller caller, List<FileModel> models)
     {
         InitializeComponent();
 
@@ -28,7 +28,7 @@ public partial class EncryptForm : Form
         EncryptionAlgorithmComboBox.DataSource = Enum.GetNames(typeof(EncryptionAlgorithm));
 
         this.caller = caller;
-        this.model = model;
+        this.models = models;
     }
 
     private void EnterButton_Click(object sender, EventArgs e)
@@ -38,12 +38,16 @@ public partial class EncryptForm : Form
 
         try
         {
-            Enum.TryParse(EncryptionAlgorithmComboBox.SelectedItem.ToString(), out EncryptionAlgorithm algorithm);
-            model.EncryptionAlgorithm = algorithm;
-            model.Password = PasswordMaskedTextBox.Text;
-            model.Lock();
-            GlobalConfig.DataAccessor.SaveFileModel(model);
+            foreach (FileModel model in models)
+            {
+                Enum.TryParse(EncryptionAlgorithmComboBox.SelectedItem.ToString(), out EncryptionAlgorithm algorithm);
+                model.EncryptionAlgorithm = algorithm;
+                model.Password = PasswordMaskedTextBox.Text;
+                model.Lock();
+                GlobalConfig.DataAccessor.SaveFileModel(model);
+            }
 
+            // TODO - replace with a label in EncryptForm
             MessageBox.Show("If your password is lost, your data cannot be recovered.", "Warning", MessageBoxButtons.OK);
         }
         catch (Exception ex)
@@ -80,6 +84,20 @@ public partial class EncryptForm : Form
             output = false;
 
         return output;
+    }
+
+    private void UpdateControls()
+    {
+        if (ValidateInputFields())
+        {
+            EnterButton.BackColor = SystemColors.Highlight;
+            EnterButton.Enabled = true;
+        }
+        else
+        {
+            EnterButton.BackColor = Color.Silver;
+            EnterButton.Enabled = false;
+        }
     }
 
     private void EyeballLabel_Click(object sender, EventArgs e)
@@ -184,47 +202,17 @@ public partial class EncryptForm : Form
             SpecialCharacterLabel.ForeColor = SystemColors.AppWorkspace;
         }
 
-        // TODO - refactor into a separate method
-        if (ValidateInputFields())
-        {
-            EnterButton.BackColor = SystemColors.Highlight;
-            EnterButton.Enabled = true;
-        }
-        else
-        {
-            EnterButton.BackColor = Color.Silver;
-            EnterButton.Enabled = false;
-        }
+        UpdateControls();
     }
 
     private void ConfirmPasswordMaskedTextBox_TextChanged(object sender, EventArgs e)
     {
-        // TODO - refactor into a separate method
-        if (ValidateInputFields())
-        {
-            EnterButton.BackColor = SystemColors.Highlight;
-            EnterButton.Enabled = true;
-        }
-        else
-        {
-            EnterButton.BackColor = Color.Silver;
-            EnterButton.Enabled = false;
-        }
+        UpdateControls();
     }
 
     private void EncryptionAlgorithmComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
-        // TODO - refactor into a separate method
-        if (ValidateInputFields())
-        {
-            EnterButton.BackColor = SystemColors.Highlight;
-            EnterButton.Enabled = true;
-        }
-        else
-        {
-            EnterButton.BackColor = Color.Silver;
-            EnterButton.Enabled = false;
-        }
+        UpdateControls();
     }
 
     static string GenerateRandomPassword()

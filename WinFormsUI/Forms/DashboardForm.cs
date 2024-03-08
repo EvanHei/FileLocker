@@ -6,11 +6,15 @@ using System.IO;
 using System.Reflection;
 using System.Security.Principal;
 using System.Windows.Forms;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace WinFormsUI;
 
 public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCaller, IImportFormCaller
 {
+    List<FileModel> selectedFiles = new();
+
     public DashboardForm()
     {
         InitializeComponent();
@@ -45,7 +49,11 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
     private void UpdateControls()
     {
-        if (FileListBox.Items.Count == 0)
+        selectedFiles = new();
+        foreach (FileModel model in FileListBox.SelectedItems)
+            selectedFiles.Add(model);
+
+        if (selectedFiles.Count == 0)
         {
             TrashButton.Enabled = false;
             EncryptButton.Enabled = false;
@@ -55,33 +63,39 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
             TrashButton.BackColor = Color.Silver;
             EncryptButton.BackColor = Color.Silver;
             DecryptButton.BackColor = Color.Silver;
-            ExportMenuItem.BackColor = Color.Silver;
         }
         else
         {
-            FileModel model = (FileModel)FileListBox.SelectedItem;
-
+            TrashButton.Enabled = true;
             ExportMenuItem.Enabled = true;
-            ExportMenuItem.BackColor = SystemColors.Control;
 
-            if (model.EncryptionStatus == true)
+            TrashButton.BackColor = Color.DarkRed;
+
+            // one selected is locked
+            if (selectedFiles.Count == 1 && selectedFiles.All(model => model.EncryptionStatus == true))
             {
-                TrashButton.Enabled = true;
                 EncryptButton.Enabled = false;
                 DecryptButton.Enabled = true;
 
-                TrashButton.BackColor = Color.DarkRed;
                 EncryptButton.BackColor = Color.Silver;
                 DecryptButton.BackColor = SystemColors.Highlight;
             }
-            else
+            // all unlocked
+            else if (selectedFiles.All(model => model.EncryptionStatus == false))
             {
-                TrashButton.Enabled = true;
                 EncryptButton.Enabled = true;
                 DecryptButton.Enabled = false;
 
-                TrashButton.BackColor = Color.DarkRed;
                 EncryptButton.BackColor = SystemColors.Highlight;
+                DecryptButton.BackColor = Color.Silver;
+            }
+            // all locked or mixed
+            else
+            {
+                EncryptButton.Enabled = false;
+                DecryptButton.Enabled = false;
+
+                EncryptButton.BackColor = Color.Silver;
                 DecryptButton.BackColor = Color.Silver;
             }
         }
@@ -89,26 +103,21 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
     private void EncryptButton_Click(object sender, EventArgs e)
     {
-        if (FileListBox.SelectedItem == null)
+        if (selectedFiles.Count == 0)
             return;
 
-        FileModel model = (FileModel)FileListBox.SelectedItem;
-
-        EncryptForm encryptForm = new(this, model);
+        EncryptForm encryptForm = new(this, selectedFiles);
         encryptForm.ShowDialog();
     }
 
     private void DecryptButton_Click(object sender, EventArgs e)
     {
-        if (FileListBox.SelectedItem == null)
+        if (selectedFiles.Count == 0 || selectedFiles.Count > 1)
+            return;
+        if (selectedFiles.First().EncryptionStatus == false)
             return;
 
-        FileModel model = (FileModel)FileListBox.SelectedItem;
-
-        if (model.EncryptionStatus == false)
-            return;
-
-        DecryptForm decryptForm = new(this, model);
+        DecryptForm decryptForm = new(this, selectedFiles.First());
         decryptForm.ShowDialog();
     }
 
@@ -281,7 +290,8 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
         try
         {
-            GlobalConfig.DataAccessor.ShredFile(model);
+            GlobalConfig.DataAccessor.ShredFile(model.Path);
+            GlobalConfig.DataAccessor.DeleteFileModel(model);
         }
         catch (Exception ex)
         {
@@ -290,7 +300,6 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         }
 
         PopulateForm();
-
     }
 
     public void ImportComplete()

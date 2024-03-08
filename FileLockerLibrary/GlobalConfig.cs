@@ -20,9 +20,9 @@ public static class GlobalConfig
     {
         switch (algorithm)
         {
-            case EncryptionAlgorithm.Aes:
+            case EncryptionAlgorithm.AES:
                 return new AesEncryptor();
-            case EncryptionAlgorithm.TripleDes:
+            case EncryptionAlgorithm.TripleDES:
                 return new TripleDesEncryptor();
             default:
                 throw new ArgumentException("Unsupported encryption algorithm.", nameof(algorithm));

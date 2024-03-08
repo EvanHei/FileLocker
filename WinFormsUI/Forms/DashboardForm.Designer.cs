@@ -60,6 +60,7 @@
             FileListBox.ItemHeight = 20;
             FileListBox.Location = new Point(48, 109);
             FileListBox.Name = "FileListBox";
+            FileListBox.SelectionMode = SelectionMode.MultiSimple;
             FileListBox.Size = new Size(577, 184);
             FileListBox.TabIndex = 1;
             FileListBox.DrawItem += FileListBox_DrawItem;
@@ -202,14 +203,14 @@
             // 
             FileListBoxItemContextMenuStrip.Items.AddRange(new ToolStripItem[] { RemoveFromListItem });
             FileListBoxItemContextMenuStrip.Name = "FileListBoxItemContextMenuStrip";
-            FileListBoxItemContextMenuStrip.Size = new Size(181, 48);
+            FileListBoxItemContextMenuStrip.Size = new Size(165, 26);
             FileListBoxItemContextMenuStrip.Tag = "FileListBox";
             FileListBoxItemContextMenuStrip.Text = "Remove File";
             // 
             // RemoveFromListItem
             // 
             RemoveFromListItem.Name = "RemoveFromListItem";
-            RemoveFromListItem.Size = new Size(180, 22);
+            RemoveFromListItem.Size = new Size(164, 22);
             RemoveFromListItem.Text = "Remove from list";
             RemoveFromListItem.Click += RemoveFileItem_Click;
             // 

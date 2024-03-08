@@ -13,7 +13,6 @@ public class Pbkdf2KeyDeriver : IKeyDeriver
         return salt;
     }
 
-    // TODO - test with 24 byte keys
     public byte[] DeriveKey(string password, byte[] salt, int length = 32)
     {
         if (password == null)

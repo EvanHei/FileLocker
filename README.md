@@ -98,7 +98,7 @@ The Decrypt Form allows users to input the password they used to encrypt.
 - **Password Generator**: Generates a password without the need to manually type, mitigating the effect of keystroke logging malware.
 - **Password Management**: Hashes and salts passwords to protect against rainbow table attacks.
 - **Password-Based Key Derivation**: Derives encryption keys from passwords.
-- **Logging**: _Coming soon_
+- **Logging**: Logs important events such as encryption and decryption with Serilog.
 - **Constant-Time Comparison**: Uses libraries with constant-time comparison to mitigate timing attacks.
 - **File Shredder**: Deletes files without leaving traces by overwriting with random data.
 - **Customizable Encryption**: Allows selection of different encryption algorithms.

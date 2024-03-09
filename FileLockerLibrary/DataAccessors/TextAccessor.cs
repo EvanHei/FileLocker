@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Formats.Tar;
+using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
@@ -41,6 +42,8 @@ public class TextAccessor : IDataAccessor
 
         Directory.CreateDirectory(FileDirectoryPath);
         WriteFileModelToFiles(model);
+
+        GlobalConfig.Logger.Info($"File Created - {model.FileName}");
     }
 
     public void SaveFileModel(FileModel model)
@@ -51,6 +54,8 @@ public class TextAccessor : IDataAccessor
         InitializePaths(model.FileName);
 
         WriteFileModelToFiles(model);
+
+        GlobalConfig.Logger.Info($"File Saved - {model.FileName}");
     }
 
     private void WriteFileModelToFiles(FileModel model)
@@ -75,7 +80,11 @@ public class TextAccessor : IDataAccessor
         InitializePaths(model.FileName);
 
         if (Directory.Exists(FileDirectoryPath))
+        {
             Directory.Delete(FileDirectoryPath, true);
+
+            GlobalConfig.Logger.Info($"File Deleted - {model.FileName}");
+        }
     }
 
     public List<FileModel> LoadAllFileModels()
@@ -125,6 +134,8 @@ public class TextAccessor : IDataAccessor
         }
 
         File.Delete(path);
+
+        GlobalConfig.Logger.Info($"File Shredded - {Path.GetFileNameWithoutExtension(path)}");
     }
 
     public void ExportZipFileModel(FileModel model, string zipPath)
@@ -139,6 +150,8 @@ public class TextAccessor : IDataAccessor
         CreateArchiveFromExportDirectory(zipPath);
 
         Directory.Delete(TempExportDirectoryPath, recursive: true);
+
+        GlobalConfig.Logger.Info($"File Exported - {model.FileName}");
     }
 
     private void GenerateExportDirectory(FileModel model)
@@ -254,6 +267,8 @@ public class TextAccessor : IDataAccessor
         // create file model and save
         CreateFileModel(model);
         SaveFileModel(model);
+
+        GlobalConfig.Logger.Info($"File Imported - {model.FileName}");
     }
 
     private List<string> GetZipEntryNames(ZipArchive archive)

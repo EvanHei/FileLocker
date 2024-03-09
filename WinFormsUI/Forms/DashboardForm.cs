@@ -353,4 +353,14 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
         RemoveSelectedFiles();
     }
+
+    private void DashboardForm_Load(object sender, EventArgs e)
+    {
+        GlobalConfig.Logger.Info($"App Launched");
+    }
+
+    private void DashboardForm_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        GlobalConfig.Logger.Info($"App Terminated");
+    }
 }

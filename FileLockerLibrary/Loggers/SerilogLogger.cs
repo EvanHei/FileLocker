@@ -11,7 +11,7 @@ public class SerilogLogger : ILogger
         string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         string logDirectoryPath = Path.Combine(appDataPath, Constants.AppDirectoryName, Constants.LogDirectoryName);
 
-        // create hidden log folder
+        // create hidden log folder if it doesn't exist
         Directory.CreateDirectory(logDirectoryPath);
         FileAttributes attributes = File.GetAttributes(logDirectoryPath);
         attributes |= FileAttributes.Hidden;

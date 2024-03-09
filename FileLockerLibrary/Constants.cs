@@ -18,7 +18,7 @@ public static class Constants
     public const string LogDirectoryName = "Logs";
     public const string AesExtension = ".aes";
     public const string TripleDesExtension = ".3des";
-    public const string ExportExtension = ".filelocker";
+    public const string ExportExtension = ".zip";
     public const string FilePathFileName = "Path.txt";
     public const string EncryptionKeySaltFileName = "EncryptionKey.salt";
     public const string MacFileName = "Content.mac";

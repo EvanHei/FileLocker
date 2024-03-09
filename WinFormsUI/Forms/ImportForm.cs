@@ -53,7 +53,7 @@ public partial class ImportForm : Form
     {
         using OpenFileDialog openFileDialog = new();
         openFileDialog.Title = "Select Archive";
-        openFileDialog.Filter = "FileLocker files (*.filelocker)|*.filelocker";
+        openFileDialog.Filter = $"{Constants.ExportExtension} files (*{Constants.ExportExtension})|*{Constants.ExportExtension}";
         openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
         DialogResult openFileDialogResult = openFileDialog.ShowDialog();

@@ -71,18 +71,35 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
             TrashButton.BackColor = Color.DarkRed;
 
-            // one selected is locked
-            if (selectedFiles.Count == 1 && selectedFiles.All(model => model.EncryptionStatus == true))
+            // one file selected
+            if (selectedFiles.Count == 1)
             {
-                EncryptButton.Enabled = false;
-                DecryptButton.Enabled = true;
+                ExportMenuItem.Enabled = true;
 
-                EncryptButton.BackColor = Color.Silver;
-                DecryptButton.BackColor = SystemColors.Highlight;
+                // locked
+                if (selectedFiles.First().EncryptionStatus == true)
+                {
+                    EncryptButton.Enabled = false;
+                    DecryptButton.Enabled = true;
+
+                    EncryptButton.BackColor = Color.Silver;
+                    DecryptButton.BackColor = SystemColors.Highlight;
+                }
+                // unlocked
+                else
+                {
+                    EncryptButton.Enabled = true;
+                    DecryptButton.Enabled = false;
+
+                    EncryptButton.BackColor = SystemColors.Highlight;
+                    DecryptButton.BackColor = Color.Silver;
+                }
             }
             // all unlocked
             else if (selectedFiles.All(model => model.EncryptionStatus == false))
             {
+                ExportMenuItem.Enabled = false;
+
                 EncryptButton.Enabled = true;
                 DecryptButton.Enabled = false;
 
@@ -92,6 +109,8 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
             // all locked or mixed
             else
             {
+                ExportMenuItem.Enabled = false;
+
                 EncryptButton.Enabled = false;
                 DecryptButton.Enabled = false;
 
@@ -112,7 +131,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
     private void DecryptButton_Click(object sender, EventArgs e)
     {
-        if (selectedFiles.Count == 0 || selectedFiles.Count > 1)
+        if (selectedFiles.Count != 1)
             return;
         if (selectedFiles.First().EncryptionStatus == false)
             return;
@@ -123,10 +142,10 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
     private void TrashButton_Click(object sender, EventArgs e)
     {
-        if (FileListBox.SelectedItem == null)
+        if (selectedFiles.Count == 0)
             return;
 
-        ShredSelectedFile();
+        ShredSelectedFiles();
     }
 
     private void AddButton_Click(object sender, EventArgs e)
@@ -192,10 +211,10 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
     private void ExportMenuItem_Click(object sender, EventArgs e)
     {
-        if (FileListBox.SelectedItem == null)
+        if (selectedFiles.Count != 1)
             return;
 
-        FileModel model = (FileModel)FileListBox.SelectedItem;
+        FileModel model = selectedFiles.First();
 
         using SaveFileDialog saveFileDialog = new();
         saveFileDialog.Title = "Save Archive";
@@ -255,11 +274,9 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         PopulateForm();
     }
 
-    private void RemoveSelectedFile()
+    private void RemoveSelectedFiles()
     {
-        FileModel model = (FileModel)FileListBox.SelectedItem;
-
-        if (model.EncryptionStatus == true)
+        if (selectedFiles.Any(model => model.EncryptionStatus == true))
         {
             DialogResult result = MessageBox.Show("Removing a locked file means it can never be unlocked. Are you sure you want to proceed?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
@@ -269,7 +286,8 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
         try
         {
-            GlobalConfig.DataAccessor.DeleteFileModel(model);
+            foreach (FileModel model in selectedFiles)
+                GlobalConfig.DataAccessor.DeleteFileModel(model);
         }
         catch (Exception ex)
         {
@@ -280,18 +298,19 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         PopulateForm();
     }
 
-    private void ShredSelectedFile()
+    private void ShredSelectedFiles()
     {
-        DialogResult result = MessageBox.Show("This will delete the file permanently. Are you sure you want to proceed?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+        DialogResult result = MessageBox.Show("This will delete the file(s) permanently. Are you sure you want to proceed?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
         if (result != DialogResult.Yes)
             return;
 
-        FileModel model = (FileModel)FileListBox.SelectedItem;
-
         try
         {
-            GlobalConfig.DataAccessor.ShredFile(model.Path);
-            GlobalConfig.DataAccessor.DeleteFileModel(model);
+            foreach (FileModel model in selectedFiles)
+            {
+                GlobalConfig.DataAccessor.ShredFile(model.Path);
+                GlobalConfig.DataAccessor.DeleteFileModel(model);
+            }
         }
         catch (Exception ex)
         {
@@ -327,11 +346,11 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         }
     }
 
-    private void RemoveFileItem_Click(object sender, EventArgs e)
+    private void RemoveFile_Click(object sender, EventArgs e)
     {
-        if (FileListBox.SelectedIndex == -1)
+        if (selectedFiles.Count == 0)
             return;
 
-        RemoveSelectedFile();
+        RemoveSelectedFiles();
     }
 }

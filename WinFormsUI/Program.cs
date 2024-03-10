@@ -11,8 +11,6 @@ internal static class Program
     [STAThread]
     static void Main()
     {
-        // FileModels saved to C:\Users\Evan\AppData\Roaming\FileLocker
-
         ApplicationConfiguration.Initialize();
         Application.Run(new DashboardForm());
     }

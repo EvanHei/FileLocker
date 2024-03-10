@@ -22,7 +22,6 @@ public class TripleDesEncryptor : IEncryptor
             throw new ArgumentOutOfRangeException(nameof(key), "Key must be 24 bytes long.");
 
         using TripleDES tripleDes = TripleDES.Create();
-        tripleDes.GenerateIV();
         ICryptoTransform encryptor = tripleDes.CreateEncryptor(key, tripleDes.IV);
 
         using MemoryStream msEncrypt = new();

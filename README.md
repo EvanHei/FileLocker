@@ -36,7 +36,7 @@ The Dashboard Form displays what files are currently within FileLocker's scope. 
 - **Encrypt**: launches the [**Encrypt Form**](#encrypt-form).
 - **Decrypt**: launches the [**Decrypt Form**](#decrypt-form).
 - **🗑️**: shreds a file by overwriting its contents with random data and then deleting.
-- **List Panel**: right click on a file to display options.
+- **List Panel**: right click on a file to display options, or drag and drop files onto the panel to add them.
 
 ### Tabs
 

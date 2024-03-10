@@ -22,7 +22,6 @@ public class AesEncryptor : IEncryptor
             throw new ArgumentOutOfRangeException("Key must be 32 bytes long.");
 
         using Aes aes = Aes.Create();
-        aes.GenerateIV();
         ICryptoTransform encryptor = aes.CreateEncryptor(key, aes.IV);
 
         using MemoryStream msEncrypt = new();

@@ -37,14 +37,12 @@
             AddButton = new Button();
             FileLockerLabel = new Label();
             MenuStrip = new MenuStrip();
-            FileMenuItem = new ToolStripMenuItem();
-            ImportMenuItem = new ToolStripMenuItem();
-            ExportMenuItem = new ToolStripMenuItem();
-            ExitMenuItem = new ToolStripMenuItem();
             HelpMenuItem = new ToolStripMenuItem();
             UserGuideMenuItem = new ToolStripMenuItem();
             FileListBoxItemContextMenuStrip = new ContextMenuStrip(components);
             RemoveFromListItem = new ToolStripMenuItem();
+            ExportButton = new Button();
+            ImportButton = new Button();
             MenuStrip.SuspendLayout();
             FileListBoxItemContextMenuStrip.SuspendLayout();
             SuspendLayout();
@@ -75,7 +73,7 @@
             EncryptButton.FlatStyle = FlatStyle.Flat;
             EncryptButton.Font = new Font("Segoe UI Emoji", 12F);
             EncryptButton.ForeColor = SystemColors.ButtonFace;
-            EncryptButton.Location = new Point(273, 329);
+            EncryptButton.Location = new Point(273, 299);
             EncryptButton.Name = "EncryptButton";
             EncryptButton.Size = new Size(81, 37);
             EncryptButton.TabIndex = 2;
@@ -89,7 +87,7 @@
             DecryptButton.FlatStyle = FlatStyle.Flat;
             DecryptButton.Font = new Font("Segoe UI Emoji", 12F);
             DecryptButton.ForeColor = SystemColors.ButtonFace;
-            DecryptButton.Location = new Point(360, 329);
+            DecryptButton.Location = new Point(360, 299);
             DecryptButton.Name = "DecryptButton";
             DecryptButton.Size = new Size(81, 37);
             DecryptButton.TabIndex = 3;
@@ -103,7 +101,7 @@
             TrashButton.FlatStyle = FlatStyle.Flat;
             TrashButton.Font = new Font("Segoe UI Emoji", 12F);
             TrashButton.ForeColor = SystemColors.ButtonFace;
-            TrashButton.Location = new Point(48, 329);
+            TrashButton.Location = new Point(48, 299);
             TrashButton.Name = "TrashButton";
             TrashButton.Size = new Size(34, 37);
             TrashButton.TabIndex = 5;
@@ -117,7 +115,7 @@
             AddButton.FlatStyle = FlatStyle.Flat;
             AddButton.Font = new Font("Segoe UI Emoji", 12F);
             AddButton.ForeColor = SystemColors.ButtonFace;
-            AddButton.Location = new Point(534, 329);
+            AddButton.Location = new Point(534, 299);
             AddButton.Name = "AddButton";
             AddButton.Size = new Size(91, 37);
             AddButton.TabIndex = 4;
@@ -130,7 +128,7 @@
             FileLockerLabel.AutoSize = true;
             FileLockerLabel.Font = new Font("Segoe UI Emoji", 20.25F);
             FileLockerLabel.ForeColor = SystemColors.ButtonFace;
-            FileLockerLabel.Location = new Point(288, 57);
+            FileLockerLabel.Location = new Point(295, 24);
             FileLockerLabel.Name = "FileLockerLabel";
             FileLockerLabel.Size = new Size(133, 36);
             FileLockerLabel.TabIndex = 7;
@@ -140,45 +138,12 @@
             // 
             MenuStrip.BackColor = Color.FromArgb(32, 32, 32);
             MenuStrip.Font = new Font("Microsoft Sans Serif", 9F);
-            MenuStrip.Items.AddRange(new ToolStripItem[] { FileMenuItem, HelpMenuItem });
+            MenuStrip.Items.AddRange(new ToolStripItem[] { HelpMenuItem });
             MenuStrip.Location = new Point(0, 0);
             MenuStrip.Name = "MenuStrip";
-            MenuStrip.Size = new Size(695, 24);
+            MenuStrip.Size = new Size(682, 24);
             MenuStrip.TabIndex = 8;
             MenuStrip.Text = "menuStrip1";
-            // 
-            // FileMenuItem
-            // 
-            FileMenuItem.BackColor = Color.FromArgb(32, 32, 32);
-            FileMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ImportMenuItem, ExportMenuItem, ExitMenuItem });
-            FileMenuItem.Font = new Font("Segoe UI Emoji", 9F);
-            FileMenuItem.ForeColor = SystemColors.AppWorkspace;
-            FileMenuItem.Name = "FileMenuItem";
-            FileMenuItem.Size = new Size(37, 20);
-            FileMenuItem.Text = "&File";
-            // 
-            // ImportMenuItem
-            // 
-            ImportMenuItem.Name = "ImportMenuItem";
-            ImportMenuItem.Size = new Size(153, 22);
-            ImportMenuItem.Text = "&Import Archive";
-            ImportMenuItem.Click += ImportMenuItem_Click;
-            // 
-            // ExportMenuItem
-            // 
-            ExportMenuItem.Name = "ExportMenuItem";
-            ExportMenuItem.Size = new Size(153, 22);
-            ExportMenuItem.Text = "&Export Archive";
-            ExportMenuItem.Click += ExportMenuItem_Click;
-            // 
-            // ExitMenuItem
-            // 
-            ExitMenuItem.BackColor = SystemColors.Control;
-            ExitMenuItem.ForeColor = SystemColors.ControlText;
-            ExitMenuItem.Name = "ExitMenuItem";
-            ExitMenuItem.Size = new Size(153, 22);
-            ExitMenuItem.Text = "E&xit";
-            ExitMenuItem.Click += ExitMenuItem_Click;
             // 
             // HelpMenuItem
             // 
@@ -214,12 +179,42 @@
             RemoveFromListItem.Text = "Remove from list";
             RemoveFromListItem.Click += RemoveFile_Click;
             // 
+            // ExportButton
+            // 
+            ExportButton.BackColor = Color.FromArgb(32, 32, 32);
+            ExportButton.FlatStyle = FlatStyle.Flat;
+            ExportButton.Font = new Font("Segoe UI Emoji", 10F);
+            ExportButton.ForeColor = SystemColors.ButtonFace;
+            ExportButton.Location = new Point(595, 73);
+            ExportButton.Name = "ExportButton";
+            ExportButton.Size = new Size(30, 30);
+            ExportButton.TabIndex = 9;
+            ExportButton.Text = "📤";
+            ExportButton.UseVisualStyleBackColor = false;
+            ExportButton.Click += ExportButton_Click;
+            // 
+            // ImportButton
+            // 
+            ImportButton.BackColor = Color.FromArgb(32, 32, 32);
+            ImportButton.FlatStyle = FlatStyle.Flat;
+            ImportButton.Font = new Font("Segoe UI Emoji", 10F);
+            ImportButton.ForeColor = SystemColors.ButtonFace;
+            ImportButton.Location = new Point(559, 73);
+            ImportButton.Name = "ImportButton";
+            ImportButton.Size = new Size(30, 30);
+            ImportButton.TabIndex = 10;
+            ImportButton.Text = "📥";
+            ImportButton.UseVisualStyleBackColor = false;
+            ImportButton.Click += ImportButton_Click;
+            // 
             // DashboardForm
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(32, 32, 32);
-            ClientSize = new Size(695, 397);
+            ClientSize = new Size(682, 354);
+            Controls.Add(ImportButton);
+            Controls.Add(ExportButton);
             Controls.Add(FileLockerLabel);
             Controls.Add(AddButton);
             Controls.Add(TrashButton);
@@ -251,13 +246,11 @@
         private Button AddButton;
         private Label FileLockerLabel;
         private MenuStrip MenuStrip;
-        private ToolStripMenuItem FileMenuItem;
-        private ToolStripMenuItem ExitMenuItem;
         private ToolStripMenuItem HelpMenuItem;
         private ToolStripMenuItem UserGuideMenuItem;
-        private ToolStripMenuItem ExportMenuItem;
-        private ToolStripMenuItem ImportMenuItem;
         private ContextMenuStrip FileListBoxItemContextMenuStrip;
         private ToolStripMenuItem RemoveFromListItem;
+        private Button ExportButton;
+        private Button ImportButton;
     }
 }

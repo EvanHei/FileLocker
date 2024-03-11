@@ -50,6 +50,7 @@ public partial class DecryptForm : Form
         }
         finally
         {
+            ResetTimer();
             this.Close();
             caller.DecryptionComplete();
         }
@@ -86,5 +87,38 @@ public partial class DecryptForm : Form
 
             isEyeballLabelClicked = true;
         }
+
+        ResetTimer();
+    }
+
+    private void InactivityTimer_Tick(object sender, EventArgs e)
+    {
+        PasswordMaskedTextBox.Text = "";
+    }
+
+    private void ResetTimer()
+    {
+        InactivityTimer.Stop();
+        InactivityTimer.Start();
+    }
+
+    private void PasswordMaskedTextBox_TextChanged(object sender, EventArgs e)
+    {
+        ResetTimer();
+    }
+
+    private void PasswordMaskedTextBox_Click(object sender, EventArgs e)
+    {
+        ResetTimer();
+    }
+
+    private void DecryptForm_MouseDown(object sender, MouseEventArgs e)
+    {
+        ResetTimer();
+    }
+
+    private void DecryptForm_MouseMove(object sender, MouseEventArgs e)
+    {
+        ResetTimer();
     }
 }

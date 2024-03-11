@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EncryptForm));
             PasswordMaskedTextBox = new MaskedTextBox();
             PasswordLabel = new Label();
@@ -44,6 +45,7 @@
             EncryptionAlgorithmLabel = new Label();
             EncryptionAlgorithmComboBox = new ComboBox();
             PasswordWarningLabel = new Label();
+            InactivityTimer = new System.Windows.Forms.Timer(components);
             SuspendLayout();
             // 
             // PasswordMaskedTextBox
@@ -56,6 +58,7 @@
             PasswordMaskedTextBox.Size = new Size(277, 29);
             PasswordMaskedTextBox.TabIndex = 1;
             PasswordMaskedTextBox.UseSystemPasswordChar = true;
+            PasswordMaskedTextBox.Click += PasswordMaskedTextBox_Click;
             PasswordMaskedTextBox.TextChanged += PasswordMaskedTextBox_TextChanged;
             // 
             // PasswordLabel
@@ -162,6 +165,7 @@
             ConfirmPasswordMaskedTextBox.Size = new Size(277, 29);
             ConfirmPasswordMaskedTextBox.TabIndex = 11;
             ConfirmPasswordMaskedTextBox.UseSystemPasswordChar = true;
+            ConfirmPasswordMaskedTextBox.Click += ConfirmPasswordMaskedTextBox_Click;
             ConfirmPasswordMaskedTextBox.TextChanged += ConfirmPasswordMaskedTextBox_TextChanged;
             // 
             // ConfirmPasswordLabel
@@ -211,6 +215,7 @@
             EncryptionAlgorithmComboBox.Size = new Size(277, 29);
             EncryptionAlgorithmComboBox.TabIndex = 15;
             EncryptionAlgorithmComboBox.SelectedIndexChanged += EncryptionAlgorithmComboBox_SelectedIndexChanged;
+            EncryptionAlgorithmComboBox.Click += EncryptionAlgorithmComboBox_Click;
             // 
             // PasswordWarningLabel
             // 
@@ -223,6 +228,12 @@
             PasswordWarningLabel.TabIndex = 16;
             PasswordWarningLabel.Text = "If your password is lost, so is your data.";
             PasswordWarningLabel.Visible = false;
+            // 
+            // InactivityTimer
+            // 
+            InactivityTimer.Enabled = true;
+            InactivityTimer.Interval = 30000;
+            InactivityTimer.Tick += InactivityTimer_Tick;
             // 
             // EncryptForm
             // 
@@ -251,6 +262,8 @@
             Name = "EncryptForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Encrypt";
+            MouseDown += EncryptForm_MouseDown;
+            MouseMove += EncryptForm_MouseMove;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -272,5 +285,6 @@
         private Label EncryptionAlgorithmLabel;
         private ComboBox EncryptionAlgorithmComboBox;
         private Label PasswordWarningLabel;
+        private System.Windows.Forms.Timer InactivityTimer;
     }
 }

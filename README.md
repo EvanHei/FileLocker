@@ -38,14 +38,8 @@ The Dashboard Form displays files within FileLocker's scope. Each file's status 
 - **🗑️**: shreds a file by overwriting its contents with random data and then deleting.
 - 📥: imports a chosen file archive.
 - 📤: exports the selected file.
+- **User Guide 📖**: opens the GitHub repository in the default browser.
 - **File List**: right click on a file to display options, or drag and drop files onto the panel to add them.
-
-### Tabs
-
-<img src="./images/HelpTab.png" alt="Help Tab" width="400">
-
-- **Help Tab**:
-  - User Guide: opens the GitHub repository in the default browser.
 
 ---
 
@@ -53,7 +47,7 @@ The Dashboard Form displays files within FileLocker's scope. Each file's status 
 
 <img src="./images/EncryptForm.png" alt="Encrypt Form" width="400">
 
-The Encrypt Form allows users to encrypt by choosing an industry-standard encryption algorithm such as AES or 3DES and providing a strength-enforced password.
+The Encrypt Form allows users to encrypt by choosing an industry-standard encryption algorithm such as AES or 3DES and providing a strength-enforced password. Passwords cleared after 30 seconds of inactivity.
 
 - **Generate Random**: generates a random password that satisfies the strength policy.
 - **→**: encrypts the file with the provided password.
@@ -93,7 +87,7 @@ The Decrypt Form allows users to decrypt by inputting the encryption password.
 - **Integrity**: Generates HMACs to ensure the integrity of stored or transmitted data.
 - **Password Strength Policy**: Sets a strong password to mitigate brute-force attacks.
 - **Password Generator**: Generates a password without the need to manually type, mitigating the effect of keystroke logging malware.
-- **Password Management**: Hashes and salts passwords to protect against rainbow table attacks.
+- **Password Management**: Clears password inputs after a set time if the device is left running.
 - **Password-Based Key Derivation**: Derives encryption keys from passwords.
 - **Logging**: Logs important events such as encryption and decryption with Serilog.
 - **Constant-Time Comparison**: Uses libraries with constant-time comparison to mitigate timing attacks.

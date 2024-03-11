@@ -234,45 +234,6 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         Process.Start(processStartInfo);
     }
 
-    private void ExitMenuItem_Click(object sender, EventArgs e)
-    {
-        Application.Exit();
-    }
-
-    private void ExportMenuItem_Click(object sender, EventArgs e)
-    {
-        if (selectedFiles.Count != 1)
-            return;
-
-        FileModel model = selectedFiles.First();
-
-        using SaveFileDialog saveFileDialog = new();
-        saveFileDialog.Title = "Save Archive";
-        saveFileDialog.Filter = "Zip files (*.zip)|*.zip";
-        saveFileDialog.FileName = model.FileName + ".zip";
-        saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-        saveFileDialog.OverwritePrompt = true;
-
-        DialogResult result = saveFileDialog.ShowDialog();
-        if (result != DialogResult.OK)
-            return;
-
-        try
-        {
-            GlobalConfig.DataAccessor.ExportZipFileModel(model, saveFileDialog.FileName);
-        }
-        catch
-        {
-            MessageBox.Show("Could not export, the file may be missing.", "Error", MessageBoxButtons.OK);
-        }
-    }
-
-    private void ImportMenuItem_Click(object sender, EventArgs e)
-    {
-        ImportForm importForm = new(this);
-        importForm.ShowDialog();
-    }
-
     private void AddFiles(string[] paths)
     {
         bool fileTooLarge = false;

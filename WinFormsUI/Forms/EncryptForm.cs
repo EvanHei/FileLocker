@@ -53,6 +53,7 @@ public partial class EncryptForm : Form
         }
         finally
         {
+            ResetTimer();
             this.Close();
             caller.EncryptionComplete();
         }
@@ -119,6 +120,8 @@ public partial class EncryptForm : Form
 
             isEyeballLabelClicked = true;
         }
+
+        ResetTimer();
     }
 
     private void PasswordMaskedTextBox_TextChanged(object sender, EventArgs e)
@@ -202,16 +205,19 @@ public partial class EncryptForm : Form
         }
 
         UpdateControls();
+        ResetTimer();
     }
 
     private void ConfirmPasswordMaskedTextBox_TextChanged(object sender, EventArgs e)
     {
         UpdateControls();
+        ResetTimer();
     }
 
     private void EncryptionAlgorithmComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
         UpdateControls();
+        ResetTimer();
     }
 
     static string GenerateRandomPassword()
@@ -267,5 +273,44 @@ public partial class EncryptForm : Form
 
         if (!isEyeballLabelClicked)
             EyeballLabel_Click(null, null);
+
+        ResetTimer();
+    }
+
+    private void InactivityTimer_Tick(object sender, EventArgs e)
+    {
+        PasswordMaskedTextBox.Text = "";
+        ConfirmPasswordMaskedTextBox.Text = "";
+    }
+
+    private void EncryptForm_MouseDown(object sender, MouseEventArgs e)
+    {
+        ResetTimer();
+    }
+
+    private void EncryptForm_MouseMove(object sender, MouseEventArgs e)
+    {
+        ResetTimer();
+    }
+
+    private void PasswordMaskedTextBox_Click(object sender, EventArgs e)
+    {
+        ResetTimer();
+    }
+
+    private void ConfirmPasswordMaskedTextBox_Click(object sender, EventArgs e)
+    {
+        ResetTimer();
+    }
+
+    private void EncryptionAlgorithmComboBox_Click(object sender, EventArgs e)
+    {
+        ResetTimer();
+    }
+
+    private void ResetTimer()
+    {
+        InactivityTimer.Stop();
+        InactivityTimer.Start();
     }
 }

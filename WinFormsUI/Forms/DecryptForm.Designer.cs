@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DecryptForm));
             PasswordLabel = new Label();
             PasswordMaskedTextBox = new MaskedTextBox();
             EyeballLabel = new Label();
             EnterButton = new Button();
+            InactivityTimer = new System.Windows.Forms.Timer(components);
             SuspendLayout();
             // 
             // PasswordLabel
@@ -56,6 +58,8 @@
             PasswordMaskedTextBox.Size = new Size(277, 29);
             PasswordMaskedTextBox.TabIndex = 1;
             PasswordMaskedTextBox.UseSystemPasswordChar = true;
+            PasswordMaskedTextBox.Click += PasswordMaskedTextBox_Click;
+            PasswordMaskedTextBox.TextChanged += PasswordMaskedTextBox_TextChanged;
             // 
             // EyeballLabel
             // 
@@ -84,6 +88,12 @@
             EnterButton.UseVisualStyleBackColor = false;
             EnterButton.Click += EnterButton_Click;
             // 
+            // InactivityTimer
+            // 
+            InactivityTimer.Enabled = true;
+            InactivityTimer.Interval = 30000;
+            InactivityTimer.Tick += InactivityTimer_Tick;
+            // 
             // DecryptForm
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
@@ -100,6 +110,8 @@
             Name = "DecryptForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Decrypt";
+            MouseDown += DecryptForm_MouseDown;
+            MouseMove += DecryptForm_MouseMove;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -110,5 +122,6 @@
         private MaskedTextBox PasswordMaskedTextBox;
         private Label EyeballLabel;
         private Button EnterButton;
+        private System.Windows.Forms.Timer InactivityTimer;
     }
 }

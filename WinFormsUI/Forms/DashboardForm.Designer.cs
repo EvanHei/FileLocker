@@ -37,7 +37,6 @@
             AddButton = new Button();
             FileLockerLabel = new Label();
             MenuStrip = new MenuStrip();
-            HelpMenuItem = new ToolStripMenuItem();
             UserGuideMenuItem = new ToolStripMenuItem();
             FileListBoxItemContextMenuStrip = new ContextMenuStrip(components);
             RemoveFromListItem = new ToolStripMenuItem();
@@ -138,30 +137,21 @@
             // 
             MenuStrip.BackColor = Color.FromArgb(32, 32, 32);
             MenuStrip.Font = new Font("Microsoft Sans Serif", 9F);
-            MenuStrip.Items.AddRange(new ToolStripItem[] { HelpMenuItem });
+            MenuStrip.Items.AddRange(new ToolStripItem[] { UserGuideMenuItem });
             MenuStrip.Location = new Point(0, 0);
             MenuStrip.Name = "MenuStrip";
             MenuStrip.Size = new Size(682, 24);
             MenuStrip.TabIndex = 8;
             MenuStrip.Text = "menuStrip1";
             // 
-            // HelpMenuItem
-            // 
-            HelpMenuItem.BackColor = Color.FromArgb(32, 32, 32);
-            HelpMenuItem.DropDownItems.AddRange(new ToolStripItem[] { UserGuideMenuItem });
-            HelpMenuItem.Font = new Font("Segoe UI Emoji", 9F);
-            HelpMenuItem.ForeColor = SystemColors.AppWorkspace;
-            HelpMenuItem.Name = "HelpMenuItem";
-            HelpMenuItem.Size = new Size(44, 20);
-            HelpMenuItem.Text = "&Help";
-            // 
             // UserGuideMenuItem
             // 
-            UserGuideMenuItem.BackColor = SystemColors.Control;
-            UserGuideMenuItem.ForeColor = SystemColors.ControlText;
+            UserGuideMenuItem.BackColor = Color.FromArgb(32, 32, 32);
+            UserGuideMenuItem.Font = new Font("Segoe UI Emoji", 9F);
+            UserGuideMenuItem.ForeColor = SystemColors.AppWorkspace;
             UserGuideMenuItem.Name = "UserGuideMenuItem";
-            UserGuideMenuItem.Size = new Size(131, 22);
-            UserGuideMenuItem.Text = "User &Guide";
+            UserGuideMenuItem.Size = new Size(95, 20);
+            UserGuideMenuItem.Text = "User &Guide 📖";
             UserGuideMenuItem.Click += UserGuideMenuItem_Click;
             // 
             // FileListBoxItemContextMenuStrip
@@ -246,7 +236,6 @@
         private Button AddButton;
         private Label FileLockerLabel;
         private MenuStrip MenuStrip;
-        private ToolStripMenuItem HelpMenuItem;
         private ToolStripMenuItem UserGuideMenuItem;
         private ContextMenuStrip FileListBoxItemContextMenuStrip;
         private ToolStripMenuItem RemoveFromListItem;

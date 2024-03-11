@@ -53,71 +53,101 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         foreach (FileModel model in FileListBox.SelectedItems)
             selectedFiles.Add(model);
 
+        // no files selected
         if (selectedFiles.Count == 0)
         {
-            TrashButton.Enabled = false;
-            EncryptButton.Enabled = false;
-            DecryptButton.Enabled = false;
-            ExportMenuItem.Enabled = false;
-
-            TrashButton.BackColor = Color.Silver;
-            EncryptButton.BackColor = Color.Silver;
-            DecryptButton.BackColor = Color.Silver;
+            DisableEncryptButton();
+            DisableDecryptButton();
+            DisableTrashButton();
+            DisableExportButton();
         }
+        // some files selected
         else
         {
-            TrashButton.Enabled = true;
-            ExportMenuItem.Enabled = true;
-
-            TrashButton.BackColor = Color.DarkRed;
+            EnableTrashButton();
+            EnableExportButton();
 
             // one file selected
             if (selectedFiles.Count == 1)
             {
-                ExportMenuItem.Enabled = true;
+                EnableExportButton();
 
                 // locked
                 if (selectedFiles.First().EncryptionStatus == true)
                 {
-                    EncryptButton.Enabled = false;
-                    DecryptButton.Enabled = true;
-
-                    EncryptButton.BackColor = Color.Silver;
-                    DecryptButton.BackColor = SystemColors.Highlight;
+                    DisableEncryptButton();
+                    EnableDecryptButton();
                 }
                 // unlocked
                 else
                 {
-                    EncryptButton.Enabled = true;
-                    DecryptButton.Enabled = false;
-
-                    EncryptButton.BackColor = SystemColors.Highlight;
-                    DecryptButton.BackColor = Color.Silver;
+                    EnableEncryptButton();
+                    DisableDecryptButton();
                 }
             }
             // all unlocked
             else if (selectedFiles.All(model => model.EncryptionStatus == false))
             {
-                ExportMenuItem.Enabled = false;
-
-                EncryptButton.Enabled = true;
-                DecryptButton.Enabled = false;
-
-                EncryptButton.BackColor = SystemColors.Highlight;
-                DecryptButton.BackColor = Color.Silver;
+                EnableEncryptButton();
+                DisableDecryptButton();
+                DisableExportButton();
             }
             // all locked or mixed
             else
             {
-                ExportMenuItem.Enabled = false;
-
-                EncryptButton.Enabled = false;
-                DecryptButton.Enabled = false;
-
-                EncryptButton.BackColor = Color.Silver;
-                DecryptButton.BackColor = Color.Silver;
+                DisableEncryptButton();
+                DisableDecryptButton();
+                DisableExportButton();
             }
         }
+    }
+
+    private void EnableEncryptButton()
+    {
+        EncryptButton.Enabled = true;
+        EncryptButton.BackColor = SystemColors.Highlight;
+    }
+
+    private void DisableEncryptButton()
+    {
+        EncryptButton.Enabled = false;
+        EncryptButton.BackColor = Color.Silver;
+    }
+
+    private void EnableDecryptButton()
+    {
+        DecryptButton.Enabled = true;
+        DecryptButton.BackColor = SystemColors.Highlight;
+    }
+
+    private void DisableDecryptButton()
+    {
+        DecryptButton.Enabled = false;
+        DecryptButton.BackColor = Color.Silver;
+    }
+
+    private void EnableTrashButton()
+    {
+        TrashButton.Enabled = true;
+        TrashButton.BackColor = Color.DarkRed;
+    }
+
+    private void DisableTrashButton()
+    {
+        TrashButton.Enabled = false;
+        TrashButton.BackColor = Color.Silver;
+    }
+
+    private void EnableExportButton()
+    {
+        ExportButton.Enabled = true;
+        ExportButton.BackColor = Color.FromArgb(32, 32, 32);
+    }
+
+    private void DisableExportButton()
+    {
+        ExportButton.Enabled = false;
+        ExportButton.BackColor = Color.Silver;
     }
 
     private void EncryptButton_Click(object sender, EventArgs e)
@@ -362,5 +392,39 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
     private void DashboardForm_FormClosing(object sender, FormClosingEventArgs e)
     {
         GlobalConfig.Logger.Info($"App Terminated");
+    }
+
+    private void ExportButton_Click(object sender, EventArgs e)
+    {
+        if (selectedFiles.Count != 1)
+            return;
+
+        FileModel model = selectedFiles.First();
+
+        using SaveFileDialog saveFileDialog = new();
+        saveFileDialog.Title = "Save Archive";
+        saveFileDialog.Filter = "Zip files (*.zip)|*.zip";
+        saveFileDialog.FileName = model.FileName + ".zip";
+        saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        saveFileDialog.OverwritePrompt = true;
+
+        DialogResult result = saveFileDialog.ShowDialog();
+        if (result != DialogResult.OK)
+            return;
+
+        try
+        {
+            GlobalConfig.DataAccessor.ExportZipFileModel(model, saveFileDialog.FileName);
+        }
+        catch
+        {
+            MessageBox.Show("Could not export, the file may be missing.", "Error", MessageBoxButtons.OK);
+        }
+    }
+
+    private void ImportButton_Click(object sender, EventArgs e)
+    {
+        ImportForm importForm = new(this);
+        importForm.ShowDialog();
     }
 }

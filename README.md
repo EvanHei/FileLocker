@@ -1,6 +1,6 @@
 # FileLocker
 
-FileLocker is a Windows desktop application designed protect files in rest or in transit using security best practices.
+A Windows desktop app to protect files in rest or in transit using cryptographic techniques and cybersecurity best practices.
 
 ## Table of Contents
 
@@ -30,27 +30,21 @@ _Coming Soon_
 
 <img src="./images/DashboardForm.png" alt="Dashboard Form" width="600">
 
-The Dashboard Form displays what files are currently within FileLocker's scope. Each file's status can be seen to the left of its name. 🔐 means the file is locked, and 📄 means the file is unlocked. Multiple files can be selected for encryption.
+The Dashboard Form displays files within FileLocker's scope. Each file's status can be seen to the left of its name. Multiple files can be selected for encryption and deletion.
 
 - **+ Add File**: displays a file dialog to select one or more files to be displayed.
 - **Encrypt**: launches the [**Encrypt Form**](#encrypt-form).
 - **Decrypt**: launches the [**Decrypt Form**](#decrypt-form).
 - **🗑️**: shreds a file by overwriting its contents with random data and then deleting.
-- **List Panel**: right click on a file to display options, or drag and drop files onto the panel to add them.
+- 📥: imports a chosen file archive.
+- 📤: exports the selected file.
+- **File List**: right click on a file to display options, or drag and drop files onto the panel to add them.
 
 ### Tabs
 
-<img src="./images/FileTab.png" alt="File Tab" width="400">
 <img src="./images/HelpTab.png" alt="Help Tab" width="400">
 
-- **File Tab**: displays a menu with the following options:
-
-  - Import Archive: allows selection a file archive to load.
-  - Export Archive: exports the currently selected file archive. Only one file may be exported at a time.
-  - Exit: terminates the app.
-
 - **Help Tab**:
-
   - User Guide: opens the GitHub repository in the default browser.
 
 ---
@@ -59,11 +53,14 @@ The Dashboard Form displays what files are currently within FileLocker's scope. 
 
 <img src="./images/EncryptForm.png" alt="Encrypt Form" width="400">
 
-The Encrypt Form allows users to choose an industry-standard encryption algorithm such as AES and 3DES and provide a strength-enforced password.
+The Encrypt Form allows users to encrypt by choosing an industry-standard encryption algorithm such as AES or 3DES and providing a strength-enforced password.
 
 - **Generate Random**: generates a random password that satisfies the strength policy.
 - **→**: encrypts the file with the provided password.
 - **👁**: shows or hides the password fields.
+
+> [!CAUTION]
+> If the password is lost, so is the file's data. FileLocker maintains a zero-knowledge policy.
 
 ---
 
@@ -71,7 +68,7 @@ The Encrypt Form allows users to choose an industry-standard encryption algorith
 
 <img src="./images/DecryptForm.png" alt="Decrypt Form" width="400">
 
-The Decrypt Form allows users to input the password they used to encrypt.
+The Decrypt Form allows users to decrypt by inputting the encryption password.
 
 - **→**: decrypts the file with the provided password, if correct.
 - **👁**: shows or hides the password.

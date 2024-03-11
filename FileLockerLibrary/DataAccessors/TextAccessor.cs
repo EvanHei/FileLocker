@@ -211,19 +211,21 @@ public class TextAccessor : IDataAccessor
 
         using ZipArchive archive = ZipFile.OpenRead(zipPath);
 
+        // TODO - remove?
         List<string> zipEntriesToProcess = GetZipEntryNames(archive);
-
-        // error checking
-        if (zipEntriesToProcess.Count < 1 || zipEntriesToProcess.Count > 5)
-            throw new FileNotFoundException($"Archive has invalid number of files.");
-
-        FileModel model = new(savePath);
-
-        // TODO - refactor to adhere to the SRP
         ZipArchiveEntry encryptionKeySaltEntry = archive.GetEntry(Constants.EncryptionKeySaltFileName);
         ZipArchiveEntry macKeySaltEntry = archive.GetEntry(Constants.MacKeySaltFileName);
         ZipArchiveEntry macEntry = archive.GetEntry(Constants.MacFileName);
 
+        // error checking
+        if (encryptionKeySaltEntry == null ||
+            macKeySaltEntry == null ||
+            macEntry == null)
+            throw new FileNotFoundException($"Archive does not contain the necessary files.");
+
+        FileModel model = new(savePath);
+
+        // TODO - refactor to adhere to the SRP
         // read the encryption key salt
         using (MemoryStream ms = new())
         using (Stream stream = encryptionKeySaltEntry.Open())

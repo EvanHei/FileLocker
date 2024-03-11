@@ -81,7 +81,7 @@ The Decrypt Form allows users to decrypt by inputting the encryption password.
 - **Framework**: .NET
 - **UI**: Windows Forms
 - **Version Control**: Git / GitHub
-- **Encryption Algorithm**: AES
+- **Encryption Algorithm(s)**: AES, 3DES
 - **MAC Algorithm**: HMACSHA256
 - **Key Derivation Algorithm**: PBKDF2
 - **Logging Library**: Serilog

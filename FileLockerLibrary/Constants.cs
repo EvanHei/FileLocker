@@ -23,5 +23,5 @@ public static class Constants
     public const string EncryptionKeySaltFileName = "EncryptionKey.salt";
     public const string MacFileName = "Content.mac";
     public const string MacKeySaltFileName = "MacKey.salt";
-    public const string GitHubUrl = "https://github.com/EvanHei/FileLocker";
+    public const string ReadmeUrl = "https://github.com/EvanHei/FileLocker/blob/main/README.md";
 }

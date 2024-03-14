@@ -171,6 +171,7 @@ public class FileModel
         }
     }
 
+    // throws FileNotFoundException and others
     public void Lock()
     {
         Encrypt();
@@ -190,7 +191,7 @@ public class FileModel
     private void Encrypt()
     {
         if (!File.Exists(Path))
-            throw new FileNotFoundException("The file could not be found.", Path);
+            throw new FileNotFoundException("The file was either moved or deleted.", Path);
         if (Password == null)
             throw new NullReferenceException("Password must be set.");
         if (EncryptionStatus == true)
@@ -224,7 +225,7 @@ public class FileModel
     private void Decrypt()
     {
         if (!File.Exists(Path))
-            throw new FileNotFoundException("The file could not be found.", Path);
+            throw new FileNotFoundException("The file was either moved or deleted.", Path);
         if (Password == null)
             throw new NullReferenceException("Password must be set.");
         if (EncryptionStatus == false)
@@ -256,7 +257,7 @@ public class FileModel
     private void AddMac()
     {
         if (!File.Exists(Path))
-            throw new FileNotFoundException("The file could not be found.", Path);
+            throw new FileNotFoundException("The file was either moved or deleted.", Path);
         if (Password == null)
             throw new NullReferenceException("Password must be set.");
         if (EncryptionStatus == false)
@@ -271,13 +272,17 @@ public class FileModel
 
     private bool ValidateMac()
     {
+        if (!File.Exists(Path))
+            throw new FileNotFoundException("The file was either moved or deleted.", Path);
         if (Mac == null)
             throw new NullReferenceException("MAC must be set.");
         if (MacKey == null)
             throw new NullReferenceException("MAC key must be set.");
 
-        byte[] content = File.ReadAllBytes(Path);
         GlobalConfig.MacGenerator.Key = MacKey;
+
+        // TODO - surround with try/catch if the file was moved or deleted
+        byte[] content = File.ReadAllBytes(Path);
         bool output = GlobalConfig.MacGenerator.ValidateMac(content, Mac);
         TamperedStatus = !output;
 

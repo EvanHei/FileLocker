@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Reflection.Emit;
 using System.Security.Cryptography;
 using System.Text;
@@ -14,7 +15,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskBand;
 
 namespace WinFormsUI;
 
-public partial class EncryptForm : Form
+public partial class EncryptForm : Form, IRelocateFormCaller
 {
     private IEncryptFormCaller caller;
     private List<FileModel> models;
@@ -43,20 +44,31 @@ public partial class EncryptForm : Form
                 Enum.TryParse(EncryptionAlgorithmComboBox.SelectedItem.ToString(), out EncryptionAlgorithm algorithm);
                 model.EncryptionAlgorithm = algorithm;
                 model.Password = PasswordMaskedTextBox.Text;
-                model.Lock();
-                GlobalConfig.DataAccessor.SaveFileModel(model);
+
+                try
+                {
+                    model.Lock();
+                    GlobalConfig.DataAccessor.SaveFileModel(model);
+                    this.Close();
+                    caller.EncryptionComplete();
+                }
+                catch (FileNotFoundException ex)
+                {
+                    RelocateForm relocateForm = new(this, model);
+                    relocateForm.ShowDialog();
+                    break;
+                }
             }
         }
         catch (Exception ex)
         {
             MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
         }
-        finally
-        {
-            ResetTimer();
-            this.Close();
-            caller.EncryptionComplete();
-        }
+        //finally
+        //{
+        //    this.Close();
+        //    caller.EncryptionComplete();
+        //}
     }
 
     private bool ValidateInputFields()
@@ -279,6 +291,11 @@ public partial class EncryptForm : Form
 
     private void InactivityTimer_Tick(object sender, EventArgs e)
     {
+        ClearPasswords();
+    }
+
+    private void ClearPasswords()
+    {
         PasswordMaskedTextBox.Text = "";
         ConfirmPasswordMaskedTextBox.Text = "";
     }
@@ -312,5 +329,10 @@ public partial class EncryptForm : Form
     {
         InactivityTimer.Stop();
         InactivityTimer.Start();
+    }
+
+    public void RelocationComplete()
+    {
+        ClearPasswords();
     }
 }

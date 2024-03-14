@@ -62,7 +62,7 @@ The Encrypt Form allows users to encrypt by choosing an industry-standard encryp
 
 <img src="./images/DecryptForm.png" alt="Decrypt Form" width="400">
 
-The Decrypt Form allows users to decrypt by inputting the encryption password.
+The Decrypt Form allows users to decrypt by inputting the encryption password. Passwords cleared after 30 seconds of inactivity.
 
 - **→**: decrypts the file with the provided password, if correct.
 - **👁**: shows or hides the password.

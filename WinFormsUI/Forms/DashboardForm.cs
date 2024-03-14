@@ -185,7 +185,6 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         openFileDialog.Multiselect = true;
         openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-        // Select file(s)
         DialogResult result = openFileDialog.ShowDialog();
         if (result != DialogResult.OK)
             return;
@@ -214,8 +213,18 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         using SolidBrush backgroundBrush = new(backgroundColor);
         row.Graphics.FillRectangle(backgroundBrush, row.Bounds);
 
-        using SolidBrush foregroundBrush = new(row.ForeColor);
-        row.Graphics.DrawString(model.DisplayName, row.Font, foregroundBrush, row.Bounds);
+        // TODO - ValidateMac will throw exception if the file was moved
+        try
+        {
+            using SolidBrush foregroundBrush = new(row.ForeColor);
+            row.Graphics.DrawString(model.DisplayName, row.Font, foregroundBrush, row.Bounds);
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }    
     }
 
     private void FileListBox_SelectedIndexChanged(object? sender, EventArgs e)
@@ -227,7 +236,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
     {
         ProcessStartInfo processStartInfo = new()
         {
-            FileName = Constants.GitHubUrl,
+            FileName = Constants.ReadmeUrl,
             UseShellExecute = true
         };
 

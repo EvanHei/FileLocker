@@ -138,6 +138,12 @@ public class TextAccessor : IDataAccessor
         GlobalConfig.Logger.Info($"File Shredded - {Path.GetFileNameWithoutExtension(path)}");
     }
 
+    public void RelocateFile(FileModel model, string newPath)
+    {
+        model.Path = newPath;
+        SaveFileModel(model);
+    }
+
     public void ExportZipFileModel(FileModel model, string zipPath)
     {
         if (model == null)

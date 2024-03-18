@@ -178,7 +178,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         ShredSelectedFiles();
     }
 
-    private void AddButton_Click(object sender, EventArgs e)
+    private void AddFilesButton_Click(object sender, EventArgs e)
     {
         using OpenFileDialog openFileDialog = new();
         openFileDialog.Title = "Select File(s)";
@@ -249,6 +249,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
         foreach (string path in paths)
         {
+            // TODO - don't allow folders
             FileInfo fileInfo = new FileInfo(path);
             if (fileInfo.Length > Constants.MaxFileSize)
             {
@@ -396,5 +397,10 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
     {
         ImportForm importForm = new(this);
         importForm.ShowDialog();
+    }
+
+    public void RemovalComplete()
+    {
+        PopulateForm();
     }
 }

@@ -64,11 +64,6 @@ public partial class EncryptForm : Form, IRelocateFormCaller
         {
             MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
         }
-        //finally
-        //{
-        //    this.Close();
-        //    caller.EncryptionComplete();
-        //}
     }
 
     private bool ValidateInputFields()
@@ -100,16 +95,48 @@ public partial class EncryptForm : Form, IRelocateFormCaller
     {
         if (ValidateInputFields())
         {
-            EnterButton.BackColor = SystemColors.Highlight;
-            EnterButton.Enabled = true;
+            EnableEnterButton();
             PasswordWarningLabel.Visible = true;
         }
         else
         {
-            EnterButton.BackColor = Color.Silver;
-            EnterButton.Enabled = false;
+            DisableEnterButton();
             PasswordWarningLabel.Visible = false;
         }
+
+        if (PasswordMaskedTextBox.Text.Length > 0 ||
+            ConfirmPasswordMaskedTextBox.Text.Length > 0)
+        {
+            EnableClearButton();
+        }
+        else
+        {
+            DisableClearButton();
+        }
+    }
+
+    private void EnableClearButton()
+    {
+        ClearButton.Enabled = true;
+        ClearButton.BackColor = SystemColors.Highlight;
+    }
+
+    private void DisableClearButton()
+    {
+        ClearButton.Enabled = false;
+        ClearButton.BackColor = Color.Silver;
+    }
+
+    private void EnableEnterButton()
+    {
+        EnterButton.BackColor = SystemColors.Highlight;
+        EnterButton.Enabled = true;
+    }
+
+    private void DisableEnterButton()
+    {
+        EnterButton.BackColor = Color.Silver;
+        EnterButton.Enabled = false;
     }
 
     private void EyeballLabel_Click(object sender, EventArgs e)
@@ -334,5 +361,17 @@ public partial class EncryptForm : Form, IRelocateFormCaller
     public void RelocationComplete()
     {
         ClearPasswords();
+    }
+
+    public void RemovalComplete()
+    {
+        this.Close();
+        caller.RemovalComplete();
+    }
+
+    private void ClearButton_Click(object sender, EventArgs e)
+    {
+        PasswordMaskedTextBox.Text = "";
+        ConfirmPasswordMaskedTextBox.Text = "";
     }
 }

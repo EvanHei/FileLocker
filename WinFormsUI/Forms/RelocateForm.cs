@@ -53,9 +53,19 @@ public partial class RelocateForm : Form
         caller.RelocationComplete();
     }
 
-    // TODO - implement RemoveButton_Click
     private void RemoveButton_Click(object sender, EventArgs e)
     {
-        MessageBox.Show("You clicked remove.");
+        try
+        {
+            GlobalConfig.DataAccessor.DeleteFileModel(model);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        this.Close();
+        caller.RemovalComplete();
     }
 }

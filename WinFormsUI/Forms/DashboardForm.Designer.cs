@@ -34,7 +34,7 @@
             EncryptButton = new Button();
             DecryptButton = new Button();
             TrashButton = new Button();
-            AddButton = new Button();
+            AddFilesButton = new Button();
             FileLockerLabel = new Label();
             MenuStrip = new MenuStrip();
             UserGuideMenuItem = new ToolStripMenuItem();
@@ -108,19 +108,19 @@
             TrashButton.UseVisualStyleBackColor = false;
             TrashButton.Click += TrashButton_Click;
             // 
-            // AddButton
+            // AddFilesButton
             // 
-            AddButton.BackColor = Color.DarkGreen;
-            AddButton.FlatStyle = FlatStyle.Flat;
-            AddButton.Font = new Font("Segoe UI Emoji", 12F);
-            AddButton.ForeColor = SystemColors.ButtonFace;
-            AddButton.Location = new Point(534, 299);
-            AddButton.Name = "AddButton";
-            AddButton.Size = new Size(91, 37);
-            AddButton.TabIndex = 4;
-            AddButton.Text = "+ Add File";
-            AddButton.UseVisualStyleBackColor = false;
-            AddButton.Click += AddButton_Click;
+            AddFilesButton.BackColor = Color.DarkGreen;
+            AddFilesButton.FlatStyle = FlatStyle.Flat;
+            AddFilesButton.Font = new Font("Segoe UI Emoji", 12F);
+            AddFilesButton.ForeColor = SystemColors.ButtonFace;
+            AddFilesButton.Location = new Point(517, 299);
+            AddFilesButton.Name = "AddFilesButton";
+            AddFilesButton.Size = new Size(108, 37);
+            AddFilesButton.TabIndex = 4;
+            AddFilesButton.Text = "+ Add File(s)";
+            AddFilesButton.UseVisualStyleBackColor = false;
+            AddFilesButton.Click += AddFilesButton_Click;
             // 
             // FileLockerLabel
             // 
@@ -206,7 +206,7 @@
             Controls.Add(ImportButton);
             Controls.Add(ExportButton);
             Controls.Add(FileLockerLabel);
-            Controls.Add(AddButton);
+            Controls.Add(AddFilesButton);
             Controls.Add(TrashButton);
             Controls.Add(DecryptButton);
             Controls.Add(EncryptButton);
@@ -233,7 +233,7 @@
         private Button EncryptButton;
         private Button DecryptButton;
         private Button TrashButton;
-        private Button AddButton;
+        private Button AddFilesButton;
         private Label FileLockerLabel;
         private MenuStrip MenuStrip;
         private ToolStripMenuItem UserGuideMenuItem;

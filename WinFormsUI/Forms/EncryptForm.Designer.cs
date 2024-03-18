@@ -46,6 +46,7 @@
             EncryptionAlgorithmComboBox = new ComboBox();
             PasswordWarningLabel = new Label();
             InactivityTimer = new System.Windows.Forms.Timer(components);
+            ClearButton = new Button();
             SuspendLayout();
             // 
             // PasswordMaskedTextBox
@@ -185,7 +186,7 @@
             GenerateRandomButton.FlatStyle = FlatStyle.Flat;
             GenerateRandomButton.Font = new Font("Segoe UI Emoji", 12F);
             GenerateRandomButton.ForeColor = SystemColors.ButtonFace;
-            GenerateRandomButton.Location = new Point(208, 312);
+            GenerateRandomButton.Location = new Point(157, 306);
             GenerateRandomButton.Name = "GenerateRandomButton";
             GenerateRandomButton.Size = new Size(148, 37);
             GenerateRandomButton.TabIndex = 13;
@@ -235,12 +236,28 @@
             InactivityTimer.Interval = 30000;
             InactivityTimer.Tick += InactivityTimer_Tick;
             // 
+            // ClearButton
+            // 
+            ClearButton.BackColor = Color.Silver;
+            ClearButton.Enabled = false;
+            ClearButton.FlatStyle = FlatStyle.Flat;
+            ClearButton.Font = new Font("Segoe UI Emoji", 12F);
+            ClearButton.ForeColor = SystemColors.ButtonFace;
+            ClearButton.Location = new Point(311, 306);
+            ClearButton.Name = "ClearButton";
+            ClearButton.Size = new Size(148, 37);
+            ClearButton.TabIndex = 17;
+            ClearButton.Text = "Clear";
+            ClearButton.UseVisualStyleBackColor = false;
+            ClearButton.Click += ClearButton_Click;
+            // 
             // EncryptForm
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(32, 32, 32);
             ClientSize = new Size(541, 367);
+            Controls.Add(ClearButton);
             Controls.Add(PasswordWarningLabel);
             Controls.Add(EncryptionAlgorithmComboBox);
             Controls.Add(EncryptionAlgorithmLabel);
@@ -286,5 +303,6 @@
         private ComboBox EncryptionAlgorithmComboBox;
         private Label PasswordWarningLabel;
         private System.Windows.Forms.Timer InactivityTimer;
+        private Button ClearButton;
     }
 }

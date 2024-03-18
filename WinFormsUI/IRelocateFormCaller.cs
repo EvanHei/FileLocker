@@ -9,4 +9,5 @@ namespace WinFormsUI;
 public interface IRelocateFormCaller
 {
     void RelocationComplete();
+    void RemovalComplete();
 }

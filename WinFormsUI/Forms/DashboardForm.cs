@@ -184,9 +184,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         openFileDialog.Title = "Select File(s)";
         openFileDialog.Multiselect = true;
         openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-
-        DialogResult result = openFileDialog.ShowDialog();
-        if (result != DialogResult.OK)
+        if (openFileDialog.ShowDialog() != DialogResult.OK)
             return;
 
         AddFiles(openFileDialog.FileNames);
@@ -249,7 +247,9 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
         foreach (string path in paths)
         {
-            // TODO - don't allow folders
+            if (!File.Exists(path))
+                continue;
+
             FileInfo fileInfo = new FileInfo(path);
             if (fileInfo.Length > Constants.MaxFileSize)
             {
@@ -279,9 +279,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
     {
         if (selectedFiles.Any(model => model.EncryptionStatus == true))
         {
-            DialogResult result = MessageBox.Show("Removing a locked file means it can never be unlocked. Are you sure you want to proceed?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-            if (result != DialogResult.Yes)
+            if (MessageBox.Show("Removing a locked file means it can never be unlocked. Are you sure you want to proceed?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
                 return;
         }
 
@@ -301,8 +299,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
     private void ShredSelectedFiles()
     {
-        DialogResult result = MessageBox.Show("This will delete the file(s) permanently. Are you sure you want to proceed?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-        if (result != DialogResult.Yes)
+        if (MessageBox.Show("This will delete the file(s) permanently. Are you sure you want to proceed?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
             return;
 
         try
@@ -378,9 +375,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         saveFileDialog.FileName = model.FileName + ".zip";
         saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         saveFileDialog.OverwritePrompt = true;
-
-        DialogResult result = saveFileDialog.ShowDialog();
-        if (result != DialogResult.OK)
+        if (saveFileDialog.ShowDialog() != DialogResult.OK)
             return;
 
         try

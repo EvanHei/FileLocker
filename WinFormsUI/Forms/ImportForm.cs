@@ -55,9 +55,7 @@ public partial class ImportForm : Form
         openFileDialog.Title = "Select Archive";
         openFileDialog.Filter = $"{Constants.ExportExtension} files (*{Constants.ExportExtension})|*{Constants.ExportExtension}";
         openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-
-        DialogResult openFileDialogResult = openFileDialog.ShowDialog();
-        if (openFileDialogResult != DialogResult.OK)
+        if (openFileDialog.ShowDialog() != DialogResult.OK)
             return;
 
         openPath = openFileDialog.FileName;
@@ -76,9 +74,7 @@ public partial class ImportForm : Form
         saveFileDialog.FileName = Path.GetFileNameWithoutExtension(openPath);
         saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         saveFileDialog.OverwritePrompt = true;
-
-        DialogResult saveFileDialogResult = saveFileDialog.ShowDialog();
-        if (saveFileDialogResult != DialogResult.OK)
+        if (saveFileDialog.ShowDialog() != DialogResult.OK)
             return;
 
         savePath = saveFileDialog.FileName;

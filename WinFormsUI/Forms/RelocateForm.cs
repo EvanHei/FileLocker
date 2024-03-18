@@ -38,8 +38,6 @@ public partial class RelocateForm : Form
         using OpenFileDialog openFileDialog = new();
         openFileDialog.Title = "Relocate File";
         openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-
-        // TODO - refactor file dialog code to this example
         if (openFileDialog.ShowDialog() != DialogResult.OK)
             return;
 

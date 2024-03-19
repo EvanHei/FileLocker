@@ -165,9 +165,9 @@ public class FileModel
     }
 
     // throws FileNotFoundException and others
-    public void Lock()
+    public void Lock(EncryptionAlgorithm encryptionAlgorithm)
     {
-        Encrypt();
+        Encrypt(encryptionAlgorithm);
         GenerateMac();
 
         GlobalConfig.Logger.Info($"File Locked - {FileName}");
@@ -181,7 +181,7 @@ public class FileModel
         GlobalConfig.Logger.Info($"File Unlocked - {FileName}");
     }
 
-    private void Encrypt()
+    private void Encrypt(EncryptionAlgorithm encryptionAlgorithm)
     {
         if (!File.Exists(Path))
             throw new FileNotFoundException("The file was either moved or deleted.", Path);
@@ -189,6 +189,8 @@ public class FileModel
             throw new NullReferenceException("Password must be set.");
         if (EncryptionStatus == true)
             return;
+
+        EncryptionAlgorithm = encryptionAlgorithm;
 
         // read plaintext
         string plaintextFilePath = Path;

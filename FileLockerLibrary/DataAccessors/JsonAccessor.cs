@@ -142,8 +142,10 @@ public class JsonAccessor : IDataAccessor
 
         // insert JSON file without the path
         string tempJsonFilePath = Path.Combine(TempExportDirectoryPath, model.FileName + Constants.JsonExtension);
+        string originalPath = model.Path;
         model.Path = "";
         string jsonString = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
+        model.Path = originalPath;
         File.WriteAllText(tempJsonFilePath, jsonString);
     }
 

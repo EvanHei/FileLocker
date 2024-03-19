@@ -42,12 +42,11 @@ public partial class EncryptForm : Form, IRelocateFormCaller
             foreach (FileModel model in models)
             {
                 Enum.TryParse(EncryptionAlgorithmComboBox.SelectedItem.ToString(), out EncryptionAlgorithm algorithm);
-                model.EncryptionAlgorithm = algorithm;
                 model.Password = PasswordMaskedTextBox.Text;
 
                 try
                 {
-                    model.Lock();
+                    model.Lock(algorithm);
                     GlobalConfig.DataAccessor.SaveFileModel(model);
                     this.Close();
                     caller.EncryptionComplete();

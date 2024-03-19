@@ -36,8 +36,8 @@ The Dashboard Form displays files within FileLocker's scope. Each file's status 
 - **Encrypt**: launches the [**Encrypt Form**](#encrypt-form).
 - **Decrypt**: launches the [**Decrypt Form**](#decrypt-form).
 - **🗑️**: shreds a file by overwriting its contents with random data and then deleting.
-- 📥: imports a chosen file archive.
-- 📤: exports the selected file.
+- 📥: imports a .zip archive.
+- 📤: exports the selected file into a .zip archive.
 - **User Guide 📖**: opens the GitHub repository in the default browser.
 - **File List**: right click on a file to display options, or drag and drop files onto the panel to add them.
 
@@ -66,6 +66,18 @@ The Decrypt Form allows users to decrypt by inputting the encryption password. P
 
 - **→**: decrypts the file with the provided password, if correct.
 - **👁**: shows or hides the password.
+
+---
+
+### Import Form
+
+<img src="./images/ImportForm.png" alt="Decrypt Form" width="400">
+
+The Import Form allows users to import a .zip archive.
+
+- **Open**: allows selection of a .zip archive.
+- **Save To**: the location where the plaintext or ciphertext file will be saved.
+- **Import**: imports with the archive and saves to the chosen location.
 
 ## Technologies
 

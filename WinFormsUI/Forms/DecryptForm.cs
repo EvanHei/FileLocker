@@ -36,7 +36,7 @@ public partial class DecryptForm : Form
         {
             model.Password = PasswordMaskedTextBox.Text;
 
-            if (model.TamperedStatus == false)
+            if (model.ValidateIntegrity() == true)
             {
                 model.Unlock();
                 GlobalConfig.DataAccessor.SaveFileModel(model);

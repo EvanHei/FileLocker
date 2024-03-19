@@ -83,21 +83,6 @@ public class FileModel
         }
     }
 
-    private bool tamperedStatus;
-    public bool TamperedStatus
-    {
-        get
-        {
-            // if password is correct and fails validation, then tampering
-            if (Mac != null && MacKey != null)
-                tamperedStatus = !ValidateMac();
-
-            return tamperedStatus;
-        }
-
-        private set { tamperedStatus = value; }
-    }
-
     private byte[] macKeySalt;
     public byte[] MacKeySalt
     {
@@ -153,9 +138,6 @@ public class FileModel
             else if (EncryptionStatus == false)
                 output += "📄 ";
 
-            if (TamperedStatus == true)
-                output = "❌";
-
             string fileName = FileName.Length > 50 ? FileName.Substring(0, 47) + "..." : FileName;
             output += $" {fileName}";
 
@@ -175,7 +157,7 @@ public class FileModel
     public void Lock()
     {
         Encrypt();
-        AddMac();
+        GenerateMac();
 
         GlobalConfig.Logger.Info($"File Locked - {FileName}");
     }
@@ -254,7 +236,7 @@ public class FileModel
         }
     }
 
-    private void AddMac()
+    private void GenerateMac()
     {
         if (!File.Exists(Path))
             throw new FileNotFoundException("The file was either moved or deleted.", Path);
@@ -270,7 +252,7 @@ public class FileModel
         Mac = GlobalConfig.MacGenerator.GenerateMac(content);
     }
 
-    private bool ValidateMac()
+    public bool ValidateIntegrity()
     {
         if (!File.Exists(Path))
             throw new FileNotFoundException("The file was either moved or deleted.", Path);
@@ -281,10 +263,8 @@ public class FileModel
 
         GlobalConfig.MacGenerator.Key = MacKey;
 
-        // TODO - surround with try/catch if the file was moved or deleted
         byte[] content = File.ReadAllBytes(Path);
         bool output = GlobalConfig.MacGenerator.ValidateMac(content, Mac);
-        TamperedStatus = !output;
 
         return output;
     }

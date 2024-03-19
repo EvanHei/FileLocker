@@ -211,18 +211,8 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         using SolidBrush backgroundBrush = new(backgroundColor);
         row.Graphics.FillRectangle(backgroundBrush, row.Bounds);
 
-        // TODO - ValidateMac will throw exception if the file was moved
-        try
-        {
-            using SolidBrush foregroundBrush = new(row.ForeColor);
-            row.Graphics.DrawString(model.DisplayName, row.Font, foregroundBrush, row.Bounds);
-
-        }
-        catch (Exception)
-        {
-
-            throw;
-        }    
+        using SolidBrush foregroundBrush = new(row.ForeColor);
+        row.Graphics.DrawString(model.DisplayName, row.Font, foregroundBrush, row.Bounds);
     }
 
     private void FileListBox_SelectedIndexChanged(object? sender, EventArgs e)

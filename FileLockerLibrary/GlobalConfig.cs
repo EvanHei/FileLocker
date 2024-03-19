@@ -8,7 +8,7 @@ namespace FileLockerLibrary;
 
 public static class GlobalConfig
 {
-    public static IDataAccessor DataAccessor = new TextAccessor();
+    public static IDataAccessor DataAccessor = new JsonAccessor();
 
     public static IKeyDeriver KeyDeriver = new Pbkdf2KeyDeriver();
 

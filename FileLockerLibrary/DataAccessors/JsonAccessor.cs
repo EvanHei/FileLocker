@@ -8,40 +8,30 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Metadata;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace FileLockerLibrary;
 
-public class TextAccessor : IDataAccessor
+public class JsonAccessor : IDataAccessor
 {
     // File structure:
-    /// +-- FileModels/
-    //      +-- <file>/
-    //      |   +-- Path.txt
-    //      |   +-- EncryptionKey.salt
-    //      |   +-- MacKey.salt
-    //      |   +-- Content.mac
-    //      +-- ...
+    /// +-- JSON Files/
+    //  |   +-- <file1>.json
+    //  |   +-- <file2>.json
+    //  |   +-- ...
+    //  +--
 
     private string TempExportDirectoryPath { get; set; }
     private string FileModelsDirectoryPath { get; set; }
-    private string FileDirectoryPath { get; set; }
-    private string FilePathPath { get; set; }
-    private string EncryptionKeySaltPath { get; set; }
-    private string MacPath { get; set; }
-    private string MacKeySaltPath { get; set; }
+    private string JsonFilePath { get; set; }
 
     public void CreateFileModel(FileModel model)
     {
-        if (model == null)
-            throw new ArgumentNullException("Model cannot be null.", nameof(model));
         if (GetAllFileNames().Contains(model.FileName))
             throw new InvalidOperationException($"{model.FileName} already added.");
 
-        InitializePaths(model.FileName);
-
-        Directory.CreateDirectory(FileDirectoryPath);
-        WriteFileModelToFiles(model);
+        SaveFileModel(model);
 
         GlobalConfig.Logger.Info($"File Created - {model.FileName}");
     }
@@ -51,37 +41,20 @@ public class TextAccessor : IDataAccessor
         if (model == null)
             throw new ArgumentNullException("Model cannot be null.", nameof(model));
 
-        InitializePaths(model.FileName);
+        InitializeJsonFilePath(model.FileName);
 
-        WriteFileModelToFiles(model);
+        string jsonString = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
+        File.WriteAllText(JsonFilePath, jsonString);
 
         GlobalConfig.Logger.Info($"File Saved - {model.FileName}");
     }
 
-    private void WriteFileModelToFiles(FileModel model)
-    {
-        if (model == null)
-            throw new ArgumentNullException("Model cannot be null.", nameof(model));
-        if (string.IsNullOrEmpty(model.Path))
-            throw new ArgumentException("Path cannot be null or empty.", nameof(model.Path));
-        if (!Directory.Exists(FileDirectoryPath))
-            throw new DirectoryNotFoundException($"Directory '{FileDirectoryPath}' does not exist.");
-        if (model.EncryptionStatus == true && model.EncryptionKeySalt.Length == 0)
-            throw new InvalidOperationException("File is missing data to be unlocked.");
-
-        File.WriteAllText(FilePathPath, model.Path);
-        File.WriteAllBytes(EncryptionKeySaltPath, model.EncryptionKeySalt);
-        File.WriteAllBytes(MacKeySaltPath, model.MacKeySalt);
-        File.WriteAllBytes(MacPath, model.Mac);
-    }
-
     public void DeleteFileModel(FileModel model)
     {
-        InitializePaths(model.FileName);
-
-        if (Directory.Exists(FileDirectoryPath))
+        InitializeJsonFilePath(model.FileName);
+        if (File.Exists(JsonFilePath))
         {
-            Directory.Delete(FileDirectoryPath, true);
+            File.Delete(JsonFilePath);
 
             GlobalConfig.Logger.Info($"File Deleted - {model.FileName}");
         }
@@ -93,22 +66,15 @@ public class TextAccessor : IDataAccessor
 
         foreach (string fileName in GetAllFileNames())
         {
-            InitializePaths(fileName);
+            InitializeJsonFilePath(fileName);
 
-            string path = File.ReadAllText(FilePathPath);
-            FileModel temp = new(path);
-            ReadFileModelFromFiles(temp);
+            string jsonString = File.ReadAllText(JsonFilePath);
+            FileModel temp = JsonSerializer.Deserialize<FileModel>(jsonString);
+
             output.Add(temp);
         }
 
         return output;
-    }
-
-    private void ReadFileModelFromFiles(FileModel model)
-    {
-        model.EncryptionKeySalt = File.ReadAllBytes(EncryptionKeySaltPath);
-        model.MacKeySalt = File.ReadAllBytes(MacKeySaltPath);
-        model.Mac = File.ReadAllBytes(MacPath);
     }
 
     public void ShredFile(string path)
@@ -149,7 +115,7 @@ public class TextAccessor : IDataAccessor
         if (model == null)
             throw new ArgumentNullException("Model cannot be null.", nameof(model));
 
-        InitializePaths(model.FileName);
+        InitializeJsonFilePath(model.FileName);
 
         GenerateExportDirectory(model);
 
@@ -164,29 +130,24 @@ public class TextAccessor : IDataAccessor
     {
         if (string.IsNullOrEmpty(model.Path))
             throw new ArgumentException("Path cannot be null or empty.", nameof(model.Path));
-        if (!Directory.Exists(FileDirectoryPath))
-            throw new DirectoryNotFoundException($"Directory '{FileDirectoryPath}' does not exist.");
+        if (!File.Exists(JsonFilePath))
+            throw new FileNotFoundException($"File '{JsonFilePath}' does not exist.");
 
-        CreateExportDirectory();
+        CreateTempExportDirectory();
 
-        // copy source file data to TempExportDirectoryPath
+        // insert source file data into TempExportDirectoryPath
         byte[] content = File.ReadAllBytes(model.Path);
         string tempContentPath = Path.Combine(TempExportDirectoryPath, model.FileName);
         File.WriteAllBytes(tempContentPath, content);
 
-        // copy all files in the model's directory to TempExportDirectoryPath, except the path file
-        foreach (string path in Directory.GetFiles(FileDirectoryPath))
-        {
-            if (Path.GetFileName(path) == Constants.FilePathFileName)
-                continue;
-
-            string fileName = Path.GetFileName(path);
-            string destinationPath = Path.Combine(TempExportDirectoryPath, fileName);
-            File.Copy(path, destinationPath, overwrite: true);
-        }
+        // insert JSON file without the path
+        string tempJsonFilePath = Path.Combine(TempExportDirectoryPath, model.FileName + Constants.JsonExtension);
+        model.Path = "";
+        string jsonString = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
+        File.WriteAllText(tempJsonFilePath, jsonString);
     }
 
-    private void CreateExportDirectory()
+    private void CreateTempExportDirectory()
     {
         Directory.CreateDirectory(TempExportDirectoryPath);
         FileAttributes attributes = File.GetAttributes(TempExportDirectoryPath);
@@ -204,10 +165,6 @@ public class TextAccessor : IDataAccessor
 
         // create archive
         ZipFile.CreateFromDirectory(TempExportDirectoryPath, zipPath);
-
-        // change .zip extension
-        string newFilePath = Path.ChangeExtension(zipPath, Constants.ExportExtension);
-        File.Move(zipPath, newFilePath);
     }
 
     public void ImportZipFileModel(string zipPath, string savePath)
@@ -216,65 +173,43 @@ public class TextAccessor : IDataAccessor
             throw new ArgumentException("Zip path cannot be null or empty.", nameof(zipPath));
 
         using ZipArchive archive = ZipFile.OpenRead(zipPath);
-
-        // TODO - remove?
         List<string> zipEntriesToProcess = GetZipEntryNames(archive);
-        ZipArchiveEntry encryptionKeySaltEntry = archive.GetEntry(Constants.EncryptionKeySaltFileName);
-        ZipArchiveEntry macKeySaltEntry = archive.GetEntry(Constants.MacKeySaltFileName);
-        ZipArchiveEntry macEntry = archive.GetEntry(Constants.MacFileName);
 
-        // error checking
-        if (encryptionKeySaltEntry == null ||
-            macKeySaltEntry == null ||
-            macEntry == null)
-            throw new FileNotFoundException($"Archive does not contain the necessary files.");
+        // get JSON file
+        string jsonFilePath = zipEntriesToProcess.Where(filePath => Path.GetExtension(filePath).Equals(Constants.JsonExtension)).First();
+        ZipArchiveEntry jsonEntry = archive.GetEntry(jsonFilePath);
+        zipEntriesToProcess.Remove(jsonFilePath);
 
-        FileModel model = new(savePath);
-
-        // TODO - refactor to adhere to the SRP
-        // read the encryption key salt
-        using (MemoryStream ms = new())
-        using (Stream stream = encryptionKeySaltEntry.Open())
-        {
-            stream.CopyTo(ms);
-            model.EncryptionKeySalt = ms.ToArray();
-            zipEntriesToProcess.Remove(Constants.EncryptionKeySaltFileName);
-        }
-
-        // read the MAC key salt
-        using (MemoryStream ms = new())
-        using (Stream stream = macKeySaltEntry.Open())
-        {
-            stream.CopyTo(ms);
-            model.MacKeySalt = ms.ToArray();
-            zipEntriesToProcess.Remove(Constants.MacKeySaltFileName);
-        }
-
-        // read the MAC
-        using (MemoryStream ms = new())
-        using (Stream stream = macEntry.Open())
-        {
-            stream.CopyTo(ms);
-            model.Mac = ms.ToArray();
-            zipEntriesToProcess.Remove(Constants.MacFileName);
-        }
-
-        byte[] content;
+        // get content file
         ZipArchiveEntry contentEntry = archive.GetEntry(zipEntriesToProcess.First());
 
-        // read the content and save to the choosen path
+        if (contentEntry == null ||
+            jsonEntry == null)
+            throw new FileNotFoundException($"Archive does not contain the necessary files.");
+
+        // read the JSON file and create the FileModel
+        FileModel model = new(savePath);
+        using (MemoryStream ms = new())
+        using (Stream stream = jsonEntry.Open())
+        {
+            stream.CopyTo(ms);
+            string jsonString = Encoding.UTF8.GetString(ms.ToArray());
+            model = JsonSerializer.Deserialize<FileModel>(jsonString);
+            model.Path = savePath;
+        }
+
+        // read the content and save to the chosen path
+        byte[] content;
         using (MemoryStream ms = new())
         using (Stream stream = contentEntry.Open())
         {
             stream.CopyTo(ms);
             content = ms.ToArray();
-            zipEntriesToProcess.Clear();
+            File.WriteAllBytes(model.Path, content);
         }
-        File.WriteAllBytes(model.Path, content);
 
         // create file model and save
         CreateFileModel(model);
-        SaveFileModel(model);
 
         GlobalConfig.Logger.Info($"File Imported - {model.FileName}");
     }
@@ -294,26 +229,26 @@ public class TextAccessor : IDataAccessor
         if (!Directory.Exists(FileModelsDirectoryPath))
             throw new DirectoryNotFoundException($"Directory not found: {FileModelsDirectoryPath}");
 
-        List<string> output = Directory
-            .GetDirectories(FileModelsDirectoryPath)
-            .Select(Path.GetFileName)
-            .ToList();
+        List<string> output = new();
+
+        string[] filePaths = Directory.GetFiles(FileModelsDirectoryPath, "*" + Constants.JsonExtension);
+        foreach (string filePath in filePaths)
+        {
+            string fileName = Path.GetFileNameWithoutExtension(filePath);
+            output.Add(fileName);
+        }
 
         return output;
     }
 
-    private void InitializePaths(string fileName)
+    private void InitializeJsonFilePath(string fileName)
     {
         string extension = Path.GetExtension(fileName);
         fileName = (extension == Constants.AesExtension || extension == Constants.TripleDesExtension) ? Path.GetFileNameWithoutExtension(fileName) : fileName;
-        FileDirectoryPath = Path.Combine(FileModelsDirectoryPath, fileName);
-        FilePathPath = Path.Combine(FileDirectoryPath, Constants.FilePathFileName);
-        EncryptionKeySaltPath = Path.Combine(FileDirectoryPath, Constants.EncryptionKeySaltFileName);
-        MacPath = Path.Combine(FileDirectoryPath, Constants.MacFileName);
-        MacKeySaltPath = Path.Combine(FileDirectoryPath, Constants.MacKeySaltFileName);
+        JsonFilePath = Path.Combine(FileModelsDirectoryPath, fileName + Constants.JsonExtension);
     }
 
-    public TextAccessor()
+    public JsonAccessor()
     {
         string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         string appDirectoryPath = Path.Combine(appDataPath, Constants.AppDirectoryName);

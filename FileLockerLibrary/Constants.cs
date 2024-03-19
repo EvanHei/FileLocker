@@ -13,12 +13,12 @@ public static class Constants
     public const int MinPasswordLength = 8;
     public const int MaxPasswordLength = 64;
     public const string AppDirectoryName = "FileLocker";
-    public const string FileModelsDirectoryName = "FileModels";
+    public const string FileModelsDirectoryName = "JSON Files";
     public const string TempExportDirectoryName = "TempExport";
     public const string LogDirectoryName = "Logs";
     public const string AesExtension = ".aes";
     public const string TripleDesExtension = ".3des";
-    public const string ExportExtension = ".zip";
+    public const string JsonExtension = ".json";
     public const string FilePathFileName = "Path.txt";
     public const string EncryptionKeySaltFileName = "EncryptionKey.salt";
     public const string MacFileName = "Content.mac";

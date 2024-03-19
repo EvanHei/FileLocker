@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace FileLockerLibrary;
@@ -14,6 +15,8 @@ public class FileModel
     public string Path { get; set; }
 
     private string password;
+
+    [JsonIgnore]
     public string Password
     {
         get { return password; }
@@ -32,9 +35,12 @@ public class FileModel
         }
     }
 
+    [JsonIgnore]
     public EncryptionAlgorithm EncryptionAlgorithm { get; set; }
 
     private byte[] encryptionKey;
+
+    [JsonIgnore]
     public byte[] EncryptionKey
     {
         get
@@ -69,6 +75,7 @@ public class FileModel
         }
     }
 
+    [JsonIgnore]
     public bool EncryptionStatus
     {
         get
@@ -97,6 +104,8 @@ public class FileModel
     }
 
     private byte[] macKey;
+
+    [JsonIgnore]
     public byte[] MacKey
     {
         get
@@ -127,6 +136,7 @@ public class FileModel
         }
     }
 
+    [JsonIgnore]
     public string DisplayName
     {
         get
@@ -145,6 +155,7 @@ public class FileModel
         }
     }
 
+    [JsonIgnore]
     public string FileName
     {
         get

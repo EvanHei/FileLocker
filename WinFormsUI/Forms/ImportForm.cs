@@ -53,7 +53,7 @@ public partial class ImportForm : Form
     {
         using OpenFileDialog openFileDialog = new();
         openFileDialog.Title = "Select Archive";
-        openFileDialog.Filter = $"{Constants.ExportExtension} files (*{Constants.ExportExtension})|*{Constants.ExportExtension}";
+        openFileDialog.Filter = ".zip files (*.zip)|*.zip";
         openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         if (openFileDialog.ShowDialog() != DialogResult.OK)
             return;
@@ -83,7 +83,8 @@ public partial class ImportForm : Form
 
     private void ImportButton_Click(object sender, EventArgs e)
     {
-        if (openPath == null || savePath == null)
+        if (openPath == null || 
+            savePath == null)
             return;
 
         try

@@ -211,6 +211,8 @@ public class FileModel
         // overwrite plaintext
         File.WriteAllBytes(Path, ciphertext);
         GlobalConfig.DataAccessor.ShredFile(plaintextFilePath);
+
+        GlobalConfig.Logger.Log($"File encrypted - {FileName}", LogLevel.Information);
     }
 
     private void Decrypt()
@@ -219,6 +221,8 @@ public class FileModel
             throw new FileNotFoundException("The file was either moved or deleted.", Path);
         if (Password == null)
             throw new NullReferenceException("Password must be set.");
+        if (ValidateIntegrity() == false)
+            throw new CryptographicException("Integrity check failed.");
         if (EncryptionStatus == false)
             return;
 
@@ -241,8 +245,10 @@ public class FileModel
         }
         catch (Exception ex)
         {
-            throw new CryptographicException("Unable to decrypt.", ex);
+            throw new CryptographicException("Decryption Failed.", ex);
         }
+
+        GlobalConfig.Logger.Log($"File decrypted - {FileName}", LogLevel.Information);
     }
 
     private void GenerateMac()
@@ -274,6 +280,9 @@ public class FileModel
 
         byte[] content = File.ReadAllBytes(Path);
         bool output = GlobalConfig.MacGenerator.ValidateMac(content, Mac);
+
+        if (output == false)
+            GlobalConfig.Logger.Log($"Integrity check failed, incorrect password or tampering - {FileName}", LogLevel.Warning);
 
         return output;
     }

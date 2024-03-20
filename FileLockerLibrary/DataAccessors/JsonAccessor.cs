@@ -48,10 +48,11 @@ public class JsonAccessor : IDataAccessor
     public void DeleteFileModel(FileModel model)
     {
         InitializeJsonFilePath(model.FileName);
+
         if (File.Exists(JsonFilePath))
-        {
             File.Delete(JsonFilePath);
-        }
+
+        GlobalConfig.Logger.Log($"File removed from scope - {model.FileName}", LogLevel.Information);
     }
 
     public List<FileModel> LoadAllFileModels()
@@ -94,6 +95,8 @@ public class JsonAccessor : IDataAccessor
         }
 
         File.Delete(path);
+
+        GlobalConfig.Logger.Log($"File shredded - {Path.GetFileName(path)}", LogLevel.Information);
     }
 
     public void RelocateFile(FileModel model, string newPath)

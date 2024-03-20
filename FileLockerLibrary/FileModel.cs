@@ -169,16 +169,12 @@ public class FileModel
     {
         Encrypt(encryptionAlgorithm);
         GenerateMac();
-
-        GlobalConfig.Logger.Info($"File Locked - {FileName}");
     }
 
     public void Unlock()
     {
         Decrypt();
         RemoveMac();
-
-        GlobalConfig.Logger.Info($"File Unlocked - {FileName}");
     }
 
     private void Encrypt(EncryptionAlgorithm encryptionAlgorithm)

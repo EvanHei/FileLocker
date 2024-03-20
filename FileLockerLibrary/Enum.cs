@@ -11,3 +11,12 @@ public enum EncryptionAlgorithm
     AES,
     TripleDES
 }
+
+public enum LogLevel
+{
+    Information,
+    Debug,
+    Warning,
+    Error,
+    Fatal
+}

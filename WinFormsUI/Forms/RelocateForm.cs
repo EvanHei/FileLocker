@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace WinFormsUI;
 
@@ -31,6 +32,17 @@ public partial class RelocateForm : Form
     {
         CantLocateFileLabel.Text = $"Can't locate \"{model.FileName}\"";
         LastSeenLabel.Text = $"It was last seen at {model.Path}";
+    }
+
+    private void CenterLabel_TextChanged(object sender, EventArgs e)
+    {
+        if (sender is not Label label)
+            return;
+
+        Size textSize = TextRenderer.MeasureText(label.Text, label.Font);
+        int newX = (label.Parent.ClientSize.Width - textSize.Width) / 2;
+        int newY = label.Location.Y;
+        label.Location = new Point(newX, newY);
     }
 
     private void RelocateButton_Click(object sender, EventArgs e)

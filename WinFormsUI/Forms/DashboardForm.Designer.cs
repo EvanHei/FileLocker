@@ -213,6 +213,7 @@
             Controls.Add(FileListBox);
             Controls.Add(MenuStrip);
             Font = new Font("Segoe UI Emoji", 12F);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = MenuStrip;
             Margin = new Padding(4);

@@ -105,6 +105,7 @@
             Controls.Add(PasswordMaskedTextBox);
             Controls.Add(PasswordLabel);
             Font = new Font("Segoe UI Emoji", 12F);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4);
             Name = "DecryptForm";

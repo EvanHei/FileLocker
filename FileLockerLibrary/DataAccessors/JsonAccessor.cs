@@ -32,8 +32,6 @@ public class JsonAccessor : IDataAccessor
             throw new InvalidOperationException($"{model.FileName} already added.");
 
         SaveFileModel(model);
-
-        GlobalConfig.Logger.Info($"File Created - {model.FileName}");
     }
 
     public void SaveFileModel(FileModel model)
@@ -45,8 +43,6 @@ public class JsonAccessor : IDataAccessor
 
         string jsonString = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
         File.WriteAllText(JsonFilePath, jsonString);
-
-        GlobalConfig.Logger.Info($"File Saved - {model.FileName}");
     }
 
     public void DeleteFileModel(FileModel model)
@@ -55,8 +51,6 @@ public class JsonAccessor : IDataAccessor
         if (File.Exists(JsonFilePath))
         {
             File.Delete(JsonFilePath);
-
-            GlobalConfig.Logger.Info($"File Deleted - {model.FileName}");
         }
     }
 
@@ -100,8 +94,6 @@ public class JsonAccessor : IDataAccessor
         }
 
         File.Delete(path);
-
-        GlobalConfig.Logger.Info($"File Shredded - {Path.GetFileNameWithoutExtension(path)}");
     }
 
     public void RelocateFile(FileModel model, string newPath)
@@ -122,8 +114,6 @@ public class JsonAccessor : IDataAccessor
         CreateArchiveFromExportDirectory(zipPath);
 
         Directory.Delete(TempExportDirectoryPath, recursive: true);
-
-        GlobalConfig.Logger.Info($"File Exported - {model.FileName}");
     }
 
     private void GenerateExportDirectory(FileModel model)
@@ -212,8 +202,6 @@ public class JsonAccessor : IDataAccessor
 
         // create file model and save
         CreateFileModel(model);
-
-        GlobalConfig.Logger.Info($"File Imported - {model.FileName}");
     }
 
     private List<string> GetZipEntryNames(ZipArchive archive)

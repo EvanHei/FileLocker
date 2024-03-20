@@ -40,7 +40,7 @@
             RelocateButton.FlatStyle = FlatStyle.Flat;
             RelocateButton.Font = new Font("Segoe UI Emoji", 12F);
             RelocateButton.ForeColor = SystemColors.ButtonFace;
-            RelocateButton.Location = new Point(355, 140);
+            RelocateButton.Location = new Point(291, 143);
             RelocateButton.Name = "RelocateButton";
             RelocateButton.Size = new Size(83, 37);
             RelocateButton.TabIndex = 13;
@@ -50,25 +50,28 @@
             // 
             // CantLocateFileLabel
             // 
+            CantLocateFileLabel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             CantLocateFileLabel.AutoSize = true;
             CantLocateFileLabel.Font = new Font("Segoe UI Emoji", 20.25F);
             CantLocateFileLabel.ForeColor = SystemColors.ButtonFace;
-            CantLocateFileLabel.Location = new Point(159, 37);
+            CantLocateFileLabel.Location = new Point(265, 39);
             CantLocateFileLabel.Name = "CantLocateFileLabel";
             CantLocateFileLabel.Size = new Size(238, 36);
             CantLocateFileLabel.TabIndex = 15;
             CantLocateFileLabel.Text = "Can't locate \"path\"";
+            CantLocateFileLabel.TextChanged += CenterLabel_TextChanged;
             // 
             // LastSeenLabel
             // 
             LastSeenLabel.AutoSize = true;
             LastSeenLabel.Font = new Font("Segoe UI Emoji", 12F);
             LastSeenLabel.ForeColor = SystemColors.AppWorkspace;
-            LastSeenLabel.Location = new Point(183, 73);
+            LastSeenLabel.Location = new Point(289, 75);
             LastSeenLabel.Name = "LastSeenLabel";
             LastSeenLabel.Size = new Size(191, 21);
             LastSeenLabel.TabIndex = 16;
             LastSeenLabel.Text = "It was last seen at <path>.";
+            LastSeenLabel.TextChanged += CenterLabel_TextChanged;
             // 
             // RemoveButton
             // 
@@ -76,7 +79,7 @@
             RemoveButton.FlatStyle = FlatStyle.Flat;
             RemoveButton.Font = new Font("Segoe UI Emoji", 12F);
             RemoveButton.ForeColor = SystemColors.ButtonFace;
-            RemoveButton.Location = new Point(444, 140);
+            RemoveButton.Location = new Point(380, 143);
             RemoveButton.Name = "RemoveButton";
             RemoveButton.Size = new Size(83, 37);
             RemoveButton.TabIndex = 17;
@@ -89,12 +92,13 @@
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(32, 32, 32);
-            ClientSize = new Size(776, 209);
+            ClientSize = new Size(752, 209);
             Controls.Add(RemoveButton);
             Controls.Add(LastSeenLabel);
             Controls.Add(CantLocateFileLabel);
             Controls.Add(RelocateButton);
             Font = new Font("Segoe UI Emoji", 12F);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Margin = new Padding(4);
             Name = "RelocateForm";
             StartPosition = FormStartPosition.CenterParent;

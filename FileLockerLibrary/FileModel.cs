@@ -188,8 +188,8 @@ public class FileModel
         EncryptionAlgorithm = encryptionAlgorithm;
 
         // read plaintext
-        string plaintextFilePath = Path;
         byte[] content = File.ReadAllBytes(Path);
+        ShredFile();
 
         switch (EncryptionAlgorithm)
         {
@@ -209,7 +209,6 @@ public class FileModel
 
         // overwrite plaintext
         File.WriteAllBytes(Path, ciphertext);
-        ShredFile();
 
         GlobalConfig.Logger.Log($"File encrypted - {FileName}", LogLevel.Information);
     }

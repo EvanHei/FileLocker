@@ -32,21 +32,19 @@ public partial class DecryptForm : Form
         if (!ValidateInputFields())
             return;
 
+        ResetTimer();
+
         try
         {
             model.Password = PasswordMaskedTextBox.Text;
             model.Unlock();
             GlobalConfig.DataAccessor.SaveFileModel(model);
+            this.Close();
+            caller.DecryptionComplete();
         }
         catch (Exception ex)
         {
-            MessageBox.Show("Decryption failed. If the password was correct, the data has been tampered.", "Error", MessageBoxButtons.OK);
-        }
-        finally
-        {
-            ResetTimer();
-            this.Close();
-            caller.DecryptionComplete();
+            FailureLabel.Visible = true;
         }
     }
 

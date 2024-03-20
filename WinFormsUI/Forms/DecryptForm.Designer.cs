@@ -35,6 +35,7 @@
             EyeballLabel = new Label();
             EnterButton = new Button();
             InactivityTimer = new System.Windows.Forms.Timer(components);
+            FailureLabel = new Label();
             SuspendLayout();
             // 
             // PasswordLabel
@@ -94,12 +95,25 @@
             InactivityTimer.Interval = 30000;
             InactivityTimer.Tick += InactivityTimer_Tick;
             // 
+            // FailureLabel
+            // 
+            FailureLabel.AutoSize = true;
+            FailureLabel.Font = new Font("Segoe UI Emoji", 10F);
+            FailureLabel.ForeColor = Color.Red;
+            FailureLabel.Location = new Point(81, 100);
+            FailureLabel.Name = "FailureLabel";
+            FailureLabel.Size = new Size(359, 19);
+            FailureLabel.TabIndex = 17;
+            FailureLabel.Text = "If the password was correct, the data has been tampered.";
+            FailureLabel.Visible = false;
+            // 
             // DecryptForm
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(32, 32, 32);
             ClientSize = new Size(470, 161);
+            Controls.Add(FailureLabel);
             Controls.Add(EnterButton);
             Controls.Add(EyeballLabel);
             Controls.Add(PasswordMaskedTextBox);
@@ -124,5 +138,6 @@
         private Label EyeballLabel;
         private Button EnterButton;
         private System.Windows.Forms.Timer InactivityTimer;
+        private Label FailureLabel;
     }
 }

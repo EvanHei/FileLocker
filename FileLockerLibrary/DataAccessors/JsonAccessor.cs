@@ -72,33 +72,6 @@ public class JsonAccessor : IDataAccessor
         return output;
     }
 
-    public void ShredFile(string path)
-    {
-        if (string.IsNullOrEmpty(path))
-            throw new ArgumentException("Path cannot be null or empty.", nameof(path));
-
-        using (FileStream stream = new(path, FileMode.Open, FileAccess.Write))
-        {
-            Random random = new();
-            byte[] buffer = new byte[1024];
-
-            // overwrite with random data
-            long remainingBytes = stream.Length;
-            while (remainingBytes > 0)
-            {
-                // calculate the size of the next chunk to overwrite
-                int chunkSize = (int)Math.Min(buffer.Length, remainingBytes);
-                random.NextBytes(buffer);
-                stream.Write(buffer, 0, chunkSize);
-                remainingBytes -= chunkSize;
-            }
-        }
-
-        File.Delete(path);
-
-        GlobalConfig.Logger.Log($"File shredded - {Path.GetFileName(path)}", LogLevel.Information);
-    }
-
     public void RelocateFile(FileModel model, string newPath)
     {
         model.Path = newPath;

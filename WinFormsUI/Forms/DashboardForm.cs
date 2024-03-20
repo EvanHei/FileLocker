@@ -296,7 +296,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         {
             foreach (FileModel model in selectedFiles)
             {
-                GlobalConfig.DataAccessor.ShredFile(model.Path);
+                model.ShredFile();
                 GlobalConfig.DataAccessor.DeleteFileModel(model);
             }
         }
@@ -340,15 +340,6 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
             return;
 
         RemoveSelectedFiles();
-    }
-
-    // TODO - remove?
-    private void DashboardForm_Load(object sender, EventArgs e)
-    {
-    }
-
-    private void DashboardForm_FormClosing(object sender, FormClosingEventArgs e)
-    {
     }
 
     private void ExportButton_Click(object sender, EventArgs e)

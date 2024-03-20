@@ -164,7 +164,6 @@ public class FileModel
         }
     }
 
-    // throws FileNotFoundException and others
     public void Lock(EncryptionAlgorithm encryptionAlgorithm)
     {
         Encrypt(encryptionAlgorithm);
@@ -210,7 +209,7 @@ public class FileModel
 
         // overwrite plaintext
         File.WriteAllBytes(Path, ciphertext);
-        GlobalConfig.DataAccessor.ShredFile(plaintextFilePath);
+        ShredFile();
 
         GlobalConfig.Logger.Log($"File encrypted - {FileName}", LogLevel.Information);
     }
@@ -291,6 +290,33 @@ public class FileModel
     {
         Mac = new byte[0];
         MacKeySalt = new byte[0];
+    }
+
+    public void ShredFile()
+    {
+        if (string.IsNullOrEmpty(Path))
+            throw new ArgumentException("Path cannot be null or empty.", nameof(Path));
+
+        using (FileStream stream = new(Path, FileMode.Open, FileAccess.Write))
+        {
+            Random random = new();
+            byte[] buffer = new byte[1024];
+
+            // overwrite with random data
+            long remainingBytes = stream.Length;
+            while (remainingBytes > 0)
+            {
+                // calculate the size of the next chunk to overwrite
+                int chunkSize = (int)Math.Min(buffer.Length, remainingBytes);
+                random.NextBytes(buffer);
+                stream.Write(buffer, 0, chunkSize);
+                remainingBytes -= chunkSize;
+            }
+        }
+
+        File.Delete(Path);
+
+        GlobalConfig.Logger.Log($"File shredded - {FileName}", LogLevel.Information);
     }
 
     public FileModel(string path)

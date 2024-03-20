@@ -220,8 +220,6 @@
             Name = "DashboardForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Dashboard";
-            FormClosing += DashboardForm_FormClosing;
-            Load += DashboardForm_Load;
             MenuStrip.ResumeLayout(false);
             MenuStrip.PerformLayout();
             FileListBoxItemContextMenuStrip.ResumeLayout(false);

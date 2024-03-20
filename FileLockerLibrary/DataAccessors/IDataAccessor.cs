@@ -8,7 +8,6 @@ public interface IDataAccessor
     void CreateFileModel(FileModel model);
     void SaveFileModel(FileModel model);
     void DeleteFileModel(FileModel model);
-    void ShredFile(string path);
     void RelocateFile(FileModel model, string newPath);
     List<FileModel> LoadAllFileModels();
     void ExportZipFileModel(FileModel model, string zipPath);

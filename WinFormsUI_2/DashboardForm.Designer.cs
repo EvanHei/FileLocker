@@ -31,15 +31,17 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DashboardForm));
             FileListBox = new ListBox();
+            FileListBoxContextMenuStrip = new ContextMenuStrip(components);
+            RemoveFromListItem = new ToolStripMenuItem();
             MenuStrip = new MenuStrip();
             SettingsMenuItem = new ToolStripMenuItem();
             DiagnosticsMenuItem = new ToolStripMenuItem();
-            UserGuideMenuItem = new ToolStripMenuItem();
+            GuideMenuItem = new ToolStripMenuItem();
             SearchTextBox = new TextBox();
-            SearchLabel = new Label();
+            MagnifyingGlassLabel = new Label();
             AddButton = new Button();
             AddButtonContextMenuStrip = new ContextMenuStrip(components);
-            AddExistingFileToolStripMenuItem = new ToolStripMenuItem();
+            AddExistingFilesToolStripMenuItem = new ToolStripMenuItem();
             ImportArchiveToolStripMenuItem = new ToolStripMenuItem();
             NoFilesPanel = new Panel();
             NoFilesDescriptionLabel = new Label();
@@ -94,6 +96,7 @@
             UnlockedStatusValueLabel = new Label();
             UnlockedStatusLabel = new Label();
             UnlockedFileNameLabel = new Label();
+            FileListBoxContextMenuStrip.SuspendLayout();
             MenuStrip.SuspendLayout();
             AddButtonContextMenuStrip.SuspendLayout();
             NoFilesPanel.SuspendLayout();
@@ -109,58 +112,80 @@
             FileListBox.AllowDrop = true;
             FileListBox.BackColor = Color.FromArgb(40, 40, 40);
             FileListBox.BorderStyle = BorderStyle.None;
+            FileListBox.ContextMenuStrip = FileListBoxContextMenuStrip;
             FileListBox.DrawMode = DrawMode.OwnerDrawFixed;
             FileListBox.Font = new Font("Segoe UI Emoji", 12F);
             FileListBox.ForeColor = SystemColors.ButtonFace;
             FileListBox.FormattingEnabled = true;
             FileListBox.ItemHeight = 20;
-            FileListBox.Location = new Point(-10, 65);
+            FileListBox.Location = new Point(0, 66);
             FileListBox.Name = "FileListBox";
-            FileListBox.SelectionMode = SelectionMode.MultiSimple;
-            FileListBox.Size = new Size(365, 900);
+            FileListBox.Size = new Size(361, 880);
             FileListBox.TabIndex = 11;
+            FileListBox.DrawItem += FileListBox_DrawItem;
+            FileListBox.DragDrop += FileListBox_DragDrop;
+            FileListBox.DragEnter += FileListBox_DragEnter;
+            FileListBox.MouseDown += FileListBox_MouseDown;
+            // 
+            // FileListBoxContextMenuStrip
+            // 
+            FileListBoxContextMenuStrip.Items.AddRange(new ToolStripItem[] { RemoveFromListItem });
+            FileListBoxContextMenuStrip.Name = "FileListBoxItemContextMenuStrip";
+            FileListBoxContextMenuStrip.Size = new Size(165, 26);
+            FileListBoxContextMenuStrip.Tag = "FileListBox";
+            FileListBoxContextMenuStrip.Text = "Remove File";
+            // 
+            // RemoveFromListItem
+            // 
+            RemoveFromListItem.BackColor = Color.FromArgb(40, 40, 40);
+            RemoveFromListItem.ForeColor = SystemColors.ButtonFace;
+            RemoveFromListItem.Name = "RemoveFromListItem";
+            RemoveFromListItem.Size = new Size(164, 22);
+            RemoveFromListItem.Text = "Remove from list";
+            RemoveFromListItem.Click += RemoveFromListItem_Click;
             // 
             // MenuStrip
             // 
             MenuStrip.BackColor = Color.FromArgb(40, 40, 40);
-            MenuStrip.Font = new Font("Segoe UI Emoji", 9F);
-            MenuStrip.Items.AddRange(new ToolStripItem[] { SettingsMenuItem, DiagnosticsMenuItem, UserGuideMenuItem });
+            MenuStrip.Font = new Font("Segoe UI Emoji", 10F);
+            MenuStrip.Items.AddRange(new ToolStripItem[] { SettingsMenuItem, DiagnosticsMenuItem, GuideMenuItem });
             MenuStrip.Location = new Point(0, 0);
             MenuStrip.Name = "MenuStrip";
-            MenuStrip.Size = new Size(1217, 26);
+            MenuStrip.Size = new Size(1217, 29);
             MenuStrip.TabIndex = 17;
             MenuStrip.Text = "menuStrip1";
             // 
             // SettingsMenuItem
             // 
             SettingsMenuItem.Alignment = ToolStripItemAlignment.Right;
-            SettingsMenuItem.Font = new Font("Segoe UI Emoji", 9F);
+            SettingsMenuItem.Font = new Font("Segoe UI Emoji", 10F);
             SettingsMenuItem.ForeColor = SystemColors.AppWorkspace;
             SettingsMenuItem.Margin = new Padding(0, 2, 0, 0);
             SettingsMenuItem.Name = "SettingsMenuItem";
-            SettingsMenuItem.Size = new Size(80, 20);
+            SettingsMenuItem.Size = new Size(93, 23);
             SettingsMenuItem.Text = "&Settings ⚙";
             // 
             // DiagnosticsMenuItem
             // 
             DiagnosticsMenuItem.Alignment = ToolStripItemAlignment.Right;
-            DiagnosticsMenuItem.Font = new Font("Segoe UI Emoji", 9F);
+            DiagnosticsMenuItem.Font = new Font("Segoe UI Emoji", 10F);
             DiagnosticsMenuItem.ForeColor = SystemColors.AppWorkspace;
             DiagnosticsMenuItem.Margin = new Padding(0, 2, 0, 0);
             DiagnosticsMenuItem.Name = "DiagnosticsMenuItem";
-            DiagnosticsMenuItem.Size = new Size(99, 20);
+            DiagnosticsMenuItem.Size = new Size(113, 23);
             DiagnosticsMenuItem.Text = "&Diagnostics 📊";
             // 
-            // UserGuideMenuItem
+            // GuideMenuItem
             // 
-            UserGuideMenuItem.Alignment = ToolStripItemAlignment.Right;
-            UserGuideMenuItem.BackColor = Color.FromArgb(40, 40, 40);
-            UserGuideMenuItem.Font = new Font("Segoe UI Emoji", 9F);
-            UserGuideMenuItem.ForeColor = SystemColors.AppWorkspace;
-            UserGuideMenuItem.Margin = new Padding(0, 2, 0, 0);
-            UserGuideMenuItem.Name = "UserGuideMenuItem";
-            UserGuideMenuItem.Size = new Size(69, 20);
-            UserGuideMenuItem.Text = "&Guide 📖";
+            GuideMenuItem.Alignment = ToolStripItemAlignment.Right;
+            GuideMenuItem.BackColor = Color.FromArgb(40, 40, 40);
+            GuideMenuItem.Font = new Font("Segoe UI Emoji", 10F);
+            GuideMenuItem.ForeColor = SystemColors.AppWorkspace;
+            GuideMenuItem.Margin = new Padding(0, 2, 0, 0);
+            GuideMenuItem.Name = "GuideMenuItem";
+            GuideMenuItem.Size = new Size(80, 23);
+            GuideMenuItem.Text = "&Guide 📖";
+            GuideMenuItem.Click += GuideMenuItem_Click;
             // 
             // SearchTextBox
             // 
@@ -168,33 +193,33 @@
             SearchTextBox.BorderStyle = BorderStyle.FixedSingle;
             SearchTextBox.Font = new Font("Segoe UI Emoji", 12F);
             SearchTextBox.ForeColor = SystemColors.ButtonFace;
-            SearchTextBox.Location = new Point(61, 27);
+            SearchTextBox.Location = new Point(9, 31);
             SearchTextBox.Name = "SearchTextBox";
-            SearchTextBox.Size = new Size(211, 29);
+            SearchTextBox.Size = new Size(261, 29);
             SearchTextBox.TabIndex = 18;
             SearchTextBox.TextChanged += SearchTextBox_TextChanged;
             // 
-            // SearchLabel
+            // MagnifyingGlassLabel
             // 
-            SearchLabel.AutoSize = true;
-            SearchLabel.BackColor = Color.FromArgb(40, 40, 40);
-            SearchLabel.Font = new Font("Segoe UI Emoji", 12F);
-            SearchLabel.ForeColor = SystemColors.ButtonFace;
-            SearchLabel.Location = new Point(4, 31);
-            SearchLabel.Name = "SearchLabel";
-            SearchLabel.Size = new Size(57, 21);
-            SearchLabel.TabIndex = 20;
-            SearchLabel.Text = "Search";
+            MagnifyingGlassLabel.AutoSize = true;
+            MagnifyingGlassLabel.BackColor = Color.FromArgb(32, 32, 32);
+            MagnifyingGlassLabel.Font = new Font("Segoe UI Emoji", 12F);
+            MagnifyingGlassLabel.ForeColor = SystemColors.ButtonFace;
+            MagnifyingGlassLabel.Location = new Point(234, 33);
+            MagnifyingGlassLabel.Name = "MagnifyingGlassLabel";
+            MagnifyingGlassLabel.Size = new Size(32, 21);
+            MagnifyingGlassLabel.TabIndex = 20;
+            MagnifyingGlassLabel.Text = "🔍";
             // 
             // AddButton
             // 
-            AddButton.BackColor = Color.FromArgb(50, 50, 50);
+            AddButton.BackColor = Color.FromArgb(52, 52, 52);
             AddButton.ContextMenuStrip = AddButtonContextMenuStrip;
             AddButton.FlatAppearance.BorderColor = SystemColors.WindowFrame;
             AddButton.FlatStyle = FlatStyle.Flat;
             AddButton.Font = new Font("Segoe UI Emoji", 12F);
             AddButton.ForeColor = SystemColors.ButtonFace;
-            AddButton.Location = new Point(278, 27);
+            AddButton.Location = new Point(277, 31);
             AddButton.Name = "AddButton";
             AddButton.Padding = new Padding(7, 0, 0, 0);
             AddButton.Size = new Size(77, 29);
@@ -205,26 +230,26 @@
             // 
             // AddButtonContextMenuStrip
             // 
-            AddButtonContextMenuStrip.Items.AddRange(new ToolStripItem[] { AddExistingFileToolStripMenuItem, ImportArchiveToolStripMenuItem });
+            AddButtonContextMenuStrip.Items.AddRange(new ToolStripItem[] { AddExistingFilesToolStripMenuItem, ImportArchiveToolStripMenuItem });
             AddButtonContextMenuStrip.Name = "AddButtonContextMenuStrip";
-            AddButtonContextMenuStrip.Size = new Size(160, 48);
+            AddButtonContextMenuStrip.Size = new Size(173, 48);
             AddButtonContextMenuStrip.Tag = "";
             // 
-            // AddExistingFileToolStripMenuItem
+            // AddExistingFilesToolStripMenuItem
             // 
-            AddExistingFileToolStripMenuItem.BackColor = Color.FromArgb(40, 40, 40);
-            AddExistingFileToolStripMenuItem.ForeColor = SystemColors.ButtonFace;
-            AddExistingFileToolStripMenuItem.Name = "AddExistingFileToolStripMenuItem";
-            AddExistingFileToolStripMenuItem.Size = new Size(159, 22);
-            AddExistingFileToolStripMenuItem.Text = "Add existing file";
-            AddExistingFileToolStripMenuItem.Click += AddExistingFileToolStripMenuItem_Click;
+            AddExistingFilesToolStripMenuItem.BackColor = Color.FromArgb(40, 40, 40);
+            AddExistingFilesToolStripMenuItem.ForeColor = SystemColors.ButtonFace;
+            AddExistingFilesToolStripMenuItem.Name = "AddExistingFilesToolStripMenuItem";
+            AddExistingFilesToolStripMenuItem.Size = new Size(172, 22);
+            AddExistingFilesToolStripMenuItem.Text = "Add existing file(s)";
+            AddExistingFilesToolStripMenuItem.Click += AddExistingFileToolStripMenuItem_Click;
             // 
             // ImportArchiveToolStripMenuItem
             // 
             ImportArchiveToolStripMenuItem.BackColor = Color.FromArgb(40, 40, 40);
             ImportArchiveToolStripMenuItem.ForeColor = SystemColors.ButtonFace;
             ImportArchiveToolStripMenuItem.Name = "ImportArchiveToolStripMenuItem";
-            ImportArchiveToolStripMenuItem.Size = new Size(159, 22);
+            ImportArchiveToolStripMenuItem.Size = new Size(172, 22);
             ImportArchiveToolStripMenuItem.Text = "Import archive";
             ImportArchiveToolStripMenuItem.Click += ImportArchiveToolStripMenuItem_Click;
             // 
@@ -234,9 +259,9 @@
             NoFilesPanel.BorderStyle = BorderStyle.FixedSingle;
             NoFilesPanel.Controls.Add(NoFilesDescriptionLabel);
             NoFilesPanel.Controls.Add(NoFilesLabel);
-            NoFilesPanel.Location = new Point(361, 27);
+            NoFilesPanel.Location = new Point(361, 31);
             NoFilesPanel.Name = "NoFilesPanel";
-            NoFilesPanel.Size = new Size(864, 926);
+            NoFilesPanel.Size = new Size(864, 921);
             NoFilesPanel.TabIndex = 22;
             // 
             // NoFilesDescriptionLabel
@@ -278,9 +303,9 @@
             LockedFilePanel.Controls.Add(LockedStatusValueLabel);
             LockedFilePanel.Controls.Add(LockedStatusLabel);
             LockedFilePanel.Controls.Add(LockedFileNameLabel);
-            LockedFilePanel.Location = new Point(361, 27);
+            LockedFilePanel.Location = new Point(361, 31);
             LockedFilePanel.Name = "LockedFilePanel";
-            LockedFilePanel.Size = new Size(864, 926);
+            LockedFilePanel.Size = new Size(864, 921);
             LockedFilePanel.TabIndex = 24;
             // 
             // LockedShaValueLabel
@@ -434,9 +459,9 @@
             RelocationPanel.Controls.Add(RelocateButton);
             RelocationPanel.Controls.Add(LastSeenLabel);
             RelocationPanel.Controls.Add(CantLocateFileLabel);
-            RelocationPanel.Location = new Point(361, 27);
+            RelocationPanel.Location = new Point(361, 31);
             RelocationPanel.Name = "RelocationPanel";
-            RelocationPanel.Size = new Size(864, 926);
+            RelocationPanel.Size = new Size(864, 921);
             RelocationPanel.TabIndex = 35;
             // 
             // RemoveButton
@@ -505,9 +530,9 @@
             UnlockedFilePanel.Controls.Add(UnlockedStatusValueLabel);
             UnlockedFilePanel.Controls.Add(UnlockedStatusLabel);
             UnlockedFilePanel.Controls.Add(UnlockedFileNameLabel);
-            UnlockedFilePanel.Location = new Point(361, 27);
+            UnlockedFilePanel.Location = new Point(361, 31);
             UnlockedFilePanel.Name = "UnlockedFilePanel";
-            UnlockedFilePanel.Size = new Size(864, 926);
+            UnlockedFilePanel.Size = new Size(864, 921);
             UnlockedFilePanel.TabIndex = 35;
             // 
             // UnlockedShredGroupBox
@@ -885,14 +910,14 @@
             BackColor = Color.FromArgb(40, 40, 40);
             ClientSize = new Size(1217, 950);
             Controls.Add(AddButton);
-            Controls.Add(SearchLabel);
+            Controls.Add(MagnifyingGlassLabel);
             Controls.Add(SearchTextBox);
             Controls.Add(FileListBox);
             Controls.Add(MenuStrip);
             Controls.Add(UnlockedFilePanel);
-            Controls.Add(LockedFilePanel);
-            Controls.Add(RelocationPanel);
             Controls.Add(NoFilesPanel);
+            Controls.Add(RelocationPanel);
+            Controls.Add(LockedFilePanel);
             Font = new Font("Segoe UI Emoji", 12F);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -900,6 +925,7 @@
             Name = "DashboardForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FileLocker";
+            FileListBoxContextMenuStrip.ResumeLayout(false);
             MenuStrip.ResumeLayout(false);
             MenuStrip.PerformLayout();
             AddButtonContextMenuStrip.ResumeLayout(false);
@@ -925,16 +951,16 @@
         private Button DecryptButton;
         private ListBox FileListBox;
         private MenuStrip MenuStrip;
-        private ToolStripMenuItem UserGuideMenuItem;
+        private ToolStripMenuItem GuideMenuItem;
         private TextBox SearchTextBox;
-        private Label SearchLabel;
+        private Label MagnifyingGlassLabel;
         private Button AddButton;
         private Panel NoFilesPanel;
         private Label NoFilesDescriptionLabel;
         private ToolStripMenuItem SettingsMenuItem;
         private ToolStripMenuItem DiagnosticsMenuItem;
         private ContextMenuStrip AddButtonContextMenuStrip;
-        private ToolStripMenuItem AddExistingFileToolStripMenuItem;
+        private ToolStripMenuItem AddExistingFilesToolStripMenuItem;
         private ToolStripMenuItem ImportArchiveToolStripMenuItem;
         private Panel LockedFilePanel;
         private Label LockedStatusLabel;
@@ -965,7 +991,6 @@
         private Label UnlockedStatusValueLabel;
         private Label UnlockedStatusLabel;
         private Label UnlockedFileNameLabel;
-        private GroupBox EncryptGroupBox;
         private GroupBox UnlockedShredGroupBox;
         private Button ClearButton;
         private Label PasswordWarningLabel;
@@ -985,5 +1010,8 @@
         private Label PasswordLabel;
         private Label EncryptDescriptionLabel;
         private Label ShredDescriptionLabel;
+        private GroupBox EncryptGroupBox;
+        private ContextMenuStrip FileListBoxContextMenuStrip;
+        private ToolStripMenuItem RemoveFromListItem;
     }
 }

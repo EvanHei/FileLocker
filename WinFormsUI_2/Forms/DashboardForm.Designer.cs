@@ -44,60 +44,60 @@
             AddExistingFilesToolStripMenuItem = new ToolStripMenuItem();
             ImportArchiveToolStripMenuItem = new ToolStripMenuItem();
             NoFilesPanel = new Panel();
-            NoFilesDescriptionLabel = new Label();
-            NoFilesLabel = new Label();
-            LockedFilePanel = new Panel();
-            LockedShredGroupBox = new GroupBox();
-            LockedShredDescriptionLabel = new Label();
-            LockedShredButton = new Button();
-            DecryptGroupBox = new GroupBox();
-            DecryptDescriptionLabel = new Label();
-            DecryptButton = new Button();
-            LockedShaValueLabel = new Label();
-            LockedShaLabel = new Label();
-            LockedSizeValueLabel = new Label();
-            LockedSizeLabel = new Label();
-            LockedPathValueLabel = new Label();
-            LockedPathLabel = new Label();
-            LockDateValueLabel = new Label();
-            LockDateLabel = new Label();
-            AlgorithmValueLabel = new Label();
-            AlgorithmLabel = new Label();
-            LockedStatusValueLabel = new Label();
-            LockedStatusLabel = new Label();
-            LockedFileNameLabel = new Label();
+            NoFilesPanel_NoFilesDescriptionLabel = new Label();
+            NoFilesPanel_NoFilesLabel = new Label();
+            LockedPanel = new Panel();
+            LockedPanel_ShredGroupBox = new GroupBox();
+            LockedPanel_ShredDescriptionLabel = new Label();
+            LockedPanel_ShredButton = new Button();
+            LockedPanel_DecryptGroupBox = new GroupBox();
+            LockedPanel_DecryptDescriptionLabel = new Label();
+            LockedPanel_DecryptButton = new Button();
+            LockedPanel_ShaValueLabel = new Label();
+            LockedPanel_ShaLabel = new Label();
+            LockedPanel_SizeValueLabel = new Label();
+            LockedPanel_SizeLabel = new Label();
+            LockedPanel_PathValueLabel = new Label();
+            LockedPanel_PathLabel = new Label();
+            LockedPanel_DateValueLabel = new Label();
+            LockedPanel_DateLabel = new Label();
+            LockedPanel_AlgorithmValueLabel = new Label();
+            LockedPanel_AlgorithmLabel = new Label();
+            LockedPanel_StatusValueLabel = new Label();
+            LockedPanel_StatusLabel = new Label();
+            LockedPanel_FileNameLabel = new Label();
             RelocationPanel = new Panel();
-            RemoveButton = new Button();
-            RelocateButton = new Button();
-            LastSeenLabel = new Label();
-            CantLocateFileLabel = new Label();
-            UnlockedFilePanel = new Panel();
-            UnlockedShredGroupBox = new GroupBox();
-            UnlockedShredDescriptionLabel = new Label();
-            UnlockedShredButton = new Button();
-            EncryptGroupBox = new GroupBox();
-            EncryptDescriptionLabel = new Label();
-            EncryptButton = new Button();
-            UnlockedShaValueLabel = new Label();
-            UnlockedShaLabel = new Label();
-            UnlockedSizeValueLabel = new Label();
-            UnlockedSizeLabel = new Label();
-            UnlockedPathValueLabel = new Label();
-            UnlockedPathLabel = new Label();
-            UnlockedStatusValueLabel = new Label();
-            UnlockedStatusLabel = new Label();
-            UnlockedFileNameLabel = new Label();
+            RelocationPanel_RemoveButton = new Button();
+            RelocationPanel_RelocateButton = new Button();
+            RelocationPanel_LastSeenLabel = new Label();
+            RelocationPanel_CantLocateFileLabel = new Label();
+            UnlockedPanel = new Panel();
+            UnlockedPanel_ShredGroupBox = new GroupBox();
+            UnlockedPanel_ShredDescriptionLabel = new Label();
+            UnlockedPanel_ShredButton = new Button();
+            UnlockedPanel_EncryptGroupBox = new GroupBox();
+            UnlockedPanel_EncryptDescriptionLabel = new Label();
+            UnlockedPanel_EncryptButton = new Button();
+            UnlockedPanel_ShaValueLabel = new Label();
+            UnlockedPanel_ShaLabel = new Label();
+            UnlockedPanel_SizeValueLabel = new Label();
+            UnlockedPanel_SizeLabel = new Label();
+            UnlockedPanel_PathValueLabel = new Label();
+            UnlockedPanel_PathLabel = new Label();
+            UnlockedPanel_StatusValueLabel = new Label();
+            UnlockedPanel_StatusLabel = new Label();
+            UnlockedPanel_FileNameLabel = new Label();
             FileListBoxContextMenuStrip.SuspendLayout();
             MenuStrip.SuspendLayout();
             AddButtonContextMenuStrip.SuspendLayout();
             NoFilesPanel.SuspendLayout();
-            LockedFilePanel.SuspendLayout();
-            LockedShredGroupBox.SuspendLayout();
-            DecryptGroupBox.SuspendLayout();
+            LockedPanel.SuspendLayout();
+            LockedPanel_ShredGroupBox.SuspendLayout();
+            LockedPanel_DecryptGroupBox.SuspendLayout();
             RelocationPanel.SuspendLayout();
-            UnlockedFilePanel.SuspendLayout();
-            UnlockedShredGroupBox.SuspendLayout();
-            EncryptGroupBox.SuspendLayout();
+            UnlockedPanel.SuspendLayout();
+            UnlockedPanel_ShredGroupBox.SuspendLayout();
+            UnlockedPanel_EncryptGroupBox.SuspendLayout();
             SuspendLayout();
             // 
             // FileListBox
@@ -251,540 +251,541 @@
             // 
             NoFilesPanel.BackColor = Color.FromArgb(32, 32, 32);
             NoFilesPanel.BorderStyle = BorderStyle.FixedSingle;
-            NoFilesPanel.Controls.Add(NoFilesDescriptionLabel);
-            NoFilesPanel.Controls.Add(NoFilesLabel);
+            NoFilesPanel.Controls.Add(NoFilesPanel_NoFilesDescriptionLabel);
+            NoFilesPanel.Controls.Add(NoFilesPanel_NoFilesLabel);
             NoFilesPanel.Location = new Point(361, 31);
             NoFilesPanel.Name = "NoFilesPanel";
             NoFilesPanel.Size = new Size(864, 921);
             NoFilesPanel.TabIndex = 22;
             // 
-            // NoFilesDescriptionLabel
+            // NoFilesPanel_NoFilesDescriptionLabel
             // 
-            NoFilesDescriptionLabel.AutoSize = true;
-            NoFilesDescriptionLabel.BackColor = Color.FromArgb(32, 32, 32);
-            NoFilesDescriptionLabel.ForeColor = SystemColors.ButtonFace;
-            NoFilesDescriptionLabel.Location = new Point(316, 426);
-            NoFilesDescriptionLabel.Name = "NoFilesDescriptionLabel";
-            NoFilesDescriptionLabel.Size = new Size(274, 42);
-            NoFilesDescriptionLabel.TabIndex = 23;
-            NoFilesDescriptionLabel.Text = "Click Add to import or manually select\r\n files to add to FileLocker's scope.";
-            NoFilesDescriptionLabel.Click += NoFilesDescriptionLabel_Click;
+            NoFilesPanel_NoFilesDescriptionLabel.AutoSize = true;
+            NoFilesPanel_NoFilesDescriptionLabel.BackColor = Color.FromArgb(32, 32, 32);
+            NoFilesPanel_NoFilesDescriptionLabel.ForeColor = SystemColors.ButtonFace;
+            NoFilesPanel_NoFilesDescriptionLabel.Location = new Point(270, 420);
+            NoFilesPanel_NoFilesDescriptionLabel.Name = "NoFilesPanel_NoFilesDescriptionLabel";
+            NoFilesPanel_NoFilesDescriptionLabel.Size = new Size(399, 42);
+            NoFilesPanel_NoFilesDescriptionLabel.TabIndex = 23;
+            NoFilesPanel_NoFilesDescriptionLabel.Text = "Click Add button to import an archive or manually select\r\nfiles, or drag and drop onto the left list.\r\n";
+            NoFilesPanel_NoFilesDescriptionLabel.Click += NoFilesDescriptionLabel_Click;
             // 
-            // NoFilesLabel
+            // NoFilesPanel_NoFilesLabel
             // 
-            NoFilesLabel.AutoSize = true;
-            NoFilesLabel.Font = new Font("Segoe UI Emoji", 20.25F);
-            NoFilesLabel.ForeColor = SystemColors.ButtonFace;
-            NoFilesLabel.Location = new Point(401, 378);
-            NoFilesLabel.Name = "NoFilesLabel";
-            NoFilesLabel.Size = new Size(105, 36);
-            NoFilesLabel.TabIndex = 8;
-            NoFilesLabel.Text = "No files";
+            NoFilesPanel_NoFilesLabel.AutoSize = true;
+            NoFilesPanel_NoFilesLabel.Font = new Font("Segoe UI Emoji", 20.25F);
+            NoFilesPanel_NoFilesLabel.ForeColor = SystemColors.ButtonFace;
+            NoFilesPanel_NoFilesLabel.Location = new Point(401, 378);
+            NoFilesPanel_NoFilesLabel.Name = "NoFilesPanel_NoFilesLabel";
+            NoFilesPanel_NoFilesLabel.Size = new Size(105, 36);
+            NoFilesPanel_NoFilesLabel.TabIndex = 8;
+            NoFilesPanel_NoFilesLabel.Text = "No files";
             // 
-            // LockedFilePanel
+            // LockedPanel
             // 
-            LockedFilePanel.BackColor = Color.FromArgb(32, 32, 32);
-            LockedFilePanel.BorderStyle = BorderStyle.FixedSingle;
-            LockedFilePanel.Controls.Add(LockedShredGroupBox);
-            LockedFilePanel.Controls.Add(DecryptGroupBox);
-            LockedFilePanel.Controls.Add(LockedShaValueLabel);
-            LockedFilePanel.Controls.Add(LockedShaLabel);
-            LockedFilePanel.Controls.Add(LockedSizeValueLabel);
-            LockedFilePanel.Controls.Add(LockedSizeLabel);
-            LockedFilePanel.Controls.Add(LockedPathValueLabel);
-            LockedFilePanel.Controls.Add(LockedPathLabel);
-            LockedFilePanel.Controls.Add(LockDateValueLabel);
-            LockedFilePanel.Controls.Add(LockDateLabel);
-            LockedFilePanel.Controls.Add(AlgorithmValueLabel);
-            LockedFilePanel.Controls.Add(AlgorithmLabel);
-            LockedFilePanel.Controls.Add(LockedStatusValueLabel);
-            LockedFilePanel.Controls.Add(LockedStatusLabel);
-            LockedFilePanel.Controls.Add(LockedFileNameLabel);
-            LockedFilePanel.Location = new Point(361, 31);
-            LockedFilePanel.Name = "LockedFilePanel";
-            LockedFilePanel.Size = new Size(864, 921);
-            LockedFilePanel.TabIndex = 24;
+            LockedPanel.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel.BorderStyle = BorderStyle.FixedSingle;
+            LockedPanel.Controls.Add(LockedPanel_ShredGroupBox);
+            LockedPanel.Controls.Add(LockedPanel_DecryptGroupBox);
+            LockedPanel.Controls.Add(LockedPanel_ShaValueLabel);
+            LockedPanel.Controls.Add(LockedPanel_ShaLabel);
+            LockedPanel.Controls.Add(LockedPanel_SizeValueLabel);
+            LockedPanel.Controls.Add(LockedPanel_SizeLabel);
+            LockedPanel.Controls.Add(LockedPanel_PathValueLabel);
+            LockedPanel.Controls.Add(LockedPanel_PathLabel);
+            LockedPanel.Controls.Add(LockedPanel_DateValueLabel);
+            LockedPanel.Controls.Add(LockedPanel_DateLabel);
+            LockedPanel.Controls.Add(LockedPanel_AlgorithmValueLabel);
+            LockedPanel.Controls.Add(LockedPanel_AlgorithmLabel);
+            LockedPanel.Controls.Add(LockedPanel_StatusValueLabel);
+            LockedPanel.Controls.Add(LockedPanel_StatusLabel);
+            LockedPanel.Controls.Add(LockedPanel_FileNameLabel);
+            LockedPanel.Location = new Point(361, 31);
+            LockedPanel.Name = "LockedPanel";
+            LockedPanel.Size = new Size(864, 921);
+            LockedPanel.TabIndex = 24;
             // 
-            // LockedShredGroupBox
+            // LockedPanel_ShredGroupBox
             // 
-            LockedShredGroupBox.BackColor = Color.FromArgb(32, 32, 32);
-            LockedShredGroupBox.Controls.Add(LockedShredDescriptionLabel);
-            LockedShredGroupBox.Controls.Add(LockedShredButton);
-            LockedShredGroupBox.FlatStyle = FlatStyle.Flat;
-            LockedShredGroupBox.ForeColor = SystemColors.ButtonFace;
-            LockedShredGroupBox.Location = new Point(22, 338);
-            LockedShredGroupBox.Name = "LockedShredGroupBox";
-            LockedShredGroupBox.Size = new Size(807, 116);
-            LockedShredGroupBox.TabIndex = 36;
-            LockedShredGroupBox.TabStop = false;
-            LockedShredGroupBox.Text = "Shred";
+            LockedPanel_ShredGroupBox.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel_ShredGroupBox.Controls.Add(LockedPanel_ShredDescriptionLabel);
+            LockedPanel_ShredGroupBox.Controls.Add(LockedPanel_ShredButton);
+            LockedPanel_ShredGroupBox.FlatStyle = FlatStyle.Flat;
+            LockedPanel_ShredGroupBox.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_ShredGroupBox.Location = new Point(22, 338);
+            LockedPanel_ShredGroupBox.Name = "LockedPanel_ShredGroupBox";
+            LockedPanel_ShredGroupBox.Size = new Size(807, 116);
+            LockedPanel_ShredGroupBox.TabIndex = 36;
+            LockedPanel_ShredGroupBox.TabStop = false;
+            LockedPanel_ShredGroupBox.Text = "Shred";
             // 
-            // LockedShredDescriptionLabel
+            // LockedPanel_ShredDescriptionLabel
             // 
-            LockedShredDescriptionLabel.AutoSize = true;
-            LockedShredDescriptionLabel.BackColor = Color.FromArgb(32, 32, 32);
-            LockedShredDescriptionLabel.ForeColor = SystemColors.ButtonFace;
-            LockedShredDescriptionLabel.Location = new Point(74, 40);
-            LockedShredDescriptionLabel.Name = "LockedShredDescriptionLabel";
-            LockedShredDescriptionLabel.Size = new Size(233, 42);
-            LockedShredDescriptionLabel.TabIndex = 34;
-            LockedShredDescriptionLabel.Text = "Overwrites the file with \r\nrandom data and then deletes it.";
+            LockedPanel_ShredDescriptionLabel.AutoSize = true;
+            LockedPanel_ShredDescriptionLabel.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel_ShredDescriptionLabel.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_ShredDescriptionLabel.Location = new Point(74, 40);
+            LockedPanel_ShredDescriptionLabel.Name = "LockedPanel_ShredDescriptionLabel";
+            LockedPanel_ShredDescriptionLabel.Size = new Size(233, 42);
+            LockedPanel_ShredDescriptionLabel.TabIndex = 34;
+            LockedPanel_ShredDescriptionLabel.Text = "Overwrites the file with \r\nrandom data and then deletes it.";
             // 
-            // LockedShredButton
+            // LockedPanel_ShredButton
             // 
-            LockedShredButton.BackColor = Color.DarkRed;
-            LockedShredButton.FlatStyle = FlatStyle.Flat;
-            LockedShredButton.Font = new Font("Segoe UI Emoji", 12F);
-            LockedShredButton.ForeColor = SystemColors.ButtonFace;
-            LockedShredButton.Location = new Point(669, 45);
-            LockedShredButton.Name = "LockedShredButton";
-            LockedShredButton.Size = new Size(100, 37);
-            LockedShredButton.TabIndex = 6;
-            LockedShredButton.Text = "Shred 🗑️";
-            LockedShredButton.UseVisualStyleBackColor = false;
+            LockedPanel_ShredButton.BackColor = Color.DarkRed;
+            LockedPanel_ShredButton.FlatStyle = FlatStyle.Flat;
+            LockedPanel_ShredButton.Font = new Font("Segoe UI Emoji", 12F);
+            LockedPanel_ShredButton.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_ShredButton.Location = new Point(669, 45);
+            LockedPanel_ShredButton.Name = "LockedPanel_ShredButton";
+            LockedPanel_ShredButton.Size = new Size(100, 37);
+            LockedPanel_ShredButton.TabIndex = 6;
+            LockedPanel_ShredButton.Text = "Shred 🗑️";
+            LockedPanel_ShredButton.UseVisualStyleBackColor = false;
+            LockedPanel_ShredButton.Click += LockedShredButton_Click;
             // 
-            // DecryptGroupBox
+            // LockedPanel_DecryptGroupBox
             // 
-            DecryptGroupBox.BackColor = Color.FromArgb(32, 32, 32);
-            DecryptGroupBox.Controls.Add(DecryptDescriptionLabel);
-            DecryptGroupBox.Controls.Add(DecryptButton);
-            DecryptGroupBox.FlatStyle = FlatStyle.Flat;
-            DecryptGroupBox.ForeColor = SystemColors.ButtonFace;
-            DecryptGroupBox.Location = new Point(22, 197);
-            DecryptGroupBox.Name = "DecryptGroupBox";
-            DecryptGroupBox.Size = new Size(807, 116);
-            DecryptGroupBox.TabIndex = 35;
-            DecryptGroupBox.TabStop = false;
-            DecryptGroupBox.Text = "Decrypt";
+            LockedPanel_DecryptGroupBox.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel_DecryptGroupBox.Controls.Add(LockedPanel_DecryptDescriptionLabel);
+            LockedPanel_DecryptGroupBox.Controls.Add(LockedPanel_DecryptButton);
+            LockedPanel_DecryptGroupBox.FlatStyle = FlatStyle.Flat;
+            LockedPanel_DecryptGroupBox.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_DecryptGroupBox.Location = new Point(22, 197);
+            LockedPanel_DecryptGroupBox.Name = "LockedPanel_DecryptGroupBox";
+            LockedPanel_DecryptGroupBox.Size = new Size(807, 116);
+            LockedPanel_DecryptGroupBox.TabIndex = 35;
+            LockedPanel_DecryptGroupBox.TabStop = false;
+            LockedPanel_DecryptGroupBox.Text = "Decrypt";
             // 
-            // DecryptDescriptionLabel
+            // LockedPanel_DecryptDescriptionLabel
             // 
-            DecryptDescriptionLabel.AutoSize = true;
-            DecryptDescriptionLabel.BackColor = Color.FromArgb(32, 32, 32);
-            DecryptDescriptionLabel.ForeColor = SystemColors.ButtonFace;
-            DecryptDescriptionLabel.Location = new Point(62, 42);
-            DecryptDescriptionLabel.Name = "DecryptDescriptionLabel";
-            DecryptDescriptionLabel.Size = new Size(168, 42);
-            DecryptDescriptionLabel.TabIndex = 33;
-            DecryptDescriptionLabel.Text = "Decrypts the file using \r\nthe input password.";
+            LockedPanel_DecryptDescriptionLabel.AutoSize = true;
+            LockedPanel_DecryptDescriptionLabel.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel_DecryptDescriptionLabel.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_DecryptDescriptionLabel.Location = new Point(62, 42);
+            LockedPanel_DecryptDescriptionLabel.Name = "LockedPanel_DecryptDescriptionLabel";
+            LockedPanel_DecryptDescriptionLabel.Size = new Size(168, 42);
+            LockedPanel_DecryptDescriptionLabel.TabIndex = 33;
+            LockedPanel_DecryptDescriptionLabel.Text = "Decrypts the file using \r\nthe input password.";
             // 
-            // DecryptButton
+            // LockedPanel_DecryptButton
             // 
-            DecryptButton.BackColor = SystemColors.Highlight;
-            DecryptButton.FlatStyle = FlatStyle.Flat;
-            DecryptButton.Font = new Font("Segoe UI Emoji", 12F);
-            DecryptButton.ForeColor = SystemColors.ButtonFace;
-            DecryptButton.Location = new Point(669, 42);
-            DecryptButton.Name = "DecryptButton";
-            DecryptButton.Size = new Size(100, 37);
-            DecryptButton.TabIndex = 29;
-            DecryptButton.Text = "Decrypt 🔑";
-            DecryptButton.UseVisualStyleBackColor = false;
-            DecryptButton.Click += DecryptButton_Click;
+            LockedPanel_DecryptButton.BackColor = SystemColors.Highlight;
+            LockedPanel_DecryptButton.FlatStyle = FlatStyle.Flat;
+            LockedPanel_DecryptButton.Font = new Font("Segoe UI Emoji", 12F);
+            LockedPanel_DecryptButton.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_DecryptButton.Location = new Point(669, 42);
+            LockedPanel_DecryptButton.Name = "LockedPanel_DecryptButton";
+            LockedPanel_DecryptButton.Size = new Size(100, 37);
+            LockedPanel_DecryptButton.TabIndex = 29;
+            LockedPanel_DecryptButton.Text = "Decrypt 🔑";
+            LockedPanel_DecryptButton.UseVisualStyleBackColor = false;
+            LockedPanel_DecryptButton.Click += DecryptButton_Click;
             // 
-            // LockedShaValueLabel
+            // LockedPanel_ShaValueLabel
             // 
-            LockedShaValueLabel.AutoSize = true;
-            LockedShaValueLabel.BackColor = Color.FromArgb(32, 32, 32);
-            LockedShaValueLabel.ForeColor = SystemColors.ButtonFace;
-            LockedShaValueLabel.Location = new Point(428, 173);
-            LockedShaValueLabel.Name = "LockedShaValueLabel";
-            LockedShaValueLabel.Size = new Size(56, 21);
-            LockedShaValueLabel.TabIndex = 34;
-            LockedShaValueLabel.Text = "<sha>";
+            LockedPanel_ShaValueLabel.AutoSize = true;
+            LockedPanel_ShaValueLabel.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel_ShaValueLabel.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_ShaValueLabel.Location = new Point(428, 173);
+            LockedPanel_ShaValueLabel.Name = "LockedPanel_ShaValueLabel";
+            LockedPanel_ShaValueLabel.Size = new Size(56, 21);
+            LockedPanel_ShaValueLabel.TabIndex = 34;
+            LockedPanel_ShaValueLabel.Text = "<sha>";
             // 
-            // LockedShaLabel
+            // LockedPanel_ShaLabel
             // 
-            LockedShaLabel.AutoSize = true;
-            LockedShaLabel.BackColor = Color.FromArgb(32, 32, 32);
-            LockedShaLabel.ForeColor = SystemColors.ButtonFace;
-            LockedShaLabel.Location = new Point(379, 173);
-            LockedShaLabel.Name = "LockedShaLabel";
-            LockedShaLabel.Size = new Size(43, 21);
-            LockedShaLabel.TabIndex = 33;
-            LockedShaLabel.Text = "SHA:";
+            LockedPanel_ShaLabel.AutoSize = true;
+            LockedPanel_ShaLabel.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel_ShaLabel.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_ShaLabel.Location = new Point(379, 173);
+            LockedPanel_ShaLabel.Name = "LockedPanel_ShaLabel";
+            LockedPanel_ShaLabel.Size = new Size(43, 21);
+            LockedPanel_ShaLabel.TabIndex = 33;
+            LockedPanel_ShaLabel.Text = "SHA:";
             // 
-            // LockedSizeValueLabel
+            // LockedPanel_SizeValueLabel
             // 
-            LockedSizeValueLabel.AutoSize = true;
-            LockedSizeValueLabel.BackColor = Color.FromArgb(32, 32, 32);
-            LockedSizeValueLabel.ForeColor = SystemColors.ButtonFace;
-            LockedSizeValueLabel.Location = new Point(428, 152);
-            LockedSizeValueLabel.Name = "LockedSizeValueLabel";
-            LockedSizeValueLabel.Size = new Size(58, 21);
-            LockedSizeValueLabel.TabIndex = 32;
-            LockedSizeValueLabel.Text = "<size>";
+            LockedPanel_SizeValueLabel.AutoSize = true;
+            LockedPanel_SizeValueLabel.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel_SizeValueLabel.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_SizeValueLabel.Location = new Point(428, 152);
+            LockedPanel_SizeValueLabel.Name = "LockedPanel_SizeValueLabel";
+            LockedPanel_SizeValueLabel.Size = new Size(58, 21);
+            LockedPanel_SizeValueLabel.TabIndex = 32;
+            LockedPanel_SizeValueLabel.Text = "<size>";
             // 
-            // LockedSizeLabel
+            // LockedPanel_SizeLabel
             // 
-            LockedSizeLabel.AutoSize = true;
-            LockedSizeLabel.BackColor = Color.FromArgb(32, 32, 32);
-            LockedSizeLabel.ForeColor = SystemColors.ButtonFace;
-            LockedSizeLabel.Location = new Point(381, 152);
-            LockedSizeLabel.Name = "LockedSizeLabel";
-            LockedSizeLabel.Size = new Size(41, 21);
-            LockedSizeLabel.TabIndex = 31;
-            LockedSizeLabel.Text = "Size:";
+            LockedPanel_SizeLabel.AutoSize = true;
+            LockedPanel_SizeLabel.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel_SizeLabel.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_SizeLabel.Location = new Point(381, 152);
+            LockedPanel_SizeLabel.Name = "LockedPanel_SizeLabel";
+            LockedPanel_SizeLabel.Size = new Size(41, 21);
+            LockedPanel_SizeLabel.TabIndex = 31;
+            LockedPanel_SizeLabel.Text = "Size:";
             // 
-            // LockedPathValueLabel
+            // LockedPanel_PathValueLabel
             // 
-            LockedPathValueLabel.AutoSize = true;
-            LockedPathValueLabel.BackColor = Color.FromArgb(32, 32, 32);
-            LockedPathValueLabel.ForeColor = SystemColors.ButtonFace;
-            LockedPathValueLabel.Location = new Point(428, 131);
-            LockedPathValueLabel.Name = "LockedPathValueLabel";
-            LockedPathValueLabel.Size = new Size(63, 21);
-            LockedPathValueLabel.TabIndex = 30;
-            LockedPathValueLabel.Text = "<path>";
+            LockedPanel_PathValueLabel.AutoSize = true;
+            LockedPanel_PathValueLabel.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel_PathValueLabel.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_PathValueLabel.Location = new Point(428, 131);
+            LockedPanel_PathValueLabel.Name = "LockedPanel_PathValueLabel";
+            LockedPanel_PathValueLabel.Size = new Size(63, 21);
+            LockedPanel_PathValueLabel.TabIndex = 30;
+            LockedPanel_PathValueLabel.Text = "<path>";
             // 
-            // LockedPathLabel
+            // LockedPanel_PathLabel
             // 
-            LockedPathLabel.AutoSize = true;
-            LockedPathLabel.BackColor = Color.FromArgb(32, 32, 32);
-            LockedPathLabel.ForeColor = SystemColors.ButtonFace;
-            LockedPathLabel.Location = new Point(378, 131);
-            LockedPathLabel.Name = "LockedPathLabel";
-            LockedPathLabel.Size = new Size(44, 21);
-            LockedPathLabel.TabIndex = 29;
-            LockedPathLabel.Text = "Path:";
+            LockedPanel_PathLabel.AutoSize = true;
+            LockedPanel_PathLabel.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel_PathLabel.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_PathLabel.Location = new Point(378, 131);
+            LockedPanel_PathLabel.Name = "LockedPanel_PathLabel";
+            LockedPanel_PathLabel.Size = new Size(44, 21);
+            LockedPanel_PathLabel.TabIndex = 29;
+            LockedPanel_PathLabel.Text = "Path:";
             // 
-            // LockDateValueLabel
+            // LockedPanel_DateValueLabel
             // 
-            LockDateValueLabel.AutoSize = true;
-            LockDateValueLabel.BackColor = Color.FromArgb(32, 32, 32);
-            LockDateValueLabel.ForeColor = SystemColors.ButtonFace;
-            LockDateValueLabel.Location = new Point(428, 110);
-            LockDateValueLabel.Name = "LockDateValueLabel";
-            LockDateValueLabel.Size = new Size(94, 21);
-            LockDateValueLabel.TabIndex = 28;
-            LockDateValueLabel.Text = "<lock date>";
+            LockedPanel_DateValueLabel.AutoSize = true;
+            LockedPanel_DateValueLabel.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel_DateValueLabel.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_DateValueLabel.Location = new Point(428, 110);
+            LockedPanel_DateValueLabel.Name = "LockedPanel_DateValueLabel";
+            LockedPanel_DateValueLabel.Size = new Size(94, 21);
+            LockedPanel_DateValueLabel.TabIndex = 28;
+            LockedPanel_DateValueLabel.Text = "<lock date>";
             // 
-            // LockDateLabel
+            // LockedPanel_DateLabel
             // 
-            LockDateLabel.AutoSize = true;
-            LockDateLabel.BackColor = Color.FromArgb(32, 32, 32);
-            LockDateLabel.ForeColor = SystemColors.ButtonFace;
-            LockDateLabel.Location = new Point(341, 110);
-            LockDateLabel.Name = "LockDateLabel";
-            LockDateLabel.Size = new Size(81, 21);
-            LockDateLabel.TabIndex = 27;
-            LockDateLabel.Text = "Lock Date:";
+            LockedPanel_DateLabel.AutoSize = true;
+            LockedPanel_DateLabel.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel_DateLabel.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_DateLabel.Location = new Point(341, 110);
+            LockedPanel_DateLabel.Name = "LockedPanel_DateLabel";
+            LockedPanel_DateLabel.Size = new Size(81, 21);
+            LockedPanel_DateLabel.TabIndex = 27;
+            LockedPanel_DateLabel.Text = "Lock Date:";
             // 
-            // AlgorithmValueLabel
+            // LockedPanel_AlgorithmValueLabel
             // 
-            AlgorithmValueLabel.AutoSize = true;
-            AlgorithmValueLabel.BackColor = Color.FromArgb(32, 32, 32);
-            AlgorithmValueLabel.ForeColor = SystemColors.ButtonFace;
-            AlgorithmValueLabel.Location = new Point(428, 89);
-            AlgorithmValueLabel.Name = "AlgorithmValueLabel";
-            AlgorithmValueLabel.Size = new Size(100, 21);
-            AlgorithmValueLabel.TabIndex = 26;
-            AlgorithmValueLabel.Text = "<algorithm>";
+            LockedPanel_AlgorithmValueLabel.AutoSize = true;
+            LockedPanel_AlgorithmValueLabel.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel_AlgorithmValueLabel.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_AlgorithmValueLabel.Location = new Point(428, 89);
+            LockedPanel_AlgorithmValueLabel.Name = "LockedPanel_AlgorithmValueLabel";
+            LockedPanel_AlgorithmValueLabel.Size = new Size(100, 21);
+            LockedPanel_AlgorithmValueLabel.TabIndex = 26;
+            LockedPanel_AlgorithmValueLabel.Text = "<algorithm>";
             // 
-            // AlgorithmLabel
+            // LockedPanel_AlgorithmLabel
             // 
-            AlgorithmLabel.AutoSize = true;
-            AlgorithmLabel.BackColor = Color.FromArgb(32, 32, 32);
-            AlgorithmLabel.ForeColor = SystemColors.ButtonFace;
-            AlgorithmLabel.Location = new Point(339, 89);
-            AlgorithmLabel.Name = "AlgorithmLabel";
-            AlgorithmLabel.Size = new Size(83, 21);
-            AlgorithmLabel.TabIndex = 25;
-            AlgorithmLabel.Text = "Algorithm:";
+            LockedPanel_AlgorithmLabel.AutoSize = true;
+            LockedPanel_AlgorithmLabel.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel_AlgorithmLabel.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_AlgorithmLabel.Location = new Point(339, 89);
+            LockedPanel_AlgorithmLabel.Name = "LockedPanel_AlgorithmLabel";
+            LockedPanel_AlgorithmLabel.Size = new Size(83, 21);
+            LockedPanel_AlgorithmLabel.TabIndex = 25;
+            LockedPanel_AlgorithmLabel.Text = "Algorithm:";
             // 
-            // LockedStatusValueLabel
+            // LockedPanel_StatusValueLabel
             // 
-            LockedStatusValueLabel.AutoSize = true;
-            LockedStatusValueLabel.BackColor = Color.FromArgb(32, 32, 32);
-            LockedStatusValueLabel.ForeColor = SystemColors.ButtonFace;
-            LockedStatusValueLabel.Location = new Point(428, 68);
-            LockedStatusValueLabel.Name = "LockedStatusValueLabel";
-            LockedStatusValueLabel.Size = new Size(59, 21);
-            LockedStatusValueLabel.TabIndex = 24;
-            LockedStatusValueLabel.Text = "Locked";
+            LockedPanel_StatusValueLabel.AutoSize = true;
+            LockedPanel_StatusValueLabel.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel_StatusValueLabel.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_StatusValueLabel.Location = new Point(428, 68);
+            LockedPanel_StatusValueLabel.Name = "LockedPanel_StatusValueLabel";
+            LockedPanel_StatusValueLabel.Size = new Size(59, 21);
+            LockedPanel_StatusValueLabel.TabIndex = 24;
+            LockedPanel_StatusValueLabel.Text = "Locked";
             // 
-            // LockedStatusLabel
+            // LockedPanel_StatusLabel
             // 
-            LockedStatusLabel.AutoSize = true;
-            LockedStatusLabel.BackColor = Color.FromArgb(32, 32, 32);
-            LockedStatusLabel.ForeColor = SystemColors.ButtonFace;
-            LockedStatusLabel.Location = new Point(366, 68);
-            LockedStatusLabel.Name = "LockedStatusLabel";
-            LockedStatusLabel.Size = new Size(56, 21);
-            LockedStatusLabel.TabIndex = 23;
-            LockedStatusLabel.Text = "Status:";
+            LockedPanel_StatusLabel.AutoSize = true;
+            LockedPanel_StatusLabel.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel_StatusLabel.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_StatusLabel.Location = new Point(366, 68);
+            LockedPanel_StatusLabel.Name = "LockedPanel_StatusLabel";
+            LockedPanel_StatusLabel.Size = new Size(56, 21);
+            LockedPanel_StatusLabel.TabIndex = 23;
+            LockedPanel_StatusLabel.Text = "Status:";
             // 
-            // LockedFileNameLabel
+            // LockedPanel_FileNameLabel
             // 
-            LockedFileNameLabel.AutoSize = true;
-            LockedFileNameLabel.Font = new Font("Segoe UI Emoji", 20.25F);
-            LockedFileNameLabel.ForeColor = SystemColors.ButtonFace;
-            LockedFileNameLabel.Location = new Point(353, 26);
-            LockedFileNameLabel.Name = "LockedFileNameLabel";
-            LockedFileNameLabel.Size = new Size(153, 36);
-            LockedFileNameLabel.TabIndex = 8;
-            LockedFileNameLabel.Text = "<filename>";
+            LockedPanel_FileNameLabel.AutoSize = true;
+            LockedPanel_FileNameLabel.Font = new Font("Segoe UI Emoji", 20.25F);
+            LockedPanel_FileNameLabel.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_FileNameLabel.Location = new Point(353, 26);
+            LockedPanel_FileNameLabel.Name = "LockedPanel_FileNameLabel";
+            LockedPanel_FileNameLabel.Size = new Size(153, 36);
+            LockedPanel_FileNameLabel.TabIndex = 8;
+            LockedPanel_FileNameLabel.Text = "<filename>";
             // 
             // RelocationPanel
             // 
             RelocationPanel.BackColor = Color.FromArgb(32, 32, 32);
             RelocationPanel.BorderStyle = BorderStyle.FixedSingle;
-            RelocationPanel.Controls.Add(RemoveButton);
-            RelocationPanel.Controls.Add(RelocateButton);
-            RelocationPanel.Controls.Add(LastSeenLabel);
-            RelocationPanel.Controls.Add(CantLocateFileLabel);
+            RelocationPanel.Controls.Add(RelocationPanel_RemoveButton);
+            RelocationPanel.Controls.Add(RelocationPanel_RelocateButton);
+            RelocationPanel.Controls.Add(RelocationPanel_LastSeenLabel);
+            RelocationPanel.Controls.Add(RelocationPanel_CantLocateFileLabel);
             RelocationPanel.Location = new Point(361, 31);
             RelocationPanel.Name = "RelocationPanel";
             RelocationPanel.Size = new Size(864, 921);
             RelocationPanel.TabIndex = 35;
             // 
-            // RemoveButton
+            // RelocationPanel_RemoveButton
             // 
-            RemoveButton.BackColor = SystemColors.Highlight;
-            RemoveButton.FlatStyle = FlatStyle.Flat;
-            RemoveButton.Font = new Font("Segoe UI Emoji", 12F);
-            RemoveButton.ForeColor = SystemColors.ButtonFace;
-            RemoveButton.Location = new Point(449, 457);
-            RemoveButton.Name = "RemoveButton";
-            RemoveButton.Size = new Size(83, 37);
-            RemoveButton.TabIndex = 20;
-            RemoveButton.Text = "Remove";
-            RemoveButton.UseVisualStyleBackColor = false;
-            RemoveButton.Click += RemoveButton_Click;
+            RelocationPanel_RemoveButton.BackColor = SystemColors.Highlight;
+            RelocationPanel_RemoveButton.FlatStyle = FlatStyle.Flat;
+            RelocationPanel_RemoveButton.Font = new Font("Segoe UI Emoji", 12F);
+            RelocationPanel_RemoveButton.ForeColor = SystemColors.ButtonFace;
+            RelocationPanel_RemoveButton.Location = new Point(449, 457);
+            RelocationPanel_RemoveButton.Name = "RelocationPanel_RemoveButton";
+            RelocationPanel_RemoveButton.Size = new Size(83, 37);
+            RelocationPanel_RemoveButton.TabIndex = 20;
+            RelocationPanel_RemoveButton.Text = "Remove";
+            RelocationPanel_RemoveButton.UseVisualStyleBackColor = false;
+            RelocationPanel_RemoveButton.Click += RemoveButton_Click;
             // 
-            // RelocateButton
+            // RelocationPanel_RelocateButton
             // 
-            RelocateButton.BackColor = SystemColors.Highlight;
-            RelocateButton.FlatStyle = FlatStyle.Flat;
-            RelocateButton.Font = new Font("Segoe UI Emoji", 12F);
-            RelocateButton.ForeColor = SystemColors.ButtonFace;
-            RelocateButton.Location = new Point(360, 457);
-            RelocateButton.Name = "RelocateButton";
-            RelocateButton.Size = new Size(83, 37);
-            RelocateButton.TabIndex = 19;
-            RelocateButton.Text = "Relocate";
-            RelocateButton.UseVisualStyleBackColor = false;
-            RelocateButton.Click += RelocateButton_Click;
+            RelocationPanel_RelocateButton.BackColor = SystemColors.Highlight;
+            RelocationPanel_RelocateButton.FlatStyle = FlatStyle.Flat;
+            RelocationPanel_RelocateButton.Font = new Font("Segoe UI Emoji", 12F);
+            RelocationPanel_RelocateButton.ForeColor = SystemColors.ButtonFace;
+            RelocationPanel_RelocateButton.Location = new Point(360, 457);
+            RelocationPanel_RelocateButton.Name = "RelocationPanel_RelocateButton";
+            RelocationPanel_RelocateButton.Size = new Size(83, 37);
+            RelocationPanel_RelocateButton.TabIndex = 19;
+            RelocationPanel_RelocateButton.Text = "Relocate";
+            RelocationPanel_RelocateButton.UseVisualStyleBackColor = false;
+            RelocationPanel_RelocateButton.Click += RelocateButton_Click;
             // 
-            // LastSeenLabel
+            // RelocationPanel_LastSeenLabel
             // 
-            LastSeenLabel.AutoSize = true;
-            LastSeenLabel.Font = new Font("Segoe UI Emoji", 12F);
-            LastSeenLabel.ForeColor = SystemColors.AppWorkspace;
-            LastSeenLabel.Location = new Point(359, 414);
-            LastSeenLabel.Name = "LastSeenLabel";
-            LastSeenLabel.Size = new Size(191, 21);
-            LastSeenLabel.TabIndex = 18;
-            LastSeenLabel.Text = "It was last seen at <path>.";
+            RelocationPanel_LastSeenLabel.AutoSize = true;
+            RelocationPanel_LastSeenLabel.Font = new Font("Segoe UI Emoji", 12F);
+            RelocationPanel_LastSeenLabel.ForeColor = SystemColors.AppWorkspace;
+            RelocationPanel_LastSeenLabel.Location = new Point(359, 414);
+            RelocationPanel_LastSeenLabel.Name = "RelocationPanel_LastSeenLabel";
+            RelocationPanel_LastSeenLabel.Size = new Size(191, 21);
+            RelocationPanel_LastSeenLabel.TabIndex = 18;
+            RelocationPanel_LastSeenLabel.Text = "It was last seen at <path>.";
             // 
-            // CantLocateFileLabel
+            // RelocationPanel_CantLocateFileLabel
             // 
-            CantLocateFileLabel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            CantLocateFileLabel.AutoSize = true;
-            CantLocateFileLabel.Font = new Font("Segoe UI Emoji", 20.25F);
-            CantLocateFileLabel.ForeColor = SystemColors.ButtonFace;
-            CantLocateFileLabel.Location = new Point(335, 378);
-            CantLocateFileLabel.Name = "CantLocateFileLabel";
-            CantLocateFileLabel.Size = new Size(238, 36);
-            CantLocateFileLabel.TabIndex = 17;
-            CantLocateFileLabel.Text = "Can't locate \"path\"";
+            RelocationPanel_CantLocateFileLabel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            RelocationPanel_CantLocateFileLabel.AutoSize = true;
+            RelocationPanel_CantLocateFileLabel.Font = new Font("Segoe UI Emoji", 20.25F);
+            RelocationPanel_CantLocateFileLabel.ForeColor = SystemColors.ButtonFace;
+            RelocationPanel_CantLocateFileLabel.Location = new Point(335, 378);
+            RelocationPanel_CantLocateFileLabel.Name = "RelocationPanel_CantLocateFileLabel";
+            RelocationPanel_CantLocateFileLabel.Size = new Size(238, 36);
+            RelocationPanel_CantLocateFileLabel.TabIndex = 17;
+            RelocationPanel_CantLocateFileLabel.Text = "Can't locate \"path\"";
             // 
-            // UnlockedFilePanel
+            // UnlockedPanel
             // 
-            UnlockedFilePanel.BackColor = Color.FromArgb(32, 32, 32);
-            UnlockedFilePanel.BorderStyle = BorderStyle.FixedSingle;
-            UnlockedFilePanel.Controls.Add(UnlockedShredGroupBox);
-            UnlockedFilePanel.Controls.Add(EncryptGroupBox);
-            UnlockedFilePanel.Controls.Add(UnlockedShaValueLabel);
-            UnlockedFilePanel.Controls.Add(UnlockedShaLabel);
-            UnlockedFilePanel.Controls.Add(UnlockedSizeValueLabel);
-            UnlockedFilePanel.Controls.Add(UnlockedSizeLabel);
-            UnlockedFilePanel.Controls.Add(UnlockedPathValueLabel);
-            UnlockedFilePanel.Controls.Add(UnlockedPathLabel);
-            UnlockedFilePanel.Controls.Add(UnlockedStatusValueLabel);
-            UnlockedFilePanel.Controls.Add(UnlockedStatusLabel);
-            UnlockedFilePanel.Controls.Add(UnlockedFileNameLabel);
-            UnlockedFilePanel.Location = new Point(361, 31);
-            UnlockedFilePanel.Name = "UnlockedFilePanel";
-            UnlockedFilePanel.Size = new Size(864, 921);
-            UnlockedFilePanel.TabIndex = 35;
+            UnlockedPanel.BackColor = Color.FromArgb(32, 32, 32);
+            UnlockedPanel.BorderStyle = BorderStyle.FixedSingle;
+            UnlockedPanel.Controls.Add(UnlockedPanel_ShredGroupBox);
+            UnlockedPanel.Controls.Add(UnlockedPanel_EncryptGroupBox);
+            UnlockedPanel.Controls.Add(UnlockedPanel_ShaValueLabel);
+            UnlockedPanel.Controls.Add(UnlockedPanel_ShaLabel);
+            UnlockedPanel.Controls.Add(UnlockedPanel_SizeValueLabel);
+            UnlockedPanel.Controls.Add(UnlockedPanel_SizeLabel);
+            UnlockedPanel.Controls.Add(UnlockedPanel_PathValueLabel);
+            UnlockedPanel.Controls.Add(UnlockedPanel_PathLabel);
+            UnlockedPanel.Controls.Add(UnlockedPanel_StatusValueLabel);
+            UnlockedPanel.Controls.Add(UnlockedPanel_StatusLabel);
+            UnlockedPanel.Controls.Add(UnlockedPanel_FileNameLabel);
+            UnlockedPanel.Location = new Point(361, 31);
+            UnlockedPanel.Name = "UnlockedPanel";
+            UnlockedPanel.Size = new Size(864, 921);
+            UnlockedPanel.TabIndex = 35;
             // 
-            // UnlockedShredGroupBox
+            // UnlockedPanel_ShredGroupBox
             // 
-            UnlockedShredGroupBox.BackColor = Color.FromArgb(32, 32, 32);
-            UnlockedShredGroupBox.Controls.Add(UnlockedShredDescriptionLabel);
-            UnlockedShredGroupBox.Controls.Add(UnlockedShredButton);
-            UnlockedShredGroupBox.FlatStyle = FlatStyle.Flat;
-            UnlockedShredGroupBox.ForeColor = SystemColors.ButtonFace;
-            UnlockedShredGroupBox.Location = new Point(22, 338);
-            UnlockedShredGroupBox.Name = "UnlockedShredGroupBox";
-            UnlockedShredGroupBox.Size = new Size(807, 116);
-            UnlockedShredGroupBox.TabIndex = 32;
-            UnlockedShredGroupBox.TabStop = false;
-            UnlockedShredGroupBox.Text = "Shred";
+            UnlockedPanel_ShredGroupBox.BackColor = Color.FromArgb(32, 32, 32);
+            UnlockedPanel_ShredGroupBox.Controls.Add(UnlockedPanel_ShredDescriptionLabel);
+            UnlockedPanel_ShredGroupBox.Controls.Add(UnlockedPanel_ShredButton);
+            UnlockedPanel_ShredGroupBox.FlatStyle = FlatStyle.Flat;
+            UnlockedPanel_ShredGroupBox.ForeColor = SystemColors.ButtonFace;
+            UnlockedPanel_ShredGroupBox.Location = new Point(22, 338);
+            UnlockedPanel_ShredGroupBox.Name = "UnlockedPanel_ShredGroupBox";
+            UnlockedPanel_ShredGroupBox.Size = new Size(807, 116);
+            UnlockedPanel_ShredGroupBox.TabIndex = 32;
+            UnlockedPanel_ShredGroupBox.TabStop = false;
+            UnlockedPanel_ShredGroupBox.Text = "Shred";
             // 
-            // UnlockedShredDescriptionLabel
+            // UnlockedPanel_ShredDescriptionLabel
             // 
-            UnlockedShredDescriptionLabel.AutoSize = true;
-            UnlockedShredDescriptionLabel.BackColor = Color.FromArgb(32, 32, 32);
-            UnlockedShredDescriptionLabel.ForeColor = SystemColors.ButtonFace;
-            UnlockedShredDescriptionLabel.Location = new Point(74, 40);
-            UnlockedShredDescriptionLabel.Name = "UnlockedShredDescriptionLabel";
-            UnlockedShredDescriptionLabel.Size = new Size(233, 42);
-            UnlockedShredDescriptionLabel.TabIndex = 34;
-            UnlockedShredDescriptionLabel.Text = "Overwrites the file with \r\nrandom data and then deletes it.";
+            UnlockedPanel_ShredDescriptionLabel.AutoSize = true;
+            UnlockedPanel_ShredDescriptionLabel.BackColor = Color.FromArgb(32, 32, 32);
+            UnlockedPanel_ShredDescriptionLabel.ForeColor = SystemColors.ButtonFace;
+            UnlockedPanel_ShredDescriptionLabel.Location = new Point(74, 40);
+            UnlockedPanel_ShredDescriptionLabel.Name = "UnlockedPanel_ShredDescriptionLabel";
+            UnlockedPanel_ShredDescriptionLabel.Size = new Size(233, 42);
+            UnlockedPanel_ShredDescriptionLabel.TabIndex = 34;
+            UnlockedPanel_ShredDescriptionLabel.Text = "Overwrites the file with \r\nrandom data and then deletes it.";
             // 
-            // UnlockedShredButton
+            // UnlockedPanel_ShredButton
             // 
-            UnlockedShredButton.BackColor = Color.DarkRed;
-            UnlockedShredButton.FlatStyle = FlatStyle.Flat;
-            UnlockedShredButton.Font = new Font("Segoe UI Emoji", 12F);
-            UnlockedShredButton.ForeColor = SystemColors.ButtonFace;
-            UnlockedShredButton.Location = new Point(669, 45);
-            UnlockedShredButton.Name = "UnlockedShredButton";
-            UnlockedShredButton.Size = new Size(100, 37);
-            UnlockedShredButton.TabIndex = 6;
-            UnlockedShredButton.Text = "Shred 🗑️";
-            UnlockedShredButton.UseVisualStyleBackColor = false;
-            UnlockedShredButton.Click += UnlockedShredButton_Click;
+            UnlockedPanel_ShredButton.BackColor = Color.DarkRed;
+            UnlockedPanel_ShredButton.FlatStyle = FlatStyle.Flat;
+            UnlockedPanel_ShredButton.Font = new Font("Segoe UI Emoji", 12F);
+            UnlockedPanel_ShredButton.ForeColor = SystemColors.ButtonFace;
+            UnlockedPanel_ShredButton.Location = new Point(669, 45);
+            UnlockedPanel_ShredButton.Name = "UnlockedPanel_ShredButton";
+            UnlockedPanel_ShredButton.Size = new Size(100, 37);
+            UnlockedPanel_ShredButton.TabIndex = 6;
+            UnlockedPanel_ShredButton.Text = "Shred 🗑️";
+            UnlockedPanel_ShredButton.UseVisualStyleBackColor = false;
+            UnlockedPanel_ShredButton.Click += UnlockedShredButton_Click;
             // 
-            // EncryptGroupBox
+            // UnlockedPanel_EncryptGroupBox
             // 
-            EncryptGroupBox.BackColor = Color.FromArgb(32, 32, 32);
-            EncryptGroupBox.Controls.Add(EncryptDescriptionLabel);
-            EncryptGroupBox.Controls.Add(EncryptButton);
-            EncryptGroupBox.FlatStyle = FlatStyle.Flat;
-            EncryptGroupBox.ForeColor = SystemColors.ButtonFace;
-            EncryptGroupBox.Location = new Point(22, 197);
-            EncryptGroupBox.Name = "EncryptGroupBox";
-            EncryptGroupBox.Size = new Size(807, 116);
-            EncryptGroupBox.TabIndex = 31;
-            EncryptGroupBox.TabStop = false;
-            EncryptGroupBox.Text = "Encrypt";
+            UnlockedPanel_EncryptGroupBox.BackColor = Color.FromArgb(32, 32, 32);
+            UnlockedPanel_EncryptGroupBox.Controls.Add(UnlockedPanel_EncryptDescriptionLabel);
+            UnlockedPanel_EncryptGroupBox.Controls.Add(UnlockedPanel_EncryptButton);
+            UnlockedPanel_EncryptGroupBox.FlatStyle = FlatStyle.Flat;
+            UnlockedPanel_EncryptGroupBox.ForeColor = SystemColors.ButtonFace;
+            UnlockedPanel_EncryptGroupBox.Location = new Point(22, 197);
+            UnlockedPanel_EncryptGroupBox.Name = "UnlockedPanel_EncryptGroupBox";
+            UnlockedPanel_EncryptGroupBox.Size = new Size(807, 116);
+            UnlockedPanel_EncryptGroupBox.TabIndex = 31;
+            UnlockedPanel_EncryptGroupBox.TabStop = false;
+            UnlockedPanel_EncryptGroupBox.Text = "Encrypt";
             // 
-            // EncryptDescriptionLabel
+            // UnlockedPanel_EncryptDescriptionLabel
             // 
-            EncryptDescriptionLabel.AutoSize = true;
-            EncryptDescriptionLabel.BackColor = Color.FromArgb(32, 32, 32);
-            EncryptDescriptionLabel.ForeColor = SystemColors.ButtonFace;
-            EncryptDescriptionLabel.Location = new Point(74, 27);
-            EncryptDescriptionLabel.Name = "EncryptDescriptionLabel";
-            EncryptDescriptionLabel.Size = new Size(184, 63);
-            EncryptDescriptionLabel.TabIndex = 33;
-            EncryptDescriptionLabel.Text = "Encrypts the file with the \r\nselected algorithm using \r\nthe input password.";
+            UnlockedPanel_EncryptDescriptionLabel.AutoSize = true;
+            UnlockedPanel_EncryptDescriptionLabel.BackColor = Color.FromArgb(32, 32, 32);
+            UnlockedPanel_EncryptDescriptionLabel.ForeColor = SystemColors.ButtonFace;
+            UnlockedPanel_EncryptDescriptionLabel.Location = new Point(74, 27);
+            UnlockedPanel_EncryptDescriptionLabel.Name = "UnlockedPanel_EncryptDescriptionLabel";
+            UnlockedPanel_EncryptDescriptionLabel.Size = new Size(184, 63);
+            UnlockedPanel_EncryptDescriptionLabel.TabIndex = 33;
+            UnlockedPanel_EncryptDescriptionLabel.Text = "Encrypts the file with the \r\nselected algorithm using \r\nthe input password.";
             // 
-            // EncryptButton
+            // UnlockedPanel_EncryptButton
             // 
-            EncryptButton.BackColor = SystemColors.Highlight;
-            EncryptButton.FlatStyle = FlatStyle.Flat;
-            EncryptButton.Font = new Font("Segoe UI Emoji", 12F);
-            EncryptButton.ForeColor = SystemColors.ButtonFace;
-            EncryptButton.Location = new Point(669, 42);
-            EncryptButton.Name = "EncryptButton";
-            EncryptButton.Size = new Size(100, 37);
-            EncryptButton.TabIndex = 29;
-            EncryptButton.Text = "Encrypt 🔐";
-            EncryptButton.UseVisualStyleBackColor = false;
-            EncryptButton.Click += EncryptButton_Click;
+            UnlockedPanel_EncryptButton.BackColor = SystemColors.Highlight;
+            UnlockedPanel_EncryptButton.FlatStyle = FlatStyle.Flat;
+            UnlockedPanel_EncryptButton.Font = new Font("Segoe UI Emoji", 12F);
+            UnlockedPanel_EncryptButton.ForeColor = SystemColors.ButtonFace;
+            UnlockedPanel_EncryptButton.Location = new Point(669, 42);
+            UnlockedPanel_EncryptButton.Name = "UnlockedPanel_EncryptButton";
+            UnlockedPanel_EncryptButton.Size = new Size(100, 37);
+            UnlockedPanel_EncryptButton.TabIndex = 29;
+            UnlockedPanel_EncryptButton.Text = "Encrypt 🔐";
+            UnlockedPanel_EncryptButton.UseVisualStyleBackColor = false;
+            UnlockedPanel_EncryptButton.Click += EncryptButton_Click;
             // 
-            // UnlockedShaValueLabel
+            // UnlockedPanel_ShaValueLabel
             // 
-            UnlockedShaValueLabel.AutoSize = true;
-            UnlockedShaValueLabel.BackColor = Color.FromArgb(32, 32, 32);
-            UnlockedShaValueLabel.ForeColor = SystemColors.ButtonFace;
-            UnlockedShaValueLabel.Location = new Point(431, 131);
-            UnlockedShaValueLabel.Name = "UnlockedShaValueLabel";
-            UnlockedShaValueLabel.Size = new Size(56, 21);
-            UnlockedShaValueLabel.TabIndex = 30;
-            UnlockedShaValueLabel.Text = "<sha>";
+            UnlockedPanel_ShaValueLabel.AutoSize = true;
+            UnlockedPanel_ShaValueLabel.BackColor = Color.FromArgb(32, 32, 32);
+            UnlockedPanel_ShaValueLabel.ForeColor = SystemColors.ButtonFace;
+            UnlockedPanel_ShaValueLabel.Location = new Point(431, 131);
+            UnlockedPanel_ShaValueLabel.Name = "UnlockedPanel_ShaValueLabel";
+            UnlockedPanel_ShaValueLabel.Size = new Size(56, 21);
+            UnlockedPanel_ShaValueLabel.TabIndex = 30;
+            UnlockedPanel_ShaValueLabel.Text = "<sha>";
             // 
-            // UnlockedShaLabel
+            // UnlockedPanel_ShaLabel
             // 
-            UnlockedShaLabel.AutoSize = true;
-            UnlockedShaLabel.BackColor = Color.FromArgb(32, 32, 32);
-            UnlockedShaLabel.ForeColor = SystemColors.ButtonFace;
-            UnlockedShaLabel.Location = new Point(381, 131);
-            UnlockedShaLabel.Name = "UnlockedShaLabel";
-            UnlockedShaLabel.Size = new Size(43, 21);
-            UnlockedShaLabel.TabIndex = 29;
-            UnlockedShaLabel.Text = "SHA:";
+            UnlockedPanel_ShaLabel.AutoSize = true;
+            UnlockedPanel_ShaLabel.BackColor = Color.FromArgb(32, 32, 32);
+            UnlockedPanel_ShaLabel.ForeColor = SystemColors.ButtonFace;
+            UnlockedPanel_ShaLabel.Location = new Point(381, 131);
+            UnlockedPanel_ShaLabel.Name = "UnlockedPanel_ShaLabel";
+            UnlockedPanel_ShaLabel.Size = new Size(43, 21);
+            UnlockedPanel_ShaLabel.TabIndex = 29;
+            UnlockedPanel_ShaLabel.Text = "SHA:";
             // 
-            // UnlockedSizeValueLabel
+            // UnlockedPanel_SizeValueLabel
             // 
-            UnlockedSizeValueLabel.AutoSize = true;
-            UnlockedSizeValueLabel.BackColor = Color.FromArgb(32, 32, 32);
-            UnlockedSizeValueLabel.ForeColor = SystemColors.ButtonFace;
-            UnlockedSizeValueLabel.Location = new Point(431, 110);
-            UnlockedSizeValueLabel.Name = "UnlockedSizeValueLabel";
-            UnlockedSizeValueLabel.Size = new Size(58, 21);
-            UnlockedSizeValueLabel.TabIndex = 28;
-            UnlockedSizeValueLabel.Text = "<size>";
+            UnlockedPanel_SizeValueLabel.AutoSize = true;
+            UnlockedPanel_SizeValueLabel.BackColor = Color.FromArgb(32, 32, 32);
+            UnlockedPanel_SizeValueLabel.ForeColor = SystemColors.ButtonFace;
+            UnlockedPanel_SizeValueLabel.Location = new Point(431, 110);
+            UnlockedPanel_SizeValueLabel.Name = "UnlockedPanel_SizeValueLabel";
+            UnlockedPanel_SizeValueLabel.Size = new Size(58, 21);
+            UnlockedPanel_SizeValueLabel.TabIndex = 28;
+            UnlockedPanel_SizeValueLabel.Text = "<size>";
             // 
-            // UnlockedSizeLabel
+            // UnlockedPanel_SizeLabel
             // 
-            UnlockedSizeLabel.AutoSize = true;
-            UnlockedSizeLabel.BackColor = Color.FromArgb(32, 32, 32);
-            UnlockedSizeLabel.ForeColor = SystemColors.ButtonFace;
-            UnlockedSizeLabel.Location = new Point(383, 110);
-            UnlockedSizeLabel.Name = "UnlockedSizeLabel";
-            UnlockedSizeLabel.Size = new Size(41, 21);
-            UnlockedSizeLabel.TabIndex = 27;
-            UnlockedSizeLabel.Text = "Size:";
+            UnlockedPanel_SizeLabel.AutoSize = true;
+            UnlockedPanel_SizeLabel.BackColor = Color.FromArgb(32, 32, 32);
+            UnlockedPanel_SizeLabel.ForeColor = SystemColors.ButtonFace;
+            UnlockedPanel_SizeLabel.Location = new Point(383, 110);
+            UnlockedPanel_SizeLabel.Name = "UnlockedPanel_SizeLabel";
+            UnlockedPanel_SizeLabel.Size = new Size(41, 21);
+            UnlockedPanel_SizeLabel.TabIndex = 27;
+            UnlockedPanel_SizeLabel.Text = "Size:";
             // 
-            // UnlockedPathValueLabel
+            // UnlockedPanel_PathValueLabel
             // 
-            UnlockedPathValueLabel.AutoSize = true;
-            UnlockedPathValueLabel.BackColor = Color.FromArgb(32, 32, 32);
-            UnlockedPathValueLabel.ForeColor = SystemColors.ButtonFace;
-            UnlockedPathValueLabel.Location = new Point(431, 89);
-            UnlockedPathValueLabel.Name = "UnlockedPathValueLabel";
-            UnlockedPathValueLabel.Size = new Size(63, 21);
-            UnlockedPathValueLabel.TabIndex = 26;
-            UnlockedPathValueLabel.Text = "<path>";
+            UnlockedPanel_PathValueLabel.AutoSize = true;
+            UnlockedPanel_PathValueLabel.BackColor = Color.FromArgb(32, 32, 32);
+            UnlockedPanel_PathValueLabel.ForeColor = SystemColors.ButtonFace;
+            UnlockedPanel_PathValueLabel.Location = new Point(431, 89);
+            UnlockedPanel_PathValueLabel.Name = "UnlockedPanel_PathValueLabel";
+            UnlockedPanel_PathValueLabel.Size = new Size(63, 21);
+            UnlockedPanel_PathValueLabel.TabIndex = 26;
+            UnlockedPanel_PathValueLabel.Text = "<path>";
             // 
-            // UnlockedPathLabel
+            // UnlockedPanel_PathLabel
             // 
-            UnlockedPathLabel.AutoSize = true;
-            UnlockedPathLabel.BackColor = Color.FromArgb(32, 32, 32);
-            UnlockedPathLabel.ForeColor = SystemColors.ButtonFace;
-            UnlockedPathLabel.Location = new Point(380, 89);
-            UnlockedPathLabel.Name = "UnlockedPathLabel";
-            UnlockedPathLabel.Size = new Size(44, 21);
-            UnlockedPathLabel.TabIndex = 25;
-            UnlockedPathLabel.Text = "Path:";
+            UnlockedPanel_PathLabel.AutoSize = true;
+            UnlockedPanel_PathLabel.BackColor = Color.FromArgb(32, 32, 32);
+            UnlockedPanel_PathLabel.ForeColor = SystemColors.ButtonFace;
+            UnlockedPanel_PathLabel.Location = new Point(380, 89);
+            UnlockedPanel_PathLabel.Name = "UnlockedPanel_PathLabel";
+            UnlockedPanel_PathLabel.Size = new Size(44, 21);
+            UnlockedPanel_PathLabel.TabIndex = 25;
+            UnlockedPanel_PathLabel.Text = "Path:";
             // 
-            // UnlockedStatusValueLabel
+            // UnlockedPanel_StatusValueLabel
             // 
-            UnlockedStatusValueLabel.AutoSize = true;
-            UnlockedStatusValueLabel.BackColor = Color.FromArgb(32, 32, 32);
-            UnlockedStatusValueLabel.ForeColor = SystemColors.ButtonFace;
-            UnlockedStatusValueLabel.Location = new Point(431, 68);
-            UnlockedStatusValueLabel.Name = "UnlockedStatusValueLabel";
-            UnlockedStatusValueLabel.Size = new Size(75, 21);
-            UnlockedStatusValueLabel.TabIndex = 24;
-            UnlockedStatusValueLabel.Text = "Unlocked";
+            UnlockedPanel_StatusValueLabel.AutoSize = true;
+            UnlockedPanel_StatusValueLabel.BackColor = Color.FromArgb(32, 32, 32);
+            UnlockedPanel_StatusValueLabel.ForeColor = SystemColors.ButtonFace;
+            UnlockedPanel_StatusValueLabel.Location = new Point(431, 68);
+            UnlockedPanel_StatusValueLabel.Name = "UnlockedPanel_StatusValueLabel";
+            UnlockedPanel_StatusValueLabel.Size = new Size(75, 21);
+            UnlockedPanel_StatusValueLabel.TabIndex = 24;
+            UnlockedPanel_StatusValueLabel.Text = "Unlocked";
             // 
-            // UnlockedStatusLabel
+            // UnlockedPanel_StatusLabel
             // 
-            UnlockedStatusLabel.AutoSize = true;
-            UnlockedStatusLabel.BackColor = Color.FromArgb(32, 32, 32);
-            UnlockedStatusLabel.ForeColor = SystemColors.ButtonFace;
-            UnlockedStatusLabel.Location = new Point(368, 68);
-            UnlockedStatusLabel.Name = "UnlockedStatusLabel";
-            UnlockedStatusLabel.Size = new Size(56, 21);
-            UnlockedStatusLabel.TabIndex = 23;
-            UnlockedStatusLabel.Text = "Status:";
+            UnlockedPanel_StatusLabel.AutoSize = true;
+            UnlockedPanel_StatusLabel.BackColor = Color.FromArgb(32, 32, 32);
+            UnlockedPanel_StatusLabel.ForeColor = SystemColors.ButtonFace;
+            UnlockedPanel_StatusLabel.Location = new Point(368, 68);
+            UnlockedPanel_StatusLabel.Name = "UnlockedPanel_StatusLabel";
+            UnlockedPanel_StatusLabel.Size = new Size(56, 21);
+            UnlockedPanel_StatusLabel.TabIndex = 23;
+            UnlockedPanel_StatusLabel.Text = "Status:";
             // 
-            // UnlockedFileNameLabel
+            // UnlockedPanel_FileNameLabel
             // 
-            UnlockedFileNameLabel.AutoSize = true;
-            UnlockedFileNameLabel.Font = new Font("Segoe UI Emoji", 20.25F);
-            UnlockedFileNameLabel.ForeColor = SystemColors.ButtonFace;
-            UnlockedFileNameLabel.Location = new Point(356, 26);
-            UnlockedFileNameLabel.Name = "UnlockedFileNameLabel";
-            UnlockedFileNameLabel.Size = new Size(153, 36);
-            UnlockedFileNameLabel.TabIndex = 8;
-            UnlockedFileNameLabel.Text = "<filename>";
+            UnlockedPanel_FileNameLabel.AutoSize = true;
+            UnlockedPanel_FileNameLabel.Font = new Font("Segoe UI Emoji", 20.25F);
+            UnlockedPanel_FileNameLabel.ForeColor = SystemColors.ButtonFace;
+            UnlockedPanel_FileNameLabel.Location = new Point(356, 26);
+            UnlockedPanel_FileNameLabel.Name = "UnlockedPanel_FileNameLabel";
+            UnlockedPanel_FileNameLabel.Size = new Size(153, 36);
+            UnlockedPanel_FileNameLabel.TabIndex = 8;
+            UnlockedPanel_FileNameLabel.Text = "<filename>";
             // 
             // DashboardForm
             // 
@@ -797,10 +798,10 @@
             Controls.Add(SearchTextBox);
             Controls.Add(FileListBox);
             Controls.Add(MenuStrip);
-            Controls.Add(UnlockedFilePanel);
-            Controls.Add(NoFilesPanel);
             Controls.Add(RelocationPanel);
-            Controls.Add(LockedFilePanel);
+            Controls.Add(LockedPanel);
+            Controls.Add(UnlockedPanel);
+            Controls.Add(NoFilesPanel);
             Font = new Font("Segoe UI Emoji", 12F);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -814,28 +815,28 @@
             AddButtonContextMenuStrip.ResumeLayout(false);
             NoFilesPanel.ResumeLayout(false);
             NoFilesPanel.PerformLayout();
-            LockedFilePanel.ResumeLayout(false);
-            LockedFilePanel.PerformLayout();
-            LockedShredGroupBox.ResumeLayout(false);
-            LockedShredGroupBox.PerformLayout();
-            DecryptGroupBox.ResumeLayout(false);
-            DecryptGroupBox.PerformLayout();
+            LockedPanel.ResumeLayout(false);
+            LockedPanel.PerformLayout();
+            LockedPanel_ShredGroupBox.ResumeLayout(false);
+            LockedPanel_ShredGroupBox.PerformLayout();
+            LockedPanel_DecryptGroupBox.ResumeLayout(false);
+            LockedPanel_DecryptGroupBox.PerformLayout();
             RelocationPanel.ResumeLayout(false);
             RelocationPanel.PerformLayout();
-            UnlockedFilePanel.ResumeLayout(false);
-            UnlockedFilePanel.PerformLayout();
-            UnlockedShredGroupBox.ResumeLayout(false);
-            UnlockedShredGroupBox.PerformLayout();
-            EncryptGroupBox.ResumeLayout(false);
-            EncryptGroupBox.PerformLayout();
+            UnlockedPanel.ResumeLayout(false);
+            UnlockedPanel.PerformLayout();
+            UnlockedPanel_ShredGroupBox.ResumeLayout(false);
+            UnlockedPanel_ShredGroupBox.PerformLayout();
+            UnlockedPanel_EncryptGroupBox.ResumeLayout(false);
+            UnlockedPanel_EncryptGroupBox.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-        private Label NoFilesLabel;
-        private Button UnlockedShredButton;
-        private Button DecryptButton;
+        private Label NoFilesPanel_NoFilesLabel;
+        private Button UnlockedPanel_ShredButton;
+        private Button LockedPanel_DecryptButton;
         private ListBox FileListBox;
         private MenuStrip MenuStrip;
         private ToolStripMenuItem GuideMenuItem;
@@ -843,47 +844,47 @@
         private Label MagnifyingGlassLabel;
         private Button AddButton;
         private Panel NoFilesPanel;
-        private Label NoFilesDescriptionLabel;
+        private Label NoFilesPanel_NoFilesDescriptionLabel;
         private ToolStripMenuItem SettingsMenuItem;
         private ToolStripMenuItem DiagnosticsMenuItem;
         private ContextMenuStrip AddButtonContextMenuStrip;
         private ToolStripMenuItem AddExistingFilesToolStripMenuItem;
         private ToolStripMenuItem ImportArchiveToolStripMenuItem;
-        private Panel LockedFilePanel;
-        private Label LockedStatusLabel;
-        private Label LockedFileNameLabel;
-        private Label LockedStatusValueLabel;
-        private Label LockedShaValueLabel;
-        private Label LockedShaLabel;
-        private Label LockedSizeValueLabel;
-        private Label LockedSizeLabel;
-        private Label LockedPathValueLabel;
-        private Label LockedPathLabel;
-        private Label LockDateValueLabel;
-        private Label LockDateLabel;
-        private Label AlgorithmValueLabel;
-        private Label AlgorithmLabel;
+        private Panel LockedPanel;
+        private Label LockedPanel_StatusLabel;
+        private Label LockedPanel_FileNameLabel;
+        private Label LockedPanel_StatusValueLabel;
+        private Label LockedPanel_ShaValueLabel;
+        private Label LockedPanel_ShaLabel;
+        private Label LockedPanel_SizeValueLabel;
+        private Label LockedPanel_SizeLabel;
+        private Label LockedPanel_PathValueLabel;
+        private Label LockedPanel_PathLabel;
+        private Label LockedPanel_DateValueLabel;
+        private Label LockedPanel_DateLabel;
+        private Label LockedPanel_AlgorithmValueLabel;
+        private Label LockedPanel_AlgorithmLabel;
         private Panel RelocationPanel;
-        private Label LastSeenLabel;
-        private Label CantLocateFileLabel;
-        private Button RemoveButton;
-        private Button RelocateButton;
-        private Panel UnlockedFilePanel;
-        private Label UnlockedShaValueLabel;
-        private Label UnlockedShaLabel;
-        private Label UnlockedSizeValueLabel;
-        private Label UnlockedSizeLabel;
-        private Label UnlockedPathValueLabel;
-        private Label UnlockedPathLabel;
-        private Label UnlockedStatusValueLabel;
-        private Label UnlockedStatusLabel;
-        private Label UnlockedFileNameLabel;
-        private GroupBox UnlockedShredGroupBox;
+        private Label RelocationPanel_LastSeenLabel;
+        private Label RelocationPanel_CantLocateFileLabel;
+        private Button RelocationPanel_RemoveButton;
+        private Button RelocationPanel_RelocateButton;
+        private Panel UnlockedPanel;
+        private Label UnlockedPanel_ShaValueLabel;
+        private Label UnlockedPanel_ShaLabel;
+        private Label UnlockedPanel_SizeValueLabel;
+        private Label UnlockedPanel_SizeLabel;
+        private Label UnlockedPanel_PathValueLabel;
+        private Label UnlockedPanel_PathLabel;
+        private Label UnlockedPanel_StatusValueLabel;
+        private Label UnlockedPanel_StatusLabel;
+        private Label UnlockedPanel_FileNameLabel;
+        private GroupBox UnlockedPanel_ShredGroupBox;
         private Button ClearButton;
         private Label PasswordWarningLabel;
         private ComboBox EncryptionAlgorithmComboBox;
         private Label ChooseAlgorithmLabel;
-        private Button EncryptButton;
+        private Button UnlockedPanel_EncryptButton;
         private Label EyeballLabel;
         private MaskedTextBox ConfirmPasswordMaskedTextBox;
         private Label ConfirmLabel;
@@ -895,15 +896,15 @@
         private Label NumberOfCharactersLabel;
         private MaskedTextBox PasswordMaskedTextBox;
         private Label PasswordLabel;
-        private Label EncryptDescriptionLabel;
-        private Label UnlockedShredDescriptionLabel;
-        private GroupBox EncryptGroupBox;
+        private Label UnlockedPanel_EncryptDescriptionLabel;
+        private Label UnlockedPanel_ShredDescriptionLabel;
+        private GroupBox UnlockedPanel_EncryptGroupBox;
         private ContextMenuStrip FileListBoxContextMenuStrip;
         private ToolStripMenuItem RemoveFromListItem;
-        private GroupBox LockedShredGroupBox;
-        private Label LockedShredDescriptionLabel;
-        private Button LockedShredButton;
-        private GroupBox DecryptGroupBox;
-        private Label DecryptDescriptionLabel;
+        private GroupBox LockedPanel_ShredGroupBox;
+        private Label LockedPanel_ShredDescriptionLabel;
+        private Button LockedPanel_ShredButton;
+        private GroupBox LockedPanel_DecryptGroupBox;
+        private Label LockedPanel_DecryptDescriptionLabel;
     }
 }

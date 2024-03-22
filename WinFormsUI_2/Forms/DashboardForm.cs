@@ -12,7 +12,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
     {
         InitializeComponent();
 
-        LockedFilePanel.Visible = true;
+        LockedPanel.Visible = true;
         NoFilesPanel.Visible = false;
         RelocationPanel.Visible = false;
 
@@ -71,32 +71,32 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
     private void ShowNoFilesPanel()
     {
         NoFilesPanel.Visible = true;
-        LockedFilePanel.Visible = false;
-        UnlockedFilePanel.Visible = false;
+        LockedPanel.Visible = false;
+        UnlockedPanel.Visible = false;
         RelocationPanel.Visible = false;
     }
 
     private void ShowUnlockedPanel()
     {
         NoFilesPanel.Visible = false;
-        LockedFilePanel.Visible = false;
-        UnlockedFilePanel.Visible = true;
+        LockedPanel.Visible = false;
+        UnlockedPanel.Visible = true;
         RelocationPanel.Visible = false;
     }
 
     private void ShowLockedPanel()
     {
         NoFilesPanel.Visible = false;
-        LockedFilePanel.Visible = true;
-        UnlockedFilePanel.Visible = false;
+        LockedPanel.Visible = true;
+        UnlockedPanel.Visible = false;
         RelocationPanel.Visible = false;
     }
 
     private void ShowRelocationPanel()
     {
         NoFilesPanel.Visible = false;
-        LockedFilePanel.Visible = false;
-        UnlockedFilePanel.Visible = false;
+        LockedPanel.Visible = false;
+        UnlockedPanel.Visible = false;
         RelocationPanel.Visible = true;
     }
 
@@ -172,13 +172,6 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
     }
 
-    // TODO - implement UnlockedShredButton_Click
-    private void UnlockedShredButton_Click(object sender, EventArgs e)
-    {
-
-    }
-
-    // TODO - implement EncryptButton_Click
     private void EncryptButton_Click(object sender, EventArgs e)
     {
         EncryptForm encryptForm = new(this, selectedModel);
@@ -273,5 +266,34 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
     {
         // TODO - may have to be PopulateForm();
         UpdateControls();
+    }
+
+    private void UnlockedShredButton_Click(object sender, EventArgs e)
+    {
+        ShredFile();
+    }
+
+    private void LockedShredButton_Click(object sender, EventArgs e)
+    {
+        ShredFile();
+    }
+
+    private void ShredFile()
+    {
+        if (MessageBox.Show("This will delete the file(s) permanently. Are you sure you want to proceed?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+            return;
+
+        try
+        {
+            selectedModel.ShredFile();
+            GlobalConfig.DataAccessor.DeleteFileModel(selectedModel);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        PopulateForm();
     }
 }

@@ -113,4 +113,9 @@ public partial class DecryptForm : Form
     {
         ResetTimer();
     }
+
+    private void PasswordLabel_Click(object sender, EventArgs e)
+    {
+
+    }
 }

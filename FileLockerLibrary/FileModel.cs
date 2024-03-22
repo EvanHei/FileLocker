@@ -156,6 +156,15 @@ public class FileModel
     }
 
     [JsonIgnore]
+    public string PathDisplay
+    {
+        get
+        {
+            return Path.Length > 50 ? Path.Substring(0, 47) + "..." : Path;
+        }
+    }
+
+    [JsonIgnore]
     public string FileName
     {
         get

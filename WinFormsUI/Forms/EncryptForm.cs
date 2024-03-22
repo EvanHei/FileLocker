@@ -370,7 +370,6 @@ public partial class EncryptForm : Form, IRelocateFormCaller
 
     private void ClearButton_Click(object sender, EventArgs e)
     {
-        PasswordMaskedTextBox.Text = "";
-        ConfirmPasswordMaskedTextBox.Text = "";
+        ClearPasswords();
     }
 }

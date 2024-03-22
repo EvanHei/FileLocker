@@ -264,8 +264,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
     public void DecryptionComplete()
     {
-        // TODO - may have to be PopulateForm();
-        UpdateControls();
+        PopulateForm();
     }
 
     private void UnlockedShredButton_Click(object sender, EventArgs e)

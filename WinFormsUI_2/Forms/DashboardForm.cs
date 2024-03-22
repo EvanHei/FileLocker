@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace WinFormsUI_2;
 
-public partial class DashboardForm : Form, IEncryptFormCaller
+public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCaller
 {
     FileModel selectedModel;
 
@@ -181,7 +181,8 @@ public partial class DashboardForm : Form, IEncryptFormCaller
     // TODO - implement EncryptButton_Click
     private void EncryptButton_Click(object sender, EventArgs e)
     {
-
+        EncryptForm encryptForm = new(this, selectedModel);
+        encryptForm.ShowDialog();
     }
 
     private void FileListBox_MouseDown(object sender, MouseEventArgs e)
@@ -242,11 +243,6 @@ public partial class DashboardForm : Form, IEncryptFormCaller
         Process.Start(processStartInfo);
     }
 
-    public void EncryptionComplete()
-    {
-        throw new NotImplementedException();
-    }
-
     public void RemovalComplete()
     {
         throw new NotImplementedException();
@@ -260,5 +256,22 @@ public partial class DashboardForm : Form, IEncryptFormCaller
     private void NoFilesDescriptionLabel_Click(object sender, EventArgs e)
     {
 
+    }
+
+    private void DecryptButton_Click(object sender, EventArgs e)
+    {
+        DecryptForm decryptForm = new(this, selectedModel);
+        decryptForm.ShowDialog();
+    }
+
+    public void EncryptionComplete()
+    {
+        PopulateForm();
+    }
+
+    public void DecryptionComplete()
+    {
+        // TODO - may have to be PopulateForm();
+        UpdateControls();
     }
 }

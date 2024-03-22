@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WinFormsUI_2.Forms;
+namespace WinFormsUI_2;
 
 public partial class EncryptForm : Form
 {

@@ -1,4 +1,4 @@
-﻿namespace WinFormsUI_2.Forms
+﻿namespace WinFormsUI_2
 {
     partial class EncryptForm
     {

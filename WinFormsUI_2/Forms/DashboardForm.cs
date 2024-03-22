@@ -178,26 +178,8 @@ public partial class DashboardForm : Form, IEncryptFormCaller
 
     }
 
-    // TODO - implement GenerateRandomButton_Click
-    private void GenerateRandomButton_Click(object sender, EventArgs e)
-    {
-
-    }
-
-    // TODO - implement ClearButton_Click
-    private void ClearButton_Click(object sender, EventArgs e)
-    {
-
-    }
-
-    // TODO - implement EyeballLabel_Click
-    private void EyeballLabel_Click(object sender, EventArgs e)
-    {
-
-    }
-
-    // TODO - implement EnterButton_Click
-    private void EnterButton_Click(object sender, EventArgs e)
+    // TODO - implement EncryptButton_Click
+    private void EncryptButton_Click(object sender, EventArgs e)
     {
 
     }
@@ -273,5 +255,10 @@ public partial class DashboardForm : Form, IEncryptFormCaller
     private void FileListBox_SelectedIndexChanged(object sender, EventArgs e)
     {
         UpdateControls();
+    }
+
+    private void NoFilesDescriptionLabel_Click(object sender, EventArgs e)
+    {
+
     }
 }

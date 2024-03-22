@@ -47,6 +47,12 @@
             NoFilesDescriptionLabel = new Label();
             NoFilesLabel = new Label();
             LockedFilePanel = new Panel();
+            LockedShredGroupBox = new GroupBox();
+            LockedShredDescriptionLabel = new Label();
+            LockedShredButton = new Button();
+            DecryptGroupBox = new GroupBox();
+            DecryptDescriptionLabel = new Label();
+            DecryptButton = new Button();
             LockedShaValueLabel = new Label();
             LockedShaLabel = new Label();
             LockedSizeValueLabel = new Label();
@@ -67,26 +73,11 @@
             CantLocateFileLabel = new Label();
             UnlockedFilePanel = new Panel();
             UnlockedShredGroupBox = new GroupBox();
-            ShredDescriptionLabel = new Label();
+            UnlockedShredDescriptionLabel = new Label();
             UnlockedShredButton = new Button();
             EncryptGroupBox = new GroupBox();
             EncryptDescriptionLabel = new Label();
-            ClearButton = new Button();
-            PasswordWarningLabel = new Label();
-            EncryptionAlgorithmComboBox = new ComboBox();
-            ChooseAlgorithmLabel = new Label();
-            GenerateRandomButton = new Button();
-            EyeballLabel = new Label();
-            ConfirmPasswordMaskedTextBox = new MaskedTextBox();
-            ConfirmLabel = new Label();
-            EnterButton = new Button();
-            SpecialCharacterLabel = new Label();
-            LowercaseLetterLabel = new Label();
-            UppercaseLetterLabel = new Label();
-            DigitLabel = new Label();
-            NumberOfCharactersLabel = new Label();
-            PasswordMaskedTextBox = new MaskedTextBox();
-            PasswordLabel = new Label();
+            EncryptButton = new Button();
             UnlockedShaValueLabel = new Label();
             UnlockedShaLabel = new Label();
             UnlockedSizeValueLabel = new Label();
@@ -101,6 +92,8 @@
             AddButtonContextMenuStrip.SuspendLayout();
             NoFilesPanel.SuspendLayout();
             LockedFilePanel.SuspendLayout();
+            LockedShredGroupBox.SuspendLayout();
+            DecryptGroupBox.SuspendLayout();
             RelocationPanel.SuspendLayout();
             UnlockedFilePanel.SuspendLayout();
             UnlockedShredGroupBox.SuspendLayout();
@@ -270,18 +263,19 @@
             NoFilesDescriptionLabel.AutoSize = true;
             NoFilesDescriptionLabel.BackColor = Color.FromArgb(32, 32, 32);
             NoFilesDescriptionLabel.ForeColor = SystemColors.ButtonFace;
-            NoFilesDescriptionLabel.Location = new Point(196, 179);
+            NoFilesDescriptionLabel.Location = new Point(316, 426);
             NoFilesDescriptionLabel.Name = "NoFilesDescriptionLabel";
             NoFilesDescriptionLabel.Size = new Size(274, 42);
             NoFilesDescriptionLabel.TabIndex = 23;
             NoFilesDescriptionLabel.Text = "Click Add to import or manually select\r\n files to add to FileLocker's scope.";
+            NoFilesDescriptionLabel.Click += NoFilesDescriptionLabel_Click;
             // 
             // NoFilesLabel
             // 
             NoFilesLabel.AutoSize = true;
             NoFilesLabel.Font = new Font("Segoe UI Emoji", 20.25F);
             NoFilesLabel.ForeColor = SystemColors.ButtonFace;
-            NoFilesLabel.Location = new Point(281, 131);
+            NoFilesLabel.Location = new Point(401, 378);
             NoFilesLabel.Name = "NoFilesLabel";
             NoFilesLabel.Size = new Size(105, 36);
             NoFilesLabel.TabIndex = 8;
@@ -291,6 +285,8 @@
             // 
             LockedFilePanel.BackColor = Color.FromArgb(32, 32, 32);
             LockedFilePanel.BorderStyle = BorderStyle.FixedSingle;
+            LockedFilePanel.Controls.Add(LockedShredGroupBox);
+            LockedFilePanel.Controls.Add(DecryptGroupBox);
             LockedFilePanel.Controls.Add(LockedShaValueLabel);
             LockedFilePanel.Controls.Add(LockedShaLabel);
             LockedFilePanel.Controls.Add(LockedSizeValueLabel);
@@ -309,12 +305,88 @@
             LockedFilePanel.Size = new Size(864, 921);
             LockedFilePanel.TabIndex = 24;
             // 
+            // LockedShredGroupBox
+            // 
+            LockedShredGroupBox.BackColor = Color.FromArgb(32, 32, 32);
+            LockedShredGroupBox.Controls.Add(LockedShredDescriptionLabel);
+            LockedShredGroupBox.Controls.Add(LockedShredButton);
+            LockedShredGroupBox.FlatStyle = FlatStyle.Flat;
+            LockedShredGroupBox.ForeColor = SystemColors.ButtonFace;
+            LockedShredGroupBox.Location = new Point(22, 338);
+            LockedShredGroupBox.Name = "LockedShredGroupBox";
+            LockedShredGroupBox.Size = new Size(807, 116);
+            LockedShredGroupBox.TabIndex = 36;
+            LockedShredGroupBox.TabStop = false;
+            LockedShredGroupBox.Text = "Shred";
+            // 
+            // LockedShredDescriptionLabel
+            // 
+            LockedShredDescriptionLabel.AutoSize = true;
+            LockedShredDescriptionLabel.BackColor = Color.FromArgb(32, 32, 32);
+            LockedShredDescriptionLabel.ForeColor = SystemColors.ButtonFace;
+            LockedShredDescriptionLabel.Location = new Point(74, 40);
+            LockedShredDescriptionLabel.Name = "LockedShredDescriptionLabel";
+            LockedShredDescriptionLabel.Size = new Size(233, 42);
+            LockedShredDescriptionLabel.TabIndex = 34;
+            LockedShredDescriptionLabel.Text = "Overwrites the file with \r\nrandom data and then deletes it.";
+            // 
+            // LockedShredButton
+            // 
+            LockedShredButton.BackColor = Color.DarkRed;
+            LockedShredButton.FlatStyle = FlatStyle.Flat;
+            LockedShredButton.Font = new Font("Segoe UI Emoji", 12F);
+            LockedShredButton.ForeColor = SystemColors.ButtonFace;
+            LockedShredButton.Location = new Point(669, 45);
+            LockedShredButton.Name = "LockedShredButton";
+            LockedShredButton.Size = new Size(100, 37);
+            LockedShredButton.TabIndex = 6;
+            LockedShredButton.Text = "Shred 🗑️";
+            LockedShredButton.UseVisualStyleBackColor = false;
+            // 
+            // DecryptGroupBox
+            // 
+            DecryptGroupBox.BackColor = Color.FromArgb(32, 32, 32);
+            DecryptGroupBox.Controls.Add(DecryptDescriptionLabel);
+            DecryptGroupBox.Controls.Add(DecryptButton);
+            DecryptGroupBox.FlatStyle = FlatStyle.Flat;
+            DecryptGroupBox.ForeColor = SystemColors.ButtonFace;
+            DecryptGroupBox.Location = new Point(22, 197);
+            DecryptGroupBox.Name = "DecryptGroupBox";
+            DecryptGroupBox.Size = new Size(807, 116);
+            DecryptGroupBox.TabIndex = 35;
+            DecryptGroupBox.TabStop = false;
+            DecryptGroupBox.Text = "Decrypt";
+            // 
+            // DecryptDescriptionLabel
+            // 
+            DecryptDescriptionLabel.AutoSize = true;
+            DecryptDescriptionLabel.BackColor = Color.FromArgb(32, 32, 32);
+            DecryptDescriptionLabel.ForeColor = SystemColors.ButtonFace;
+            DecryptDescriptionLabel.Location = new Point(62, 42);
+            DecryptDescriptionLabel.Name = "DecryptDescriptionLabel";
+            DecryptDescriptionLabel.Size = new Size(168, 42);
+            DecryptDescriptionLabel.TabIndex = 33;
+            DecryptDescriptionLabel.Text = "Decrypts the file using \r\nthe input password.";
+            // 
+            // DecryptButton
+            // 
+            DecryptButton.BackColor = SystemColors.Highlight;
+            DecryptButton.FlatStyle = FlatStyle.Flat;
+            DecryptButton.Font = new Font("Segoe UI Emoji", 12F);
+            DecryptButton.ForeColor = SystemColors.ButtonFace;
+            DecryptButton.Location = new Point(669, 42);
+            DecryptButton.Name = "DecryptButton";
+            DecryptButton.Size = new Size(100, 37);
+            DecryptButton.TabIndex = 29;
+            DecryptButton.Text = "Decrypt 🔑";
+            DecryptButton.UseVisualStyleBackColor = false;
+            // 
             // LockedShaValueLabel
             // 
             LockedShaValueLabel.AutoSize = true;
             LockedShaValueLabel.BackColor = Color.FromArgb(32, 32, 32);
             LockedShaValueLabel.ForeColor = SystemColors.ButtonFace;
-            LockedShaValueLabel.Location = new Point(343, 173);
+            LockedShaValueLabel.Location = new Point(428, 173);
             LockedShaValueLabel.Name = "LockedShaValueLabel";
             LockedShaValueLabel.Size = new Size(56, 21);
             LockedShaValueLabel.TabIndex = 34;
@@ -325,7 +397,7 @@
             LockedShaLabel.AutoSize = true;
             LockedShaLabel.BackColor = Color.FromArgb(32, 32, 32);
             LockedShaLabel.ForeColor = SystemColors.ButtonFace;
-            LockedShaLabel.Location = new Point(294, 173);
+            LockedShaLabel.Location = new Point(379, 173);
             LockedShaLabel.Name = "LockedShaLabel";
             LockedShaLabel.Size = new Size(43, 21);
             LockedShaLabel.TabIndex = 33;
@@ -336,7 +408,7 @@
             LockedSizeValueLabel.AutoSize = true;
             LockedSizeValueLabel.BackColor = Color.FromArgb(32, 32, 32);
             LockedSizeValueLabel.ForeColor = SystemColors.ButtonFace;
-            LockedSizeValueLabel.Location = new Point(343, 152);
+            LockedSizeValueLabel.Location = new Point(428, 152);
             LockedSizeValueLabel.Name = "LockedSizeValueLabel";
             LockedSizeValueLabel.Size = new Size(58, 21);
             LockedSizeValueLabel.TabIndex = 32;
@@ -347,7 +419,7 @@
             LockedSizeLabel.AutoSize = true;
             LockedSizeLabel.BackColor = Color.FromArgb(32, 32, 32);
             LockedSizeLabel.ForeColor = SystemColors.ButtonFace;
-            LockedSizeLabel.Location = new Point(296, 152);
+            LockedSizeLabel.Location = new Point(381, 152);
             LockedSizeLabel.Name = "LockedSizeLabel";
             LockedSizeLabel.Size = new Size(41, 21);
             LockedSizeLabel.TabIndex = 31;
@@ -358,7 +430,7 @@
             LockedPathValueLabel.AutoSize = true;
             LockedPathValueLabel.BackColor = Color.FromArgb(32, 32, 32);
             LockedPathValueLabel.ForeColor = SystemColors.ButtonFace;
-            LockedPathValueLabel.Location = new Point(343, 131);
+            LockedPathValueLabel.Location = new Point(428, 131);
             LockedPathValueLabel.Name = "LockedPathValueLabel";
             LockedPathValueLabel.Size = new Size(63, 21);
             LockedPathValueLabel.TabIndex = 30;
@@ -369,7 +441,7 @@
             LockedPathLabel.AutoSize = true;
             LockedPathLabel.BackColor = Color.FromArgb(32, 32, 32);
             LockedPathLabel.ForeColor = SystemColors.ButtonFace;
-            LockedPathLabel.Location = new Point(293, 131);
+            LockedPathLabel.Location = new Point(378, 131);
             LockedPathLabel.Name = "LockedPathLabel";
             LockedPathLabel.Size = new Size(44, 21);
             LockedPathLabel.TabIndex = 29;
@@ -380,7 +452,7 @@
             LockDateValueLabel.AutoSize = true;
             LockDateValueLabel.BackColor = Color.FromArgb(32, 32, 32);
             LockDateValueLabel.ForeColor = SystemColors.ButtonFace;
-            LockDateValueLabel.Location = new Point(343, 110);
+            LockDateValueLabel.Location = new Point(428, 110);
             LockDateValueLabel.Name = "LockDateValueLabel";
             LockDateValueLabel.Size = new Size(94, 21);
             LockDateValueLabel.TabIndex = 28;
@@ -391,7 +463,7 @@
             LockDateLabel.AutoSize = true;
             LockDateLabel.BackColor = Color.FromArgb(32, 32, 32);
             LockDateLabel.ForeColor = SystemColors.ButtonFace;
-            LockDateLabel.Location = new Point(256, 110);
+            LockDateLabel.Location = new Point(341, 110);
             LockDateLabel.Name = "LockDateLabel";
             LockDateLabel.Size = new Size(81, 21);
             LockDateLabel.TabIndex = 27;
@@ -402,7 +474,7 @@
             AlgorithmValueLabel.AutoSize = true;
             AlgorithmValueLabel.BackColor = Color.FromArgb(32, 32, 32);
             AlgorithmValueLabel.ForeColor = SystemColors.ButtonFace;
-            AlgorithmValueLabel.Location = new Point(343, 89);
+            AlgorithmValueLabel.Location = new Point(428, 89);
             AlgorithmValueLabel.Name = "AlgorithmValueLabel";
             AlgorithmValueLabel.Size = new Size(100, 21);
             AlgorithmValueLabel.TabIndex = 26;
@@ -413,7 +485,7 @@
             AlgorithmLabel.AutoSize = true;
             AlgorithmLabel.BackColor = Color.FromArgb(32, 32, 32);
             AlgorithmLabel.ForeColor = SystemColors.ButtonFace;
-            AlgorithmLabel.Location = new Point(254, 89);
+            AlgorithmLabel.Location = new Point(339, 89);
             AlgorithmLabel.Name = "AlgorithmLabel";
             AlgorithmLabel.Size = new Size(83, 21);
             AlgorithmLabel.TabIndex = 25;
@@ -424,7 +496,7 @@
             LockedStatusValueLabel.AutoSize = true;
             LockedStatusValueLabel.BackColor = Color.FromArgb(32, 32, 32);
             LockedStatusValueLabel.ForeColor = SystemColors.ButtonFace;
-            LockedStatusValueLabel.Location = new Point(343, 68);
+            LockedStatusValueLabel.Location = new Point(428, 68);
             LockedStatusValueLabel.Name = "LockedStatusValueLabel";
             LockedStatusValueLabel.Size = new Size(59, 21);
             LockedStatusValueLabel.TabIndex = 24;
@@ -435,7 +507,7 @@
             LockedStatusLabel.AutoSize = true;
             LockedStatusLabel.BackColor = Color.FromArgb(32, 32, 32);
             LockedStatusLabel.ForeColor = SystemColors.ButtonFace;
-            LockedStatusLabel.Location = new Point(281, 68);
+            LockedStatusLabel.Location = new Point(366, 68);
             LockedStatusLabel.Name = "LockedStatusLabel";
             LockedStatusLabel.Size = new Size(56, 21);
             LockedStatusLabel.TabIndex = 23;
@@ -446,7 +518,7 @@
             LockedFileNameLabel.AutoSize = true;
             LockedFileNameLabel.Font = new Font("Segoe UI Emoji", 20.25F);
             LockedFileNameLabel.ForeColor = SystemColors.ButtonFace;
-            LockedFileNameLabel.Location = new Point(268, 26);
+            LockedFileNameLabel.Location = new Point(353, 26);
             LockedFileNameLabel.Name = "LockedFileNameLabel";
             LockedFileNameLabel.Size = new Size(153, 36);
             LockedFileNameLabel.TabIndex = 8;
@@ -471,7 +543,7 @@
             RemoveButton.FlatStyle = FlatStyle.Flat;
             RemoveButton.Font = new Font("Segoe UI Emoji", 12F);
             RemoveButton.ForeColor = SystemColors.ButtonFace;
-            RemoveButton.Location = new Point(336, 216);
+            RemoveButton.Location = new Point(449, 457);
             RemoveButton.Name = "RemoveButton";
             RemoveButton.Size = new Size(83, 37);
             RemoveButton.TabIndex = 20;
@@ -485,7 +557,7 @@
             RelocateButton.FlatStyle = FlatStyle.Flat;
             RelocateButton.Font = new Font("Segoe UI Emoji", 12F);
             RelocateButton.ForeColor = SystemColors.ButtonFace;
-            RelocateButton.Location = new Point(247, 216);
+            RelocateButton.Location = new Point(360, 457);
             RelocateButton.Name = "RelocateButton";
             RelocateButton.Size = new Size(83, 37);
             RelocateButton.TabIndex = 19;
@@ -498,7 +570,7 @@
             LastSeenLabel.AutoSize = true;
             LastSeenLabel.Font = new Font("Segoe UI Emoji", 12F);
             LastSeenLabel.ForeColor = SystemColors.AppWorkspace;
-            LastSeenLabel.Location = new Point(246, 173);
+            LastSeenLabel.Location = new Point(359, 414);
             LastSeenLabel.Name = "LastSeenLabel";
             LastSeenLabel.Size = new Size(191, 21);
             LastSeenLabel.TabIndex = 18;
@@ -510,7 +582,7 @@
             CantLocateFileLabel.AutoSize = true;
             CantLocateFileLabel.Font = new Font("Segoe UI Emoji", 20.25F);
             CantLocateFileLabel.ForeColor = SystemColors.ButtonFace;
-            CantLocateFileLabel.Location = new Point(222, 137);
+            CantLocateFileLabel.Location = new Point(335, 378);
             CantLocateFileLabel.Name = "CantLocateFileLabel";
             CantLocateFileLabel.Size = new Size(238, 36);
             CantLocateFileLabel.TabIndex = 17;
@@ -539,27 +611,27 @@
             // UnlockedShredGroupBox
             // 
             UnlockedShredGroupBox.BackColor = Color.FromArgb(32, 32, 32);
-            UnlockedShredGroupBox.Controls.Add(ShredDescriptionLabel);
+            UnlockedShredGroupBox.Controls.Add(UnlockedShredDescriptionLabel);
             UnlockedShredGroupBox.Controls.Add(UnlockedShredButton);
             UnlockedShredGroupBox.FlatStyle = FlatStyle.Flat;
             UnlockedShredGroupBox.ForeColor = SystemColors.ButtonFace;
-            UnlockedShredGroupBox.Location = new Point(22, 541);
+            UnlockedShredGroupBox.Location = new Point(22, 338);
             UnlockedShredGroupBox.Name = "UnlockedShredGroupBox";
             UnlockedShredGroupBox.Size = new Size(807, 116);
             UnlockedShredGroupBox.TabIndex = 32;
             UnlockedShredGroupBox.TabStop = false;
             UnlockedShredGroupBox.Text = "Shred";
             // 
-            // ShredDescriptionLabel
+            // UnlockedShredDescriptionLabel
             // 
-            ShredDescriptionLabel.AutoSize = true;
-            ShredDescriptionLabel.BackColor = Color.FromArgb(32, 32, 32);
-            ShredDescriptionLabel.ForeColor = SystemColors.ButtonFace;
-            ShredDescriptionLabel.Location = new Point(74, 40);
-            ShredDescriptionLabel.Name = "ShredDescriptionLabel";
-            ShredDescriptionLabel.Size = new Size(233, 42);
-            ShredDescriptionLabel.TabIndex = 34;
-            ShredDescriptionLabel.Text = "Overwrites the file with \r\nrandom data and then deletes it.";
+            UnlockedShredDescriptionLabel.AutoSize = true;
+            UnlockedShredDescriptionLabel.BackColor = Color.FromArgb(32, 32, 32);
+            UnlockedShredDescriptionLabel.ForeColor = SystemColors.ButtonFace;
+            UnlockedShredDescriptionLabel.Location = new Point(74, 40);
+            UnlockedShredDescriptionLabel.Name = "UnlockedShredDescriptionLabel";
+            UnlockedShredDescriptionLabel.Size = new Size(233, 42);
+            UnlockedShredDescriptionLabel.TabIndex = 34;
+            UnlockedShredDescriptionLabel.Text = "Overwrites the file with \r\nrandom data and then deletes it.";
             // 
             // UnlockedShredButton
             // 
@@ -567,9 +639,9 @@
             UnlockedShredButton.FlatStyle = FlatStyle.Flat;
             UnlockedShredButton.Font = new Font("Segoe UI Emoji", 12F);
             UnlockedShredButton.ForeColor = SystemColors.ButtonFace;
-            UnlockedShredButton.Location = new Point(681, 45);
+            UnlockedShredButton.Location = new Point(669, 45);
             UnlockedShredButton.Name = "UnlockedShredButton";
-            UnlockedShredButton.Size = new Size(88, 37);
+            UnlockedShredButton.Size = new Size(100, 37);
             UnlockedShredButton.TabIndex = 6;
             UnlockedShredButton.Text = "Shred 🗑️";
             UnlockedShredButton.UseVisualStyleBackColor = false;
@@ -579,27 +651,12 @@
             // 
             EncryptGroupBox.BackColor = Color.FromArgb(32, 32, 32);
             EncryptGroupBox.Controls.Add(EncryptDescriptionLabel);
-            EncryptGroupBox.Controls.Add(ClearButton);
-            EncryptGroupBox.Controls.Add(PasswordWarningLabel);
-            EncryptGroupBox.Controls.Add(EncryptionAlgorithmComboBox);
-            EncryptGroupBox.Controls.Add(ChooseAlgorithmLabel);
-            EncryptGroupBox.Controls.Add(GenerateRandomButton);
-            EncryptGroupBox.Controls.Add(EyeballLabel);
-            EncryptGroupBox.Controls.Add(ConfirmPasswordMaskedTextBox);
-            EncryptGroupBox.Controls.Add(ConfirmLabel);
-            EncryptGroupBox.Controls.Add(EnterButton);
-            EncryptGroupBox.Controls.Add(SpecialCharacterLabel);
-            EncryptGroupBox.Controls.Add(LowercaseLetterLabel);
-            EncryptGroupBox.Controls.Add(UppercaseLetterLabel);
-            EncryptGroupBox.Controls.Add(DigitLabel);
-            EncryptGroupBox.Controls.Add(NumberOfCharactersLabel);
-            EncryptGroupBox.Controls.Add(PasswordMaskedTextBox);
-            EncryptGroupBox.Controls.Add(PasswordLabel);
+            EncryptGroupBox.Controls.Add(EncryptButton);
             EncryptGroupBox.FlatStyle = FlatStyle.Flat;
             EncryptGroupBox.ForeColor = SystemColors.ButtonFace;
             EncryptGroupBox.Location = new Point(22, 197);
             EncryptGroupBox.Name = "EncryptGroupBox";
-            EncryptGroupBox.Size = new Size(807, 338);
+            EncryptGroupBox.Size = new Size(807, 116);
             EncryptGroupBox.TabIndex = 31;
             EncryptGroupBox.TabStop = false;
             EncryptGroupBox.Text = "Encrypt";
@@ -609,201 +666,25 @@
             EncryptDescriptionLabel.AutoSize = true;
             EncryptDescriptionLabel.BackColor = Color.FromArgb(32, 32, 32);
             EncryptDescriptionLabel.ForeColor = SystemColors.ButtonFace;
-            EncryptDescriptionLabel.Location = new Point(74, 148);
+            EncryptDescriptionLabel.Location = new Point(74, 27);
             EncryptDescriptionLabel.Name = "EncryptDescriptionLabel";
             EncryptDescriptionLabel.Size = new Size(184, 63);
             EncryptDescriptionLabel.TabIndex = 33;
             EncryptDescriptionLabel.Text = "Encrypts the file with the \r\nselected algorithm using \r\nthe input password.";
             // 
-            // ClearButton
+            // EncryptButton
             // 
-            ClearButton.BackColor = Color.Silver;
-            ClearButton.Enabled = false;
-            ClearButton.FlatStyle = FlatStyle.Flat;
-            ClearButton.Font = new Font("Segoe UI Emoji", 12F);
-            ClearButton.ForeColor = SystemColors.ButtonFace;
-            ClearButton.Location = new Point(592, 280);
-            ClearButton.Name = "ClearButton";
-            ClearButton.Size = new Size(148, 37);
-            ClearButton.TabIndex = 33;
-            ClearButton.Text = "Clear";
-            ClearButton.UseVisualStyleBackColor = false;
-            ClearButton.Click += ClearButton_Click;
-            // 
-            // PasswordWarningLabel
-            // 
-            PasswordWarningLabel.AutoSize = true;
-            PasswordWarningLabel.Font = new Font("Segoe UI Emoji", 10F);
-            PasswordWarningLabel.ForeColor = Color.Red;
-            PasswordWarningLabel.Location = new Point(466, 131);
-            PasswordWarningLabel.Name = "PasswordWarningLabel";
-            PasswordWarningLabel.Size = new Size(250, 19);
-            PasswordWarningLabel.TabIndex = 32;
-            PasswordWarningLabel.Text = "If your password is lost, so is your data.";
-            PasswordWarningLabel.Visible = false;
-            // 
-            // EncryptionAlgorithmComboBox
-            // 
-            EncryptionAlgorithmComboBox.BackColor = Color.FromArgb(52, 52, 52);
-            EncryptionAlgorithmComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            EncryptionAlgorithmComboBox.ForeColor = SystemColors.ButtonFace;
-            EncryptionAlgorithmComboBox.FormattingEnabled = true;
-            EncryptionAlgorithmComboBox.Location = new Point(452, 99);
-            EncryptionAlgorithmComboBox.Name = "EncryptionAlgorithmComboBox";
-            EncryptionAlgorithmComboBox.Size = new Size(277, 29);
-            EncryptionAlgorithmComboBox.TabIndex = 31;
-            // 
-            // ChooseAlgorithmLabel
-            // 
-            ChooseAlgorithmLabel.AutoSize = true;
-            ChooseAlgorithmLabel.Font = new Font("Segoe UI Emoji", 12F);
-            ChooseAlgorithmLabel.ForeColor = SystemColors.ButtonFace;
-            ChooseAlgorithmLabel.Location = new Point(363, 102);
-            ChooseAlgorithmLabel.Name = "ChooseAlgorithmLabel";
-            ChooseAlgorithmLabel.Size = new Size(83, 21);
-            ChooseAlgorithmLabel.TabIndex = 30;
-            ChooseAlgorithmLabel.Text = "Algorithm:";
-            // 
-            // GenerateRandomButton
-            // 
-            GenerateRandomButton.BackColor = SystemColors.Highlight;
-            GenerateRandomButton.FlatStyle = FlatStyle.Flat;
-            GenerateRandomButton.Font = new Font("Segoe UI Emoji", 12F);
-            GenerateRandomButton.ForeColor = SystemColors.ButtonFace;
-            GenerateRandomButton.Location = new Point(438, 280);
-            GenerateRandomButton.Name = "GenerateRandomButton";
-            GenerateRandomButton.Size = new Size(148, 37);
-            GenerateRandomButton.TabIndex = 29;
-            GenerateRandomButton.Text = "Generate Random";
-            GenerateRandomButton.UseVisualStyleBackColor = false;
-            GenerateRandomButton.Click += GenerateRandomButton_Click;
-            // 
-            // EyeballLabel
-            // 
-            EyeballLabel.AutoSize = true;
-            EyeballLabel.BackColor = Color.FromArgb(52, 52, 52);
-            EyeballLabel.Font = new Font("Segoe UI Emoji", 12F);
-            EyeballLabel.ForeColor = SystemColors.ButtonFace;
-            EyeballLabel.Location = new Point(695, 67);
-            EyeballLabel.Name = "EyeballLabel";
-            EyeballLabel.Size = new Size(32, 21);
-            EyeballLabel.TabIndex = 19;
-            EyeballLabel.Text = "👁";
-            EyeballLabel.Click += EyeballLabel_Click;
-            // 
-            // ConfirmPasswordMaskedTextBox
-            // 
-            ConfirmPasswordMaskedTextBox.BackColor = Color.FromArgb(52, 52, 52);
-            ConfirmPasswordMaskedTextBox.Font = new Font("Segoe UI Emoji", 12F);
-            ConfirmPasswordMaskedTextBox.ForeColor = SystemColors.ButtonFace;
-            ConfirmPasswordMaskedTextBox.Location = new Point(452, 64);
-            ConfirmPasswordMaskedTextBox.Name = "ConfirmPasswordMaskedTextBox";
-            ConfirmPasswordMaskedTextBox.Size = new Size(277, 29);
-            ConfirmPasswordMaskedTextBox.TabIndex = 27;
-            ConfirmPasswordMaskedTextBox.UseSystemPasswordChar = true;
-            // 
-            // ConfirmLabel
-            // 
-            ConfirmLabel.AutoSize = true;
-            ConfirmLabel.Font = new Font("Segoe UI Emoji", 12F);
-            ConfirmLabel.ForeColor = SystemColors.ButtonFace;
-            ConfirmLabel.Location = new Point(376, 67);
-            ConfirmLabel.Name = "ConfirmLabel";
-            ConfirmLabel.Size = new Size(70, 21);
-            ConfirmLabel.TabIndex = 28;
-            ConfirmLabel.Text = "Confirm:";
-            // 
-            // EnterButton
-            // 
-            EnterButton.BackColor = Color.Silver;
-            EnterButton.Enabled = false;
-            EnterButton.FlatStyle = FlatStyle.Flat;
-            EnterButton.Font = new Font("Segoe UI Emoji", 12F);
-            EnterButton.ForeColor = SystemColors.ButtonFace;
-            EnterButton.Location = new Point(735, 60);
-            EnterButton.Name = "EnterButton";
-            EnterButton.Size = new Size(34, 37);
-            EnterButton.TabIndex = 26;
-            EnterButton.Text = "→\n";
-            EnterButton.UseVisualStyleBackColor = false;
-            EnterButton.Click += EnterButton_Click;
-            // 
-            // SpecialCharacterLabel
-            // 
-            SpecialCharacterLabel.AutoSize = true;
-            SpecialCharacterLabel.Font = new Font("Segoe UI Emoji", 12F);
-            SpecialCharacterLabel.ForeColor = SystemColors.AppWorkspace;
-            SpecialCharacterLabel.Location = new Point(452, 243);
-            SpecialCharacterLabel.Name = "SpecialCharacterLabel";
-            SpecialCharacterLabel.Size = new Size(138, 21);
-            SpecialCharacterLabel.TabIndex = 25;
-            SpecialCharacterLabel.Text = "• Special character";
-            // 
-            // LowercaseLetterLabel
-            // 
-            LowercaseLetterLabel.AutoSize = true;
-            LowercaseLetterLabel.Font = new Font("Segoe UI Emoji", 12F);
-            LowercaseLetterLabel.ForeColor = SystemColors.AppWorkspace;
-            LowercaseLetterLabel.Location = new Point(452, 201);
-            LowercaseLetterLabel.Name = "LowercaseLetterLabel";
-            LowercaseLetterLabel.Size = new Size(134, 21);
-            LowercaseLetterLabel.TabIndex = 24;
-            LowercaseLetterLabel.Text = "• Lowercase letter";
-            // 
-            // UppercaseLetterLabel
-            // 
-            UppercaseLetterLabel.AutoSize = true;
-            UppercaseLetterLabel.Font = new Font("Segoe UI Emoji", 12F);
-            UppercaseLetterLabel.ForeColor = SystemColors.AppWorkspace;
-            UppercaseLetterLabel.Location = new Point(452, 180);
-            UppercaseLetterLabel.Name = "UppercaseLetterLabel";
-            UppercaseLetterLabel.Size = new Size(134, 21);
-            UppercaseLetterLabel.TabIndex = 23;
-            UppercaseLetterLabel.Text = "• Uppercase letter";
-            // 
-            // DigitLabel
-            // 
-            DigitLabel.AutoSize = true;
-            DigitLabel.Font = new Font("Segoe UI Emoji", 12F);
-            DigitLabel.ForeColor = SystemColors.AppWorkspace;
-            DigitLabel.Location = new Point(452, 222);
-            DigitLabel.Name = "DigitLabel";
-            DigitLabel.Size = new Size(54, 21);
-            DigitLabel.TabIndex = 22;
-            DigitLabel.Text = "• Digit";
-            // 
-            // NumberOfCharactersLabel
-            // 
-            NumberOfCharactersLabel.AutoSize = true;
-            NumberOfCharactersLabel.Font = new Font("Segoe UI Emoji", 12F);
-            NumberOfCharactersLabel.ForeColor = SystemColors.AppWorkspace;
-            NumberOfCharactersLabel.Location = new Point(452, 159);
-            NumberOfCharactersLabel.Name = "NumberOfCharactersLabel";
-            NumberOfCharactersLabel.Size = new Size(158, 21);
-            NumberOfCharactersLabel.TabIndex = 21;
-            NumberOfCharactersLabel.Text = "• <range> characters";
-            // 
-            // PasswordMaskedTextBox
-            // 
-            PasswordMaskedTextBox.BackColor = Color.FromArgb(52, 52, 52);
-            PasswordMaskedTextBox.Font = new Font("Segoe UI Emoji", 12F);
-            PasswordMaskedTextBox.ForeColor = SystemColors.ButtonFace;
-            PasswordMaskedTextBox.Location = new Point(452, 31);
-            PasswordMaskedTextBox.Name = "PasswordMaskedTextBox";
-            PasswordMaskedTextBox.Size = new Size(277, 29);
-            PasswordMaskedTextBox.TabIndex = 18;
-            PasswordMaskedTextBox.UseSystemPasswordChar = true;
-            // 
-            // PasswordLabel
-            // 
-            PasswordLabel.AutoSize = true;
-            PasswordLabel.Font = new Font("Segoe UI Emoji", 12F);
-            PasswordLabel.ForeColor = SystemColors.ButtonFace;
-            PasswordLabel.Location = new Point(364, 34);
-            PasswordLabel.Name = "PasswordLabel";
-            PasswordLabel.Size = new Size(80, 21);
-            PasswordLabel.TabIndex = 20;
-            PasswordLabel.Text = "Password:";
+            EncryptButton.BackColor = SystemColors.Highlight;
+            EncryptButton.FlatStyle = FlatStyle.Flat;
+            EncryptButton.Font = new Font("Segoe UI Emoji", 12F);
+            EncryptButton.ForeColor = SystemColors.ButtonFace;
+            EncryptButton.Location = new Point(669, 42);
+            EncryptButton.Name = "EncryptButton";
+            EncryptButton.Size = new Size(100, 37);
+            EncryptButton.TabIndex = 29;
+            EncryptButton.Text = "Encrypt 🔐";
+            EncryptButton.UseVisualStyleBackColor = false;
+            EncryptButton.Click += EncryptButton_Click;
             // 
             // UnlockedShaValueLabel
             // 
@@ -915,10 +796,10 @@
             Controls.Add(SearchTextBox);
             Controls.Add(FileListBox);
             Controls.Add(MenuStrip);
-            Controls.Add(UnlockedFilePanel);
             Controls.Add(NoFilesPanel);
             Controls.Add(RelocationPanel);
             Controls.Add(LockedFilePanel);
+            Controls.Add(UnlockedFilePanel);
             Font = new Font("Segoe UI Emoji", 12F);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -934,6 +815,10 @@
             NoFilesPanel.PerformLayout();
             LockedFilePanel.ResumeLayout(false);
             LockedFilePanel.PerformLayout();
+            LockedShredGroupBox.ResumeLayout(false);
+            LockedShredGroupBox.PerformLayout();
+            DecryptGroupBox.ResumeLayout(false);
+            DecryptGroupBox.PerformLayout();
             RelocationPanel.ResumeLayout(false);
             RelocationPanel.PerformLayout();
             UnlockedFilePanel.ResumeLayout(false);
@@ -997,7 +882,7 @@
         private Label PasswordWarningLabel;
         private ComboBox EncryptionAlgorithmComboBox;
         private Label ChooseAlgorithmLabel;
-        private Button GenerateRandomButton;
+        private Button EncryptButton;
         private Label EyeballLabel;
         private MaskedTextBox ConfirmPasswordMaskedTextBox;
         private Label ConfirmLabel;
@@ -1010,9 +895,14 @@
         private MaskedTextBox PasswordMaskedTextBox;
         private Label PasswordLabel;
         private Label EncryptDescriptionLabel;
-        private Label ShredDescriptionLabel;
+        private Label UnlockedShredDescriptionLabel;
         private GroupBox EncryptGroupBox;
         private ContextMenuStrip FileListBoxContextMenuStrip;
         private ToolStripMenuItem RemoveFromListItem;
+        private GroupBox LockedShredGroupBox;
+        private Label LockedShredDescriptionLabel;
+        private Button LockedShredButton;
+        private GroupBox DecryptGroupBox;
+        private Label DecryptDescriptionLabel;
     }
 }

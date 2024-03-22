@@ -82,6 +82,10 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         LockedPanel.Visible = false;
         UnlockedPanel.Visible = true;
         RelocationPanel.Visible = false;
+
+        UnlockedPanel_PathValueLabel.Text = selectedModel.PathDisplay;
+
+        // TODO - update UnlockedPanel_ShaValueLabel and UnlockedPanel_SizeValueLabel
     }
 
     private void ShowLockedPanel()
@@ -90,6 +94,11 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         LockedPanel.Visible = true;
         UnlockedPanel.Visible = false;
         RelocationPanel.Visible = false;
+
+        LockedPanel_PathValueLabel.Text = selectedModel.PathDisplay;
+        LockedPanel_AlgorithmValueLabel.Text = selectedModel.EncryptionAlgorithm.ToString();
+
+        // TODO - update LockedPanel_ShaValueLabel, LockedPanel_SizeValueLabel, and LockedPanel_LockDateValueLabel
     }
 
     private void ShowRelocationPanel()

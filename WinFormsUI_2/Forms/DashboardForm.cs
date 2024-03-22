@@ -6,6 +6,8 @@ namespace WinFormsUI_2;
 
 public partial class DashboardForm : Form, IEncryptFormCaller
 {
+    FileModel selectedModel;
+
     public DashboardForm()
     {
         InitializeComponent();
@@ -46,6 +48,56 @@ public partial class DashboardForm : Form, IEncryptFormCaller
     {
         FileListBox.DataSource = GlobalConfig.DataAccessor.LoadAllFileModels();
         FileListBox.DisplayMember = "DisplayName";
+
+        UpdateControls();
+    }
+
+    private void UpdateControls()
+    {
+        // TODO - add ShowRelocationPanel()
+
+        if (FileListBox.SelectedItem != null)
+            selectedModel = (FileModel)FileListBox.SelectedItem;
+
+        if (FileListBox.Items.Count < 1)
+            ShowNoFilesPanel();
+        else
+            if (selectedModel.EncryptionStatus == true)
+            ShowLockedPanel();
+        else
+            ShowUnlockedPanel();
+    }
+
+    private void ShowNoFilesPanel()
+    {
+        NoFilesPanel.Visible = true;
+        LockedFilePanel.Visible = false;
+        UnlockedFilePanel.Visible = false;
+        RelocationPanel.Visible = false;
+    }
+
+    private void ShowUnlockedPanel()
+    {
+        NoFilesPanel.Visible = false;
+        LockedFilePanel.Visible = false;
+        UnlockedFilePanel.Visible = true;
+        RelocationPanel.Visible = false;
+    }
+
+    private void ShowLockedPanel()
+    {
+        NoFilesPanel.Visible = false;
+        LockedFilePanel.Visible = true;
+        UnlockedFilePanel.Visible = false;
+        RelocationPanel.Visible = false;
+    }
+
+    private void ShowRelocationPanel()
+    {
+        NoFilesPanel.Visible = false;
+        LockedFilePanel.Visible = false;
+        UnlockedFilePanel.Visible = false;
+        RelocationPanel.Visible = true;
     }
 
     private void AddButton_MouseDown(object sender, MouseEventArgs e)
@@ -216,5 +268,10 @@ public partial class DashboardForm : Form, IEncryptFormCaller
     public void RemovalComplete()
     {
         throw new NotImplementedException();
+    }
+
+    private void FileListBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        UpdateControls();
     }
 }

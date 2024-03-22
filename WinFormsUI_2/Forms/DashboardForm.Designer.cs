@@ -123,6 +123,7 @@
             FileListBox.Size = new Size(361, 880);
             FileListBox.TabIndex = 11;
             FileListBox.DrawItem += FileListBox_DrawItem;
+            FileListBox.SelectedIndexChanged += FileListBox_SelectedIndexChanged;
             FileListBox.DragDrop += FileListBox_DragDrop;
             FileListBox.DragEnter += FileListBox_DragEnter;
             FileListBox.MouseDown += FileListBox_MouseDown;

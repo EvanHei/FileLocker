@@ -90,9 +90,10 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         UnlockedPanel.Visible = true;
         RelocationPanel.Visible = false;
 
-        UnlockedPanel_PathValueLabel.Text = selectedModel.PathDisplay;
+        UnlockedPanel_FileNameLabel.Text = selectedModel.FileName.Length > 50 ? selectedModel.FileName.Substring(0, 47) + "..." : selectedModel.FileName;
+        UnlockedPanel_PathValueLabel.Text = selectedModel.Path.Length > 64 ? selectedModel.Path.Substring(0, 61) + "..." : selectedModel.Path;
         UnlockedPanel_SizeValueLabel.Text = selectedModel.ByteSize.ToString() + " bytes";
-        UnlockedPanel_ShaValueLabel.Text = BitConverter.ToString(selectedModel.Hash).Replace("-", "");
+        UnlockedPanel_ShaValueLabel.Text = BitConverter.ToString(selectedModel.Sha).Replace("-", "");
     }
 
     private void ShowLockedPanel()
@@ -102,12 +103,11 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         UnlockedPanel.Visible = false;
         RelocationPanel.Visible = false;
 
-        LockedPanel_PathValueLabel.Text = selectedModel.PathDisplay;
+        LockedPanel_FileNameLabel.Text = selectedModel.FileName.Length > 50 ? selectedModel.FileName.Substring(0, 47) + "..." : selectedModel.FileName;
+        LockedPanel_PathValueLabel.Text = selectedModel.Path.Length > 64 ? selectedModel.Path.Substring(0, 61) + "..." : selectedModel.Path;
         LockedPanel_SizeValueLabel.Text = selectedModel.ByteSize.ToString() + " bytes";
-        LockedPanel_ShaValueLabel.Text = BitConverter.ToString(selectedModel.Hash).Replace("-", "");
+        LockedPanel_ShaValueLabel.Text = BitConverter.ToString(selectedModel.Sha).Replace("-", "");
         LockedPanel_AlgorithmValueLabel.Text = selectedModel.EncryptionAlgorithm.ToString();
-
-        // TODO - update LockedPanel_LockDateValueLabel
     }
 
     private void ShowRelocationPanel()
@@ -179,7 +179,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
             MessageBox.Show(message, "Error", MessageBoxButtons.OK);
         }
-        
+
         PopulateForm();
     }
 
@@ -384,5 +384,37 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         {
             MessageBox.Show("Could not export, the file may be missing.", "Error", MessageBoxButtons.OK);
         }
+    }
+
+    private void UnlockedPanel_PathClipboardLabel_Click(object sender, EventArgs e)
+    {
+        Clipboard.SetText(selectedModel.Path);
+    }
+
+    private void UnlockedPanel_ShaClipboardLabel_Click(object sender, EventArgs e)
+    {
+        Clipboard.SetText(UnlockedPanel_ShaValueLabel.Text);
+    }
+
+    private void LockedPanel_PathClipboardLabel_Click(object sender, EventArgs e)
+    {
+        Clipboard.SetText(selectedModel.Path);
+    }
+
+    private void LockedPanel_ShaClipboardLabel_Click(object sender, EventArgs e)
+    {
+        Clipboard.SetText(LockedPanel_ShaValueLabel.Text);
+    }
+
+    private void Label_MouseEnter(object sender, EventArgs e)
+    {
+        Label label = (Label)sender;
+        label.ForeColor = SystemColors.Highlight;
+    }
+
+    private void Label_MouseLeave(object sender, EventArgs e)
+    {
+        Label label = (Label)sender;
+        label.ForeColor = SystemColors.ButtonFace;
     }
 }

@@ -14,15 +14,6 @@ public class FileModel
 {
     public string Path { get; set; }
 
-    [JsonIgnore]
-    public string PathDisplay
-    {
-        get
-        {
-            return Path.Length > 50 ? Path.Substring(0, 47) + "..." : Path;
-        }
-    }
-
     private string password;
 
     [JsonIgnore]
@@ -174,7 +165,7 @@ public class FileModel
     }
 
     [JsonIgnore]
-    public byte[] Hash
+    public byte[] Sha
     {
         get
         {

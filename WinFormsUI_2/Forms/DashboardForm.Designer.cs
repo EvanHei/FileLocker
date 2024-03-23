@@ -47,9 +47,11 @@
             NoFilesPanel_NoFilesDescriptionLabel = new Label();
             NoFilesPanel_NoFilesLabel = new Label();
             LockedPanel = new Panel();
+            LockedPanel_ShaClipboardLabel = new Label();
             LockedPanel_ExportGroupBox = new GroupBox();
             LockedPanel_ExportDescriptionLabel = new Label();
             LockedPanel_ExportButton = new Button();
+            LockedPanel_PathClipboardLabel = new Label();
             LockedPanel_ShredGroupBox = new GroupBox();
             LockedPanel_ShredDescriptionLabel = new Label();
             LockedPanel_ShredButton = new Button();
@@ -62,8 +64,6 @@
             LockedPanel_SizeLabel = new Label();
             LockedPanel_PathValueLabel = new Label();
             LockedPanel_PathLabel = new Label();
-            LockedPanel_DateValueLabel = new Label();
-            LockedPanel_DateLabel = new Label();
             LockedPanel_AlgorithmValueLabel = new Label();
             LockedPanel_AlgorithmLabel = new Label();
             LockedPanel_StatusValueLabel = new Label();
@@ -75,6 +75,8 @@
             RelocationPanel_LastSeenLabel = new Label();
             RelocationPanel_CantLocateFileLabel = new Label();
             UnlockedPanel = new Panel();
+            UnlockedPanel_ShaClipboardLabel = new Label();
+            UnlockedPanel_PathClipboardLabel = new Label();
             UnlockedPanel_ShredGroupBox = new GroupBox();
             UnlockedPanel_ShredDescriptionLabel = new Label();
             UnlockedPanel_ShredButton = new Button();
@@ -289,7 +291,9 @@
             // 
             LockedPanel.BackColor = Color.FromArgb(32, 32, 32);
             LockedPanel.BorderStyle = BorderStyle.FixedSingle;
+            LockedPanel.Controls.Add(LockedPanel_ShaClipboardLabel);
             LockedPanel.Controls.Add(LockedPanel_ExportGroupBox);
+            LockedPanel.Controls.Add(LockedPanel_PathClipboardLabel);
             LockedPanel.Controls.Add(LockedPanel_ShredGroupBox);
             LockedPanel.Controls.Add(LockedPanel_DecryptGroupBox);
             LockedPanel.Controls.Add(LockedPanel_ShaValueLabel);
@@ -298,8 +302,6 @@
             LockedPanel.Controls.Add(LockedPanel_SizeLabel);
             LockedPanel.Controls.Add(LockedPanel_PathValueLabel);
             LockedPanel.Controls.Add(LockedPanel_PathLabel);
-            LockedPanel.Controls.Add(LockedPanel_DateValueLabel);
-            LockedPanel.Controls.Add(LockedPanel_DateLabel);
             LockedPanel.Controls.Add(LockedPanel_AlgorithmValueLabel);
             LockedPanel.Controls.Add(LockedPanel_AlgorithmLabel);
             LockedPanel.Controls.Add(LockedPanel_StatusValueLabel);
@@ -309,6 +311,21 @@
             LockedPanel.Name = "LockedPanel";
             LockedPanel.Size = new Size(864, 921);
             LockedPanel.TabIndex = 24;
+            // 
+            // LockedPanel_ShaClipboardLabel
+            // 
+            LockedPanel_ShaClipboardLabel.AutoSize = true;
+            LockedPanel_ShaClipboardLabel.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel_ShaClipboardLabel.Font = new Font("Segoe UI Emoji", 10F);
+            LockedPanel_ShaClipboardLabel.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_ShaClipboardLabel.Location = new Point(34, 123);
+            LockedPanel_ShaClipboardLabel.Name = "LockedPanel_ShaClipboardLabel";
+            LockedPanel_ShaClipboardLabel.Size = new Size(25, 19);
+            LockedPanel_ShaClipboardLabel.TabIndex = 44;
+            LockedPanel_ShaClipboardLabel.Text = "📋";
+            LockedPanel_ShaClipboardLabel.Click += LockedPanel_ShaClipboardLabel_Click;
+            LockedPanel_ShaClipboardLabel.MouseEnter += Label_MouseEnter;
+            LockedPanel_ShaClipboardLabel.MouseLeave += Label_MouseLeave;
             // 
             // LockedPanel_ExportGroupBox
             // 
@@ -348,6 +365,21 @@
             LockedPanel_ExportButton.Text = "Export 📤";
             LockedPanel_ExportButton.UseVisualStyleBackColor = false;
             LockedPanel_ExportButton.Click += LockedPanel_ExportButton_Click;
+            // 
+            // LockedPanel_PathClipboardLabel
+            // 
+            LockedPanel_PathClipboardLabel.AutoSize = true;
+            LockedPanel_PathClipboardLabel.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel_PathClipboardLabel.Font = new Font("Segoe UI Emoji", 10F);
+            LockedPanel_PathClipboardLabel.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_PathClipboardLabel.Location = new Point(34, 102);
+            LockedPanel_PathClipboardLabel.Name = "LockedPanel_PathClipboardLabel";
+            LockedPanel_PathClipboardLabel.Size = new Size(25, 19);
+            LockedPanel_PathClipboardLabel.TabIndex = 43;
+            LockedPanel_PathClipboardLabel.Text = "📋";
+            LockedPanel_PathClipboardLabel.Click += LockedPanel_PathClipboardLabel_Click;
+            LockedPanel_PathClipboardLabel.MouseEnter += Label_MouseEnter;
+            LockedPanel_PathClipboardLabel.MouseLeave += Label_MouseLeave;
             // 
             // LockedPanel_ShredGroupBox
             // 
@@ -454,7 +486,7 @@
             LockedPanel_SizeValueLabel.AutoSize = true;
             LockedPanel_SizeValueLabel.BackColor = Color.FromArgb(32, 32, 32);
             LockedPanel_SizeValueLabel.ForeColor = SystemColors.ButtonFace;
-            LockedPanel_SizeValueLabel.Location = new Point(107, 101);
+            LockedPanel_SizeValueLabel.Location = new Point(107, 80);
             LockedPanel_SizeValueLabel.Name = "LockedPanel_SizeValueLabel";
             LockedPanel_SizeValueLabel.Size = new Size(58, 21);
             LockedPanel_SizeValueLabel.TabIndex = 32;
@@ -465,7 +497,7 @@
             LockedPanel_SizeLabel.AutoSize = true;
             LockedPanel_SizeLabel.BackColor = Color.FromArgb(32, 32, 32);
             LockedPanel_SizeLabel.ForeColor = SystemColors.ButtonFace;
-            LockedPanel_SizeLabel.Location = new Point(61, 101);
+            LockedPanel_SizeLabel.Location = new Point(61, 80);
             LockedPanel_SizeLabel.Name = "LockedPanel_SizeLabel";
             LockedPanel_SizeLabel.Size = new Size(41, 21);
             LockedPanel_SizeLabel.TabIndex = 31;
@@ -476,7 +508,7 @@
             LockedPanel_PathValueLabel.AutoSize = true;
             LockedPanel_PathValueLabel.BackColor = Color.FromArgb(32, 32, 32);
             LockedPanel_PathValueLabel.ForeColor = SystemColors.ButtonFace;
-            LockedPanel_PathValueLabel.Location = new Point(107, 80);
+            LockedPanel_PathValueLabel.Location = new Point(107, 101);
             LockedPanel_PathValueLabel.Name = "LockedPanel_PathValueLabel";
             LockedPanel_PathValueLabel.Size = new Size(63, 21);
             LockedPanel_PathValueLabel.TabIndex = 30;
@@ -487,33 +519,11 @@
             LockedPanel_PathLabel.AutoSize = true;
             LockedPanel_PathLabel.BackColor = Color.FromArgb(32, 32, 32);
             LockedPanel_PathLabel.ForeColor = SystemColors.ButtonFace;
-            LockedPanel_PathLabel.Location = new Point(58, 80);
+            LockedPanel_PathLabel.Location = new Point(58, 101);
             LockedPanel_PathLabel.Name = "LockedPanel_PathLabel";
             LockedPanel_PathLabel.Size = new Size(44, 21);
             LockedPanel_PathLabel.TabIndex = 29;
             LockedPanel_PathLabel.Text = "Path:";
-            // 
-            // LockedPanel_DateValueLabel
-            // 
-            LockedPanel_DateValueLabel.AutoSize = true;
-            LockedPanel_DateValueLabel.BackColor = Color.FromArgb(32, 32, 32);
-            LockedPanel_DateValueLabel.ForeColor = SystemColors.ButtonFace;
-            LockedPanel_DateValueLabel.Location = new Point(107, 164);
-            LockedPanel_DateValueLabel.Name = "LockedPanel_DateValueLabel";
-            LockedPanel_DateValueLabel.Size = new Size(94, 21);
-            LockedPanel_DateValueLabel.TabIndex = 28;
-            LockedPanel_DateValueLabel.Text = "<lock date>";
-            // 
-            // LockedPanel_DateLabel
-            // 
-            LockedPanel_DateLabel.AutoSize = true;
-            LockedPanel_DateLabel.BackColor = Color.FromArgb(32, 32, 32);
-            LockedPanel_DateLabel.ForeColor = SystemColors.ButtonFace;
-            LockedPanel_DateLabel.Location = new Point(21, 164);
-            LockedPanel_DateLabel.Name = "LockedPanel_DateLabel";
-            LockedPanel_DateLabel.Size = new Size(81, 21);
-            LockedPanel_DateLabel.TabIndex = 27;
-            LockedPanel_DateLabel.Text = "Lock Date:";
             // 
             // LockedPanel_AlgorithmValueLabel
             // 
@@ -638,6 +648,8 @@
             // 
             UnlockedPanel.BackColor = Color.FromArgb(32, 32, 32);
             UnlockedPanel.BorderStyle = BorderStyle.FixedSingle;
+            UnlockedPanel.Controls.Add(UnlockedPanel_ShaClipboardLabel);
+            UnlockedPanel.Controls.Add(UnlockedPanel_PathClipboardLabel);
             UnlockedPanel.Controls.Add(UnlockedPanel_ShredGroupBox);
             UnlockedPanel.Controls.Add(UnlockedPanel_EncryptGroupBox);
             UnlockedPanel.Controls.Add(UnlockedPanel_ShaValueLabel);
@@ -653,6 +665,36 @@
             UnlockedPanel.Name = "UnlockedPanel";
             UnlockedPanel.Size = new Size(864, 921);
             UnlockedPanel.TabIndex = 35;
+            // 
+            // UnlockedPanel_ShaClipboardLabel
+            // 
+            UnlockedPanel_ShaClipboardLabel.AutoSize = true;
+            UnlockedPanel_ShaClipboardLabel.BackColor = Color.FromArgb(32, 32, 32);
+            UnlockedPanel_ShaClipboardLabel.Font = new Font("Segoe UI Emoji", 10F);
+            UnlockedPanel_ShaClipboardLabel.ForeColor = SystemColors.ButtonFace;
+            UnlockedPanel_ShaClipboardLabel.Location = new Point(34, 123);
+            UnlockedPanel_ShaClipboardLabel.Name = "UnlockedPanel_ShaClipboardLabel";
+            UnlockedPanel_ShaClipboardLabel.Size = new Size(25, 19);
+            UnlockedPanel_ShaClipboardLabel.TabIndex = 42;
+            UnlockedPanel_ShaClipboardLabel.Text = "📋";
+            UnlockedPanel_ShaClipboardLabel.Click += UnlockedPanel_ShaClipboardLabel_Click;
+            UnlockedPanel_ShaClipboardLabel.MouseEnter += Label_MouseEnter;
+            UnlockedPanel_ShaClipboardLabel.MouseLeave += Label_MouseLeave;
+            // 
+            // UnlockedPanel_PathClipboardLabel
+            // 
+            UnlockedPanel_PathClipboardLabel.AutoSize = true;
+            UnlockedPanel_PathClipboardLabel.BackColor = Color.FromArgb(32, 32, 32);
+            UnlockedPanel_PathClipboardLabel.Font = new Font("Segoe UI Emoji", 10F);
+            UnlockedPanel_PathClipboardLabel.ForeColor = SystemColors.ButtonFace;
+            UnlockedPanel_PathClipboardLabel.Location = new Point(34, 102);
+            UnlockedPanel_PathClipboardLabel.Name = "UnlockedPanel_PathClipboardLabel";
+            UnlockedPanel_PathClipboardLabel.Size = new Size(25, 19);
+            UnlockedPanel_PathClipboardLabel.TabIndex = 41;
+            UnlockedPanel_PathClipboardLabel.Text = "📋";
+            UnlockedPanel_PathClipboardLabel.Click += UnlockedPanel_PathClipboardLabel_Click;
+            UnlockedPanel_PathClipboardLabel.MouseEnter += Label_MouseEnter;
+            UnlockedPanel_PathClipboardLabel.MouseLeave += Label_MouseLeave;
             // 
             // UnlockedPanel_ShredGroupBox
             // 
@@ -759,7 +801,7 @@
             UnlockedPanel_SizeValueLabel.AutoSize = true;
             UnlockedPanel_SizeValueLabel.BackColor = Color.FromArgb(32, 32, 32);
             UnlockedPanel_SizeValueLabel.ForeColor = SystemColors.ButtonFace;
-            UnlockedPanel_SizeValueLabel.Location = new Point(107, 101);
+            UnlockedPanel_SizeValueLabel.Location = new Point(107, 80);
             UnlockedPanel_SizeValueLabel.Name = "UnlockedPanel_SizeValueLabel";
             UnlockedPanel_SizeValueLabel.Size = new Size(58, 21);
             UnlockedPanel_SizeValueLabel.TabIndex = 28;
@@ -770,7 +812,7 @@
             UnlockedPanel_SizeLabel.AutoSize = true;
             UnlockedPanel_SizeLabel.BackColor = Color.FromArgb(32, 32, 32);
             UnlockedPanel_SizeLabel.ForeColor = SystemColors.ButtonFace;
-            UnlockedPanel_SizeLabel.Location = new Point(61, 101);
+            UnlockedPanel_SizeLabel.Location = new Point(61, 80);
             UnlockedPanel_SizeLabel.Name = "UnlockedPanel_SizeLabel";
             UnlockedPanel_SizeLabel.Size = new Size(41, 21);
             UnlockedPanel_SizeLabel.TabIndex = 27;
@@ -781,7 +823,7 @@
             UnlockedPanel_PathValueLabel.AutoSize = true;
             UnlockedPanel_PathValueLabel.BackColor = Color.FromArgb(32, 32, 32);
             UnlockedPanel_PathValueLabel.ForeColor = SystemColors.ButtonFace;
-            UnlockedPanel_PathValueLabel.Location = new Point(107, 80);
+            UnlockedPanel_PathValueLabel.Location = new Point(107, 101);
             UnlockedPanel_PathValueLabel.Name = "UnlockedPanel_PathValueLabel";
             UnlockedPanel_PathValueLabel.Size = new Size(63, 21);
             UnlockedPanel_PathValueLabel.TabIndex = 26;
@@ -792,7 +834,7 @@
             UnlockedPanel_PathLabel.AutoSize = true;
             UnlockedPanel_PathLabel.BackColor = Color.FromArgb(32, 32, 32);
             UnlockedPanel_PathLabel.ForeColor = SystemColors.ButtonFace;
-            UnlockedPanel_PathLabel.Location = new Point(58, 80);
+            UnlockedPanel_PathLabel.Location = new Point(58, 101);
             UnlockedPanel_PathLabel.Name = "UnlockedPanel_PathLabel";
             UnlockedPanel_PathLabel.Size = new Size(44, 21);
             UnlockedPanel_PathLabel.TabIndex = 25;
@@ -842,10 +884,10 @@
             Controls.Add(SearchTextBox);
             Controls.Add(FileListBox);
             Controls.Add(MenuStrip);
-            Controls.Add(LockedPanel);
             Controls.Add(UnlockedPanel);
             Controls.Add(NoFilesPanel);
             Controls.Add(RelocationPanel);
+            Controls.Add(LockedPanel);
             Font = new Font("Segoe UI Emoji", 12F);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -906,8 +948,6 @@
         private Label LockedPanel_SizeLabel;
         private Label LockedPanel_PathValueLabel;
         private Label LockedPanel_PathLabel;
-        private Label LockedPanel_DateValueLabel;
-        private Label LockedPanel_DateLabel;
         private Label LockedPanel_AlgorithmValueLabel;
         private Label LockedPanel_AlgorithmLabel;
         private Panel RelocationPanel;
@@ -955,5 +995,9 @@
         private GroupBox LockedPanel_ExportGroupBox;
         private Label LockedPanel_ExportDescriptionLabel;
         private Button LockedPanel_ExportButton;
+        private Label UnlockedPanel_PathClipboardLabel;
+        private Label UnlockedPanel_ShaClipboardLabel;
+        private Label LockedPanel_ShaClipboardLabel;
+        private Label LockedPanel_PathClipboardLabel;
     }
 }

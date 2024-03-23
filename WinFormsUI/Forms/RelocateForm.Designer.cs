@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RelocateForm));
             RelocateButton = new Button();
             CantLocateFileLabel = new Label();
             LastSeenLabel = new Label();
@@ -72,6 +73,7 @@
             LastSeenLabel.TabIndex = 16;
             LastSeenLabel.Text = "It was last seen at <path>.";
             LastSeenLabel.TextChanged += CenterLabel_TextChanged;
+            LastSeenLabel.Click += this.LastSeenLabel_Click;
             // 
             // RemoveButton
             // 
@@ -99,6 +101,7 @@
             Controls.Add(RelocateButton);
             Font = new Font("Segoe UI Emoji", 12F);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4);
             Name = "RelocateForm";
             StartPosition = FormStartPosition.CenterParent;

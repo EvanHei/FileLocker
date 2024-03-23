@@ -1,5 +1,6 @@
 using FileLockerLibrary;
 using System.Diagnostics;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace WinFormsUI_2;
@@ -54,10 +55,14 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
     private void UpdateControls()
     {
-        // TODO - add ShowRelocationPanel()
-
         if (FileListBox.SelectedItem != null)
             selectedModel = (FileModel)FileListBox.SelectedItem;
+
+        if (!File.Exists(selectedModel.Path))
+        {
+            ShowRelocationPanel();
+            return;
+        }
 
         if (FileListBox.Items.Count < 1)
             ShowNoFilesPanel();
@@ -178,16 +183,35 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         importForm.ShowDialog();
     }
 
-    // TODO - implement RelocateButton_Click
     private void RelocateButton_Click(object sender, EventArgs e)
     {
+        using OpenFileDialog openFileDialog = new();
+        openFileDialog.Title = "Relocate File";
+        openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        if (openFileDialog.ShowDialog() != DialogResult.OK)
+            return;
 
+        string newPath = openFileDialog.FileName;
+        if (Path.GetFileName(newPath) != selectedModel.FileName)
+            return;
+
+        GlobalConfig.DataAccessor.RelocateFile(selectedModel, newPath);
+
+        UpdateControls();
     }
 
-    // TODO - implement RemoveButton_Click
     private void RemoveButton_Click(object sender, EventArgs e)
     {
-
+        try
+        {
+            GlobalConfig.DataAccessor.DeleteFileModel(selectedModel);
+            PopulateForm();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
     }
 
     // TODO - implement SearchTextBox_TextChanged

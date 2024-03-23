@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace WinFormsUI_2;
 
-public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCaller
+public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCaller, IImportFormCaller
 {
     FileModel selectedModel;
 
@@ -128,17 +128,24 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
     private void AddFiles(string[] paths)
     {
-        bool fileTooLarge = false;
+        bool filesTooLarge = false;
+        bool filesAlreadyAdded = false;
 
         foreach (string path in paths)
         {
             if (!File.Exists(path))
                 continue;
 
+            if (GlobalConfig.DataAccessor.LoadAllFileModels().Any(file => file.Path == path))
+            {
+                filesAlreadyAdded = true;
+                continue;
+            }
+
             FileInfo fileInfo = new(path);
             if (fileInfo.Length > Constants.MaxFileSize)
             {
-                fileTooLarge = true;
+                filesTooLarge = true;
                 continue;
             }
 
@@ -151,16 +158,24 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
             catch { }
         }
 
-        if (fileTooLarge)
-            MessageBox.Show($"Some files exceeded the max size of {Constants.MaxFileSize} bytes.", "Error", MessageBoxButtons.OK);
+        if (filesTooLarge || filesAlreadyAdded)
+        {
+            string message = "";
+            if (filesTooLarge)
+                message += $"Some files exceeded the max size of {Constants.MaxFileSize} bytes.";
+            if (filesAlreadyAdded)
+                message += "\nSome files already added.";
 
+            MessageBox.Show(message, "Error", MessageBoxButtons.OK);
+        }
+        
         PopulateForm();
     }
 
-    // TODO - implement ImportArchiveToolStripMenuItem_Click
     private void ImportArchiveToolStripMenuItem_Click(object sender, EventArgs e)
     {
-
+        ImportForm importForm = new(this);
+        importForm.ShowDialog();
     }
 
     // TODO - implement RelocateButton_Click
@@ -303,5 +318,31 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         }
 
         PopulateForm();
+    }
+
+    public void ImportComplete()
+    {
+        PopulateForm();
+    }
+
+    private void LockedPanel_ExportButton_Click(object sender, EventArgs e)
+    {
+        using SaveFileDialog saveFileDialog = new();
+        saveFileDialog.Title = "Save Archive";
+        saveFileDialog.Filter = "Zip files (*.zip)|*.zip";
+        saveFileDialog.FileName = selectedModel.FileName + ".zip";
+        saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        saveFileDialog.OverwritePrompt = true;
+        if (saveFileDialog.ShowDialog() != DialogResult.OK)
+            return;
+
+        try
+        {
+            GlobalConfig.DataAccessor.ExportZipFileModel(selectedModel, saveFileDialog.FileName);
+        }
+        catch
+        {
+            MessageBox.Show("Could not export, the file may be missing.", "Error", MessageBoxButtons.OK);
+        }
     }
 }

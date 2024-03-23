@@ -87,6 +87,9 @@
             UnlockedPanel_StatusValueLabel = new Label();
             UnlockedPanel_StatusLabel = new Label();
             UnlockedPanel_FileNameLabel = new Label();
+            LockedPanel_ExportGroupBox = new GroupBox();
+            LockedPanel_ExportDescriptionLabel = new Label();
+            LockedPanel_ExportButton = new Button();
             FileListBoxContextMenuStrip.SuspendLayout();
             MenuStrip.SuspendLayout();
             AddButtonContextMenuStrip.SuspendLayout();
@@ -98,6 +101,7 @@
             UnlockedPanel.SuspendLayout();
             UnlockedPanel_ShredGroupBox.SuspendLayout();
             UnlockedPanel_EncryptGroupBox.SuspendLayout();
+            LockedPanel_ExportGroupBox.SuspendLayout();
             SuspendLayout();
             // 
             // FileListBox
@@ -285,6 +289,7 @@
             // 
             LockedPanel.BackColor = Color.FromArgb(32, 32, 32);
             LockedPanel.BorderStyle = BorderStyle.FixedSingle;
+            LockedPanel.Controls.Add(LockedPanel_ExportGroupBox);
             LockedPanel.Controls.Add(LockedPanel_ShredGroupBox);
             LockedPanel.Controls.Add(LockedPanel_DecryptGroupBox);
             LockedPanel.Controls.Add(LockedPanel_ShaValueLabel);
@@ -312,7 +317,7 @@
             LockedPanel_ShredGroupBox.Controls.Add(LockedPanel_ShredButton);
             LockedPanel_ShredGroupBox.FlatStyle = FlatStyle.Flat;
             LockedPanel_ShredGroupBox.ForeColor = SystemColors.ButtonFace;
-            LockedPanel_ShredGroupBox.Location = new Point(22, 338);
+            LockedPanel_ShredGroupBox.Location = new Point(22, 493);
             LockedPanel_ShredGroupBox.Name = "LockedPanel_ShredGroupBox";
             LockedPanel_ShredGroupBox.Size = new Size(807, 116);
             LockedPanel_ShredGroupBox.TabIndex = 36;
@@ -787,6 +792,45 @@
             UnlockedPanel_FileNameLabel.TabIndex = 8;
             UnlockedPanel_FileNameLabel.Text = "<filename>";
             // 
+            // LockedPanel_ExportGroupBox
+            // 
+            LockedPanel_ExportGroupBox.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel_ExportGroupBox.Controls.Add(LockedPanel_ExportDescriptionLabel);
+            LockedPanel_ExportGroupBox.Controls.Add(LockedPanel_ExportButton);
+            LockedPanel_ExportGroupBox.FlatStyle = FlatStyle.Flat;
+            LockedPanel_ExportGroupBox.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_ExportGroupBox.Location = new Point(22, 346);
+            LockedPanel_ExportGroupBox.Name = "LockedPanel_ExportGroupBox";
+            LockedPanel_ExportGroupBox.Size = new Size(807, 116);
+            LockedPanel_ExportGroupBox.TabIndex = 37;
+            LockedPanel_ExportGroupBox.TabStop = false;
+            LockedPanel_ExportGroupBox.Text = "Export";
+            // 
+            // LockedPanel_ExportDescriptionLabel
+            // 
+            LockedPanel_ExportDescriptionLabel.AutoSize = true;
+            LockedPanel_ExportDescriptionLabel.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel_ExportDescriptionLabel.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_ExportDescriptionLabel.Location = new Point(74, 40);
+            LockedPanel_ExportDescriptionLabel.Name = "LockedPanel_ExportDescriptionLabel";
+            LockedPanel_ExportDescriptionLabel.Size = new Size(259, 42);
+            LockedPanel_ExportDescriptionLabel.TabIndex = 34;
+            LockedPanel_ExportDescriptionLabel.Text = "Export the file and its cryptographic \r\ndata to a .zip archive";
+            // 
+            // LockedPanel_ExportButton
+            // 
+            LockedPanel_ExportButton.BackColor = SystemColors.Highlight;
+            LockedPanel_ExportButton.FlatStyle = FlatStyle.Flat;
+            LockedPanel_ExportButton.Font = new Font("Segoe UI Emoji", 12F);
+            LockedPanel_ExportButton.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_ExportButton.Location = new Point(669, 45);
+            LockedPanel_ExportButton.Name = "LockedPanel_ExportButton";
+            LockedPanel_ExportButton.Size = new Size(100, 37);
+            LockedPanel_ExportButton.TabIndex = 6;
+            LockedPanel_ExportButton.Text = "Export 📤";
+            LockedPanel_ExportButton.UseVisualStyleBackColor = false;
+            LockedPanel_ExportButton.Click += LockedPanel_ExportButton_Click;
+            // 
             // DashboardForm
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
@@ -798,10 +842,10 @@
             Controls.Add(SearchTextBox);
             Controls.Add(FileListBox);
             Controls.Add(MenuStrip);
+            Controls.Add(LockedPanel);
             Controls.Add(UnlockedPanel);
             Controls.Add(NoFilesPanel);
             Controls.Add(RelocationPanel);
-            Controls.Add(LockedPanel);
             Font = new Font("Segoe UI Emoji", 12F);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -829,6 +873,8 @@
             UnlockedPanel_ShredGroupBox.PerformLayout();
             UnlockedPanel_EncryptGroupBox.ResumeLayout(false);
             UnlockedPanel_EncryptGroupBox.PerformLayout();
+            LockedPanel_ExportGroupBox.ResumeLayout(false);
+            LockedPanel_ExportGroupBox.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -906,5 +952,8 @@
         private Button LockedPanel_ShredButton;
         private GroupBox LockedPanel_DecryptGroupBox;
         private Label LockedPanel_DecryptDescriptionLabel;
+        private GroupBox LockedPanel_ExportGroupBox;
+        private Label LockedPanel_ExportDescriptionLabel;
+        private Button LockedPanel_ExportButton;
     }
 }

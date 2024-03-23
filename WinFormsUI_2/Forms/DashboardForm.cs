@@ -92,7 +92,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
         UnlockedPanel_FileNameLabel.Text = selectedModel.FileName.Length > 50 ? selectedModel.FileName.Substring(0, 47) + "..." : selectedModel.FileName;
         UnlockedPanel_PathValueLabel.Text = selectedModel.Path.Length > 64 ? selectedModel.Path.Substring(0, 61) + "..." : selectedModel.Path;
-        UnlockedPanel_SizeValueLabel.Text = selectedModel.ByteSize.ToString() + " bytes";
+        UnlockedPanel_SizeValueLabel.Text = FormatBytes(selectedModel.ByteSize);
         UnlockedPanel_ShaValueLabel.Text = BitConverter.ToString(selectedModel.Sha).Replace("-", "");
     }
 
@@ -105,7 +105,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
         LockedPanel_FileNameLabel.Text = selectedModel.FileName.Length > 50 ? selectedModel.FileName.Substring(0, 47) + "..." : selectedModel.FileName;
         LockedPanel_PathValueLabel.Text = selectedModel.Path.Length > 64 ? selectedModel.Path.Substring(0, 61) + "..." : selectedModel.Path;
-        LockedPanel_SizeValueLabel.Text = selectedModel.ByteSize.ToString() + " bytes";
+        LockedPanel_SizeValueLabel.Text = FormatBytes(selectedModel.ByteSize);
         LockedPanel_ShaValueLabel.Text = BitConverter.ToString(selectedModel.Sha).Replace("-", "");
         LockedPanel_AlgorithmValueLabel.Text = selectedModel.EncryptionAlgorithm.ToString();
     }
@@ -116,6 +116,21 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         LockedPanel.Visible = false;
         UnlockedPanel.Visible = false;
         RelocationPanel.Visible = true;
+    }
+
+    private string FormatBytes(int bytes)
+    {
+        string[] suffixes = { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
+
+        if (bytes == 0)
+            return "0 bytes";
+
+        int i;
+        double dblBytes = bytes;
+        for (i = 0; Math.Round(dblBytes / 1024) >= 1; i++)
+            dblBytes /= 1024;
+
+        return $"{dblBytes:n1} {suffixes[i]}";
     }
 
     private void AddButton_MouseDown(object sender, MouseEventArgs e)
@@ -300,19 +315,9 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         Process.Start(processStartInfo);
     }
 
-    public void RemovalComplete()
-    {
-        throw new NotImplementedException();
-    }
-
     private void FileListBox_SelectedIndexChanged(object sender, EventArgs e)
     {
         UpdateControls();
-    }
-
-    private void NoFilesDescriptionLabel_Click(object sender, EventArgs e)
-    {
-
     }
 
     private void DecryptButton_Click(object sender, EventArgs e)
@@ -331,17 +336,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         PopulateForm();
     }
 
-    private void UnlockedShredButton_Click(object sender, EventArgs e)
-    {
-        ShredFile();
-    }
-
-    private void LockedShredButton_Click(object sender, EventArgs e)
-    {
-        ShredFile();
-    }
-
-    private void ShredFile()
+    private void ShredButton_Click(object sender, EventArgs e)
     {
         if (MessageBox.Show("This will delete the file(s) permanently. Are you sure you want to proceed?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
             return;
@@ -365,7 +360,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         PopulateForm();
     }
 
-    private void LockedPanel_ExportButton_Click(object sender, EventArgs e)
+    private void ExportButton_Click(object sender, EventArgs e)
     {
         using SaveFileDialog saveFileDialog = new();
         saveFileDialog.Title = "Save Archive";
@@ -386,24 +381,14 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         }
     }
 
-    private void UnlockedPanel_PathClipboardLabel_Click(object sender, EventArgs e)
+    private void PathClipboardLabel_Click(object sender, EventArgs e)
     {
         Clipboard.SetText(selectedModel.Path);
     }
 
-    private void UnlockedPanel_ShaClipboardLabel_Click(object sender, EventArgs e)
+    private void ShaClipboardLabel_Click(object sender, EventArgs e)
     {
-        Clipboard.SetText(UnlockedPanel_ShaValueLabel.Text);
-    }
-
-    private void LockedPanel_PathClipboardLabel_Click(object sender, EventArgs e)
-    {
-        Clipboard.SetText(selectedModel.Path);
-    }
-
-    private void LockedPanel_ShaClipboardLabel_Click(object sender, EventArgs e)
-    {
-        Clipboard.SetText(LockedPanel_ShaValueLabel.Text);
+        Clipboard.SetText(BitConverter.ToString(selectedModel.Sha).Replace("-", ""));
     }
 
     private void Label_MouseEnter(object sender, EventArgs e)
@@ -416,5 +401,10 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
     {
         Label label = (Label)sender;
         label.ForeColor = SystemColors.ButtonFace;
+    }
+
+    private void ShowInExplorerButton_Click(object sender, EventArgs e)
+    {
+        Process.Start("explorer.exe", "/select, " + selectedModel.Path);
     }
 }

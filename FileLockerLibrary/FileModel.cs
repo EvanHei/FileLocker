@@ -148,7 +148,7 @@ public class FileModel
             else if (EncryptionStatus == false)
                 output += "📄 ";
 
-            string fileName = FileName.Length > 50 ? FileName.Substring(0, 47) + "..." : FileName;
+            string fileName = FileName.Length > 35 ? FileName.Substring(0, 32) + "..." : FileName;
             output += $" {fileName}";
 
             return output;

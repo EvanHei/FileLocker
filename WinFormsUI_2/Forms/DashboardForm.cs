@@ -1,5 +1,6 @@
 using FileLockerLibrary;
 using System.Diagnostics;
+using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -133,6 +134,8 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
     private void AddFiles(string[] paths)
     {
+        SearchTextBox.Text = "";
+
         bool filesTooLarge = false;
         bool filesAlreadyAdded = false;
 
@@ -214,10 +217,20 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         }
     }
 
-    // TODO - implement SearchTextBox_TextChanged
     private void SearchTextBox_TextChanged(object sender, EventArgs e)
     {
+        // show/hide magnifying glass label
+        if (SearchTextBox.Text.Length > 0)
+            MagnifyingGlassLabel.Visible = false;
+        else
+            MagnifyingGlassLabel.Visible = true;
 
+        // filter FileListBox
+        string searchText = SearchTextBox.Text.Trim().ToLower();
+
+        FileListBox.DataSource = GlobalConfig.DataAccessor.LoadAllFileModels().Where(file => file.FileName.ToLower().Contains(searchText)).ToList();
+
+        UpdateControls();
     }
 
     private void EncryptButton_Click(object sender, EventArgs e)

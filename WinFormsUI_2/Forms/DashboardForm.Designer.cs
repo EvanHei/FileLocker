@@ -842,10 +842,10 @@
             Controls.Add(SearchTextBox);
             Controls.Add(FileListBox);
             Controls.Add(MenuStrip);
+            Controls.Add(NoFilesPanel);
             Controls.Add(RelocationPanel);
             Controls.Add(LockedPanel);
             Controls.Add(UnlockedPanel);
-            Controls.Add(NoFilesPanel);
             Font = new Font("Segoe UI Emoji", 12F);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");

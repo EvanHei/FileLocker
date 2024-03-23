@@ -16,6 +16,8 @@ public static class GlobalConfig
 
     public static ILogger Logger = new SerilogLogger();
 
+    public static IHasher Hasher = new Sha256Hasher();
+
     public static IEncryptor Encryptor(EncryptionAlgorithm algorithm)
     {
         switch (algorithm)

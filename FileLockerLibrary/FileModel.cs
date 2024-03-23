@@ -14,6 +14,15 @@ public class FileModel
 {
     public string Path { get; set; }
 
+    [JsonIgnore]
+    public string PathDisplay
+    {
+        get
+        {
+            return Path.Length > 50 ? Path.Substring(0, 47) + "..." : Path;
+        }
+    }
+
     private string password;
 
     [JsonIgnore]
@@ -156,20 +165,31 @@ public class FileModel
     }
 
     [JsonIgnore]
-    public string PathDisplay
-    {
-        get
-        {
-            return Path.Length > 50 ? Path.Substring(0, 47) + "..." : Path;
-        }
-    }
-
-    [JsonIgnore]
     public string FileName
     {
         get
         {
             return System.IO.Path.GetFileName(Path);
+        }
+    }
+
+    [JsonIgnore]
+    public byte[] Hash
+    {
+        get
+        {
+            byte[] data = File.ReadAllBytes(Path);
+            return GlobalConfig.Hasher.Hash(data);
+        }
+    }
+
+    [JsonIgnore]
+    public int ByteSize
+    {
+        get
+        {
+            byte[] data = File.ReadAllBytes(Path);
+            return data.Length;
         }
     }
 

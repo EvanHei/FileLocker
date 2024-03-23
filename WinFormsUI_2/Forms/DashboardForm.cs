@@ -1,4 +1,5 @@
 using FileLockerLibrary;
+using System.Collections;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -90,8 +91,8 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         RelocationPanel.Visible = false;
 
         UnlockedPanel_PathValueLabel.Text = selectedModel.PathDisplay;
-
-        // TODO - update UnlockedPanel_ShaValueLabel and UnlockedPanel_SizeValueLabel
+        UnlockedPanel_SizeValueLabel.Text = selectedModel.ByteSize.ToString() + " bytes";
+        UnlockedPanel_ShaValueLabel.Text = BitConverter.ToString(selectedModel.Hash).Replace("-", "");
     }
 
     private void ShowLockedPanel()
@@ -102,9 +103,11 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         RelocationPanel.Visible = false;
 
         LockedPanel_PathValueLabel.Text = selectedModel.PathDisplay;
+        LockedPanel_SizeValueLabel.Text = selectedModel.ByteSize.ToString() + " bytes";
+        LockedPanel_ShaValueLabel.Text = BitConverter.ToString(selectedModel.Hash).Replace("-", "");
         LockedPanel_AlgorithmValueLabel.Text = selectedModel.EncryptionAlgorithm.ToString();
 
-        // TODO - update LockedPanel_ShaValueLabel, LockedPanel_SizeValueLabel, and LockedPanel_LockDateValueLabel
+        // TODO - update LockedPanel_LockDateValueLabel
     }
 
     private void ShowRelocationPanel()

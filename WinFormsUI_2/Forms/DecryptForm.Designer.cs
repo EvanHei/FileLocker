@@ -122,6 +122,8 @@
             Name = "DecryptForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Decrypt";
+            MouseDown += DecryptForm_MouseDown;
+            MouseMove += DecryptForm_MouseMove;
             ResumeLayout(false);
             PerformLayout();
         }

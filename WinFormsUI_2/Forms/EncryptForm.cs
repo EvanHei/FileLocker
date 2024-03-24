@@ -336,4 +336,14 @@ public partial class EncryptForm : Form
     {
         ResetTimer();
     }
+
+    private void EncryptForm_MouseDown(object sender, MouseEventArgs e)
+    {
+        ResetTimer();
+    }
+
+    private void EncryptForm_MouseMove(object sender, MouseEventArgs e)
+    {
+        ResetTimer();
+    }
 }

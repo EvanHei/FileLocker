@@ -90,4 +90,14 @@ public partial class DecryptForm : Form
         InactivityTimer.Stop();
         InactivityTimer.Start();
     }
+
+    private void DecryptForm_MouseDown(object sender, MouseEventArgs e)
+    {
+        ResetTimer();
+    }
+
+    private void DecryptForm_MouseMove(object sender, MouseEventArgs e)
+    {
+        ResetTimer();
+    }
 }

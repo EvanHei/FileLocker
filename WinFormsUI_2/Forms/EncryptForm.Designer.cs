@@ -280,6 +280,8 @@
             Name = "EncryptForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Encrypt";
+            MouseDown += EncryptForm_MouseDown;
+            MouseMove += EncryptForm_MouseMove;
             ResumeLayout(false);
             PerformLayout();
         }

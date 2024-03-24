@@ -10,7 +10,7 @@ public class SerilogLogger : ILogger
 
     public List<LogModel> GetAllLogs()
     {
-        List<LogModel> logs = new List<LogModel>();
+        List<LogModel> logs = new();
 
         List<string> logFiles = Directory.GetFiles(LogDirectoryPath).ToList();
         foreach (string logFile in logFiles)

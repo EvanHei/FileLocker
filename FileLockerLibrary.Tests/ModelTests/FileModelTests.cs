@@ -16,14 +16,20 @@ public class FileModelTests
     [Fact]
     public void Lock_FileNotFound_ThrowsFileNotFoundException()
     {
-        // TODO - rewrite
+        // Arrange
+        string nonExistentFilePath = "nonexistentfile.txt";
+        FileModel fileModel = new(nonExistentFilePath);
+        fileModel.Password = TestPassword;
+
+        // Act & Assert
+        FileNotFoundException exception = Assert.Throws<FileNotFoundException>(() => fileModel.Lock(EncryptionAlgorithm.AES));
     }
 
     [Fact]
     public void Unlock_FileNotFound_ThrowsFileNotFoundException()
     {
         // Arrange
-        var fileModel = new FileModel(TestFilePath);
+        FileModel fileModel = new(TestFilePath);
         fileModel.Password = TestPassword;
 
         // Act & Assert

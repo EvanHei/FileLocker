@@ -14,16 +14,16 @@ public class AesEncryptorTests
     public void Encrypt_ValidInput_ReturnsEncryptedDataWithIV()
     {
         // Arrange
-        var aesEncryptor = new AesEncryptor();
+        AesEncryptor aesEncryptor = new();
         byte[] plaintext = Encoding.UTF8.GetBytes("This is a secret message.");
         byte[] key = new byte[32];
-        using (var rng = new RNGCryptoServiceProvider())
+        using (RNGCryptoServiceProvider rng = new())
         {
             rng.GetBytes(key);
         }
 
         // Act
-        var encryptedData = aesEncryptor.Encrypt(plaintext, key);
+        byte[] encryptedData = aesEncryptor.Encrypt(plaintext, key);
 
         // Assert
         Assert.NotNull(encryptedData);
@@ -37,7 +37,7 @@ public class AesEncryptorTests
     public void Encrypt_NullPlaintext_ThrowsArgumentNullException()
     {
         // Arrange
-        var aesEncryptor = new AesEncryptor();
+        AesEncryptor aesEncryptor = new();
         byte[] key = new byte[32];
 
         // Act & Assert
@@ -48,7 +48,7 @@ public class AesEncryptorTests
     public void Encrypt_NullKey_ThrowsArgumentNullException()
     {
         // Arrange
-        var aesEncryptor = new AesEncryptor();
+        AesEncryptor aesEncryptor = new();
         byte[] plaintext = Encoding.UTF8.GetBytes("This is a secret message.");
 
         // Act & Assert
@@ -59,7 +59,7 @@ public class AesEncryptorTests
     public void Encrypt_InvalidKeyLength_ThrowsArgumentOutOfRangeException()
     {
         // Arrange
-        var aesEncryptor = new AesEncryptor();
+        AesEncryptor aesEncryptor = new();
         byte[] plaintext = Encoding.UTF8.GetBytes("This is a secret message.");
         byte[] key = new byte[31];
 
@@ -71,19 +71,19 @@ public class AesEncryptorTests
     public void Decrypt_ValidInput_ReturnsDecryptedPlaintext()
     {
         // Arrange
-        var aesEncryptor = new AesEncryptor();
+        AesEncryptor aesEncryptor = new();
         byte[] originalPlaintext = Encoding.UTF8.GetBytes("This is a secret message.");
         byte[] key = new byte[32];
-        using (var rng = new RNGCryptoServiceProvider())
+        using (RNGCryptoServiceProvider rng = new())
         {
             rng.GetBytes(key);
         }
 
         // encrypt plaintext
-        var encryptedData = aesEncryptor.Encrypt(originalPlaintext, key);
+        byte[] encryptedData = aesEncryptor.Encrypt(originalPlaintext, key);
 
         // Act
-        var decryptedPlaintext = aesEncryptor.Decrypt(encryptedData, key);
+        byte[] decryptedPlaintext = aesEncryptor.Decrypt(encryptedData, key);
 
         // Assert
         Assert.Equal(originalPlaintext, decryptedPlaintext);
@@ -93,7 +93,7 @@ public class AesEncryptorTests
     public void Decrypt_NullCiphertext_ThrowsArgumentNullException()
     {
         // Arrange
-        var aesEncryptor = new AesEncryptor();
+        AesEncryptor aesEncryptor = new();
         byte[] key = new byte[32];
 
         // Act & Assert
@@ -104,7 +104,7 @@ public class AesEncryptorTests
     public void Decrypt_NullKey_ThrowsArgumentNullException()
     {
         // Arrange
-        var aesEncryptor = new AesEncryptor();
+        AesEncryptor aesEncryptor = new();
         byte[] ciphertextAndIv = new byte[16];
 
         // Act & Assert
@@ -115,7 +115,7 @@ public class AesEncryptorTests
     public void Decrypt_InvalidCiphertextLength_ThrowsArgumentOutOfRangeException()
     {
         // Arrange
-        var aesEncryptor = new AesEncryptor();
+        AesEncryptor aesEncryptor = new();
         byte[] key = new byte[32];
 
         // Act & Assert
@@ -126,7 +126,7 @@ public class AesEncryptorTests
     public void Decrypt_InvalidKeyLength_ThrowsArgumentOutOfRangeException()
     {
         // Arrange
-        var aesEncryptor = new AesEncryptor();
+        AesEncryptor aesEncryptor = new();
         byte[] ciphertextAndIv = new byte[16];
         byte[] key = new byte[31];
 

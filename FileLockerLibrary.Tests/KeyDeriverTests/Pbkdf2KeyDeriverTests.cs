@@ -9,10 +9,10 @@ public class Pbkdf2KeyDeriverTests
     public void GenerateSalt_ReturnsValidSalt()
     {
         // Arrange
-        var pbkdf2KeyDeriver = new Pbkdf2KeyDeriver();
+        Pbkdf2KeyDeriver pbkdf2KeyDeriver = new();
 
         // Act
-        var salt = pbkdf2KeyDeriver.GenerateSalt();
+        byte[] salt = pbkdf2KeyDeriver.GenerateSalt();
 
         // Assert
         Assert.NotNull(salt);
@@ -23,12 +23,12 @@ public class Pbkdf2KeyDeriverTests
     public void DeriveKey_ValidInput_ReturnsDerivedKey()
     {
         // Arrange
-        var pbkdf2KeyDeriver = new Pbkdf2KeyDeriver();
+        Pbkdf2KeyDeriver pbkdf2KeyDeriver = new();
         string password = "SecurePassword123";
-        var salt = pbkdf2KeyDeriver.GenerateSalt();
+        byte[] salt = pbkdf2KeyDeriver.GenerateSalt();
 
         // Act
-        var derivedKey = pbkdf2KeyDeriver.DeriveKey(password, salt);
+        byte[] derivedKey = pbkdf2KeyDeriver.DeriveKey(password, salt);
 
         // Assert
         Assert.NotNull(derivedKey);
@@ -39,7 +39,7 @@ public class Pbkdf2KeyDeriverTests
     public void DeriveKey_NullPassword_ThrowsArgumentNullException()
     {
         // Arrange
-        var pbkdf2KeyDeriver = new Pbkdf2KeyDeriver();
+        Pbkdf2KeyDeriver pbkdf2KeyDeriver = new();
         byte[] salt = new byte[32];
 
         // Act & Assert
@@ -50,7 +50,7 @@ public class Pbkdf2KeyDeriverTests
     public void DeriveKey_NullSalt_ThrowsArgumentNullException()
     {
         // Arrange
-        var pbkdf2KeyDeriver = new Pbkdf2KeyDeriver();
+        Pbkdf2KeyDeriver pbkdf2KeyDeriver = new();
         string password = "SecurePassword123";
 
         // Act & Assert

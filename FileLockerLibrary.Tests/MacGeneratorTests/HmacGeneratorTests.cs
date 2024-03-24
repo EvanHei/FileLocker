@@ -9,7 +9,7 @@ public class HmacGeneratorTests
     public void Key_SetKey_HmacKeyIsSet()
     {
         // Arrange
-        var hmacGenerator = new HmacGenerator();
+        HmacGenerator hmacGenerator = new();
         byte[] key = new byte[32];
 
         // Act
@@ -23,7 +23,7 @@ public class HmacGeneratorTests
     public void Key_SetNullKey_ThrowsArgumentNullException()
     {
         // Arrange
-        var hmacGenerator = new HmacGenerator();
+        HmacGenerator hmacGenerator = new();
 
         // Act & Assert
         Assert.Throws<ArgumentNullException>(() => hmacGenerator.Key = null);
@@ -33,7 +33,7 @@ public class HmacGeneratorTests
     public void GenerateMac_KeyNotSet_ThrowsNullReferenceException()
     {
         // Arrange
-        var hmacGenerator = new HmacGenerator();
+        HmacGenerator hmacGenerator = new();
         byte[] data = { 1, 2, 3 };
 
         // Act & Assert
@@ -44,7 +44,7 @@ public class HmacGeneratorTests
     public void Key_SetInvalidKeyLength_ThrowsArgumentException()
     {
         // Arrange
-        var hmacGenerator = new HmacGenerator();
+        HmacGenerator hmacGenerator = new();
         byte[] invalidKey = new byte[16];
 
         // Act & Assert
@@ -55,13 +55,13 @@ public class HmacGeneratorTests
     public void GenerateMac_ValidInput_ReturnsHmac()
     {
         // Arrange
-        var hmacGenerator = new HmacGenerator();
+        HmacGenerator hmacGenerator = new();
         byte[] key = new byte[32];
         byte[] data = { 1, 2, 3 };
 
         // Act
         hmacGenerator.Key = key;
-        var hmac = hmacGenerator.GenerateMac(data);
+        byte[] hmac = hmacGenerator.GenerateMac(data);
 
         // Assert
         Assert.NotNull(hmac);
@@ -72,7 +72,7 @@ public class HmacGeneratorTests
     public void GenerateMac_NullData_ThrowsArgumentNullException()
     {
         // Arrange
-        var hmacGenerator = new HmacGenerator();
+        HmacGenerator hmacGenerator = new();
         byte[] key = new byte[32];
 
         // Act & Assert
@@ -83,15 +83,15 @@ public class HmacGeneratorTests
     public void ValidateMac_ValidInput_ReturnsTrue()
     {
         // Arrange
-        var hmacGenerator = new HmacGenerator();
+        HmacGenerator hmacGenerator = new();
         byte[] key = new byte[32];
         byte[] data = { 1, 2, 3 };
         hmacGenerator.Key = key;
-        var expectedHmac = hmacGenerator.GenerateMac(data);
+        byte[] expectedHmac = hmacGenerator.GenerateMac(data);
 
         // Act
         hmacGenerator.Key = key;
-        var isValid = hmacGenerator.ValidateMac(data, expectedHmac);
+        bool isValid = hmacGenerator.ValidateMac(data, expectedHmac);
 
         // Assert
         Assert.True(isValid);
@@ -101,7 +101,7 @@ public class HmacGeneratorTests
     public void ValidateMac_NullData_ThrowsArgumentNullException()
     {
         // Arrange
-        var hmacGenerator = new HmacGenerator();
+        HmacGenerator hmacGenerator = new();
         byte[] key = new byte[32];
         byte[] expectedHmac = new byte[32];
 
@@ -113,7 +113,7 @@ public class HmacGeneratorTests
     public void ValidateMac_NullExpectedHmac_ThrowsArgumentNullException()
     {
         // Arrange
-        var hmacGenerator = new HmacGenerator();
+        HmacGenerator hmacGenerator = new();
         byte[] key = new byte[32];
         byte[] data = { 1, 2, 3 };
 

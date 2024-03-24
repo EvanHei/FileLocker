@@ -7,10 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 using System.Windows.Forms;
-using System.Xml.Linq;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskBand;
 
 namespace WinFormsUI;
 
@@ -81,9 +78,9 @@ public partial class ImportForm : Form
         PopulateForm();
     }
 
-    private void ImportButton_Click(object sender, EventArgs e)
+    private void SaveToLabel_Click(object sender, EventArgs e)
     {
-        if (openPath == null || 
+        if (openPath == null ||
             savePath == null)
             return;
 
@@ -100,6 +97,25 @@ public partial class ImportForm : Form
         {
             this.Close();
             caller.ImportComplete();
+        }
+    }
+
+    private void ImportButton_Click(object sender, EventArgs e)
+    {
+        if (openPath == null ||
+            savePath == null)
+            return;
+
+        try
+        {
+            GlobalConfig.DataAccessor.ImportZipFileModel(openPath, savePath);
+            this.Close();
+            caller.ImportComplete();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
         }
     }
 }

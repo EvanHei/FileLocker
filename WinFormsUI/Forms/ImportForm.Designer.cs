@@ -29,63 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImportForm));
-            SaveToButton = new Button();
-            SaveToLabel = new Label();
+            ImportButton = new Button();
             OpenLabel = new Label();
             OpenButton = new Button();
-            ImportButton = new Button();
+            SaveToLabel = new Label();
+            SaveToButton = new Button();
             SuspendLayout();
-            // 
-            // SaveToButton
-            // 
-            SaveToButton.BackColor = Color.Silver;
-            SaveToButton.Enabled = false;
-            SaveToButton.FlatStyle = FlatStyle.Flat;
-            SaveToButton.Font = new Font("Segoe UI Emoji", 12F);
-            SaveToButton.ForeColor = SystemColors.ButtonFace;
-            SaveToButton.Location = new Point(36, 130);
-            SaveToButton.Name = "SaveToButton";
-            SaveToButton.Size = new Size(83, 37);
-            SaveToButton.TabIndex = 6;
-            SaveToButton.Text = "Save To";
-            SaveToButton.UseVisualStyleBackColor = false;
-            SaveToButton.Click += SaveToButton_Click;
-            // 
-            // SaveToLabel
-            // 
-            SaveToLabel.AutoSize = true;
-            SaveToLabel.Font = new Font("Segoe UI Emoji", 12F);
-            SaveToLabel.ForeColor = SystemColors.ButtonFace;
-            SaveToLabel.Location = new Point(119, 138);
-            SaveToLabel.Name = "SaveToLabel";
-            SaveToLabel.Size = new Size(19, 21);
-            SaveToLabel.TabIndex = 7;
-            SaveToLabel.Text = "...";
-            // 
-            // OpenLabel
-            // 
-            OpenLabel.AutoSize = true;
-            OpenLabel.Font = new Font("Segoe UI Emoji", 12F);
-            OpenLabel.ForeColor = SystemColors.ButtonFace;
-            OpenLabel.Location = new Point(119, 86);
-            OpenLabel.Name = "OpenLabel";
-            OpenLabel.Size = new Size(19, 21);
-            OpenLabel.TabIndex = 9;
-            OpenLabel.Text = "...";
-            // 
-            // OpenButton
-            // 
-            OpenButton.BackColor = SystemColors.Highlight;
-            OpenButton.FlatStyle = FlatStyle.Flat;
-            OpenButton.Font = new Font("Segoe UI Emoji", 12F);
-            OpenButton.ForeColor = SystemColors.ButtonFace;
-            OpenButton.Location = new Point(36, 78);
-            OpenButton.Name = "OpenButton";
-            OpenButton.Size = new Size(83, 37);
-            OpenButton.TabIndex = 8;
-            OpenButton.Text = "Open";
-            OpenButton.UseVisualStyleBackColor = false;
-            OpenButton.Click += OpenButton_Click;
             // 
             // ImportButton
             // 
@@ -94,13 +43,64 @@
             ImportButton.FlatStyle = FlatStyle.Flat;
             ImportButton.Font = new Font("Segoe UI Emoji", 12F);
             ImportButton.ForeColor = SystemColors.ButtonFace;
-            ImportButton.Location = new Point(227, 205);
+            ImportButton.Location = new Point(236, 201);
             ImportButton.Name = "ImportButton";
             ImportButton.Size = new Size(83, 37);
-            ImportButton.TabIndex = 10;
+            ImportButton.TabIndex = 15;
             ImportButton.Text = "Import";
             ImportButton.UseVisualStyleBackColor = false;
             ImportButton.Click += ImportButton_Click;
+            // 
+            // OpenLabel
+            // 
+            OpenLabel.AutoSize = true;
+            OpenLabel.Font = new Font("Segoe UI Emoji", 12F);
+            OpenLabel.ForeColor = SystemColors.ButtonFace;
+            OpenLabel.Location = new Point(128, 82);
+            OpenLabel.Name = "OpenLabel";
+            OpenLabel.Size = new Size(19, 21);
+            OpenLabel.TabIndex = 14;
+            OpenLabel.Text = "...";
+            // 
+            // OpenButton
+            // 
+            OpenButton.BackColor = SystemColors.Highlight;
+            OpenButton.FlatStyle = FlatStyle.Flat;
+            OpenButton.Font = new Font("Segoe UI Emoji", 12F);
+            OpenButton.ForeColor = SystemColors.ButtonFace;
+            OpenButton.Location = new Point(45, 74);
+            OpenButton.Name = "OpenButton";
+            OpenButton.Size = new Size(83, 37);
+            OpenButton.TabIndex = 13;
+            OpenButton.Text = "Open";
+            OpenButton.UseVisualStyleBackColor = false;
+            OpenButton.Click += OpenButton_Click;
+            // 
+            // SaveToLabel
+            // 
+            SaveToLabel.AutoSize = true;
+            SaveToLabel.Font = new Font("Segoe UI Emoji", 12F);
+            SaveToLabel.ForeColor = SystemColors.ButtonFace;
+            SaveToLabel.Location = new Point(128, 134);
+            SaveToLabel.Name = "SaveToLabel";
+            SaveToLabel.Size = new Size(19, 21);
+            SaveToLabel.TabIndex = 12;
+            SaveToLabel.Text = "...";
+            // 
+            // SaveToButton
+            // 
+            SaveToButton.BackColor = Color.Silver;
+            SaveToButton.Enabled = false;
+            SaveToButton.FlatStyle = FlatStyle.Flat;
+            SaveToButton.Font = new Font("Segoe UI Emoji", 12F);
+            SaveToButton.ForeColor = SystemColors.ButtonFace;
+            SaveToButton.Location = new Point(45, 126);
+            SaveToButton.Name = "SaveToButton";
+            SaveToButton.Size = new Size(83, 37);
+            SaveToButton.TabIndex = 11;
+            SaveToButton.Text = "Save To";
+            SaveToButton.UseVisualStyleBackColor = false;
+            SaveToButton.Click += SaveToButton_Click;
             // 
             // ImportForm
             // 
@@ -126,10 +126,10 @@
 
         #endregion
 
-        private Button SaveToButton;
-        private Label SaveToLabel;
+        private Button ImportButton;
         private Label OpenLabel;
         private Button OpenButton;
-        private Button ImportButton;
+        private Label SaveToLabel;
+        private Button SaveToButton;
     }
 }

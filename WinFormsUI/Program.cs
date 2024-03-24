@@ -1,18 +1,17 @@
-using FileLockerLibrary;
-using System.Text;
-using System.Text.Json;
-
-namespace WinFormsUI;
-
-internal static class Program
+namespace WinFormsUI
 {
-    /// <summary>
-    ///  The main entry point for the application.
-    /// </summary>
-    [STAThread]
-    static void Main()
+    internal static class Program
     {
-        ApplicationConfiguration.Initialize();
-        Application.Run(new DashboardForm());
+        /// <summary>
+        ///  The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        static void Main()
+        {
+            // To customize application configuration such as set high DPI settings or default font,
+            // see https://aka.ms/applicationconfiguration.
+            ApplicationConfiguration.Initialize();
+            Application.Run(new DashboardForm());
+        }
     }
 }

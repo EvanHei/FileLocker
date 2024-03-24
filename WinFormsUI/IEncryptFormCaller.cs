@@ -15,6 +15,4 @@ public interface IEncryptFormCaller
     /// Notifies the caller that the encryption process has been completed.
     /// </summary>
     void EncryptionComplete();
-
-    void RemovalComplete();
 }

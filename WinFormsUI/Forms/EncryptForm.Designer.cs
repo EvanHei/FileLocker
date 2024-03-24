@@ -30,103 +30,89 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EncryptForm));
-            PasswordMaskedTextBox = new MaskedTextBox();
-            PasswordLabel = new Label();
-            NumberOfCharactersLabel = new Label();
-            DigitLabel = new Label();
-            LowercaseLetterLabel = new Label();
-            UppercaseLetterLabel = new Label();
-            SpecialCharacterLabel = new Label();
+            ClearButton = new Button();
+            PasswordWarningLabel = new Label();
+            EncryptionAlgorithmComboBox = new ComboBox();
+            EncryptionAlgorithmLabel = new Label();
+            GenerateRandomButton = new Button();
             EyeballLabel = new Label();
-            EnterButton = new Button();
             ConfirmPasswordMaskedTextBox = new MaskedTextBox();
             ConfirmPasswordLabel = new Label();
-            GenerateRandomButton = new Button();
-            EncryptionAlgorithmLabel = new Label();
-            EncryptionAlgorithmComboBox = new ComboBox();
-            PasswordWarningLabel = new Label();
+            EnterButton = new Button();
+            SpecialCharacterLabel = new Label();
+            LowercaseLetterLabel = new Label();
+            UppercaseLetterLabel = new Label();
+            DigitLabel = new Label();
+            NumberOfCharactersLabel = new Label();
+            PasswordMaskedTextBox = new MaskedTextBox();
+            PasswordLabel = new Label();
             InactivityTimer = new System.Windows.Forms.Timer(components);
-            ClearButton = new Button();
             SuspendLayout();
             // 
-            // PasswordMaskedTextBox
+            // ClearButton
             // 
-            PasswordMaskedTextBox.BackColor = Color.FromArgb(52, 52, 52);
-            PasswordMaskedTextBox.Font = new Font("Segoe UI Emoji", 12F);
-            PasswordMaskedTextBox.ForeColor = SystemColors.ButtonFace;
-            PasswordMaskedTextBox.Location = new Point(171, 57);
-            PasswordMaskedTextBox.Name = "PasswordMaskedTextBox";
-            PasswordMaskedTextBox.Size = new Size(277, 29);
-            PasswordMaskedTextBox.TabIndex = 1;
-            PasswordMaskedTextBox.UseSystemPasswordChar = true;
-            PasswordMaskedTextBox.Click += PasswordMaskedTextBox_Click;
-            PasswordMaskedTextBox.TextChanged += PasswordMaskedTextBox_TextChanged;
+            ClearButton.BackColor = Color.Silver;
+            ClearButton.Enabled = false;
+            ClearButton.FlatStyle = FlatStyle.Flat;
+            ClearButton.Font = new Font("Segoe UI Emoji", 12F);
+            ClearButton.ForeColor = SystemColors.ButtonFace;
+            ClearButton.Location = new Point(310, 305);
+            ClearButton.Name = "ClearButton";
+            ClearButton.Size = new Size(148, 37);
+            ClearButton.TabIndex = 33;
+            ClearButton.Text = "Clear";
+            ClearButton.UseVisualStyleBackColor = false;
+            ClearButton.Click += ClearButton_Click;
             // 
-            // PasswordLabel
+            // PasswordWarningLabel
             // 
-            PasswordLabel.AutoSize = true;
-            PasswordLabel.Font = new Font("Segoe UI Emoji", 12F);
-            PasswordLabel.ForeColor = SystemColors.ButtonFace;
-            PasswordLabel.Location = new Point(83, 60);
-            PasswordLabel.Name = "PasswordLabel";
-            PasswordLabel.Size = new Size(80, 21);
-            PasswordLabel.TabIndex = 3;
-            PasswordLabel.Text = "Password:";
+            PasswordWarningLabel.AutoSize = true;
+            PasswordWarningLabel.Font = new Font("Segoe UI Emoji", 10F);
+            PasswordWarningLabel.ForeColor = Color.Red;
+            PasswordWarningLabel.Location = new Point(184, 156);
+            PasswordWarningLabel.Name = "PasswordWarningLabel";
+            PasswordWarningLabel.Size = new Size(250, 19);
+            PasswordWarningLabel.TabIndex = 32;
+            PasswordWarningLabel.Text = "If your password is lost, so is your data.";
+            PasswordWarningLabel.Visible = false;
             // 
-            // NumberOfCharactersLabel
+            // EncryptionAlgorithmComboBox
             // 
-            NumberOfCharactersLabel.AutoSize = true;
-            NumberOfCharactersLabel.Font = new Font("Segoe UI Emoji", 12F);
-            NumberOfCharactersLabel.ForeColor = SystemColors.AppWorkspace;
-            NumberOfCharactersLabel.Location = new Point(171, 185);
-            NumberOfCharactersLabel.Name = "NumberOfCharactersLabel";
-            NumberOfCharactersLabel.Size = new Size(158, 21);
-            NumberOfCharactersLabel.TabIndex = 5;
-            NumberOfCharactersLabel.Text = "• <range> characters";
+            EncryptionAlgorithmComboBox.BackColor = Color.FromArgb(52, 52, 52);
+            EncryptionAlgorithmComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            EncryptionAlgorithmComboBox.ForeColor = SystemColors.ButtonFace;
+            EncryptionAlgorithmComboBox.FormattingEnabled = true;
+            EncryptionAlgorithmComboBox.Location = new Point(170, 124);
+            EncryptionAlgorithmComboBox.Name = "EncryptionAlgorithmComboBox";
+            EncryptionAlgorithmComboBox.Size = new Size(277, 29);
+            EncryptionAlgorithmComboBox.TabIndex = 31;
+            EncryptionAlgorithmComboBox.SelectedIndexChanged += EncryptionAlgorithmComboBox_SelectedIndexChanged;
+            EncryptionAlgorithmComboBox.Click += EncryptionAlgorithmComboBox_Click;
             // 
-            // DigitLabel
+            // EncryptionAlgorithmLabel
             // 
-            DigitLabel.AutoSize = true;
-            DigitLabel.Font = new Font("Segoe UI Emoji", 12F);
-            DigitLabel.ForeColor = SystemColors.AppWorkspace;
-            DigitLabel.Location = new Point(171, 248);
-            DigitLabel.Name = "DigitLabel";
-            DigitLabel.Size = new Size(54, 21);
-            DigitLabel.TabIndex = 6;
-            DigitLabel.Text = "• Digit";
+            EncryptionAlgorithmLabel.AutoSize = true;
+            EncryptionAlgorithmLabel.Font = new Font("Segoe UI Emoji", 12F);
+            EncryptionAlgorithmLabel.ForeColor = SystemColors.ButtonFace;
+            EncryptionAlgorithmLabel.Location = new Point(3, 127);
+            EncryptionAlgorithmLabel.Name = "EncryptionAlgorithmLabel";
+            EncryptionAlgorithmLabel.Size = new Size(161, 21);
+            EncryptionAlgorithmLabel.TabIndex = 30;
+            EncryptionAlgorithmLabel.Text = "Encryption Algorithm:";
             // 
-            // LowercaseLetterLabel
+            // GenerateRandomButton
             // 
-            LowercaseLetterLabel.AutoSize = true;
-            LowercaseLetterLabel.Font = new Font("Segoe UI Emoji", 12F);
-            LowercaseLetterLabel.ForeColor = SystemColors.AppWorkspace;
-            LowercaseLetterLabel.Location = new Point(171, 227);
-            LowercaseLetterLabel.Name = "LowercaseLetterLabel";
-            LowercaseLetterLabel.Size = new Size(134, 21);
-            LowercaseLetterLabel.TabIndex = 8;
-            LowercaseLetterLabel.Text = "• Lowercase letter";
-            // 
-            // UppercaseLetterLabel
-            // 
-            UppercaseLetterLabel.AutoSize = true;
-            UppercaseLetterLabel.Font = new Font("Segoe UI Emoji", 12F);
-            UppercaseLetterLabel.ForeColor = SystemColors.AppWorkspace;
-            UppercaseLetterLabel.Location = new Point(171, 206);
-            UppercaseLetterLabel.Name = "UppercaseLetterLabel";
-            UppercaseLetterLabel.Size = new Size(134, 21);
-            UppercaseLetterLabel.TabIndex = 7;
-            UppercaseLetterLabel.Text = "• Uppercase letter";
-            // 
-            // SpecialCharacterLabel
-            // 
-            SpecialCharacterLabel.AutoSize = true;
-            SpecialCharacterLabel.Font = new Font("Segoe UI Emoji", 12F);
-            SpecialCharacterLabel.ForeColor = SystemColors.AppWorkspace;
-            SpecialCharacterLabel.Location = new Point(171, 269);
-            SpecialCharacterLabel.Name = "SpecialCharacterLabel";
-            SpecialCharacterLabel.Size = new Size(138, 21);
-            SpecialCharacterLabel.TabIndex = 9;
-            SpecialCharacterLabel.Text = "• Special character";
+            GenerateRandomButton.BackColor = SystemColors.Highlight;
+            GenerateRandomButton.FlatStyle = FlatStyle.Flat;
+            GenerateRandomButton.Font = new Font("Segoe UI Emoji", 12F);
+            GenerateRandomButton.ForeColor = SystemColors.ButtonFace;
+            GenerateRandomButton.Location = new Point(156, 305);
+            GenerateRandomButton.Name = "GenerateRandomButton";
+            GenerateRandomButton.Size = new Size(148, 37);
+            GenerateRandomButton.TabIndex = 29;
+            GenerateRandomButton.Text = "Generate Random";
+            GenerateRandomButton.UseVisualStyleBackColor = false;
+            GenerateRandomButton.Click += GenerateRandomButton_Click;
             // 
             // EyeballLabel
             // 
@@ -134,37 +120,22 @@
             EyeballLabel.BackColor = Color.FromArgb(52, 52, 52);
             EyeballLabel.Font = new Font("Segoe UI Emoji", 12F);
             EyeballLabel.ForeColor = SystemColors.ButtonFace;
-            EyeballLabel.Location = new Point(414, 93);
+            EyeballLabel.Location = new Point(413, 92);
             EyeballLabel.Name = "EyeballLabel";
             EyeballLabel.Size = new Size(32, 21);
-            EyeballLabel.TabIndex = 2;
+            EyeballLabel.TabIndex = 19;
             EyeballLabel.Text = "👁";
             EyeballLabel.Click += EyeballLabel_Click;
-            // 
-            // EnterButton
-            // 
-            EnterButton.BackColor = Color.Silver;
-            EnterButton.Enabled = false;
-            EnterButton.FlatStyle = FlatStyle.Flat;
-            EnterButton.Font = new Font("Segoe UI Emoji", 12F);
-            EnterButton.ForeColor = SystemColors.ButtonFace;
-            EnterButton.Location = new Point(454, 86);
-            EnterButton.Name = "EnterButton";
-            EnterButton.Size = new Size(34, 37);
-            EnterButton.TabIndex = 10;
-            EnterButton.Text = "→\n";
-            EnterButton.UseVisualStyleBackColor = false;
-            EnterButton.Click += EnterButton_Click;
             // 
             // ConfirmPasswordMaskedTextBox
             // 
             ConfirmPasswordMaskedTextBox.BackColor = Color.FromArgb(52, 52, 52);
             ConfirmPasswordMaskedTextBox.Font = new Font("Segoe UI Emoji", 12F);
             ConfirmPasswordMaskedTextBox.ForeColor = SystemColors.ButtonFace;
-            ConfirmPasswordMaskedTextBox.Location = new Point(171, 90);
+            ConfirmPasswordMaskedTextBox.Location = new Point(170, 89);
             ConfirmPasswordMaskedTextBox.Name = "ConfirmPasswordMaskedTextBox";
             ConfirmPasswordMaskedTextBox.Size = new Size(277, 29);
-            ConfirmPasswordMaskedTextBox.TabIndex = 11;
+            ConfirmPasswordMaskedTextBox.TabIndex = 27;
             ConfirmPasswordMaskedTextBox.UseSystemPasswordChar = true;
             ConfirmPasswordMaskedTextBox.Click += ConfirmPasswordMaskedTextBox_Click;
             ConfirmPasswordMaskedTextBox.TextChanged += ConfirmPasswordMaskedTextBox_TextChanged;
@@ -174,82 +145,111 @@
             ConfirmPasswordLabel.AutoSize = true;
             ConfirmPasswordLabel.Font = new Font("Segoe UI Emoji", 12F);
             ConfirmPasswordLabel.ForeColor = SystemColors.ButtonFace;
-            ConfirmPasswordLabel.Location = new Point(24, 93);
+            ConfirmPasswordLabel.Location = new Point(23, 92);
             ConfirmPasswordLabel.Name = "ConfirmPasswordLabel";
             ConfirmPasswordLabel.Size = new Size(141, 21);
-            ConfirmPasswordLabel.TabIndex = 12;
+            ConfirmPasswordLabel.TabIndex = 28;
             ConfirmPasswordLabel.Text = "Confirm Password:";
             // 
-            // GenerateRandomButton
+            // EnterButton
             // 
-            GenerateRandomButton.BackColor = SystemColors.Highlight;
-            GenerateRandomButton.FlatStyle = FlatStyle.Flat;
-            GenerateRandomButton.Font = new Font("Segoe UI Emoji", 12F);
-            GenerateRandomButton.ForeColor = SystemColors.ButtonFace;
-            GenerateRandomButton.Location = new Point(157, 306);
-            GenerateRandomButton.Name = "GenerateRandomButton";
-            GenerateRandomButton.Size = new Size(148, 37);
-            GenerateRandomButton.TabIndex = 13;
-            GenerateRandomButton.Text = "Generate Random";
-            GenerateRandomButton.UseVisualStyleBackColor = false;
-            GenerateRandomButton.Click += GenerateRandomButton_Click;
+            EnterButton.BackColor = Color.Silver;
+            EnterButton.Enabled = false;
+            EnterButton.FlatStyle = FlatStyle.Flat;
+            EnterButton.Font = new Font("Segoe UI Emoji", 12F);
+            EnterButton.ForeColor = SystemColors.ButtonFace;
+            EnterButton.Location = new Point(453, 85);
+            EnterButton.Name = "EnterButton";
+            EnterButton.Size = new Size(34, 37);
+            EnterButton.TabIndex = 26;
+            EnterButton.Text = "→\n";
+            EnterButton.UseVisualStyleBackColor = false;
+            EnterButton.Click += EnterButton_Click;
             // 
-            // EncryptionAlgorithmLabel
+            // SpecialCharacterLabel
             // 
-            EncryptionAlgorithmLabel.AutoSize = true;
-            EncryptionAlgorithmLabel.Font = new Font("Segoe UI Emoji", 12F);
-            EncryptionAlgorithmLabel.ForeColor = SystemColors.ButtonFace;
-            EncryptionAlgorithmLabel.Location = new Point(4, 128);
-            EncryptionAlgorithmLabel.Name = "EncryptionAlgorithmLabel";
-            EncryptionAlgorithmLabel.Size = new Size(161, 21);
-            EncryptionAlgorithmLabel.TabIndex = 14;
-            EncryptionAlgorithmLabel.Text = "Encryption Algorithm:";
+            SpecialCharacterLabel.AutoSize = true;
+            SpecialCharacterLabel.Font = new Font("Segoe UI Emoji", 12F);
+            SpecialCharacterLabel.ForeColor = SystemColors.AppWorkspace;
+            SpecialCharacterLabel.Location = new Point(170, 268);
+            SpecialCharacterLabel.Name = "SpecialCharacterLabel";
+            SpecialCharacterLabel.Size = new Size(138, 21);
+            SpecialCharacterLabel.TabIndex = 25;
+            SpecialCharacterLabel.Text = "• Special character";
             // 
-            // EncryptionAlgorithmComboBox
+            // LowercaseLetterLabel
             // 
-            EncryptionAlgorithmComboBox.BackColor = Color.FromArgb(52, 52, 52);
-            EncryptionAlgorithmComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            EncryptionAlgorithmComboBox.ForeColor = SystemColors.ButtonFace;
-            EncryptionAlgorithmComboBox.FormattingEnabled = true;
-            EncryptionAlgorithmComboBox.Location = new Point(171, 125);
-            EncryptionAlgorithmComboBox.Name = "EncryptionAlgorithmComboBox";
-            EncryptionAlgorithmComboBox.Size = new Size(277, 29);
-            EncryptionAlgorithmComboBox.TabIndex = 15;
-            EncryptionAlgorithmComboBox.SelectedIndexChanged += EncryptionAlgorithmComboBox_SelectedIndexChanged;
-            EncryptionAlgorithmComboBox.Click += EncryptionAlgorithmComboBox_Click;
+            LowercaseLetterLabel.AutoSize = true;
+            LowercaseLetterLabel.Font = new Font("Segoe UI Emoji", 12F);
+            LowercaseLetterLabel.ForeColor = SystemColors.AppWorkspace;
+            LowercaseLetterLabel.Location = new Point(170, 226);
+            LowercaseLetterLabel.Name = "LowercaseLetterLabel";
+            LowercaseLetterLabel.Size = new Size(134, 21);
+            LowercaseLetterLabel.TabIndex = 24;
+            LowercaseLetterLabel.Text = "• Lowercase letter";
             // 
-            // PasswordWarningLabel
+            // UppercaseLetterLabel
             // 
-            PasswordWarningLabel.AutoSize = true;
-            PasswordWarningLabel.Font = new Font("Segoe UI Emoji", 10F);
-            PasswordWarningLabel.ForeColor = Color.Red;
-            PasswordWarningLabel.Location = new Point(185, 157);
-            PasswordWarningLabel.Name = "PasswordWarningLabel";
-            PasswordWarningLabel.Size = new Size(250, 19);
-            PasswordWarningLabel.TabIndex = 16;
-            PasswordWarningLabel.Text = "If your password is lost, so is your data.";
-            PasswordWarningLabel.Visible = false;
+            UppercaseLetterLabel.AutoSize = true;
+            UppercaseLetterLabel.Font = new Font("Segoe UI Emoji", 12F);
+            UppercaseLetterLabel.ForeColor = SystemColors.AppWorkspace;
+            UppercaseLetterLabel.Location = new Point(170, 205);
+            UppercaseLetterLabel.Name = "UppercaseLetterLabel";
+            UppercaseLetterLabel.Size = new Size(134, 21);
+            UppercaseLetterLabel.TabIndex = 23;
+            UppercaseLetterLabel.Text = "• Uppercase letter";
+            // 
+            // DigitLabel
+            // 
+            DigitLabel.AutoSize = true;
+            DigitLabel.Font = new Font("Segoe UI Emoji", 12F);
+            DigitLabel.ForeColor = SystemColors.AppWorkspace;
+            DigitLabel.Location = new Point(170, 247);
+            DigitLabel.Name = "DigitLabel";
+            DigitLabel.Size = new Size(54, 21);
+            DigitLabel.TabIndex = 22;
+            DigitLabel.Text = "• Digit";
+            // 
+            // NumberOfCharactersLabel
+            // 
+            NumberOfCharactersLabel.AutoSize = true;
+            NumberOfCharactersLabel.Font = new Font("Segoe UI Emoji", 12F);
+            NumberOfCharactersLabel.ForeColor = SystemColors.AppWorkspace;
+            NumberOfCharactersLabel.Location = new Point(170, 184);
+            NumberOfCharactersLabel.Name = "NumberOfCharactersLabel";
+            NumberOfCharactersLabel.Size = new Size(158, 21);
+            NumberOfCharactersLabel.TabIndex = 21;
+            NumberOfCharactersLabel.Text = "• <range> characters";
+            // 
+            // PasswordMaskedTextBox
+            // 
+            PasswordMaskedTextBox.BackColor = Color.FromArgb(52, 52, 52);
+            PasswordMaskedTextBox.Font = new Font("Segoe UI Emoji", 12F);
+            PasswordMaskedTextBox.ForeColor = SystemColors.ButtonFace;
+            PasswordMaskedTextBox.Location = new Point(170, 56);
+            PasswordMaskedTextBox.Name = "PasswordMaskedTextBox";
+            PasswordMaskedTextBox.Size = new Size(277, 29);
+            PasswordMaskedTextBox.TabIndex = 18;
+            PasswordMaskedTextBox.UseSystemPasswordChar = true;
+            PasswordMaskedTextBox.Click += PasswordMaskedTextBox_Click;
+            PasswordMaskedTextBox.TextChanged += PasswordMaskedTextBox_TextChanged;
+            // 
+            // PasswordLabel
+            // 
+            PasswordLabel.AutoSize = true;
+            PasswordLabel.Font = new Font("Segoe UI Emoji", 12F);
+            PasswordLabel.ForeColor = SystemColors.ButtonFace;
+            PasswordLabel.Location = new Point(82, 59);
+            PasswordLabel.Name = "PasswordLabel";
+            PasswordLabel.Size = new Size(80, 21);
+            PasswordLabel.TabIndex = 20;
+            PasswordLabel.Text = "Password:";
             // 
             // InactivityTimer
             // 
             InactivityTimer.Enabled = true;
             InactivityTimer.Interval = 30000;
             InactivityTimer.Tick += InactivityTimer_Tick;
-            // 
-            // ClearButton
-            // 
-            ClearButton.BackColor = Color.Silver;
-            ClearButton.Enabled = false;
-            ClearButton.FlatStyle = FlatStyle.Flat;
-            ClearButton.Font = new Font("Segoe UI Emoji", 12F);
-            ClearButton.ForeColor = SystemColors.ButtonFace;
-            ClearButton.Location = new Point(311, 306);
-            ClearButton.Name = "ClearButton";
-            ClearButton.Size = new Size(148, 37);
-            ClearButton.TabIndex = 17;
-            ClearButton.Text = "Clear";
-            ClearButton.UseVisualStyleBackColor = false;
-            ClearButton.Click += ClearButton_Click;
             // 
             // EncryptForm
             // 
@@ -288,22 +288,22 @@
 
         #endregion
 
-        private MaskedTextBox PasswordMaskedTextBox;
-        private Label PasswordLabel;
-        private Label NumberOfCharactersLabel;
-        private Label DigitLabel;
-        private Label LowercaseLetterLabel;
-        private Label UppercaseLetterLabel;
-        private Label SpecialCharacterLabel;
+        private Button ClearButton;
+        private Label PasswordWarningLabel;
+        private ComboBox EncryptionAlgorithmComboBox;
+        private Label EncryptionAlgorithmLabel;
+        private Button GenerateRandomButton;
         private Label EyeballLabel;
-        private Button EnterButton;
         private MaskedTextBox ConfirmPasswordMaskedTextBox;
         private Label ConfirmPasswordLabel;
-        private Button GenerateRandomButton;
-        private Label EncryptionAlgorithmLabel;
-        private ComboBox EncryptionAlgorithmComboBox;
-        private Label PasswordWarningLabel;
+        private Button EnterButton;
+        private Label SpecialCharacterLabel;
+        private Label LowercaseLetterLabel;
+        private Label UppercaseLetterLabel;
+        private Label DigitLabel;
+        private Label NumberOfCharactersLabel;
+        private MaskedTextBox PasswordMaskedTextBox;
+        private Label PasswordLabel;
         private System.Windows.Forms.Timer InactivityTimer;
-        private Button ClearButton;
     }
 }

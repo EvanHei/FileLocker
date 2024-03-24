@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -48,19 +49,6 @@ public partial class DecryptForm : Form
         }
     }
 
-    private bool ValidateInputFields()
-    {
-        bool output = true;
-
-        if (string.IsNullOrWhiteSpace(PasswordMaskedTextBox.Text))
-        {
-            MessageBox.Show("No password provided.", "Invalid Input", MessageBoxButtons.OK);
-            output = false;
-        }
-
-        return output;
-    }
-
     private void EyeballLabel_Click(object sender, EventArgs e)
     {
         // toggle off
@@ -83,25 +71,23 @@ public partial class DecryptForm : Form
         ResetTimer();
     }
 
-    private void InactivityTimer_Tick(object sender, EventArgs e)
+    private bool ValidateInputFields()
     {
-        PasswordMaskedTextBox.Text = "";
+        bool output = true;
+
+        if (string.IsNullOrWhiteSpace(PasswordMaskedTextBox.Text))
+        {
+            MessageBox.Show("No password provided.", "Invalid Input", MessageBoxButtons.OK);
+            output = false;
+        }
+
+        return output;
     }
 
     private void ResetTimer()
     {
         InactivityTimer.Stop();
         InactivityTimer.Start();
-    }
-
-    private void PasswordMaskedTextBox_TextChanged(object sender, EventArgs e)
-    {
-        ResetTimer();
-    }
-
-    private void PasswordMaskedTextBox_Click(object sender, EventArgs e)
-    {
-        ResetTimer();
     }
 
     private void DecryptForm_MouseDown(object sender, MouseEventArgs e)
@@ -112,10 +98,5 @@ public partial class DecryptForm : Form
     private void DecryptForm_MouseMove(object sender, MouseEventArgs e)
     {
         ResetTimer();
-    }
-
-    private void PasswordLabel_Click(object sender, EventArgs e)
-    {
-
     }
 }

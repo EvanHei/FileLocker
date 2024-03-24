@@ -33,11 +33,11 @@
             ClearButton = new Button();
             PasswordWarningLabel = new Label();
             EncryptionAlgorithmComboBox = new ComboBox();
-            EncryptionAlgorithmLabel = new Label();
+            AlgorithmLabel = new Label();
             GenerateRandomButton = new Button();
             EyeballLabel = new Label();
             ConfirmPasswordMaskedTextBox = new MaskedTextBox();
-            ConfirmPasswordLabel = new Label();
+            ConfirmLabel = new Label();
             EnterButton = new Button();
             SpecialCharacterLabel = new Label();
             LowercaseLetterLabel = new Label();
@@ -89,16 +89,16 @@
             EncryptionAlgorithmComboBox.SelectedIndexChanged += EncryptionAlgorithmComboBox_SelectedIndexChanged;
             EncryptionAlgorithmComboBox.Click += EncryptionAlgorithmComboBox_Click;
             // 
-            // EncryptionAlgorithmLabel
+            // AlgorithmLabel
             // 
-            EncryptionAlgorithmLabel.AutoSize = true;
-            EncryptionAlgorithmLabel.Font = new Font("Segoe UI Emoji", 12F);
-            EncryptionAlgorithmLabel.ForeColor = SystemColors.ButtonFace;
-            EncryptionAlgorithmLabel.Location = new Point(3, 127);
-            EncryptionAlgorithmLabel.Name = "EncryptionAlgorithmLabel";
-            EncryptionAlgorithmLabel.Size = new Size(161, 21);
-            EncryptionAlgorithmLabel.TabIndex = 30;
-            EncryptionAlgorithmLabel.Text = "Encryption Algorithm:";
+            AlgorithmLabel.AutoSize = true;
+            AlgorithmLabel.Font = new Font("Segoe UI Emoji", 12F);
+            AlgorithmLabel.ForeColor = SystemColors.ButtonFace;
+            AlgorithmLabel.Location = new Point(79, 127);
+            AlgorithmLabel.Name = "AlgorithmLabel";
+            AlgorithmLabel.Size = new Size(83, 21);
+            AlgorithmLabel.TabIndex = 30;
+            AlgorithmLabel.Text = "Algorithm:";
             // 
             // GenerateRandomButton
             // 
@@ -140,16 +140,16 @@
             ConfirmPasswordMaskedTextBox.Click += ConfirmPasswordMaskedTextBox_Click;
             ConfirmPasswordMaskedTextBox.TextChanged += ConfirmPasswordMaskedTextBox_TextChanged;
             // 
-            // ConfirmPasswordLabel
+            // ConfirmLabel
             // 
-            ConfirmPasswordLabel.AutoSize = true;
-            ConfirmPasswordLabel.Font = new Font("Segoe UI Emoji", 12F);
-            ConfirmPasswordLabel.ForeColor = SystemColors.ButtonFace;
-            ConfirmPasswordLabel.Location = new Point(23, 92);
-            ConfirmPasswordLabel.Name = "ConfirmPasswordLabel";
-            ConfirmPasswordLabel.Size = new Size(141, 21);
-            ConfirmPasswordLabel.TabIndex = 28;
-            ConfirmPasswordLabel.Text = "Confirm Password:";
+            ConfirmLabel.AutoSize = true;
+            ConfirmLabel.Font = new Font("Segoe UI Emoji", 12F);
+            ConfirmLabel.ForeColor = SystemColors.ButtonFace;
+            ConfirmLabel.Location = new Point(92, 92);
+            ConfirmLabel.Name = "ConfirmLabel";
+            ConfirmLabel.Size = new Size(70, 21);
+            ConfirmLabel.TabIndex = 28;
+            ConfirmLabel.Text = "Confirm:";
             // 
             // EnterButton
             // 
@@ -260,11 +260,11 @@
             Controls.Add(ClearButton);
             Controls.Add(PasswordWarningLabel);
             Controls.Add(EncryptionAlgorithmComboBox);
-            Controls.Add(EncryptionAlgorithmLabel);
+            Controls.Add(AlgorithmLabel);
             Controls.Add(GenerateRandomButton);
             Controls.Add(EyeballLabel);
             Controls.Add(ConfirmPasswordMaskedTextBox);
-            Controls.Add(ConfirmPasswordLabel);
+            Controls.Add(ConfirmLabel);
             Controls.Add(EnterButton);
             Controls.Add(SpecialCharacterLabel);
             Controls.Add(LowercaseLetterLabel);
@@ -291,11 +291,11 @@
         private Button ClearButton;
         private Label PasswordWarningLabel;
         private ComboBox EncryptionAlgorithmComboBox;
-        private Label EncryptionAlgorithmLabel;
+        private Label AlgorithmLabel;
         private Button GenerateRandomButton;
         private Label EyeballLabel;
         private MaskedTextBox ConfirmPasswordMaskedTextBox;
-        private Label ConfirmPasswordLabel;
+        private Label ConfirmLabel;
         private Button EnterButton;
         private Label SpecialCharacterLabel;
         private Label LowercaseLetterLabel;

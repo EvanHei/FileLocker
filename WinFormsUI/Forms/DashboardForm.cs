@@ -116,6 +116,22 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         LockedPanel.Visible = false;
         UnlockedPanel.Visible = false;
         RelocationPanel.Visible = true;
+
+        string displayPath = selectedModel.Path.Length > 64 ? selectedModel.Path.Substring(0, 61) + "..." : selectedModel.Path;
+        string fileDisplayName = selectedModel.FileName.Length > 50 ? selectedModel.FileName.Substring(0, 47) + "..." : selectedModel.FileName;
+        RelocationPanel_CantLocateFileLabel.Text = $"Can't locate {fileDisplayName}";
+        RelocationPanel_LastSeenLabel.Text = $"It was last seen at {displayPath}";
+    }
+
+    private void CenterLabel_TextChanged(object sender, EventArgs e)
+    {
+        if (sender is not Label label)
+            return;
+
+        Size textSize = TextRenderer.MeasureText(label.Text, label.Font);
+        int newX = (label.Parent.ClientSize.Width - textSize.Width) / 2;
+        int newY = label.Location.Y;
+        label.Location = new Point(newX, newY);
     }
 
     private string FormatBytes(int bytes)

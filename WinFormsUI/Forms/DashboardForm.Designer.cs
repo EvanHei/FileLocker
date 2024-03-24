@@ -646,7 +646,7 @@
             RelocationPanel_RemoveButton.FlatStyle = FlatStyle.Flat;
             RelocationPanel_RemoveButton.Font = new Font("Segoe UI Emoji", 12F);
             RelocationPanel_RemoveButton.ForeColor = SystemColors.ButtonFace;
-            RelocationPanel_RemoveButton.Location = new Point(449, 457);
+            RelocationPanel_RemoveButton.Location = new Point(434, 460);
             RelocationPanel_RemoveButton.Name = "RelocationPanel_RemoveButton";
             RelocationPanel_RemoveButton.Size = new Size(83, 37);
             RelocationPanel_RemoveButton.TabIndex = 20;
@@ -660,7 +660,7 @@
             RelocationPanel_RelocateButton.FlatStyle = FlatStyle.Flat;
             RelocationPanel_RelocateButton.Font = new Font("Segoe UI Emoji", 12F);
             RelocationPanel_RelocateButton.ForeColor = SystemColors.ButtonFace;
-            RelocationPanel_RelocateButton.Location = new Point(360, 457);
+            RelocationPanel_RelocateButton.Location = new Point(345, 460);
             RelocationPanel_RelocateButton.Name = "RelocationPanel_RelocateButton";
             RelocationPanel_RelocateButton.Size = new Size(83, 37);
             RelocationPanel_RelocateButton.TabIndex = 19;
@@ -673,11 +673,12 @@
             RelocationPanel_LastSeenLabel.AutoSize = true;
             RelocationPanel_LastSeenLabel.Font = new Font("Segoe UI Emoji", 12F);
             RelocationPanel_LastSeenLabel.ForeColor = SystemColors.AppWorkspace;
-            RelocationPanel_LastSeenLabel.Location = new Point(359, 414);
+            RelocationPanel_LastSeenLabel.Location = new Point(344, 415);
             RelocationPanel_LastSeenLabel.Name = "RelocationPanel_LastSeenLabel";
             RelocationPanel_LastSeenLabel.Size = new Size(191, 21);
             RelocationPanel_LastSeenLabel.TabIndex = 18;
             RelocationPanel_LastSeenLabel.Text = "It was last seen at <path>.";
+            RelocationPanel_LastSeenLabel.TextChanged += CenterLabel_TextChanged;
             // 
             // RelocationPanel_CantLocateFileLabel
             // 
@@ -685,11 +686,12 @@
             RelocationPanel_CantLocateFileLabel.AutoSize = true;
             RelocationPanel_CantLocateFileLabel.Font = new Font("Segoe UI Emoji", 20.25F);
             RelocationPanel_CantLocateFileLabel.ForeColor = SystemColors.ButtonFace;
-            RelocationPanel_CantLocateFileLabel.Location = new Point(335, 378);
+            RelocationPanel_CantLocateFileLabel.Location = new Point(320, 379);
             RelocationPanel_CantLocateFileLabel.Name = "RelocationPanel_CantLocateFileLabel";
             RelocationPanel_CantLocateFileLabel.Size = new Size(238, 36);
             RelocationPanel_CantLocateFileLabel.TabIndex = 17;
             RelocationPanel_CantLocateFileLabel.Text = "Can't locate \"path\"";
+            RelocationPanel_CantLocateFileLabel.TextChanged += CenterLabel_TextChanged;
             // 
             // UnlockedPanel
             // 
@@ -971,10 +973,10 @@
             Controls.Add(SearchTextBox);
             Controls.Add(FileListBox);
             Controls.Add(MenuStrip);
-            Controls.Add(UnlockedPanel);
-            Controls.Add(NoFilesPanel);
             Controls.Add(RelocationPanel);
             Controls.Add(LockedPanel);
+            Controls.Add(UnlockedPanel);
+            Controls.Add(NoFilesPanel);
             Font = new Font("Segoe UI Emoji", 12F);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");

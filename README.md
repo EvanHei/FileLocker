@@ -28,18 +28,57 @@ _Coming Soon_
 
 ### Dashboard Form
 
-<img src="./images/DashboardForm.png" alt="Dashboard Form" width="600">
+#### Locked File Selected
 
-The Dashboard Form displays files within FileLocker's scope. Each file's status can be seen to the left of its name. Multiple files can be selected for encryption and deletion.
+A locked file can be decrypted, shredded, shown in File Explorer, or exported.
 
-- **+ Add File**: displays a file dialog to select one or more files to be displayed.
-- **Encrypt**: launches the [**Encrypt Form**](#encrypt-form).
-- **Decrypt**: launches the [**Decrypt Form**](#decrypt-form).
-- **🗑️**: shreds a file by overwriting its contents with random data and then deleting.
-- 📥: imports a .zip archive.
-- 📤: exports the selected file into a .zip archive.
-- **User Guide 📖**: opens the GitHub repository in the default browser.
-- **File List**: right click on a file to display options, or drag and drop files onto the panel to add them.
+- **📋 Path**: copies the path to the clipboard.
+- **📋 SHA**: copies the SHA to the clipboard.
+- **Decrypt 🔑**: opens the [**Decrypt Form**](#decrypt-form).
+- **Shred 🗑️**: shreds the file by overwriting its contents with random data and then deleting.
+- **Explorer 📁**: launches File Explorer with the file selected.
+- **Export 📤**: exports the file to a .zip archive.
+
+<img src="./images/DashboardForm_LockedPanel.png" alt="Dashboard Form with Locked File Selected" width="1000">
+
+---
+
+#### Unlocked File Selected
+
+An unlocked file can be encrypted, shredded, or shown in File Explorer.
+
+- **📋 Path**: copies the path to the clipboard.
+- **📋 SHA**: copies the SHA to the clipboard.
+- **Encrypt 🔐**: opens the [**Encrypt Form**](#encrypt-form).
+- **Shred 🗑️**: shreds the file by overwriting its contents with random data and then deleting.
+- **Explorer 📁**: launches File Explorer with the file selected.
+
+<img src="./images/DashboardForm_UnlockedPanel.png" alt="Dashboard Form with Unlocked File Selected" width="1000">
+
+---
+
+#### Moved/Deleted File Selected
+
+An moved or deleted file can be relocated or removed from scope.
+
+- **Relocate**: find the moved file.
+- **Remove**: remove file from scope.
+
+<img src="./images/DashboardForm_RelocationPanel.png" alt="Dashboard Form with Unlocked File Selected" width="1000">
+
+---
+
+The Dashboard Form also displays files within FileLocker's scope and allows addition and navigation of files.
+
+- **Guide 📖**: opens the GitHub repository in the default browser.
+- **Diagnostics 📊**: _Coming Soon_
+- **Settings ⚙**: _Coming Soon_
+- **Add ▼**: shows dropdown options to add files to the scope by manually selecting or importing an archive.
+- **File List**: right click on a file to display options or drag and drop files onto the list to add them.
+- **Search Bar**: filters files based on the search query.
+
+> [!TIP]
+> Filter by file type by searching `.txt` or `.png`, or filter by algorithm by searching `.aes` or `.3des`.
 
 ---
 
@@ -47,14 +86,15 @@ The Dashboard Form displays files within FileLocker's scope. Each file's status 
 
 <img src="./images/EncryptForm.png" alt="Encrypt Form" width="400">
 
-The Encrypt Form allows users to encrypt by choosing an industry-standard encryption algorithm such as AES or 3DES and providing a strength-enforced password. Passwords cleared after 30 seconds of inactivity.
+The Encrypt Form allows encryption by choosing an industry-standard encryption algorithm such as AES or 3DES and providing a strength-enforced password. Password fields are cleared after 30 seconds of inactivity.
 
 - **Generate Random**: generates a random password that satisfies the strength policy.
+- **Clear**: erases both password fields.
 - **→**: encrypts the file with the provided password.
 - **👁**: shows or hides the password fields.
 
 > [!CAUTION]
-> If the password is lost, so is the file's data. FileLocker maintains a zero-knowledge policy.
+> If the password is lost the file cannot be decrypted. FileLocker maintains a zero-knowledge policy.
 
 ---
 
@@ -62,10 +102,10 @@ The Encrypt Form allows users to encrypt by choosing an industry-standard encryp
 
 <img src="./images/DecryptForm.png" alt="Decrypt Form" width="400">
 
-The Decrypt Form allows users to decrypt by inputting the encryption password. Passwords cleared after 30 seconds of inactivity.
+The Decrypt Form allows decryption by providing the encryption password. Password field is cleared after 30 seconds of inactivity.
 
 - **→**: decrypts the file with the provided password, if correct.
-- **👁**: shows or hides the password.
+- **👁**: shows or hides the password fields.
 
 ---
 
@@ -73,11 +113,11 @@ The Decrypt Form allows users to decrypt by inputting the encryption password. P
 
 <img src="./images/ImportForm.png" alt="Decrypt Form" width="400">
 
-The Import Form allows users to import a .zip archive.
+The Import Form allows an import of a .zip archive.
 
-- **Open**: allows selection of a .zip archive.
-- **Save To**: the location where the plaintext or ciphertext file will be saved.
-- **Import**: imports with the archive and saves to the chosen location.
+- **Open**: choose a .zip archive.
+- **Save To**: the location where the file will be saved.
+- **Import**: loads the archive and saves the file to the chosen location.
 
 ## Technologies
 
@@ -104,5 +144,5 @@ The Import Form allows users to import a .zip archive.
 - **Logging**: Logs important events such as encryption and decryption with Serilog.
 - **Constant-Time Comparison**: Uses libraries with constant-time comparison to mitigate timing attacks.
 - **File Shredder**: Deletes files without leaving traces by overwriting with random data.
-- **Customizable Encryption**: Allows selection of different encryption algorithms.
+- **Customization**: Allows selection of different encryption algorithms.
 - **SOLID Principles**: Follows SOLID principles to facilitate quick code updates in the case of a new exploit.

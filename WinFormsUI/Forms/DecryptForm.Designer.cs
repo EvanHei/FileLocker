@@ -36,6 +36,10 @@
             PasswordMaskedTextBox = new MaskedTextBox();
             PasswordLabel = new Label();
             InactivityTimer = new System.Windows.Forms.Timer(components);
+            MenuStrip = new MenuStrip();
+            CloseMenuItem = new ToolStripMenuItem();
+            DecryptToolStripMenuItem = new ToolStripMenuItem();
+            MenuStrip.SuspendLayout();
             SuspendLayout();
             // 
             // FailureLabel
@@ -52,7 +56,8 @@
             // 
             // EnterButton
             // 
-            EnterButton.BackColor = SystemColors.Highlight;
+            EnterButton.BackColor = Color.Silver;
+            EnterButton.Enabled = false;
             EnterButton.FlatStyle = FlatStyle.Flat;
             EnterButton.Font = new Font("Segoe UI Emoji", 12F);
             EnterButton.ForeColor = SystemColors.ButtonFace;
@@ -87,6 +92,7 @@
             PasswordMaskedTextBox.Size = new Size(277, 29);
             PasswordMaskedTextBox.TabIndex = 18;
             PasswordMaskedTextBox.UseSystemPasswordChar = true;
+            PasswordMaskedTextBox.TextChanged += PasswordMaskedTextBox_TextChanged;
             // 
             // PasswordLabel
             // 
@@ -104,12 +110,44 @@
             InactivityTimer.Enabled = true;
             InactivityTimer.Interval = 30000;
             // 
+            // MenuStrip
+            // 
+            MenuStrip.BackColor = Color.FromArgb(32, 32, 32);
+            MenuStrip.Font = new Font("Segoe UI Emoji", 10F);
+            MenuStrip.Items.AddRange(new ToolStripItem[] { CloseMenuItem, DecryptToolStripMenuItem });
+            MenuStrip.Location = new Point(0, 0);
+            MenuStrip.Name = "MenuStrip";
+            MenuStrip.Size = new Size(470, 29);
+            MenuStrip.TabIndex = 35;
+            MenuStrip.Text = "menuStrip1";
+            // 
+            // CloseMenuItem
+            // 
+            CloseMenuItem.Alignment = ToolStripItemAlignment.Right;
+            CloseMenuItem.Font = new Font("Segoe UI Emoji", 10F);
+            CloseMenuItem.ForeColor = SystemColors.AppWorkspace;
+            CloseMenuItem.Margin = new Padding(0, 2, 0, 0);
+            CloseMenuItem.Name = "CloseMenuItem";
+            CloseMenuItem.Size = new Size(40, 23);
+            CloseMenuItem.Text = "❌";
+            CloseMenuItem.Click += CloseMenuItem_Click;
+            // 
+            // DecryptToolStripMenuItem
+            // 
+            DecryptToolStripMenuItem.Enabled = false;
+            DecryptToolStripMenuItem.ForeColor = SystemColors.AppWorkspace;
+            DecryptToolStripMenuItem.Name = "DecryptToolStripMenuItem";
+            DecryptToolStripMenuItem.Size = new Size(69, 25);
+            DecryptToolStripMenuItem.Text = "Decrypt";
+            // 
             // DecryptForm
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(32, 32, 32);
             ClientSize = new Size(470, 161);
+            ControlBox = false;
+            Controls.Add(MenuStrip);
             Controls.Add(FailureLabel);
             Controls.Add(EnterButton);
             Controls.Add(EyeballLabel);
@@ -121,9 +159,10 @@
             Margin = new Padding(4);
             Name = "DecryptForm";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Decrypt";
             MouseDown += DecryptForm_MouseDown;
             MouseMove += DecryptForm_MouseMove;
+            MenuStrip.ResumeLayout(false);
+            MenuStrip.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -136,5 +175,8 @@
         private MaskedTextBox PasswordMaskedTextBox;
         private Label PasswordLabel;
         private System.Windows.Forms.Timer InactivityTimer;
+        private MenuStrip MenuStrip;
+        private ToolStripMenuItem CloseMenuItem;
+        private ToolStripMenuItem DecryptToolStripMenuItem;
     }
 }

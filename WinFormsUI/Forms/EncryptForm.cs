@@ -346,4 +346,9 @@ public partial class EncryptForm : Form
     {
         ResetTimer();
     }
+
+    private void CloseMenuItem_Click(object sender, EventArgs e)
+    {
+        this.Close();
+    }
 }

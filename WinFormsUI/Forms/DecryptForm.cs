@@ -26,6 +26,26 @@ public partial class DecryptForm : Form
         this.model = model;
     }
 
+    private void UpdateControls()
+    {
+        if (ValidateInputFields())
+            EnableEnterButton();
+        else
+            DisableEnterButton();
+    }
+
+    private void EnableEnterButton()
+    {
+        EnterButton.BackColor = SystemColors.Highlight;
+        EnterButton.Enabled = true;
+    }
+
+    private void DisableEnterButton()
+    {
+        EnterButton.BackColor = Color.Silver;
+        EnterButton.Enabled = false;
+    }
+
     private void EnterButton_Click(object sender, EventArgs e)
     {
         if (model.EncryptionKeySalt == null)
@@ -75,11 +95,8 @@ public partial class DecryptForm : Form
     {
         bool output = true;
 
-        if (string.IsNullOrWhiteSpace(PasswordMaskedTextBox.Text))
-        {
-            MessageBox.Show("No password provided.", "Invalid Input", MessageBoxButtons.OK);
+        if (PasswordMaskedTextBox.Text.Length < 1)
             output = false;
-        }
 
         return output;
     }
@@ -98,5 +115,15 @@ public partial class DecryptForm : Form
     private void DecryptForm_MouseMove(object sender, MouseEventArgs e)
     {
         ResetTimer();
+    }
+
+    private void CloseMenuItem_Click(object sender, EventArgs e)
+    {
+        this.Close();
+    }
+
+    private void PasswordMaskedTextBox_TextChanged(object sender, EventArgs e)
+    {
+        UpdateControls();
     }
 }

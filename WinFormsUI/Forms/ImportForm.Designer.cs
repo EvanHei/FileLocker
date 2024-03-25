@@ -34,6 +34,10 @@
             OpenButton = new Button();
             SaveToLabel = new Label();
             SaveToButton = new Button();
+            MenuStrip = new MenuStrip();
+            CloseMenuItem = new ToolStripMenuItem();
+            ImportToolStripMenuItem = new ToolStripMenuItem();
+            MenuStrip.SuspendLayout();
             SuspendLayout();
             // 
             // ImportButton
@@ -102,12 +106,44 @@
             SaveToButton.UseVisualStyleBackColor = false;
             SaveToButton.Click += SaveToButton_Click;
             // 
+            // MenuStrip
+            // 
+            MenuStrip.BackColor = Color.FromArgb(32, 32, 32);
+            MenuStrip.Font = new Font("Segoe UI Emoji", 10F);
+            MenuStrip.Items.AddRange(new ToolStripItem[] { CloseMenuItem, ImportToolStripMenuItem });
+            MenuStrip.Location = new Point(0, 0);
+            MenuStrip.Name = "MenuStrip";
+            MenuStrip.Size = new Size(541, 29);
+            MenuStrip.TabIndex = 35;
+            MenuStrip.Text = "menuStrip1";
+            // 
+            // CloseMenuItem
+            // 
+            CloseMenuItem.Alignment = ToolStripItemAlignment.Right;
+            CloseMenuItem.Font = new Font("Segoe UI Emoji", 10F);
+            CloseMenuItem.ForeColor = SystemColors.AppWorkspace;
+            CloseMenuItem.Margin = new Padding(0, 2, 0, 0);
+            CloseMenuItem.Name = "CloseMenuItem";
+            CloseMenuItem.Size = new Size(40, 23);
+            CloseMenuItem.Text = "❌";
+            CloseMenuItem.Click += CloseMenuItem_Click;
+            // 
+            // ImportToolStripMenuItem
+            // 
+            ImportToolStripMenuItem.Enabled = false;
+            ImportToolStripMenuItem.ForeColor = SystemColors.AppWorkspace;
+            ImportToolStripMenuItem.Name = "ImportToolStripMenuItem";
+            ImportToolStripMenuItem.Size = new Size(63, 25);
+            ImportToolStripMenuItem.Text = "Import";
+            // 
             // ImportForm
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(32, 32, 32);
             ClientSize = new Size(541, 278);
+            ControlBox = false;
+            Controls.Add(MenuStrip);
             Controls.Add(ImportButton);
             Controls.Add(OpenLabel);
             Controls.Add(OpenButton);
@@ -119,7 +155,8 @@
             Margin = new Padding(4);
             Name = "ImportForm";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Import";
+            MenuStrip.ResumeLayout(false);
+            MenuStrip.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -131,5 +168,8 @@
         private Button OpenButton;
         private Label SaveToLabel;
         private Button SaveToButton;
+        private MenuStrip MenuStrip;
+        private ToolStripMenuItem CloseMenuItem;
+        private ToolStripMenuItem ImportToolStripMenuItem;
     }
 }

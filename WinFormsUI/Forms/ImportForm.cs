@@ -118,4 +118,9 @@ public partial class ImportForm : Form
             return;
         }
     }
+
+    private void CloseMenuItem_Click(object sender, EventArgs e)
+    {
+        this.Close();
+    }
 }

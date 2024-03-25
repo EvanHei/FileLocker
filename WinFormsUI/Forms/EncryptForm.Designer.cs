@@ -47,6 +47,10 @@
             PasswordMaskedTextBox = new MaskedTextBox();
             PasswordLabel = new Label();
             InactivityTimer = new System.Windows.Forms.Timer(components);
+            MenuStrip = new MenuStrip();
+            CloseMenuItem = new ToolStripMenuItem();
+            EncryptToolStripMenuItem = new ToolStripMenuItem();
+            MenuStrip.SuspendLayout();
             SuspendLayout();
             // 
             // ClearButton
@@ -251,12 +255,44 @@
             InactivityTimer.Interval = 30000;
             InactivityTimer.Tick += InactivityTimer_Tick;
             // 
+            // MenuStrip
+            // 
+            MenuStrip.BackColor = Color.FromArgb(32, 32, 32);
+            MenuStrip.Font = new Font("Segoe UI Emoji", 10F);
+            MenuStrip.Items.AddRange(new ToolStripItem[] { CloseMenuItem, EncryptToolStripMenuItem });
+            MenuStrip.Location = new Point(0, 0);
+            MenuStrip.Name = "MenuStrip";
+            MenuStrip.Size = new Size(541, 29);
+            MenuStrip.TabIndex = 34;
+            MenuStrip.Text = "menuStrip1";
+            // 
+            // CloseMenuItem
+            // 
+            CloseMenuItem.Alignment = ToolStripItemAlignment.Right;
+            CloseMenuItem.Font = new Font("Segoe UI Emoji", 10F);
+            CloseMenuItem.ForeColor = SystemColors.AppWorkspace;
+            CloseMenuItem.Margin = new Padding(0, 2, 0, 0);
+            CloseMenuItem.Name = "CloseMenuItem";
+            CloseMenuItem.Size = new Size(40, 23);
+            CloseMenuItem.Text = "❌";
+            CloseMenuItem.Click += CloseMenuItem_Click;
+            // 
+            // EncryptToolStripMenuItem
+            // 
+            EncryptToolStripMenuItem.Enabled = false;
+            EncryptToolStripMenuItem.ForeColor = SystemColors.AppWorkspace;
+            EncryptToolStripMenuItem.Name = "EncryptToolStripMenuItem";
+            EncryptToolStripMenuItem.Size = new Size(67, 25);
+            EncryptToolStripMenuItem.Text = "Encrypt";
+            // 
             // EncryptForm
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(32, 32, 32);
             ClientSize = new Size(541, 367);
+            ControlBox = false;
+            Controls.Add(MenuStrip);
             Controls.Add(ClearButton);
             Controls.Add(PasswordWarningLabel);
             Controls.Add(EncryptionAlgorithmComboBox);
@@ -279,9 +315,10 @@
             Margin = new Padding(4);
             Name = "EncryptForm";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Encrypt";
             MouseDown += EncryptForm_MouseDown;
             MouseMove += EncryptForm_MouseMove;
+            MenuStrip.ResumeLayout(false);
+            MenuStrip.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -305,5 +342,8 @@
         private MaskedTextBox PasswordMaskedTextBox;
         private Label PasswordLabel;
         private System.Windows.Forms.Timer InactivityTimer;
+        private MenuStrip MenuStrip;
+        private ToolStripMenuItem CloseMenuItem;
+        private ToolStripMenuItem EncryptToolStripMenuItem;
     }
 }

@@ -5,69 +5,28 @@ A Windows desktop app to protect files in rest or in transit using cryptographic
 ## Table of Contents
 
 1. [Getting Started](#getting-started)
-   - [Download](#download)
-   - [Installation](#installation)
-2. [User Guide](#user-guide)
-   - [Dashboard Form](#dashboard-form)
-   - [Encrypt Form](#encrypt-form)
-   - [Decrypt Form](#decrypt-form)
+2. [Guide](#guide)
 3. [Technologies](#technologies)
 4. [Security Features](#security-features)
 
 ## Getting Started
 
-### Download
+<details>
+<summary><strong>Download</strong></summary>
+<em>Coming Soon</em>
+</details>
 
-_Coming Soon_
+<details>
+<summary><strong>Installation</strong></summary>
+<em>Coming Soon</em>
+</details>
 
-### Installation
-
-_Coming Soon_
-
-## User Guide
+## Guide
 
 ### Dashboard Form
 
-#### Locked File Selected
-
-A locked file can be decrypted, shredded, shown in File Explorer, or exported.
-
-- **📋 Path**: copies the path to the clipboard.
-- **📋 SHA**: copies the SHA to the clipboard.
-- **Decrypt 🔑**: opens the [**Decrypt Form**](#decrypt-form).
-- **Shred 🗑️**: shreds the file by overwriting its contents with random data and then deleting.
-- **Explorer 📁**: launches File Explorer with the file selected.
-- **Export 📤**: exports the file to a .zip archive.
-
-<img src="./images/DashboardForm_LockedPanel.png" alt="Dashboard Form with Locked File Selected" width="1000">
-
----
-
-#### Unlocked File Selected
-
-An unlocked file can be encrypted, shredded, or shown in File Explorer.
-
-- **📋 Path**: copies the path to the clipboard.
-- **📋 SHA**: copies the SHA to the clipboard.
-- **Encrypt 🔐**: opens the [**Encrypt Form**](#encrypt-form).
-- **Shred 🗑️**: shreds the file by overwriting its contents with random data and then deleting.
-- **Explorer 📁**: launches File Explorer with the file selected.
-
-<img src="./images/DashboardForm_UnlockedPanel.png" alt="Dashboard Form with Unlocked File Selected" width="1000">
-
----
-
-#### Moved/Deleted File Selected
-
-An moved or deleted file can be relocated or removed from scope.
-
-- **Relocate**: find the moved file.
-- **Remove**: remove file from scope.
-
-<img src="./images/DashboardForm_RelocationPanel.png" alt="Dashboard Form with Unlocked File Selected" width="1000">
-
----
-
+<details>
+<summary><strong>Summary</strong></summary>
 The Dashboard Form also displays files within FileLocker's scope and allows addition and navigation of files.
 
 - **Guide 📖**: opens the GitHub repository in the default browser.
@@ -80,10 +39,50 @@ The Dashboard Form also displays files within FileLocker's scope and allows addi
 > [!TIP]
 > Filter by file type by searching `.txt` or `.png`, or filter by algorithm by searching `.aes` or `.3des`.
 
+</details>
+
+<details>
+<summary><strong>Locked File</strong></summary>
+A locked file can be decrypted, shredded, shown in File Explorer, or exported.
+
+- **📋 Path**: copies the path to the clipboard.
+- **📋 SHA**: copies the SHA to the clipboard.
+- **Decrypt 🔑**: opens the [**Decrypt Form**](#decrypt-form).
+- **Shred 🗑️**: shreds the file by overwriting its contents with random data and then deleting.
+- **Explorer 📁**: launches File Explorer with the file selected.
+- **Export 📤**: exports the file to a .zip archive.
+
+<img src="./images/DashboardForm_LockedPanel.png" alt="Dashboard Form with Locked File Selected" width="1000">
+
+</details>
+
+<details>
+<summary><strong>Unlocked File</strong></summary>
+An unlocked file can be encrypted, shredded, or shown in File Explorer.
+
+- **📋 Path**: copies the path to the clipboard.
+- **📋 SHA**: copies the SHA to the clipboard.
+- **Encrypt 🔐**: opens the [**Encrypt Form**](#encrypt-form).
+- **Shred 🗑️**: shreds the file by overwriting its contents with random data and then deleting.
+- **Explorer 📁**: launches File Explorer with the file selected.
+
+<img src="./images/DashboardForm_UnlockedPanel.png" alt="Dashboard Form with Unlocked File Selected" width="1000">
+</details>
+
+<details>
+<summary><strong>Moved/Deleted File</strong></summary>
+An moved or deleted file can be relocated or removed from scope.
+
+- **Relocate**: find the moved file.
+- **Remove**: remove file from scope.
+
+<img src="./images/DashboardForm_RelocationPanel.png" alt="Dashboard Form with Unlocked File Selected" width="1000">
+</details>
+
 ---
 
-### Encrypt Form
-
+<details>
+<summary><strong>Encrypt Form</strong></summary>
 <img src="./images/EncryptForm.png" alt="Encrypt Form" width="400">
 
 The Encrypt Form allows encryption by choosing an industry-standard encryption algorithm such as AES or 3DES and providing a strength-enforced password. Password fields are cleared after 30 seconds of inactivity.
@@ -96,21 +95,24 @@ The Encrypt Form allows encryption by choosing an industry-standard encryption a
 > [!CAUTION]
 > If the password is lost the file cannot be decrypted. FileLocker maintains a zero-knowledge policy.
 
+</details>
+
 ---
 
-### Decrypt Form
-
+<details>
+<summary><strong>Decrypt Form</strong></summary>
 <img src="./images/DecryptForm.png" alt="Decrypt Form" width="400">
 
 The Decrypt Form allows decryption by providing the encryption password. Password field is cleared after 30 seconds of inactivity.
 
 - **→**: decrypts the file with the provided password, if correct.
 - **👁**: shows or hides the password fields.
+</details>
 
 ---
 
-### Import Form
-
+<details>
+<summary><strong>Import Form</strong></summary>
 <img src="./images/ImportForm.png" alt="Decrypt Form" width="400">
 
 The Import Form allows an import of a .zip archive.
@@ -118,6 +120,9 @@ The Import Form allows an import of a .zip archive.
 - **Open**: choose a .zip archive.
 - **Save To**: the location where the file will be saved.
 - **Import**: loads the archive and saves the file to the chosen location.
+</details>
+
+---
 
 ## Technologies
 

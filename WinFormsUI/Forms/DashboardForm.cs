@@ -57,8 +57,13 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
     private void UpdateControls()
     {
-        if (FileListBox.SelectedItem != null)
-            selectedModel = (FileModel)FileListBox.SelectedItem;
+        if (FileListBox.SelectedItem == null)
+        {
+            ShowNoFilesPanel();
+            return;
+        }
+
+        selectedModel = (FileModel)FileListBox.SelectedItem;
 
         if (!File.Exists(selectedModel.Path))
         {
@@ -66,10 +71,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
             return;
         }
 
-        if (FileListBox.Items.Count < 1)
-            ShowNoFilesPanel();
-        else
-            if (selectedModel.EncryptionStatus == true)
+        if (selectedModel.EncryptionStatus == true)
             ShowLockedPanel();
         else
             ShowUnlockedPanel();
@@ -94,6 +96,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         UnlockedPanel_PathValueLabel.Text = selectedModel.Path.Length > 64 ? selectedModel.Path.Substring(0, 61) + "..." : selectedModel.Path;
         UnlockedPanel_SizeValueLabel.Text = FormatBytes(selectedModel.ByteSize);
         UnlockedPanel_ShaValueLabel.Text = BitConverter.ToString(selectedModel.Sha).Replace("-", "");
+        UnlockedPanel_DateAddedValueLabel.Text = selectedModel.DateAdded.ToShortDateString();
     }
 
     private void ShowLockedPanel()
@@ -108,6 +111,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         LockedPanel_SizeValueLabel.Text = FormatBytes(selectedModel.ByteSize);
         LockedPanel_ShaValueLabel.Text = BitConverter.ToString(selectedModel.Sha).Replace("-", "");
         LockedPanel_AlgorithmValueLabel.Text = selectedModel.EncryptionAlgorithm.ToString();
+        LockedPanel_DateAddedValueLabel.Text = selectedModel.DateAdded.ToShortDateString();
     }
 
     private void ShowRelocationPanel()

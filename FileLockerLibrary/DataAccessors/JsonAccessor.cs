@@ -31,6 +31,7 @@ public class JsonAccessor : IDataAccessor
         if (GetAllFileNames().Contains(model.FileName))
             throw new InvalidOperationException($"{model.FileName} already added.");
 
+        model.DateAdded = DateTime.Now;
         SaveFileModel(model);
     }
 

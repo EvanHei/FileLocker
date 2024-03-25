@@ -184,6 +184,8 @@ public class FileModel
         }
     }
 
+    public DateTime DateAdded { get; set; }
+
     public void Lock(EncryptionAlgorithm encryptionAlgorithm)
     {
         Encrypt(encryptionAlgorithm);

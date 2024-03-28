@@ -1,4 +1,7 @@
 using FileLockerLibrary;
+using OxyPlot.Series;
+using OxyPlot.WindowsForms;
+using OxyPlot;
 using System.Collections;
 using System.Diagnostics;
 using System.IO;
@@ -97,6 +100,8 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         UnlockedPanel_SizeValueLabel.Text = FormatBytes(selectedModel.ByteSize);
         UnlockedPanel_ShaValueLabel.Text = BitConverter.ToString(selectedModel.Sha).Replace("-", "");
         UnlockedPanel_DateAddedValueLabel.Text = selectedModel.DateAdded.ToShortDateString();
+
+        PopulatePieChartPanel(UnlockedPanel_PieChartPanel);
     }
 
     private void ShowLockedPanel()
@@ -112,6 +117,8 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         LockedPanel_ShaValueLabel.Text = BitConverter.ToString(selectedModel.Sha).Replace("-", "");
         LockedPanel_AlgorithmValueLabel.Text = selectedModel.EncryptionAlgorithm.ToString();
         LockedPanel_DateAddedValueLabel.Text = selectedModel.DateAdded.ToShortDateString();
+
+        PopulatePieChartPanel(LockedPanel_PieChartPanel);
     }
 
     private void ShowRelocationPanel()
@@ -125,6 +132,38 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         string fileDisplayName = selectedModel.FileName.Length > 50 ? selectedModel.FileName.Substring(0, 47) + "..." : selectedModel.FileName;
         RelocationPanel_CantLocateFileLabel.Text = $"Can't locate {fileDisplayName}";
         RelocationPanel_LastSeenLabel.Text = $"It was last seen at {displayPath}";
+    }
+
+    private void PopulatePieChartPanel(Panel panel)
+    {
+        double aesDays = GlobalConfig.Diagnostics.AlgorithmDuration(selectedModel, EncryptionAlgorithm.AES);
+        double tripleDesDays = GlobalConfig.Diagnostics.AlgorithmDuration(selectedModel, EncryptionAlgorithm.TripleDES);
+        double unencryptedDays = GlobalConfig.Diagnostics.UnencryptedDuration(selectedModel);
+
+        PlotModel pieModel = new();
+        PieSeries pieSeries = new()
+        {
+            OutsideLabelFormat = null,
+            InsideLabelFormat = null
+        };
+
+        PieSlice unencryptedSlice = new("None", unencryptedDays) { Fill = OxyColor.FromRgb(128, 128, 128) };
+        PieSlice aesSlice = new("AES", aesDays) { Fill = OxyColor.FromRgb(255, 0, 0) };
+        PieSlice tripleDesSlice = new("3DES", tripleDesDays) { Fill = OxyColor.FromRgb(0, 255, 0) };
+        pieSeries.Slices.Add(aesSlice);
+        pieSeries.Slices.Add(tripleDesSlice);
+        pieSeries.Slices.Add(unencryptedSlice);
+
+        pieModel.Series.Add(pieSeries);
+
+        PlotView pieView = new()
+        {
+            Model = pieModel,
+            Dock = DockStyle.Fill
+        };
+
+        panel.Controls.Clear();
+        panel.Controls.Add(pieView);
     }
 
     private void CenterLabel_TextChanged(object sender, EventArgs e)

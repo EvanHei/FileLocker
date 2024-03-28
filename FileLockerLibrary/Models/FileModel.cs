@@ -232,7 +232,7 @@ public class FileModel
         // overwrite plaintext
         File.WriteAllBytes(Path, ciphertext);
 
-        GlobalConfig.Logger.Log($"File encrypted - {FileName}", LogLevel.Information);
+        GlobalConfig.Logger.Log($"File encrypted with {encryptionAlgorithm} - {System.IO.Path.GetFileNameWithoutExtension(FileName)}", LogLevel.Information);
     }
 
     private void Decrypt()
@@ -268,7 +268,7 @@ public class FileModel
             throw new CryptographicException("Decryption Failed.", ex);
         }
 
-        GlobalConfig.Logger.Log($"File decrypted - {FileName}", LogLevel.Information);
+        GlobalConfig.Logger.Log($"File decrypted with {EncryptionAlgorithm} - {FileName}", LogLevel.Information);
     }
 
     private void GenerateMac()
@@ -336,8 +336,6 @@ public class FileModel
         }
 
         File.Delete(Path);
-
-        GlobalConfig.Logger.Log($"File shredded - {FileName}", LogLevel.Information);
     }
 
     public FileModel(string path)

@@ -47,6 +47,16 @@
             NoFilesPanel_NoFilesDescriptionLabel = new Label();
             NoFilesPanel_NoFilesLabel = new Label();
             LockedPanel = new Panel();
+            LockedPanel_3DesDotLabel = new Label();
+            LockedPanel_3DesLabel = new Label();
+            LockedPanel_AesDotLabel = new Label();
+            LockedPanel_AesLabel = new Label();
+            LockedPanel_NoneDotLabel = new Label();
+            LockedPanel_NoneLabel = new Label();
+            LockedPanel_AlgorithmDurationLabel = new Label();
+            LockedPanel_PieChartPanel = new Panel();
+            LockedPanel_DateAddedValueLabel = new Label();
+            LockedPanel_DateAddedLabel = new Label();
             LockedPanel_ExplorerGroupBox = new GroupBox();
             LockedPanel_ExplorerDescriptionLabel = new Label();
             LockedPanel_ExplorerButton = new Button();
@@ -78,6 +88,8 @@
             RelocationPanel_LastSeenLabel = new Label();
             RelocationPanel_CantLocateFileLabel = new Label();
             UnlockedPanel = new Panel();
+            UnlockedPanel_DateAddedValueLabel = new Label();
+            UnlockedPanel_DateAddedLabel = new Label();
             UnlockedPanel_ExplorerGroupBox = new GroupBox();
             UnlockedPanel_ExplorerDescriptionLabel = new Label();
             UnlockedPanel_ExplorerButton = new Button();
@@ -98,10 +110,14 @@
             UnlockedPanel_StatusValueLabel = new Label();
             UnlockedPanel_StatusLabel = new Label();
             UnlockedPanel_FileNameLabel = new Label();
-            UnlockedPanel_DateAddedValueLabel = new Label();
-            UnlockedPanel_DateAddedLabel = new Label();
-            LockedPanel_DateAddedValueLabel = new Label();
-            LockedPanel_DateAddedLabel = new Label();
+            UnlockedPane_3DesDotLabel = new Label();
+            UnlockedPanel_3DesLabel = new Label();
+            UnlockedPanel_AesDotLabel = new Label();
+            UnlockedPanel_AesLabel = new Label();
+            UnlockedPanel_NoneDotLabel = new Label();
+            UnlockedPanel_NoneLabel = new Label();
+            UnlockedPanel_AlgorithmDurationLabel = new Label();
+            UnlockedPanel_PieChartPanel = new Panel();
             FileListBoxContextMenuStrip.SuspendLayout();
             MenuStrip.SuspendLayout();
             AddButtonContextMenuStrip.SuspendLayout();
@@ -273,7 +289,7 @@
             NoFilesPanel.Controls.Add(NoFilesPanel_NoFilesLabel);
             NoFilesPanel.Location = new Point(361, 31);
             NoFilesPanel.Name = "NoFilesPanel";
-            NoFilesPanel.Size = new Size(864, 921);
+            NoFilesPanel.Size = new Size(864, 1017);
             NoFilesPanel.TabIndex = 22;
             // 
             // NoFilesPanel_NoFilesDescriptionLabel
@@ -302,6 +318,14 @@
             // 
             LockedPanel.BackColor = Color.FromArgb(32, 32, 32);
             LockedPanel.BorderStyle = BorderStyle.FixedSingle;
+            LockedPanel.Controls.Add(LockedPanel_3DesDotLabel);
+            LockedPanel.Controls.Add(LockedPanel_3DesLabel);
+            LockedPanel.Controls.Add(LockedPanel_AesDotLabel);
+            LockedPanel.Controls.Add(LockedPanel_AesLabel);
+            LockedPanel.Controls.Add(LockedPanel_NoneDotLabel);
+            LockedPanel.Controls.Add(LockedPanel_NoneLabel);
+            LockedPanel.Controls.Add(LockedPanel_AlgorithmDurationLabel);
+            LockedPanel.Controls.Add(LockedPanel_PieChartPanel);
             LockedPanel.Controls.Add(LockedPanel_DateAddedValueLabel);
             LockedPanel.Controls.Add(LockedPanel_DateAddedLabel);
             LockedPanel.Controls.Add(LockedPanel_ExplorerGroupBox);
@@ -323,8 +347,117 @@
             LockedPanel.Controls.Add(LockedPanel_FileNameLabel);
             LockedPanel.Location = new Point(361, 31);
             LockedPanel.Name = "LockedPanel";
-            LockedPanel.Size = new Size(864, 921);
+            LockedPanel.Size = new Size(864, 1017);
             LockedPanel.TabIndex = 24;
+            // 
+            // LockedPanel_3DesDotLabel
+            // 
+            LockedPanel_3DesDotLabel.AutoSize = true;
+            LockedPanel_3DesDotLabel.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel_3DesDotLabel.Font = new Font("Segoe UI Emoji", 20F);
+            LockedPanel_3DesDotLabel.ForeColor = Color.Lime;
+            LockedPanel_3DesDotLabel.Location = new Point(237, 842);
+            LockedPanel_3DesDotLabel.Name = "LockedPanel_3DesDotLabel";
+            LockedPanel_3DesDotLabel.Size = new Size(26, 36);
+            LockedPanel_3DesDotLabel.TabIndex = 58;
+            LockedPanel_3DesDotLabel.Text = "•";
+            // 
+            // LockedPanel_3DesLabel
+            // 
+            LockedPanel_3DesLabel.AutoSize = true;
+            LockedPanel_3DesLabel.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel_3DesLabel.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_3DesLabel.Location = new Point(261, 851);
+            LockedPanel_3DesLabel.Name = "LockedPanel_3DesLabel";
+            LockedPanel_3DesLabel.Size = new Size(47, 21);
+            LockedPanel_3DesLabel.TabIndex = 57;
+            LockedPanel_3DesLabel.Text = "3DES";
+            // 
+            // LockedPanel_AesDotLabel
+            // 
+            LockedPanel_AesDotLabel.AutoSize = true;
+            LockedPanel_AesDotLabel.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel_AesDotLabel.Font = new Font("Segoe UI Emoji", 20F);
+            LockedPanel_AesDotLabel.ForeColor = Color.Red;
+            LockedPanel_AesDotLabel.Location = new Point(237, 815);
+            LockedPanel_AesDotLabel.Name = "LockedPanel_AesDotLabel";
+            LockedPanel_AesDotLabel.Size = new Size(26, 36);
+            LockedPanel_AesDotLabel.TabIndex = 56;
+            LockedPanel_AesDotLabel.Text = "•";
+            // 
+            // LockedPanel_AesLabel
+            // 
+            LockedPanel_AesLabel.AutoSize = true;
+            LockedPanel_AesLabel.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel_AesLabel.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_AesLabel.Location = new Point(261, 824);
+            LockedPanel_AesLabel.Name = "LockedPanel_AesLabel";
+            LockedPanel_AesLabel.Size = new Size(37, 21);
+            LockedPanel_AesLabel.TabIndex = 55;
+            LockedPanel_AesLabel.Text = "AES";
+            // 
+            // LockedPanel_NoneDotLabel
+            // 
+            LockedPanel_NoneDotLabel.AutoSize = true;
+            LockedPanel_NoneDotLabel.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel_NoneDotLabel.Font = new Font("Segoe UI Emoji", 20F);
+            LockedPanel_NoneDotLabel.ForeColor = Color.Gray;
+            LockedPanel_NoneDotLabel.Location = new Point(237, 788);
+            LockedPanel_NoneDotLabel.Name = "LockedPanel_NoneDotLabel";
+            LockedPanel_NoneDotLabel.Size = new Size(26, 36);
+            LockedPanel_NoneDotLabel.TabIndex = 50;
+            LockedPanel_NoneDotLabel.Text = "•";
+            // 
+            // LockedPanel_NoneLabel
+            // 
+            LockedPanel_NoneLabel.AutoSize = true;
+            LockedPanel_NoneLabel.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel_NoneLabel.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_NoneLabel.Location = new Point(261, 797);
+            LockedPanel_NoneLabel.Name = "LockedPanel_NoneLabel";
+            LockedPanel_NoneLabel.Size = new Size(48, 21);
+            LockedPanel_NoneLabel.TabIndex = 49;
+            LockedPanel_NoneLabel.Text = "None";
+            // 
+            // LockedPanel_AlgorithmDurationLabel
+            // 
+            LockedPanel_AlgorithmDurationLabel.AutoSize = true;
+            LockedPanel_AlgorithmDurationLabel.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel_AlgorithmDurationLabel.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_AlgorithmDurationLabel.Location = new Point(53, 764);
+            LockedPanel_AlgorithmDurationLabel.Name = "LockedPanel_AlgorithmDurationLabel";
+            LockedPanel_AlgorithmDurationLabel.Size = new Size(145, 21);
+            LockedPanel_AlgorithmDurationLabel.TabIndex = 35;
+            LockedPanel_AlgorithmDurationLabel.Text = "Algorithm Duration";
+            // 
+            // LockedPanel_PieChartPanel
+            // 
+            LockedPanel_PieChartPanel.Location = new Point(19, 788);
+            LockedPanel_PieChartPanel.Name = "LockedPanel_PieChartPanel";
+            LockedPanel_PieChartPanel.Size = new Size(212, 212);
+            LockedPanel_PieChartPanel.TabIndex = 48;
+            // 
+            // LockedPanel_DateAddedValueLabel
+            // 
+            LockedPanel_DateAddedValueLabel.AutoSize = true;
+            LockedPanel_DateAddedValueLabel.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel_DateAddedValueLabel.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_DateAddedValueLabel.Location = new Point(142, 143);
+            LockedPanel_DateAddedValueLabel.Name = "LockedPanel_DateAddedValueLabel";
+            LockedPanel_DateAddedValueLabel.Size = new Size(109, 21);
+            LockedPanel_DateAddedValueLabel.TabIndex = 47;
+            LockedPanel_DateAddedValueLabel.Text = "<date added>";
+            // 
+            // LockedPanel_DateAddedLabel
+            // 
+            LockedPanel_DateAddedLabel.AutoSize = true;
+            LockedPanel_DateAddedLabel.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel_DateAddedLabel.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_DateAddedLabel.Location = new Point(46, 143);
+            LockedPanel_DateAddedLabel.Name = "LockedPanel_DateAddedLabel";
+            LockedPanel_DateAddedLabel.Size = new Size(94, 21);
+            LockedPanel_DateAddedLabel.TabIndex = 46;
+            LockedPanel_DateAddedLabel.Text = "Date Added:";
             // 
             // LockedPanel_ExplorerGroupBox
             // 
@@ -643,7 +776,7 @@
             RelocationPanel.Controls.Add(RelocationPanel_CantLocateFileLabel);
             RelocationPanel.Location = new Point(361, 31);
             RelocationPanel.Name = "RelocationPanel";
-            RelocationPanel.Size = new Size(864, 921);
+            RelocationPanel.Size = new Size(864, 1017);
             RelocationPanel.TabIndex = 35;
             // 
             // RelocationPanel_RemoveButton
@@ -703,6 +836,14 @@
             // 
             UnlockedPanel.BackColor = Color.FromArgb(32, 32, 32);
             UnlockedPanel.BorderStyle = BorderStyle.FixedSingle;
+            UnlockedPanel.Controls.Add(UnlockedPane_3DesDotLabel);
+            UnlockedPanel.Controls.Add(UnlockedPanel_3DesLabel);
+            UnlockedPanel.Controls.Add(UnlockedPanel_AesDotLabel);
+            UnlockedPanel.Controls.Add(UnlockedPanel_AesLabel);
+            UnlockedPanel.Controls.Add(UnlockedPanel_NoneDotLabel);
+            UnlockedPanel.Controls.Add(UnlockedPanel_NoneLabel);
+            UnlockedPanel.Controls.Add(UnlockedPanel_AlgorithmDurationLabel);
+            UnlockedPanel.Controls.Add(UnlockedPanel_PieChartPanel);
             UnlockedPanel.Controls.Add(UnlockedPanel_DateAddedValueLabel);
             UnlockedPanel.Controls.Add(UnlockedPanel_DateAddedLabel);
             UnlockedPanel.Controls.Add(UnlockedPanel_ExplorerGroupBox);
@@ -721,8 +862,30 @@
             UnlockedPanel.Controls.Add(UnlockedPanel_FileNameLabel);
             UnlockedPanel.Location = new Point(361, 31);
             UnlockedPanel.Name = "UnlockedPanel";
-            UnlockedPanel.Size = new Size(864, 921);
+            UnlockedPanel.Size = new Size(864, 1017);
             UnlockedPanel.TabIndex = 35;
+            // 
+            // UnlockedPanel_DateAddedValueLabel
+            // 
+            UnlockedPanel_DateAddedValueLabel.AutoSize = true;
+            UnlockedPanel_DateAddedValueLabel.BackColor = Color.FromArgb(32, 32, 32);
+            UnlockedPanel_DateAddedValueLabel.ForeColor = SystemColors.ButtonFace;
+            UnlockedPanel_DateAddedValueLabel.Location = new Point(142, 143);
+            UnlockedPanel_DateAddedValueLabel.Name = "UnlockedPanel_DateAddedValueLabel";
+            UnlockedPanel_DateAddedValueLabel.Size = new Size(109, 21);
+            UnlockedPanel_DateAddedValueLabel.TabIndex = 44;
+            UnlockedPanel_DateAddedValueLabel.Text = "<date added>";
+            // 
+            // UnlockedPanel_DateAddedLabel
+            // 
+            UnlockedPanel_DateAddedLabel.AutoSize = true;
+            UnlockedPanel_DateAddedLabel.BackColor = Color.FromArgb(32, 32, 32);
+            UnlockedPanel_DateAddedLabel.ForeColor = SystemColors.ButtonFace;
+            UnlockedPanel_DateAddedLabel.Location = new Point(46, 143);
+            UnlockedPanel_DateAddedLabel.Name = "UnlockedPanel_DateAddedLabel";
+            UnlockedPanel_DateAddedLabel.Size = new Size(94, 21);
+            UnlockedPanel_DateAddedLabel.TabIndex = 43;
+            UnlockedPanel_DateAddedLabel.Text = "Date Added:";
             // 
             // UnlockedPanel_ExplorerGroupBox
             // 
@@ -970,65 +1133,108 @@
             UnlockedPanel_FileNameLabel.TabIndex = 8;
             UnlockedPanel_FileNameLabel.Text = "<filename>";
             // 
-            // UnlockedPanel_DateAddedValueLabel
+            // UnlockedPane_3DesDotLabel
             // 
-            UnlockedPanel_DateAddedValueLabel.AutoSize = true;
-            UnlockedPanel_DateAddedValueLabel.BackColor = Color.FromArgb(32, 32, 32);
-            UnlockedPanel_DateAddedValueLabel.ForeColor = SystemColors.ButtonFace;
-            UnlockedPanel_DateAddedValueLabel.Location = new Point(142, 143);
-            UnlockedPanel_DateAddedValueLabel.Name = "UnlockedPanel_DateAddedValueLabel";
-            UnlockedPanel_DateAddedValueLabel.Size = new Size(109, 21);
-            UnlockedPanel_DateAddedValueLabel.TabIndex = 44;
-            UnlockedPanel_DateAddedValueLabel.Text = "<date added>";
+            UnlockedPane_3DesDotLabel.AutoSize = true;
+            UnlockedPane_3DesDotLabel.BackColor = Color.FromArgb(32, 32, 32);
+            UnlockedPane_3DesDotLabel.Font = new Font("Segoe UI Emoji", 20F);
+            UnlockedPane_3DesDotLabel.ForeColor = Color.Lime;
+            UnlockedPane_3DesDotLabel.Location = new Point(240, 693);
+            UnlockedPane_3DesDotLabel.Name = "UnlockedPane_3DesDotLabel";
+            UnlockedPane_3DesDotLabel.Size = new Size(26, 36);
+            UnlockedPane_3DesDotLabel.TabIndex = 66;
+            UnlockedPane_3DesDotLabel.Text = "•";
             // 
-            // UnlockedPanel_DateAddedLabel
+            // UnlockedPanel_3DesLabel
             // 
-            UnlockedPanel_DateAddedLabel.AutoSize = true;
-            UnlockedPanel_DateAddedLabel.BackColor = Color.FromArgb(32, 32, 32);
-            UnlockedPanel_DateAddedLabel.ForeColor = SystemColors.ButtonFace;
-            UnlockedPanel_DateAddedLabel.Location = new Point(46, 143);
-            UnlockedPanel_DateAddedLabel.Name = "UnlockedPanel_DateAddedLabel";
-            UnlockedPanel_DateAddedLabel.Size = new Size(94, 21);
-            UnlockedPanel_DateAddedLabel.TabIndex = 43;
-            UnlockedPanel_DateAddedLabel.Text = "Date Added:";
+            UnlockedPanel_3DesLabel.AutoSize = true;
+            UnlockedPanel_3DesLabel.BackColor = Color.FromArgb(32, 32, 32);
+            UnlockedPanel_3DesLabel.ForeColor = SystemColors.ButtonFace;
+            UnlockedPanel_3DesLabel.Location = new Point(264, 702);
+            UnlockedPanel_3DesLabel.Name = "UnlockedPanel_3DesLabel";
+            UnlockedPanel_3DesLabel.Size = new Size(47, 21);
+            UnlockedPanel_3DesLabel.TabIndex = 65;
+            UnlockedPanel_3DesLabel.Text = "3DES";
             // 
-            // LockedPanel_DateAddedValueLabel
+            // UnlockedPanel_AesDotLabel
             // 
-            LockedPanel_DateAddedValueLabel.AutoSize = true;
-            LockedPanel_DateAddedValueLabel.BackColor = Color.FromArgb(32, 32, 32);
-            LockedPanel_DateAddedValueLabel.ForeColor = SystemColors.ButtonFace;
-            LockedPanel_DateAddedValueLabel.Location = new Point(142, 143);
-            LockedPanel_DateAddedValueLabel.Name = "LockedPanel_DateAddedValueLabel";
-            LockedPanel_DateAddedValueLabel.Size = new Size(109, 21);
-            LockedPanel_DateAddedValueLabel.TabIndex = 47;
-            LockedPanel_DateAddedValueLabel.Text = "<date added>";
+            UnlockedPanel_AesDotLabel.AutoSize = true;
+            UnlockedPanel_AesDotLabel.BackColor = Color.FromArgb(32, 32, 32);
+            UnlockedPanel_AesDotLabel.Font = new Font("Segoe UI Emoji", 20F);
+            UnlockedPanel_AesDotLabel.ForeColor = Color.Red;
+            UnlockedPanel_AesDotLabel.Location = new Point(240, 666);
+            UnlockedPanel_AesDotLabel.Name = "UnlockedPanel_AesDotLabel";
+            UnlockedPanel_AesDotLabel.Size = new Size(26, 36);
+            UnlockedPanel_AesDotLabel.TabIndex = 64;
+            UnlockedPanel_AesDotLabel.Text = "•";
             // 
-            // LockedPanel_DateAddedLabel
+            // UnlockedPanel_AesLabel
             // 
-            LockedPanel_DateAddedLabel.AutoSize = true;
-            LockedPanel_DateAddedLabel.BackColor = Color.FromArgb(32, 32, 32);
-            LockedPanel_DateAddedLabel.ForeColor = SystemColors.ButtonFace;
-            LockedPanel_DateAddedLabel.Location = new Point(46, 143);
-            LockedPanel_DateAddedLabel.Name = "LockedPanel_DateAddedLabel";
-            LockedPanel_DateAddedLabel.Size = new Size(94, 21);
-            LockedPanel_DateAddedLabel.TabIndex = 46;
-            LockedPanel_DateAddedLabel.Text = "Date Added:";
+            UnlockedPanel_AesLabel.AutoSize = true;
+            UnlockedPanel_AesLabel.BackColor = Color.FromArgb(32, 32, 32);
+            UnlockedPanel_AesLabel.ForeColor = SystemColors.ButtonFace;
+            UnlockedPanel_AesLabel.Location = new Point(264, 675);
+            UnlockedPanel_AesLabel.Name = "UnlockedPanel_AesLabel";
+            UnlockedPanel_AesLabel.Size = new Size(37, 21);
+            UnlockedPanel_AesLabel.TabIndex = 63;
+            UnlockedPanel_AesLabel.Text = "AES";
+            // 
+            // UnlockedPanel_NoneDotLabel
+            // 
+            UnlockedPanel_NoneDotLabel.AutoSize = true;
+            UnlockedPanel_NoneDotLabel.BackColor = Color.FromArgb(32, 32, 32);
+            UnlockedPanel_NoneDotLabel.Font = new Font("Segoe UI Emoji", 20F);
+            UnlockedPanel_NoneDotLabel.ForeColor = Color.Gray;
+            UnlockedPanel_NoneDotLabel.Location = new Point(240, 639);
+            UnlockedPanel_NoneDotLabel.Name = "UnlockedPanel_NoneDotLabel";
+            UnlockedPanel_NoneDotLabel.Size = new Size(26, 36);
+            UnlockedPanel_NoneDotLabel.TabIndex = 62;
+            UnlockedPanel_NoneDotLabel.Text = "•";
+            // 
+            // UnlockedPanel_NoneLabel
+            // 
+            UnlockedPanel_NoneLabel.AutoSize = true;
+            UnlockedPanel_NoneLabel.BackColor = Color.FromArgb(32, 32, 32);
+            UnlockedPanel_NoneLabel.ForeColor = SystemColors.ButtonFace;
+            UnlockedPanel_NoneLabel.Location = new Point(264, 648);
+            UnlockedPanel_NoneLabel.Name = "UnlockedPanel_NoneLabel";
+            UnlockedPanel_NoneLabel.Size = new Size(48, 21);
+            UnlockedPanel_NoneLabel.TabIndex = 61;
+            UnlockedPanel_NoneLabel.Text = "None";
+            // 
+            // UnlockedPanel_AlgorithmDurationLabel
+            // 
+            UnlockedPanel_AlgorithmDurationLabel.AutoSize = true;
+            UnlockedPanel_AlgorithmDurationLabel.BackColor = Color.FromArgb(32, 32, 32);
+            UnlockedPanel_AlgorithmDurationLabel.ForeColor = SystemColors.ButtonFace;
+            UnlockedPanel_AlgorithmDurationLabel.Location = new Point(56, 615);
+            UnlockedPanel_AlgorithmDurationLabel.Name = "UnlockedPanel_AlgorithmDurationLabel";
+            UnlockedPanel_AlgorithmDurationLabel.Size = new Size(145, 21);
+            UnlockedPanel_AlgorithmDurationLabel.TabIndex = 59;
+            UnlockedPanel_AlgorithmDurationLabel.Text = "Algorithm Duration";
+            // 
+            // UnlockedPanel_PieChartPanel
+            // 
+            UnlockedPanel_PieChartPanel.Location = new Point(22, 639);
+            UnlockedPanel_PieChartPanel.Name = "UnlockedPanel_PieChartPanel";
+            UnlockedPanel_PieChartPanel.Size = new Size(212, 212);
+            UnlockedPanel_PieChartPanel.TabIndex = 60;
             // 
             // DashboardForm
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(40, 40, 40);
-            ClientSize = new Size(1217, 950);
+            ClientSize = new Size(1217, 1044);
             Controls.Add(AddButton);
             Controls.Add(MagnifyingGlassLabel);
             Controls.Add(SearchTextBox);
             Controls.Add(FileListBox);
             Controls.Add(MenuStrip);
-            Controls.Add(LockedPanel);
             Controls.Add(UnlockedPanel);
             Controls.Add(NoFilesPanel);
             Controls.Add(RelocationPanel);
+            Controls.Add(LockedPanel);
             Font = new Font("Segoe UI Emoji", 12F);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -1154,5 +1360,21 @@
         private Label UnlockedPanel_DateAddedLabel;
         private Label LockedPanel_DateAddedValueLabel;
         private Label LockedPanel_DateAddedLabel;
+        private Panel LockedPanel_PieChartPanel;
+        private Label LockedPanel_AlgorithmDurationLabel;
+        private Label LockedPanel_NoneLabel;
+        private Label LockedPanel_NoneDotLabel;
+        private Label LockedPanel_3DesDotLabel;
+        private Label LockedPanel_3DesLabel;
+        private Label LockedPanel_AesDotLabel;
+        private Label LockedPanel_AesLabel;
+        private Label UnlockedPane_3DesDotLabel;
+        private Label UnlockedPanel_3DesLabel;
+        private Label UnlockedPanel_AesDotLabel;
+        private Label UnlockedPanel_AesLabel;
+        private Label UnlockedPanel_NoneDotLabel;
+        private Label UnlockedPanel_NoneLabel;
+        private Label UnlockedPanel_AlgorithmDurationLabel;
+        private Panel UnlockedPanel_PieChartPanel;
     }
 }

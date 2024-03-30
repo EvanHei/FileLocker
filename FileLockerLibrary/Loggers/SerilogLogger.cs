@@ -4,10 +4,20 @@ using Serilog;
 
 namespace FileLockerLibrary;
 
+/// <summary>
+/// Implementation of the <see cref="ILogger"/> interface using Serilog.
+/// </summary>
 public class SerilogLogger : ILogger
 {
+    /// <summary>
+    /// Gets or sets the path to the directory where log files are stored.
+    /// </summary>
     private string LogDirectoryPath { get; set; }
 
+    /// <summary>
+    /// Gets all logs stored in log files.
+    /// </summary>
+    /// <returns>A list of log models containing log entries.</returns>
     public List<LogModel> GetAllLogs()
     {
         List<LogModel> logs = new();
@@ -38,6 +48,11 @@ public class SerilogLogger : ILogger
         return logs;
     }
 
+    /// <summary>
+    /// Logs a message with the specified log level.
+    /// </summary>
+    /// <param name="message">The message to log.</param>
+    /// <param name="level">The log level of the message.</param>
     public void Log(string message, LogLevel level)
     {
         // create system log file
@@ -73,6 +88,9 @@ public class SerilogLogger : ILogger
         Serilog.Log.CloseAndFlush();
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SerilogLogger"/> class.
+    /// </summary>
     public SerilogLogger()
     {
         string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
@@ -83,16 +101,5 @@ public class SerilogLogger : ILogger
         FileAttributes attributes = File.GetAttributes(LogDirectoryPath);
         attributes |= FileAttributes.Hidden;
         File.SetAttributes(LogDirectoryPath, attributes);
-
-        //// create system log file
-        //string logFilePath = Path.Combine(LogDirectoryPath, ".txt");
-
-        //// configure logger
-        //Serilog.Log.Logger = new LoggerConfiguration()
-        //    .MinimumLevel.Debug()
-        //    .WriteTo.File(logFilePath,
-        //                  outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} {Level:u} {Message:lj}{NewLine}{Exception}",
-        //                  rollingInterval: RollingInterval.Day)
-        //    .CreateLogger();
     }
 }

@@ -12,6 +12,14 @@ public class AesEncryptor : IEncryptor
     private const long MaxFileSize = Constants.MaxFileSize;
     private const int PaddingFieldLength = sizeof(long);
 
+    /// <summary>
+    /// Encrypts the specified plaintext using the provided key.
+    /// </summary>
+    /// <param name="plaintext">The plaintext to encrypt.</param>
+    /// <param name="key">The encryption key.</param>
+    /// <returns>The ciphertext along with the initialization vector (IV).</returns>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="plaintext"/> or <paramref name="key"/> is null.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when the size of <paramref name="key"/> is not 32 bytes.</exception>
     public byte[] Encrypt(byte[] plaintext, byte[] key)
     {
         if (plaintext == null)
@@ -40,6 +48,14 @@ public class AesEncryptor : IEncryptor
         return ivAndCiphertext;
     }
 
+    /// <summary>
+    /// Decrypts the specified ciphertext using the provided key.
+    /// </summary>
+    /// <param name="ciphertextAndIv">The ciphertext along with the IV.</param>
+    /// <param name="key">The decryption key.</param>
+    /// <returns>The decrypted plaintext.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="ciphertextAndIv"/> or <paramref name="key"/> is null.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when the size of <paramref name="key"/> is not 32 bytes or when the size of <paramref name="ciphertextAndIv"/> is invalid.</exception>
     public byte[] Decrypt(byte[] ciphertextAndIv, byte[] key)
     {
         if (ciphertextAndIv == null)
@@ -81,6 +97,12 @@ public class AesEncryptor : IEncryptor
         return unpaddedData;
     }
 
+    /// <summary>
+    /// Pads the specified data to match the maximum file size allowed.
+    /// </summary>
+    /// <param name="data">The data to pad.</param>
+    /// <returns>The padded data.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when the size of <paramref name="data"/> exceeds the maximum allowed size.</exception>
     private byte[] PadData(byte[] data)
     {
         if (data.Length > MaxFileSize)
@@ -97,6 +119,12 @@ public class AesEncryptor : IEncryptor
         return paddedData;
     }
 
+    /// <summary>
+    /// Removes padding from the specified padded data.
+    /// </summary>
+    /// <param name="paddedData">The padded data.</param>
+    /// <returns>The unpadded data.</returns>
+    /// <exception cref="ArgumentException">Thrown when the size of <paramref name="paddedData"/> is invalid or when the padding length is invalid.</exception>
     private byte[] UnpadData(byte[] paddedData)
     {
         if (paddedData.Length < MaxFileSize + PaddingFieldLength)

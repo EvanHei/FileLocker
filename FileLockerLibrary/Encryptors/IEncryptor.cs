@@ -14,9 +14,9 @@ public interface IEncryptor
     byte[] Encrypt(byte[] plaintext, byte[] key);
 
     /// <summary>
-    /// Decrypts the specified ciphertext (and possibly initialization vector) using the provided key.
+    /// Decrypts the specified ciphertext using the provided key.
     /// </summary>
-    /// <param name="ciphertext">The combined ciphertext (and possibly initialization vector).</param>
+    /// <param name="ciphertext">The ciphertext.</param>
     /// <param name="key">The decryption key.</param>
     /// <returns>The decrypted plaintext as a string.</returns>
     byte[] Decrypt(byte[] ciphertext, byte[] key);

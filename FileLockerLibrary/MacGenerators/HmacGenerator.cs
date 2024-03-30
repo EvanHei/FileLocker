@@ -3,12 +3,17 @@ using System.Security.Cryptography;
 
 namespace FileLockerLibrary;
 
+/// <summary>
+/// Implementation of the <see cref="IMacGenerator"/> interface using HMAC-SHA256.
+/// </summary>
 public class HmacGenerator : IMacGenerator
 {
     private HMACSHA256 Hmac = new();
-
     private bool keyIsSet = false;
 
+    /// <summary>
+    /// Gets or sets the key used for MAC generation and validation.
+    /// </summary>
     public byte[] Key
     {
         get
@@ -31,6 +36,11 @@ public class HmacGenerator : IMacGenerator
         }
     }
 
+    /// <summary>
+    /// Generates a MAC for the given data using HMAC-SHA256.
+    /// </summary>
+    /// <param name="data">The data to generate the MAC for.</param>
+    /// <returns>The generated MAC.</returns>
     public byte[] GenerateMac(byte[] data)
     {
         if (data == null)
@@ -46,6 +56,12 @@ public class HmacGenerator : IMacGenerator
         return output;
     }
 
+    /// <summary>
+    /// Validates whether the provided MAC matches the calculated MAC for the given data using HMAC-SHA256.
+    /// </summary>
+    /// <param name="data">The data to validate the MAC against.</param>
+    /// <param name="expectedHmac">The expected MAC to validate against.</param>
+    /// <returns><c>true</c> if the MAC is valid, <c>false</c> otherwise.</returns>
     public bool ValidateMac(byte[] data, byte[] expectedHmac)
     {
         if (data == null)
@@ -60,6 +76,17 @@ public class HmacGenerator : IMacGenerator
         return output;
     }
 
+    /// <summary>
+    /// Compares two byte arrays for equality by performing a bitwise comparison.
+    /// </summary>
+    /// <param name="first">The first byte array to compare.</param>
+    /// <param name="second">The second byte array to compare.</param>
+    /// <returns>
+    /// <c>true</c> if the arrays are equal; otherwise, <c>false</c>.
+    /// </returns>
+    /// <exception cref="ArgumentNullException">
+    /// Thrown when either <paramref name="first"/> or <paramref name="second"/> is null.
+    /// </exception>
     private static bool AreEqual(byte[] first, byte[] second)
     {
         if (first == null || second == null)

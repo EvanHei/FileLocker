@@ -97,7 +97,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
         UnlockedPanel_FileNameLabel.Text = selectedModel.FileName.Length > 50 ? selectedModel.FileName.Substring(0, 47) + "..." : selectedModel.FileName;
         UnlockedPanel_PathValueLabel.Text = selectedModel.Path.Length > 64 ? selectedModel.Path.Substring(0, 61) + "..." : selectedModel.Path;
-        UnlockedPanel_SizeValueLabel.Text = FormatBytes(selectedModel.ByteSize);
+        UnlockedPanel_SizeValueLabel.Text = FormatBytes(selectedModel.SizeInBytes);
         UnlockedPanel_ShaValueLabel.Text = BitConverter.ToString(selectedModel.Sha).Replace("-", "");
         UnlockedPanel_DateAddedValueLabel.Text = selectedModel.DateAdded.ToShortDateString();
 
@@ -113,7 +113,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
         LockedPanel_FileNameLabel.Text = selectedModel.FileName.Length > 50 ? selectedModel.FileName.Substring(0, 47) + "..." : selectedModel.FileName;
         LockedPanel_PathValueLabel.Text = selectedModel.Path.Length > 64 ? selectedModel.Path.Substring(0, 61) + "..." : selectedModel.Path;
-        LockedPanel_SizeValueLabel.Text = FormatBytes(selectedModel.ByteSize);
+        LockedPanel_SizeValueLabel.Text = FormatBytes(selectedModel.SizeInBytes);
         LockedPanel_ShaValueLabel.Text = BitConverter.ToString(selectedModel.Sha).Replace("-", "");
         LockedPanel_AlgorithmValueLabel.Text = selectedModel.EncryptionAlgorithm.ToString();
         LockedPanel_DateAddedValueLabel.Text = selectedModel.DateAdded.ToShortDateString();

@@ -38,25 +38,8 @@ public class FileModel
     [JsonIgnore]
     public EncryptionAlgorithm EncryptionAlgorithm { get; set; }
 
-    private byte[] encryptionKey;
-
     [JsonIgnore]
-    public byte[] EncryptionKey
-    {
-        get
-        {
-            return encryptionKey;
-        }
-        set
-        {
-            if (value == null)
-                throw new ArgumentNullException("Encryption key cannot be null.");
-            if (value.Length != 32 && value.Length != 24)
-                throw new ArgumentException("Invalid encryption key length. Expected 32 or 24 bytes.");
-
-            encryptionKey = value;
-        }
-    }
+    public byte[] EncryptionKey { get; set; }
 
     private byte[] encryptionKeySalt;
 
@@ -103,38 +86,12 @@ public class FileModel
         }
     }
 
-    private byte[] macKey;
-
     [JsonIgnore]
-    public byte[] MacKey
-    {
-        get
-        {
-            return macKey;
-        }
-        set
-        {
-            if (value == null)
-                throw new ArgumentNullException("MAC key cannot be null.");
-            if (value.Length != 32)
-                throw new ArgumentException("Invalid MAC key length. Expected 32 bytes.");
+    public byte[] MacKey { get; set; }
 
-            macKey = value;
-        }
-    }
+    public byte[] Mac { get; set; }
 
-    private byte[] mac;
-    public byte[] Mac
-    {
-        get
-        {
-            return mac;
-        }
-        set
-        {
-            mac = value;
-        }
-    }
+    public byte[] DigSig { get; set; }
 
     [JsonIgnore]
     public string DisplayName
@@ -175,7 +132,7 @@ public class FileModel
     }
 
     [JsonIgnore]
-    public int ByteSize
+    public int SizeInBytes
     {
         get
         {
@@ -343,7 +300,7 @@ public class FileModel
         Path = path;
         encryptionKeySalt = new byte[0];
         macKeySalt = new byte[0];
-        mac = new byte[0];
+        Mac = new byte[0];
 
         string extension = System.IO.Path.GetExtension(path).ToLower();
         switch (extension)

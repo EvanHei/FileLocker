@@ -140,7 +140,7 @@ public class AesEncryptorTests
         // Arrange
         AesEncryptor encryptor = new();
         byte[] plaintext = new byte[16];
-        byte[] key = new byte[24];
+        byte[] key = new byte[32];
         long minPaddingLength = 32;
 
         // Act

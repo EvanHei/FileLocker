@@ -227,7 +227,7 @@ public class FileModel
 
         // encrypt
         EncryptionKeySalt = GlobalConfig.KeyDeriver.GenerateSalt();
-        byte[] ciphertext = GlobalConfig.Encryptor(EncryptionAlgorithm).Encrypt(content, EncryptionKey);
+        byte[] ciphertext = GlobalConfig.Encryptor(EncryptionAlgorithm).Encrypt(content, EncryptionKey, Constants.MaxFileSize);
 
         // overwrite plaintext
         File.WriteAllBytes(Path, ciphertext);

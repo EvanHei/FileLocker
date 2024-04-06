@@ -1,4 +1,5 @@
 using FileLockerLibrary;
+using System.Text;
 
 namespace WinFormsUI;
 

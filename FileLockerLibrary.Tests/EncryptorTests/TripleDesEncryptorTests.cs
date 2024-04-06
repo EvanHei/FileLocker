@@ -129,4 +129,43 @@ public class TripleDesEncryptorTests
         // Act & Assert
         Assert.Throws<ArgumentOutOfRangeException>(() => tripleDesEncryptor.Decrypt(ciphertextAndIv, key));
     }
+
+    [Fact]
+    public void Encrypt_WithMinPaddingLength_ReturnsPaddedData()
+    {
+        // Arrange
+        TripleDesEncryptor encryptor = new();
+        byte[] plaintext = new byte[16];
+        byte[] key = new byte[24];
+        long minPaddingLength = 32;
+
+        // Act
+        byte[] ciphertext = encryptor.Encrypt(plaintext, key, minPaddingLength);
+
+        // Assert
+        Assert.True(ciphertext.Length >= minPaddingLength);
+    }
+
+    [Fact]
+    public void Decrypt_PaddedData_ReturnsOriginalData()
+    {
+        // Arrange
+        TripleDesEncryptor encryptor = new();
+        byte[] plaintext = new byte[16];
+        byte[] key = new byte[24];
+        long minPaddingLength = 32;
+        using (RNGCryptoServiceProvider rng = new())
+        {
+            rng.GetBytes(key);
+        }
+
+        // Encrypt with additional padding
+        byte[] ciphertext = encryptor.Encrypt(plaintext, key, minPaddingLength);
+
+        // Act
+        byte[] decryptedPlaintext = encryptor.Decrypt(ciphertext, key);
+
+        // Assert
+        Assert.Equal(plaintext.Length, decryptedPlaintext.Length);
+    }
 }

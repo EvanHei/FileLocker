@@ -59,4 +59,23 @@ public static class GlobalConfig
                 throw new ArgumentException("Unsupported encryption algorithm.", nameof(algorithm));
         }
     }
+
+    /// <summary>
+    /// Returns a signer based on the specified signing algorithm.
+    /// </summary>
+    /// <param name="algorithm">The signing algorithm.</param>
+    /// <returns>An instance of the signer for the specified algorithm.</returns>
+    /// <exception cref="ArgumentException">Thrown when the specified algorithm is unsupported.</exception>
+    public static ISigner Signer(DigSigAlgorithm algorithm)
+    {
+        switch (algorithm)
+        {
+            case DigSigAlgorithm.RSA:
+                return new RsaSigner();
+            case DigSigAlgorithm.ECDSA:
+                return new EcdsaSigner();
+            default:
+                throw new ArgumentException("Unsupported signing algorithm.", nameof(algorithm));
+        }
+    }
 }

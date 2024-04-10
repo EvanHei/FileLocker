@@ -16,7 +16,7 @@ public class EcdsaSignerTests
         EcdsaSigner signer = new();
 
         // Act
-        KeyPair keyPair = signer.GenerateKeyPair();
+        KeyPairModel keyPair = signer.GenerateKeyPair();
 
         // Assert
         Assert.NotNull(keyPair);
@@ -31,7 +31,7 @@ public class EcdsaSignerTests
     {
         // Arrange
         EcdsaSigner signer = new();
-        KeyPair keyPair = signer.GenerateKeyPair();
+        KeyPairModel keyPair = signer.GenerateKeyPair();
         byte[] data = new byte[] { 0x01, 0x02, 0x03, 0x04 };
 
         // Act
@@ -47,8 +47,8 @@ public class EcdsaSignerTests
     {
         // Arrange
         EcdsaSigner signer = new();
-        KeyPair keyPair1 = signer.GenerateKeyPair();
-        KeyPair keyPair2 = signer.GenerateKeyPair();
+        KeyPairModel keyPair1 = signer.GenerateKeyPair();
+        KeyPairModel keyPair2 = signer.GenerateKeyPair();
         byte[] data = new byte[] { 0x01, 0x02, 0x03, 0x04 };
 
         // Act

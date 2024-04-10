@@ -19,4 +19,12 @@ public interface IKeyDeriver
     /// <param name="length">The length of the derived key in bytes (default is 32).</param>
     /// <returns>The derived key.</returns>
     byte[] DeriveKey(string password, byte[] salt, int length = 32);
+
+    /// <summary>
+    /// Derives a key from the given password.
+    /// </summary>
+    /// <param name="password">The password to derive the key from.</param>
+    /// <param name="length">The length of the derived key in bytes (default is 32).</param>
+    /// <returns>The derived key.</returns>
+    byte[] DeriveKey(string password, int length = 32);
 }

@@ -52,4 +52,16 @@ public interface IDataAccessor
     /// <param name="zipPath">The path of the ZIP archive.</param>
     /// <param name="savePath">The path to save the imported file model.</param>
     void ImportZipFileModel(string zipPath, string savePath);
+
+    void CreateKeyPairModel(KeyPairModel model, string password);
+
+    void DeleteKeyPairModel(KeyPairModel model);
+
+    List<KeyPairModel> LoadAllPrivateKeyPairModels();
+
+    List<KeyPairModel> LoadAllPublicKeyPairModels();
+
+    void ExportZipKeyPairModel(KeyPairModel model, string zipPath);
+
+    void ImportZipKeyPairModel(string zipPath);
 }

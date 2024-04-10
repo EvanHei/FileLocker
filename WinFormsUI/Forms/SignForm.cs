@@ -1,26 +1,29 @@
 ﻿using FileLockerLibrary;
+using OxyPlot;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinFormsUI;
 
-public partial class DecryptForm : Form
+public partial class SignForm : Form
 {
-    private IDecryptFormCaller caller;
+    private ISignFormCaller caller;
     private FileModel model;
     private bool isEyeballLabelClicked = false;
 
-    public DecryptForm(IDecryptFormCaller caller, FileModel model)
+    public SignForm(ISignFormCaller caller, FileModel model)
     {
         InitializeComponent();
+
+        KeyPairComboBox.DataSource = GlobalConfig.DataAccessor.LoadAllPrivateKeyPairModels();
+        KeyPairComboBox.DisplayMember = "Name";
 
         this.caller = caller;
         this.model = model;
@@ -28,20 +31,16 @@ public partial class DecryptForm : Form
 
     private void EnterButton_Click(object sender, EventArgs e)
     {
-        if (model.EncryptionKeySalt == null)
-            throw new ArgumentNullException("Encryption key salt cannot be null.", nameof(model.EncryptionKeySalt));
-        if (!ValidateInputFields())
-            return;
-
-        ResetTimer();
-
         try
         {
-            model.Password = PasswordMaskedTextBox.Text;
-            model.Unlock();
+            KeyPairModel keyPair = (KeyPairModel)KeyPairComboBox.SelectedItem;
+            string password = PasswordMaskedTextBox.Text;
+
+            model.Sign(keyPair, password);
             GlobalConfig.DataAccessor.SaveFileModel(model);
+
             this.Close();
-            caller.DecryptionComplete();
+            caller.SigningComplete();
         }
         catch (Exception ex)
         {
@@ -69,6 +68,11 @@ public partial class DecryptForm : Form
         EnterButton.Enabled = false;
     }
 
+    private void CloseMenuItem_Click(object sender, EventArgs e)
+    {
+        this.Close();
+    }
+
     private void EyeballLabel_Click(object sender, EventArgs e)
     {
         // toggle off
@@ -91,6 +95,22 @@ public partial class DecryptForm : Form
         ResetTimer();
     }
 
+    private void ResetTimer()
+    {
+        InactivityTimer.Stop();
+        InactivityTimer.Start();
+    }
+
+    private void SignForm_MouseDown(object sender, MouseEventArgs e)
+    {
+        ResetTimer();
+    }
+
+    private void SignForm_MouseMove(object sender, MouseEventArgs e)
+    {
+        ResetTimer();
+    }
+
     private bool ValidateInputFields()
     {
         bool output = true;
@@ -99,27 +119,6 @@ public partial class DecryptForm : Form
             output = false;
 
         return output;
-    }
-
-    private void ResetTimer()
-    {
-        InactivityTimer.Stop();
-        InactivityTimer.Start();
-    }
-
-    private void DecryptForm_MouseDown(object sender, MouseEventArgs e)
-    {
-        ResetTimer();
-    }
-
-    private void DecryptForm_MouseMove(object sender, MouseEventArgs e)
-    {
-        ResetTimer();
-    }
-
-    private void CloseMenuItem_Click(object sender, EventArgs e)
-    {
-        this.Close();
     }
 
     private void PasswordMaskedTextBox_TextChanged(object sender, EventArgs e)

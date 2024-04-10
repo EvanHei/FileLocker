@@ -93,6 +93,28 @@ public class FileModel
 
     public byte[] DigSig { get; set; }
 
+    public DigSigAlgorithm DigSigAlgorithm { get; set; }
+
+    [JsonIgnore]
+    public string DigSigDisplay
+    {
+        get
+        {
+            if (DigSig == null)
+                return "No signature";
+
+            byte[] content = File.ReadAllBytes(Path);
+            List<KeyPairModel> allKeyPairs = GlobalConfig.DataAccessor.LoadAllPublicKeyPairModels();
+            allKeyPairs.AddRange(GlobalConfig.DataAccessor.LoadAllPrivateKeyPairModels());
+
+            foreach (KeyPairModel keyPairModel in allKeyPairs)
+                if (GlobalConfig.Signer(DigSigAlgorithm).Verify(keyPairModel.PublicKey, DigSig, content))
+                    return $"Signed by \'{keyPairModel.Name}\' using {keyPairModel.Algorithm}";
+
+            return "Unknown signer or tampered data";
+        }
+    }
+
     [JsonIgnore]
     public string DisplayName
     {
@@ -147,12 +169,14 @@ public class FileModel
     {
         Encrypt(encryptionAlgorithm);
         GenerateMac();
+        RemoveDigSig();
     }
 
     public void Unlock()
     {
         Decrypt();
         RemoveMac();
+        RemoveDigSig();
     }
 
     private void Encrypt(EncryptionAlgorithm encryptionAlgorithm)
@@ -228,22 +252,6 @@ public class FileModel
         GlobalConfig.Logger.Log($"File decrypted with {EncryptionAlgorithm} - {FileName}", LogLevel.Information);
     }
 
-    private void GenerateMac()
-    {
-        if (!File.Exists(Path))
-            throw new FileNotFoundException("The file was either moved or deleted.", Path);
-        if (Password == null)
-            throw new NullReferenceException("Password must be set.");
-        if (EncryptionStatus == false)
-            return;
-
-        MacKeySalt = GlobalConfig.KeyDeriver.GenerateSalt();
-        GlobalConfig.MacGenerator.Key = MacKey;
-
-        byte[] content = File.ReadAllBytes(Path);
-        Mac = GlobalConfig.MacGenerator.GenerateMac(content);
-    }
-
     public bool ValidateIntegrity()
     {
         if (!File.Exists(Path))
@@ -264,10 +272,54 @@ public class FileModel
         return output;
     }
 
+    private void GenerateMac()
+    {
+        if (!File.Exists(Path))
+            throw new FileNotFoundException("The file was either moved or deleted.", Path);
+        if (Password == null)
+            throw new NullReferenceException("Password must be set.");
+        if (EncryptionStatus == false)
+            return;
+
+        MacKeySalt = GlobalConfig.KeyDeriver.GenerateSalt();
+        GlobalConfig.MacGenerator.Key = MacKey;
+
+        byte[] content = File.ReadAllBytes(Path);
+        Mac = GlobalConfig.MacGenerator.GenerateMac(content);
+    }
+
     private void RemoveMac()
     {
         Mac = new byte[0];
         MacKeySalt = new byte[0];
+    }
+
+    public void Sign(KeyPairModel keyPairModel, string password)
+    {
+        if (!File.Exists(Path))
+            throw new FileNotFoundException("The file was either moved or deleted.", Path);
+        if (keyPairModel == null)
+            throw new NullReferenceException("keyPair cannot be null.");
+
+        DigSigAlgorithm = keyPairModel.Algorithm;
+
+        // read data
+        byte[] content = File.ReadAllBytes(Path);
+
+        // temporarily decrypt the private key
+        byte[] encryptedPrivateKey = keyPairModel.PrivateKey;
+        byte[] encryptionKey = GlobalConfig.KeyDeriver.DeriveKey(password);
+        keyPairModel.PrivateKey = GlobalConfig.Encryptor(EncryptionAlgorithm.AES).Decrypt(keyPairModel.PrivateKey, encryptionKey);
+
+        // create digital signature
+        DigSig = GlobalConfig.Signer(DigSigAlgorithm).Sign(keyPairModel.PrivateKey, content);
+
+        keyPairModel.PrivateKey = encryptedPrivateKey;
+    }
+
+    private void RemoveDigSig()
+    {
+        DigSig = null;
     }
 
     public void ShredFile()

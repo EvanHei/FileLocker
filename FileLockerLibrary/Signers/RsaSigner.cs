@@ -9,13 +9,13 @@ namespace FileLockerLibrary;
 
 public class RsaSigner : ISigner
 {
-    public KeyPair GenerateKeyPair()
+    public KeyPairModel GenerateKeyPair()
     {
         using RSACryptoServiceProvider rsa = new();
         byte[] publicKey = rsa.ExportRSAPublicKey();
         byte[] privateKey = rsa.ExportRSAPrivateKey();
 
-        return new KeyPair(publicKey, privateKey);
+        return new KeyPairModel(DigSigAlgorithm.RSA, publicKey, privateKey);
     }
 
     public byte[] Sign(byte[] privateKey, byte[] data)

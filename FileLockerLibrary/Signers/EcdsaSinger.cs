@@ -9,7 +9,7 @@ namespace FileLockerLibrary;
 
 public class EcdsaSigner : ISigner
 {
-    public KeyPair GenerateKeyPair()
+    public KeyPairModel GenerateKeyPair()
     {
         byte[] publicKey;
         byte[] privateKey;
@@ -18,7 +18,7 @@ public class EcdsaSigner : ISigner
         publicKey = ecdsa.ExportSubjectPublicKeyInfo();
         privateKey = ecdsa.ExportECPrivateKey();
 
-        return new KeyPair(publicKey, privateKey);
+        return new KeyPairModel(DigSigAlgorithm.ECDSA, publicKey, privateKey);
     }
 
     public byte[] Sign(byte[] privateKey, byte[] data)

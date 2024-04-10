@@ -16,14 +16,19 @@ namespace FileLockerLibrary;
 public class JsonAccessor : IDataAccessor
 {
     // File structure:
-    /// +-- JSON Files/
+    /// +-- JSON FileModels/
     //  |   +-- <file1>.json
     //  |   +-- <file2>.json
     //  |   +-- ...
-    //  +--
+    //  +-- JSON KeyPairModels/
+    //  |   +-- <file3>.json
+    //  |   +-- <file4>.json
+    //  |   +-- ...
+    //  +-- ...
 
     private string TempExportDirectoryPath { get; set; }
     private string FileModelsDirectoryPath { get; set; }
+    private string KeyPairModelsDirectoryPath { get; set; }
     private string JsonFilePath { get; set; }
 
     public void CreateFileModel(FileModel model)
@@ -40,7 +45,7 @@ public class JsonAccessor : IDataAccessor
         if (model == null)
             throw new ArgumentNullException("Model cannot be null.", nameof(model));
 
-        InitializeJsonFilePath(model.FileName);
+        InitializeFileModelJsonFilePath(model.FileName);
 
         string jsonString = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
         File.WriteAllText(JsonFilePath, jsonString);
@@ -48,7 +53,7 @@ public class JsonAccessor : IDataAccessor
 
     public void DeleteFileModel(FileModel model)
     {
-        InitializeJsonFilePath(model.FileName);
+        InitializeFileModelJsonFilePath(model.FileName);
 
         if (File.Exists(JsonFilePath))
             File.Delete(JsonFilePath);
@@ -62,7 +67,7 @@ public class JsonAccessor : IDataAccessor
 
         foreach (string fileName in GetAllFileNames())
         {
-            InitializeJsonFilePath(fileName);
+            InitializeFileModelJsonFilePath(fileName);
 
             string jsonString = File.ReadAllText(JsonFilePath);
             FileModel temp = JsonSerializer.Deserialize<FileModel>(jsonString);
@@ -84,16 +89,16 @@ public class JsonAccessor : IDataAccessor
         if (model == null)
             throw new ArgumentNullException("Model cannot be null.", nameof(model));
 
-        InitializeJsonFilePath(model.FileName);
+        InitializeFileModelJsonFilePath(model.FileName);
 
-        GenerateExportDirectory(model);
+        GenerateFileModelExportDirectory(model);
 
         CreateArchiveFromExportDirectory(zipPath);
 
         Directory.Delete(TempExportDirectoryPath, recursive: true);
     }
 
-    private void GenerateExportDirectory(FileModel model)
+    private void GenerateFileModelExportDirectory(FileModel model)
     {
         if (string.IsNullOrEmpty(model.Path))
             throw new ArgumentException("Path cannot be null or empty.", nameof(model.Path));
@@ -177,8 +182,123 @@ public class JsonAccessor : IDataAccessor
             File.WriteAllBytes(model.Path, content);
         }
 
-        // create file model and save
+        // create model and save
         CreateFileModel(model);
+    }
+
+    public void CreateKeyPairModel(KeyPairModel model, string password)
+    {
+        if (LoadAllKeyPairModels().Any(keyPairModel => keyPairModel.Name == model.Name))
+            throw new InvalidOperationException($"{model.Name} already added.");
+
+        // temporarily encrypt the private key
+        byte[] privateKey = model.PrivateKey;
+        byte[] encryptionKey = GlobalConfig.KeyDeriver.DeriveKey(password);
+        model.PrivateKey = GlobalConfig.Encryptor(EncryptionAlgorithm.AES).Encrypt(model.PrivateKey, encryptionKey);
+
+        string jsonFilePath = InitializeKeyPairModelJsonFilePath(model.Name);
+        string jsonString = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
+        File.WriteAllText(jsonFilePath, jsonString);
+
+        model.PrivateKey = privateKey;
+
+        GlobalConfig.Logger.Log($"Key pair created - {model.Name}", LogLevel.Information);
+    }
+
+    public void DeleteKeyPairModel(KeyPairModel model)
+    {
+        string jsonFilePath = InitializeKeyPairModelJsonFilePath(model.Name);
+
+        if (File.Exists(jsonFilePath))
+            File.Delete(jsonFilePath);
+
+        GlobalConfig.Logger.Log($"Key pair deleted - {model.Name}", LogLevel.Information);
+    }
+
+    public List<KeyPairModel> LoadAllPrivateKeyPairModels()
+    {
+        return LoadAllKeyPairModels().Where(model => model.PrivateKey != null).ToList();
+    }
+
+    public List<KeyPairModel> LoadAllPublicKeyPairModels()
+    {
+        return LoadAllKeyPairModels().Where(model => model.PrivateKey == null).ToList();
+    }
+
+    public List<KeyPairModel> LoadAllKeyPairModels()
+    {
+        List<KeyPairModel> output = new();
+        string[] filePaths = Directory.GetFiles(KeyPairModelsDirectoryPath, "*" + Constants.JsonExtension);
+
+        foreach (string filePath in filePaths)
+        {
+            string jsonString = File.ReadAllText(filePath);
+            KeyPairModel temp = JsonSerializer.Deserialize<KeyPairModel>(jsonString);
+            output.Add(temp);
+        }
+
+        return output;
+    }
+
+    public void ExportZipKeyPairModel(KeyPairModel model, string zipPath)
+    {
+        if (model == null)
+            throw new ArgumentNullException("Model cannot be null.", nameof(model));
+
+        GenerateKeyPairModelExportDirectory(model);
+
+        CreateArchiveFromExportDirectory(zipPath);
+
+        Directory.Delete(TempExportDirectoryPath, recursive: true);
+    }
+
+    private void GenerateKeyPairModelExportDirectory(KeyPairModel model)
+    {
+        if (model.PublicKey == null)
+            throw new ArgumentException("PublicKey cannot be null or empty.", nameof(model.PublicKey));
+
+        string jsonFilePath = InitializeKeyPairModelJsonFilePath(model.Name);
+
+        if (!File.Exists(jsonFilePath))
+            throw new FileNotFoundException($"File '{jsonFilePath}' does not exist.");
+
+        CreateTempExportDirectory();
+
+        // insert JSON file without the private key
+        string tempJsonFilePath = Path.Combine(TempExportDirectoryPath, model.Name + Constants.JsonExtension);
+        byte[] originalPrivateKey = model.PrivateKey;
+        model.PrivateKey = null;
+        string jsonString = JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true });
+        model.PrivateKey = originalPrivateKey;
+        File.WriteAllText(tempJsonFilePath, jsonString);
+    }
+
+    public void ImportZipKeyPairModel(string zipPath)
+    {
+        if (string.IsNullOrEmpty(zipPath))
+            throw new ArgumentException("Zip path cannot be null or empty.", nameof(zipPath));
+
+        using ZipArchive archive = ZipFile.OpenRead(zipPath);
+        ZipArchiveEntry jsonEntry = archive.Entries.FirstOrDefault();
+
+        if (jsonEntry == null)
+            throw new FileNotFoundException($"Archive does not contain the necessary file.");
+
+        // read the JSON file and create the FileModel
+        using MemoryStream ms = new();
+        using Stream stream = jsonEntry.Open();
+        stream.CopyTo(ms);
+        string jsonString = Encoding.UTF8.GetString(ms.ToArray());
+        KeyPairModel model = JsonSerializer.Deserialize<KeyPairModel>(jsonString);
+
+        // create model and save
+        if (LoadAllKeyPairModels().Any(keyPairModel => keyPairModel.Name == model.Name))
+            throw new InvalidOperationException($"{model.Name} already added.");
+
+        string jsonFilePath = InitializeKeyPairModelJsonFilePath(model.Name);
+        File.WriteAllText(jsonFilePath, jsonString);
+
+        GlobalConfig.Logger.Log($"Public key imported - {model.Name}", LogLevel.Information);
     }
 
     private List<string> GetZipEntryNames(ZipArchive archive)
@@ -208,11 +328,17 @@ public class JsonAccessor : IDataAccessor
         return output;
     }
 
-    private void InitializeJsonFilePath(string fileName)
+    // TODO - refactor InitializeFileModelJsonFilePath() similar to InitializeKeyPairModelJsonFilePath()
+    private void InitializeFileModelJsonFilePath(string fileName)
     {
         string extension = Path.GetExtension(fileName);
         fileName = (extension == Constants.AesExtension || extension == Constants.TripleDesExtension) ? Path.GetFileNameWithoutExtension(fileName) : fileName;
         JsonFilePath = Path.Combine(FileModelsDirectoryPath, fileName + Constants.JsonExtension);
+    }
+
+    private string InitializeKeyPairModelJsonFilePath(string keyPairName)
+    {
+        return Path.Combine(KeyPairModelsDirectoryPath, keyPairName + Constants.JsonExtension);
     }
 
     public JsonAccessor()
@@ -220,12 +346,15 @@ public class JsonAccessor : IDataAccessor
         string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         string appDirectoryPath = Path.Combine(appDataPath, Constants.AppDirectoryName);
         FileModelsDirectoryPath = Path.Combine(appDirectoryPath, Constants.FileModelsDirectoryName);
+        KeyPairModelsDirectoryPath = Path.Combine(appDirectoryPath, Constants.KeyPairModelsDirectoryName);
         TempExportDirectoryPath = Path.Combine(appDirectoryPath, Constants.TempExportDirectoryName);
 
-        // create data directory and hide it
+        // create hidden data directories
         Directory.CreateDirectory(FileModelsDirectoryPath);
+        Directory.CreateDirectory(KeyPairModelsDirectoryPath);
         FileAttributes attributes = File.GetAttributes(FileModelsDirectoryPath);
         attributes |= FileAttributes.Hidden;
         File.SetAttributes(FileModelsDirectoryPath, attributes);
+        File.SetAttributes(KeyPairModelsDirectoryPath, attributes);
     }
 }

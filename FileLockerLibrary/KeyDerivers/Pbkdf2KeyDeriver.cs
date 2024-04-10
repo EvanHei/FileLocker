@@ -38,4 +38,20 @@ public class Pbkdf2KeyDeriver : IKeyDeriver
         using Rfc2898DeriveBytes pbkdf2 = new(password, salt, 10000, HashAlgorithmName.SHA256);
         return pbkdf2.GetBytes(length);
     }
+
+    /// <summary>
+    /// Derives a key from the specified password using the PBKDF2 algorithm.
+    /// </summary>
+    /// <param name="password">The password from which to derive the key.</param>
+    /// <param name="length">The length of the derived key in bytes (default is 32 bytes).</param>
+    /// <returns>The derived key.</returns>
+    /// <exception cref="ArgumentNullException">Thrown if the <paramref name="password"/> is null.</exception>
+    public byte[] DeriveKey(string password, int length = 32)
+    {
+        if (password == null)
+            throw new ArgumentNullException(nameof(password), "Password cannot be null.");
+
+        using Rfc2898DeriveBytes pbkdf2 = new(password, salt: new byte[0], 10000, HashAlgorithmName.SHA256);
+        return pbkdf2.GetBytes(length);
+    }
 }

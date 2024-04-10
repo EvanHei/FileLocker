@@ -1,32 +1,55 @@
 ﻿using FileLockerLibrary;
+using OxyPlot;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinFormsUI;
 
-public partial class EncryptForm : Form
+public partial class CreateKeyPairForm : Form
 {
-    private IEncryptFormCaller caller;
-    private FileModel model;
+    private ICreateKeyPairFormCaller caller;
     private bool isEyeballLabelClicked = false;
 
-    public EncryptForm(IEncryptFormCaller caller, FileModel model)
+    public CreateKeyPairForm(ICreateKeyPairFormCaller caller)
     {
         InitializeComponent();
 
         NumberOfCharactersLabel.Text = $"• {Constants.MinPasswordLength} - {Constants.MaxPasswordLength} characters";
-        EncryptionAlgorithmComboBox.DataSource = Enum.GetNames(typeof(EncryptionAlgorithm));
+        SigningAlgorithmComboBox.DataSource = Enum.GetNames(typeof(DigSigAlgorithm));
 
         this.caller = caller;
-        this.model = model;
+    }
+
+    private void EnterButton_Click(object sender, EventArgs e)
+    {
+        if (!ValidateInputFields())
+            return;
+
+        try
+        {
+            Enum.TryParse(SigningAlgorithmComboBox.SelectedItem.ToString(), out DigSigAlgorithm algorithm);
+
+            KeyPairModel model = GlobalConfig.Signer(algorithm).GenerateKeyPair();
+            model.Name = NameMaskedTextBox.Text;
+
+            string password = PasswordMaskedTextBox.Text;
+            GlobalConfig.DataAccessor.CreateKeyPairModel(model, password);
+
+            this.Close();
+            caller.KeyPairCreationComplete();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
+        }
     }
 
     private void GenerateRandomButton_Click(object sender, EventArgs e)
@@ -91,26 +114,10 @@ public partial class EncryptForm : Form
         ClearPasswords();
     }
 
-    private void EnterButton_Click(object sender, EventArgs e)
+    private void ClearPasswords()
     {
-        if (!ValidateInputFields())
-            return;
-
-        try
-        {
-            Enum.TryParse(EncryptionAlgorithmComboBox.SelectedItem.ToString(), out EncryptionAlgorithm algorithm);
-
-            model.Password = PasswordMaskedTextBox.Text;
-            model.Lock(algorithm);
-            GlobalConfig.DataAccessor.SaveFileModel(model);
-
-            this.Close();
-            caller.EncryptionComplete();
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK);
-        }
+        PasswordMaskedTextBox.Text = "";
+        ConfirmPasswordMaskedTextBox.Text = "";
     }
 
     private void EyeballLabel_Click(object sender, EventArgs e)
@@ -140,12 +147,6 @@ public partial class EncryptForm : Form
     private void InactivityTimer_Tick(object sender, EventArgs e)
     {
         ClearPasswords();
-    }
-
-    private void ClearPasswords()
-    {
-        PasswordMaskedTextBox.Text = "";
-        ConfirmPasswordMaskedTextBox.Text = "";
     }
 
     private void PasswordMaskedTextBox_Click(object sender, EventArgs e)
@@ -262,6 +263,7 @@ public partial class EncryptForm : Form
         bool output = true;
         string password = PasswordMaskedTextBox.Text;
         string confirmPassword = ConfirmPasswordMaskedTextBox.Text;
+        string name = NameMaskedTextBox.Text;
 
         if (password.Length < Constants.MinPasswordLength || password.Length > Constants.MaxPasswordLength)
             output = false;
@@ -275,8 +277,13 @@ public partial class EncryptForm : Form
             output = false;
         if (password != confirmPassword)
             output = false;
-        if (EncryptionAlgorithmComboBox.SelectedItem == null ||
-            !Enum.TryParse(EncryptionAlgorithmComboBox.SelectedItem.ToString(), out EncryptionAlgorithm algorithm))
+        if (SigningAlgorithmComboBox.SelectedItem == null ||
+            !Enum.TryParse(SigningAlgorithmComboBox.SelectedItem.ToString(), out DigSigAlgorithm algorithm))
+            output = false;
+
+        // name must be alphanumeric
+        string alphanumericPattern = @"^[A-Za-z0-9]+$";
+        if (!Regex.IsMatch(name, alphanumericPattern))
             output = false;
 
         return output;
@@ -312,6 +319,16 @@ public partial class EncryptForm : Form
         InactivityTimer.Start();
     }
 
+    private void CreateKeyPairForm_MouseDown(object sender, MouseEventArgs e)
+    {
+        ResetTimer();
+    }
+
+    private void CreateKeyPairForm_MouseMove(object sender, MouseEventArgs e)
+    {
+        ResetTimer();
+    }
+
     private void ConfirmPasswordMaskedTextBox_Click(object sender, EventArgs e)
     {
         ResetTimer();
@@ -323,23 +340,13 @@ public partial class EncryptForm : Form
         ResetTimer();
     }
 
-    private void EncryptionAlgorithmComboBox_SelectedIndexChanged(object sender, EventArgs e)
+    private void SigningAlgorithmComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
         UpdateControls();
         ResetTimer();
     }
 
-    private void EncryptionAlgorithmComboBox_Click(object sender, EventArgs e)
-    {
-        ResetTimer();
-    }
-
-    private void EncryptForm_MouseDown(object sender, MouseEventArgs e)
-    {
-        ResetTimer();
-    }
-
-    private void EncryptForm_MouseMove(object sender, MouseEventArgs e)
+    private void SigningAlgorithmComboBox_Click(object sender, EventArgs e)
     {
         ResetTimer();
     }
@@ -347,5 +354,29 @@ public partial class EncryptForm : Form
     private void CloseMenuItem_Click(object sender, EventArgs e)
     {
         this.Close();
+    }
+
+    private void NameMaskedTextBox_TextChanged(object sender, EventArgs e)
+    {
+        string name = NameMaskedTextBox.Text;
+        string alphanumericPattern = @"^[A-Za-z0-9]+$";
+
+        // AlphanumericLabel
+        if (name.Length > 0 && Regex.IsMatch(name, alphanumericPattern))
+        {
+            if (AlphanumericLabel.Text.Contains('•'))
+            {
+                AlphanumericLabel.Text = '✓' + AlphanumericLabel.Text.Substring(1);
+                AlphanumericLabel.ForeColor = Color.Green;
+            }
+        }
+        else if (AlphanumericLabel.Text[0] == '✓')
+        {
+            AlphanumericLabel.Text = '•' + AlphanumericLabel.Text.Substring(1);
+            AlphanumericLabel.ForeColor = SystemColors.AppWorkspace;
+        }
+
+        UpdateControls();
+        ResetTimer();
     }
 }

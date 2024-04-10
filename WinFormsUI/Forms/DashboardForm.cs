@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace WinFormsUI;
 
-public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCaller, IImportFormCaller
+public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCaller, IImportFormCaller, ISignFormCaller, ICreateKeyPairFormCaller
 {
     FileModel selectedModel;
 
@@ -23,31 +23,6 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         RelocationPanel.Visible = false;
 
         PopulateForm();
-    }
-
-    private void FileListBox_DrawItem(object sender, DrawItemEventArgs row)
-    {
-        if (row.Index < 0 || row.Index >= FileListBox.Items.Count)
-            return;
-
-        FileModel model = (FileModel)FileListBox.Items[row.Index];
-        Color backgroundColor;
-
-        if (row.State.HasFlag(DrawItemState.Selected))
-            backgroundColor = SystemColors.Highlight;
-        else
-            if (row.Index % 2 == 0)
-            backgroundColor = Color.FromArgb(50, 50, 50);
-        else
-            backgroundColor = Color.FromArgb(40, 40, 40);
-
-        row.DrawBackground();
-
-        using SolidBrush backgroundBrush = new(backgroundColor);
-        row.Graphics.FillRectangle(backgroundBrush, row.Bounds);
-
-        using SolidBrush foregroundBrush = new(row.ForeColor);
-        row.Graphics.DrawString(model.DisplayName, row.Font, foregroundBrush, row.Bounds);
     }
 
     private void PopulateForm()
@@ -86,6 +61,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         LockedPanel.Visible = false;
         UnlockedPanel.Visible = false;
         RelocationPanel.Visible = false;
+        KeysPanel.Visible = false;
     }
 
     private void ShowUnlockedPanel()
@@ -94,14 +70,14 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         LockedPanel.Visible = false;
         UnlockedPanel.Visible = true;
         RelocationPanel.Visible = false;
+        KeysPanel.Visible = false;
 
         UnlockedPanel_FileNameLabel.Text = selectedModel.FileName.Length > 50 ? selectedModel.FileName.Substring(0, 47) + "..." : selectedModel.FileName;
         UnlockedPanel_PathValueLabel.Text = selectedModel.Path.Length > 64 ? selectedModel.Path.Substring(0, 61) + "..." : selectedModel.Path;
         UnlockedPanel_SizeValueLabel.Text = FormatBytes(selectedModel.SizeInBytes);
         UnlockedPanel_ShaValueLabel.Text = BitConverter.ToString(selectedModel.Sha).Replace("-", "");
         UnlockedPanel_DateAddedValueLabel.Text = selectedModel.DateAdded.ToShortDateString();
-
-        PopulatePieChartPanel(UnlockedPanel_PieChartPanel);
+        UnlockedPanel_SignatureValueLabel.Text = selectedModel.DigSigDisplay;
     }
 
     private void ShowLockedPanel()
@@ -110,15 +86,15 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         LockedPanel.Visible = true;
         UnlockedPanel.Visible = false;
         RelocationPanel.Visible = false;
+        KeysPanel.Visible = false;
 
         LockedPanel_FileNameLabel.Text = selectedModel.FileName.Length > 50 ? selectedModel.FileName.Substring(0, 47) + "..." : selectedModel.FileName;
         LockedPanel_PathValueLabel.Text = selectedModel.Path.Length > 64 ? selectedModel.Path.Substring(0, 61) + "..." : selectedModel.Path;
         LockedPanel_SizeValueLabel.Text = FormatBytes(selectedModel.SizeInBytes);
         LockedPanel_ShaValueLabel.Text = BitConverter.ToString(selectedModel.Sha).Replace("-", "");
-        LockedPanel_AlgorithmValueLabel.Text = selectedModel.EncryptionAlgorithm.ToString();
         LockedPanel_DateAddedValueLabel.Text = selectedModel.DateAdded.ToShortDateString();
-
-        PopulatePieChartPanel(LockedPanel_PieChartPanel);
+        LockedPanel_SignatureValueLabel.Text = selectedModel.DigSigDisplay;
+        LockedPanel_AlgorithmValueLabel.Text = selectedModel.EncryptionAlgorithm.ToString();
     }
 
     private void ShowRelocationPanel()
@@ -127,6 +103,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         LockedPanel.Visible = false;
         UnlockedPanel.Visible = false;
         RelocationPanel.Visible = true;
+        KeysPanel.Visible = false;
 
         string displayPath = selectedModel.Path.Length > 64 ? selectedModel.Path.Substring(0, 61) + "..." : selectedModel.Path;
         string fileDisplayName = selectedModel.FileName.Length > 50 ? selectedModel.FileName.Substring(0, 47) + "..." : selectedModel.FileName;
@@ -134,36 +111,94 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         RelocationPanel_LastSeenLabel.Text = $"It was last seen at {displayPath}";
     }
 
-    private void PopulatePieChartPanel(Panel panel)
+    private void ShowKeysPanel()
     {
-        double aesDays = GlobalConfig.Diagnostics.AlgorithmDuration(selectedModel, EncryptionAlgorithm.AES);
-        double tripleDesDays = GlobalConfig.Diagnostics.AlgorithmDuration(selectedModel, EncryptionAlgorithm.TripleDES);
-        double unencryptedDays = GlobalConfig.Diagnostics.UnencryptedDuration(selectedModel);
+        NoFilesPanel.Visible = false;
+        LockedPanel.Visible = false;
+        UnlockedPanel.Visible = false;
+        RelocationPanel.Visible = false;
+        KeysPanel.Visible = true;
 
-        PlotModel pieModel = new();
-        PieSeries pieSeries = new()
-        {
-            OutsideLabelFormat = null,
-            InsideLabelFormat = null
-        };
+        MyKeysListBox.DataSource = GlobalConfig.DataAccessor.LoadAllPrivateKeyPairModels();
+        MyKeysListBox.DisplayMember = "DisplayName";
 
-        PieSlice unencryptedSlice = new("None", unencryptedDays) { Fill = OxyColor.FromRgb(128, 128, 128) };
-        PieSlice aesSlice = new("AES", aesDays) { Fill = OxyColor.FromRgb(255, 0, 0) };
-        PieSlice tripleDesSlice = new("3DES", tripleDesDays) { Fill = OxyColor.FromRgb(0, 255, 0) };
-        pieSeries.Slices.Add(aesSlice);
-        pieSeries.Slices.Add(tripleDesSlice);
-        pieSeries.Slices.Add(unencryptedSlice);
+        PublicKeysListBox.DataSource = GlobalConfig.DataAccessor.LoadAllPublicKeyPairModels();
+        PublicKeysListBox.DisplayMember = "DisplayName";
+    }
 
-        pieModel.Series.Add(pieSeries);
+    private void FileListBox_DrawItem(object sender, DrawItemEventArgs row)
+    {
+        if (row.Index < 0 || row.Index >= FileListBox.Items.Count)
+            return;
 
-        PlotView pieView = new()
-        {
-            Model = pieModel,
-            Dock = DockStyle.Fill
-        };
+        FileModel model = (FileModel)FileListBox.Items[row.Index];
+        Color backgroundColor;
 
-        panel.Controls.Clear();
-        panel.Controls.Add(pieView);
+        if (row.State.HasFlag(DrawItemState.Selected))
+            backgroundColor = SystemColors.Highlight;
+        else
+            if (row.Index % 2 == 0)
+            backgroundColor = Color.FromArgb(50, 50, 50);
+        else
+            backgroundColor = Color.FromArgb(40, 40, 40);
+
+        row.DrawBackground();
+
+        using SolidBrush backgroundBrush = new(backgroundColor);
+        row.Graphics.FillRectangle(backgroundBrush, row.Bounds);
+
+        using SolidBrush foregroundBrush = new(row.ForeColor);
+        row.Graphics.DrawString(model.DisplayName, row.Font, foregroundBrush, row.Bounds);
+    }
+
+    private void PublicKeysListBox_DrawItem(object sender, DrawItemEventArgs row)
+    {
+        if (row.Index < 0 || row.Index >= PublicKeysListBox.Items.Count)
+            return;
+
+        KeyPairModel model = (KeyPairModel)PublicKeysListBox.Items[row.Index];
+        Color backgroundColor;
+
+        if (row.State.HasFlag(DrawItemState.Selected))
+            backgroundColor = SystemColors.Highlight;
+        else
+            if (row.Index % 2 == 0)
+            backgroundColor = Color.FromArgb(50, 50, 50);
+        else
+            backgroundColor = Color.FromArgb(40, 40, 40);
+
+        row.DrawBackground();
+
+        using SolidBrush backgroundBrush = new(backgroundColor);
+        row.Graphics.FillRectangle(backgroundBrush, row.Bounds);
+
+        using SolidBrush foregroundBrush = new(row.ForeColor);
+        row.Graphics.DrawString(model.DisplayName, row.Font, foregroundBrush, row.Bounds);
+    }
+
+    private void MyKeysListBox_DrawItem(object sender, DrawItemEventArgs row)
+    {
+        if (row.Index < 0 || row.Index >= MyKeysListBox.Items.Count)
+            return;
+
+        KeyPairModel model = (KeyPairModel)MyKeysListBox.Items[row.Index];
+        Color backgroundColor;
+
+        if (row.State.HasFlag(DrawItemState.Selected))
+            backgroundColor = SystemColors.Highlight;
+        else
+            if (row.Index % 2 == 0)
+            backgroundColor = Color.FromArgb(50, 50, 50);
+        else
+            backgroundColor = Color.FromArgb(40, 40, 40);
+
+        row.DrawBackground();
+
+        using SolidBrush backgroundBrush = new(backgroundColor);
+        row.Graphics.FillRectangle(backgroundBrush, row.Bounds);
+
+        using SolidBrush foregroundBrush = new(row.ForeColor);
+        row.Graphics.DrawString(model.DisplayName, row.Font, foregroundBrush, row.Bounds);
     }
 
     private void CenterLabel_TextChanged(object sender, EventArgs e)
@@ -465,5 +500,115 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
     private void ShowInExplorerButton_Click(object sender, EventArgs e)
     {
         Process.Start("explorer.exe", "/select, " + selectedModel.Path);
+    }
+
+    private void SignButton_Click(object sender, EventArgs e)
+    {
+        SignForm signForm = new(this, selectedModel);
+        signForm.ShowDialog();
+    }
+
+    public void SigningComplete()
+    {
+        PopulateForm();
+    }
+
+    private void CreateKeyPairToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        CreateKeyPairForm createKeyPairForm = new(this);
+        createKeyPairForm.ShowDialog();
+    }
+
+    public void KeyPairCreationComplete()
+    {
+        ShowKeysPanel();
+    }
+
+    private void KeysMenuItem_Click(object sender, EventArgs e)
+    {
+        ShowKeysPanel();
+    }
+
+    private void KeysPanel_CreateButton_Click(object sender, EventArgs e)
+    {
+        CreateKeyPairForm createKeyPairForm = new(this);
+        createKeyPairForm.ShowDialog();
+    }
+
+    private void MyKeysListBox_DeleteItem_Click(object sender, EventArgs e)
+    {
+        KeyPairModel model = (KeyPairModel)MyKeysListBox.SelectedItem;
+
+        try
+        {
+            GlobalConfig.DataAccessor.DeleteKeyPairModel(model);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        ShowKeysPanel();
+    }
+
+    private void PublicKeysListBox_DeleteItem_Click(object sender, EventArgs e)
+    {
+        KeyPairModel model = (KeyPairModel)PublicKeysListBox.SelectedItem;
+
+        try
+        {
+            GlobalConfig.DataAccessor.DeleteKeyPairModel(model);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        ShowKeysPanel();
+    }
+
+    private void KeysPanel_ImportButton_Click(object sender, EventArgs e)
+    {
+        using OpenFileDialog openFileDialog = new();
+        openFileDialog.Title = "Select Archive";
+        openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        if (openFileDialog.ShowDialog() != DialogResult.OK)
+            return;
+
+        try
+        {
+            GlobalConfig.DataAccessor.ImportZipKeyPairModel(openFileDialog.FileName);
+            ShowKeysPanel();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+    }
+
+    private void KeyListBox_ExportItem_Click(object sender, EventArgs e)
+    {
+        KeyPairModel model = (KeyPairModel)MyKeysListBox.SelectedItem;
+
+        using SaveFileDialog saveFileDialog = new();
+        saveFileDialog.Title = "Save Archive";
+        saveFileDialog.Filter = "Zip files (*.zip)|*.zip";
+        saveFileDialog.FileName = model.Name + ".zip";
+        saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        saveFileDialog.OverwritePrompt = true;
+        if (saveFileDialog.ShowDialog() != DialogResult.OK)
+            return;
+
+        try
+        {
+            GlobalConfig.DataAccessor.ExportZipKeyPairModel(model, saveFileDialog.FileName);
+        }
+        catch
+        {
+            MessageBox.Show("Could not export, the file may be missing.", "Error", MessageBoxButtons.OK);
+        }
     }
 }

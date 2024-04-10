@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace FileLockerLibrary;
 
 /// <summary>
-/// Specifies the encryption algorithm to be used.
+/// Specifies encryption algorithms.
 /// </summary>
 public enum EncryptionAlgorithm
 {
@@ -23,7 +23,23 @@ public enum EncryptionAlgorithm
 }
 
 /// <summary>
-/// Specifies the level of logging.
+/// Specifies signing algorithms.
+/// </summary>
+public enum DigSigAlgorithm
+{
+    /// <summary>
+    /// RSA (Rivest-Shamir-Adleman) signing algorithm.
+    /// </summary>
+    RSA,
+
+    /// <summary>
+    /// ECDSA (Elliptic Curve Digital Signature Algorithm) signing algorithm.
+    /// </summary>
+    ECDSA
+}
+
+/// <summary>
+/// Specifies the log level.
 /// </summary>
 public enum LogLevel
 {

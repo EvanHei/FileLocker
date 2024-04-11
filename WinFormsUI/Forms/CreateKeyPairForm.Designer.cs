@@ -66,6 +66,7 @@
             MenuStrip.Size = new Size(541, 29);
             MenuStrip.TabIndex = 35;
             MenuStrip.Text = "menuStrip1";
+            MenuStrip.Click += Control_Click;
             // 
             // CloseMenuItem
             // 
@@ -124,7 +125,7 @@
             SigningAlgorithmComboBox.Size = new Size(277, 29);
             SigningAlgorithmComboBox.TabIndex = 49;
             SigningAlgorithmComboBox.SelectedIndexChanged += SigningAlgorithmComboBox_SelectedIndexChanged;
-            SigningAlgorithmComboBox.Click += SigningAlgorithmComboBox_Click;
+            SigningAlgorithmComboBox.Click += Control_Click;
             // 
             // AlgorithmLabel
             // 
@@ -174,7 +175,7 @@
             ConfirmPasswordMaskedTextBox.Size = new Size(277, 29);
             ConfirmPasswordMaskedTextBox.TabIndex = 45;
             ConfirmPasswordMaskedTextBox.UseSystemPasswordChar = true;
-            ConfirmPasswordMaskedTextBox.Click += ConfirmPasswordMaskedTextBox_Click;
+            ConfirmPasswordMaskedTextBox.Click += Control_Click;
             ConfirmPasswordMaskedTextBox.TextChanged += ConfirmPasswordMaskedTextBox_TextChanged;
             // 
             // ConfirmLabel
@@ -268,7 +269,7 @@
             PasswordMaskedTextBox.Size = new Size(277, 29);
             PasswordMaskedTextBox.TabIndex = 36;
             PasswordMaskedTextBox.UseSystemPasswordChar = true;
-            PasswordMaskedTextBox.Click += PasswordMaskedTextBox_Click;
+            PasswordMaskedTextBox.Click += Control_Click;
             PasswordMaskedTextBox.TextChanged += PasswordMaskedTextBox_TextChanged;
             // 
             // PasswordLabel
@@ -297,6 +298,7 @@
             NameMaskedTextBox.Name = "NameMaskedTextBox";
             NameMaskedTextBox.Size = new Size(277, 29);
             NameMaskedTextBox.TabIndex = 52;
+            NameMaskedTextBox.Click += Control_Click;
             NameMaskedTextBox.TextChanged += NameMaskedTextBox_TextChanged;
             // 
             // NameLabel

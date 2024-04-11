@@ -89,6 +89,7 @@ public partial class EncryptForm : Form
     private void ClearButton_Click(object sender, EventArgs e)
     {
         ClearPasswords();
+        ResetTimer();
     }
 
     private void EnterButton_Click(object sender, EventArgs e)
@@ -148,7 +149,82 @@ public partial class EncryptForm : Form
         ConfirmPasswordMaskedTextBox.Text = "";
     }
 
-    private void PasswordMaskedTextBox_Click(object sender, EventArgs e)
+    private void UpdateControls()
+    {
+        if (ValidateInputFields())
+        {
+            EnableEnterButton();
+            PasswordWarningLabel.Visible = true;
+        }
+        else
+        {
+            DisableEnterButton();
+            PasswordWarningLabel.Visible = false;
+        }
+
+        if (PasswordMaskedTextBox.Text.Length > 0 ||
+            ConfirmPasswordMaskedTextBox.Text.Length > 0)
+            EnableClearButton();
+        else
+            DisableClearButton();
+    }
+
+    private bool ValidateInputFields()
+    {
+        bool output = true;
+        string password = PasswordMaskedTextBox.Text;
+        string confirmPassword = ConfirmPasswordMaskedTextBox.Text;
+
+        if (password.Length < Constants.MinPasswordLength || password.Length > Constants.MaxPasswordLength)
+            output = false;
+        if (!password.Any(char.IsUpper))
+            output = false;
+        if (!password.Any(char.IsLower))
+            output = false;
+        if (!password.Any(char.IsDigit))
+            output = false;
+        if (!password.Any(ch => !char.IsLetterOrDigit(ch)))
+            output = false;
+        if (password != confirmPassword)
+            output = false;
+        if (EncryptionAlgorithmComboBox.SelectedItem == null ||
+            !Enum.TryParse(EncryptionAlgorithmComboBox.SelectedItem.ToString(), out EncryptionAlgorithm algorithm))
+            output = false;
+
+        return output;
+    }
+
+    private void EnableClearButton()
+    {
+        ClearButton.Enabled = true;
+        ClearButton.BackColor = SystemColors.Highlight;
+    }
+
+    private void DisableClearButton()
+    {
+        ClearButton.Enabled = false;
+        ClearButton.BackColor = Color.Silver;
+    }
+
+    private void EnableEnterButton()
+    {
+        EnterButton.BackColor = SystemColors.Highlight;
+        EnterButton.Enabled = true;
+    }
+
+    private void DisableEnterButton()
+    {
+        EnterButton.BackColor = Color.Silver;
+        EnterButton.Enabled = false;
+    }
+
+    private void ResetTimer()
+    {
+        InactivityTimer.Stop();
+        InactivityTimer.Start();
+    }
+
+    private void Control_Click(object sender, EventArgs e)
     {
         ResetTimer();
     }
@@ -237,86 +313,6 @@ public partial class EncryptForm : Form
         ResetTimer();
     }
 
-    private void UpdateControls()
-    {
-        if (ValidateInputFields())
-        {
-            EnableEnterButton();
-            PasswordWarningLabel.Visible = true;
-        }
-        else
-        {
-            DisableEnterButton();
-            PasswordWarningLabel.Visible = false;
-        }
-
-        if (PasswordMaskedTextBox.Text.Length > 0 ||
-            ConfirmPasswordMaskedTextBox.Text.Length > 0)
-            EnableClearButton();
-        else
-            DisableClearButton();
-    }
-
-    private bool ValidateInputFields()
-    {
-        bool output = true;
-        string password = PasswordMaskedTextBox.Text;
-        string confirmPassword = ConfirmPasswordMaskedTextBox.Text;
-
-        if (password.Length < Constants.MinPasswordLength || password.Length > Constants.MaxPasswordLength)
-            output = false;
-        if (!password.Any(char.IsUpper))
-            output = false;
-        if (!password.Any(char.IsLower))
-            output = false;
-        if (!password.Any(char.IsDigit))
-            output = false;
-        if (!password.Any(ch => !char.IsLetterOrDigit(ch)))
-            output = false;
-        if (password != confirmPassword)
-            output = false;
-        if (EncryptionAlgorithmComboBox.SelectedItem == null ||
-            !Enum.TryParse(EncryptionAlgorithmComboBox.SelectedItem.ToString(), out EncryptionAlgorithm algorithm))
-            output = false;
-
-        return output;
-    }
-
-    private void EnableClearButton()
-    {
-        ClearButton.Enabled = true;
-        ClearButton.BackColor = SystemColors.Highlight;
-    }
-
-    private void DisableClearButton()
-    {
-        ClearButton.Enabled = false;
-        ClearButton.BackColor = Color.Silver;
-    }
-
-    private void EnableEnterButton()
-    {
-        EnterButton.BackColor = SystemColors.Highlight;
-        EnterButton.Enabled = true;
-    }
-
-    private void DisableEnterButton()
-    {
-        EnterButton.BackColor = Color.Silver;
-        EnterButton.Enabled = false;
-    }
-
-    private void ResetTimer()
-    {
-        InactivityTimer.Stop();
-        InactivityTimer.Start();
-    }
-
-    private void ConfirmPasswordMaskedTextBox_Click(object sender, EventArgs e)
-    {
-        ResetTimer();
-    }
-
     private void ConfirmPasswordMaskedTextBox_TextChanged(object sender, EventArgs e)
     {
         UpdateControls();
@@ -326,11 +322,6 @@ public partial class EncryptForm : Form
     private void EncryptionAlgorithmComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
         UpdateControls();
-        ResetTimer();
-    }
-
-    private void EncryptionAlgorithmComboBox_Click(object sender, EventArgs e)
-    {
         ResetTimer();
     }
 

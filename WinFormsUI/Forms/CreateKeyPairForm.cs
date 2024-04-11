@@ -112,6 +112,7 @@ public partial class CreateKeyPairForm : Form
     private void ClearButton_Click(object sender, EventArgs e)
     {
         ClearPasswords();
+        ResetTimer();
     }
 
     private void ClearPasswords()
@@ -147,95 +148,6 @@ public partial class CreateKeyPairForm : Form
     private void InactivityTimer_Tick(object sender, EventArgs e)
     {
         ClearPasswords();
-    }
-
-    private void PasswordMaskedTextBox_Click(object sender, EventArgs e)
-    {
-        ResetTimer();
-    }
-
-    private void PasswordMaskedTextBox_TextChanged(object sender, EventArgs e)
-    {
-        string password = PasswordMaskedTextBox.Text;
-        string confirmPassword = ConfirmPasswordMaskedTextBox.Text;
-
-        // NumberOfCharactersLabel
-        if (password.Length >= Constants.MinPasswordLength && password.Length <= Constants.MaxPasswordLength)
-        {
-            if (NumberOfCharactersLabel.Text.Contains('•'))
-            {
-                NumberOfCharactersLabel.Text = '✓' + NumberOfCharactersLabel.Text.Substring(1);
-                NumberOfCharactersLabel.ForeColor = Color.Green;
-            }
-        }
-        else if (NumberOfCharactersLabel.Text[0] == '✓')
-        {
-            NumberOfCharactersLabel.Text = '•' + NumberOfCharactersLabel.Text.Substring(1);
-            NumberOfCharactersLabel.ForeColor = SystemColors.AppWorkspace;
-        }
-
-        // UppercaseLetterLabel
-        if (password.Any(char.IsUpper))
-        {
-            if (UppercaseLetterLabel.Text.Contains('•'))
-            {
-                UppercaseLetterLabel.Text = '✓' + UppercaseLetterLabel.Text.Substring(1);
-                UppercaseLetterLabel.ForeColor = Color.Green;
-            }
-        }
-        else if (UppercaseLetterLabel.Text[0] == '✓')
-        {
-            UppercaseLetterLabel.Text = '•' + UppercaseLetterLabel.Text.Substring(1);
-            UppercaseLetterLabel.ForeColor = SystemColors.AppWorkspace;
-        }
-
-        // LowercaseLetterLabel
-        if (password.Any(char.IsLower))
-        {
-            if (LowercaseLetterLabel.Text.Contains('•'))
-            {
-                LowercaseLetterLabel.Text = '✓' + LowercaseLetterLabel.Text.Substring(1);
-                LowercaseLetterLabel.ForeColor = Color.Green;
-            }
-        }
-        else if (LowercaseLetterLabel.Text[0] == '✓')
-        {
-            LowercaseLetterLabel.Text = '•' + LowercaseLetterLabel.Text.Substring(1);
-            LowercaseLetterLabel.ForeColor = SystemColors.AppWorkspace;
-        }
-
-        // DigitLabel
-        if (password.Any(char.IsDigit))
-        {
-            if (DigitLabel.Text.Contains('•'))
-            {
-                DigitLabel.Text = '✓' + DigitLabel.Text.Substring(1);
-                DigitLabel.ForeColor = Color.Green;
-            }
-        }
-        else if (DigitLabel.Text[0] == '✓')
-        {
-            DigitLabel.Text = '•' + DigitLabel.Text.Substring(1);
-            DigitLabel.ForeColor = SystemColors.AppWorkspace;
-        }
-
-        // SpecialCharacterLabel
-        if (password.Any(ch => !char.IsLetterOrDigit(ch)))
-        {
-            if (SpecialCharacterLabel.Text.Contains('•'))
-            {
-                SpecialCharacterLabel.Text = '✓' + SpecialCharacterLabel.Text.Substring(1);
-                SpecialCharacterLabel.ForeColor = Color.Green;
-            }
-        }
-        else if (SpecialCharacterLabel.Text[0] == '✓')
-        {
-            SpecialCharacterLabel.Text = '•' + SpecialCharacterLabel.Text.Substring(1);
-            SpecialCharacterLabel.ForeColor = SystemColors.AppWorkspace;
-        }
-
-        UpdateControls();
-        ResetTimer();
     }
 
     private void UpdateControls()
@@ -329,8 +241,92 @@ public partial class CreateKeyPairForm : Form
         ResetTimer();
     }
 
-    private void ConfirmPasswordMaskedTextBox_Click(object sender, EventArgs e)
+    private void Control_Click(object sender, EventArgs e)
     {
+        ResetTimer();
+    }
+
+    private void PasswordMaskedTextBox_TextChanged(object sender, EventArgs e)
+    {
+        string password = PasswordMaskedTextBox.Text;
+        string confirmPassword = ConfirmPasswordMaskedTextBox.Text;
+
+        // NumberOfCharactersLabel
+        if (password.Length >= Constants.MinPasswordLength && password.Length <= Constants.MaxPasswordLength)
+        {
+            if (NumberOfCharactersLabel.Text.Contains('•'))
+            {
+                NumberOfCharactersLabel.Text = '✓' + NumberOfCharactersLabel.Text.Substring(1);
+                NumberOfCharactersLabel.ForeColor = Color.Green;
+            }
+        }
+        else if (NumberOfCharactersLabel.Text[0] == '✓')
+        {
+            NumberOfCharactersLabel.Text = '•' + NumberOfCharactersLabel.Text.Substring(1);
+            NumberOfCharactersLabel.ForeColor = SystemColors.AppWorkspace;
+        }
+
+        // UppercaseLetterLabel
+        if (password.Any(char.IsUpper))
+        {
+            if (UppercaseLetterLabel.Text.Contains('•'))
+            {
+                UppercaseLetterLabel.Text = '✓' + UppercaseLetterLabel.Text.Substring(1);
+                UppercaseLetterLabel.ForeColor = Color.Green;
+            }
+        }
+        else if (UppercaseLetterLabel.Text[0] == '✓')
+        {
+            UppercaseLetterLabel.Text = '•' + UppercaseLetterLabel.Text.Substring(1);
+            UppercaseLetterLabel.ForeColor = SystemColors.AppWorkspace;
+        }
+
+        // LowercaseLetterLabel
+        if (password.Any(char.IsLower))
+        {
+            if (LowercaseLetterLabel.Text.Contains('•'))
+            {
+                LowercaseLetterLabel.Text = '✓' + LowercaseLetterLabel.Text.Substring(1);
+                LowercaseLetterLabel.ForeColor = Color.Green;
+            }
+        }
+        else if (LowercaseLetterLabel.Text[0] == '✓')
+        {
+            LowercaseLetterLabel.Text = '•' + LowercaseLetterLabel.Text.Substring(1);
+            LowercaseLetterLabel.ForeColor = SystemColors.AppWorkspace;
+        }
+
+        // DigitLabel
+        if (password.Any(char.IsDigit))
+        {
+            if (DigitLabel.Text.Contains('•'))
+            {
+                DigitLabel.Text = '✓' + DigitLabel.Text.Substring(1);
+                DigitLabel.ForeColor = Color.Green;
+            }
+        }
+        else if (DigitLabel.Text[0] == '✓')
+        {
+            DigitLabel.Text = '•' + DigitLabel.Text.Substring(1);
+            DigitLabel.ForeColor = SystemColors.AppWorkspace;
+        }
+
+        // SpecialCharacterLabel
+        if (password.Any(ch => !char.IsLetterOrDigit(ch)))
+        {
+            if (SpecialCharacterLabel.Text.Contains('•'))
+            {
+                SpecialCharacterLabel.Text = '✓' + SpecialCharacterLabel.Text.Substring(1);
+                SpecialCharacterLabel.ForeColor = Color.Green;
+            }
+        }
+        else if (SpecialCharacterLabel.Text[0] == '✓')
+        {
+            SpecialCharacterLabel.Text = '•' + SpecialCharacterLabel.Text.Substring(1);
+            SpecialCharacterLabel.ForeColor = SystemColors.AppWorkspace;
+        }
+
+        UpdateControls();
         ResetTimer();
     }
 
@@ -343,11 +339,6 @@ public partial class CreateKeyPairForm : Form
     private void SigningAlgorithmComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
         UpdateControls();
-        ResetTimer();
-    }
-
-    private void SigningAlgorithmComboBox_Click(object sender, EventArgs e)
-    {
         ResetTimer();
     }
 

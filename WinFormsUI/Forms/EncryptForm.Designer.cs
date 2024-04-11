@@ -91,7 +91,7 @@
             EncryptionAlgorithmComboBox.Size = new Size(277, 29);
             EncryptionAlgorithmComboBox.TabIndex = 31;
             EncryptionAlgorithmComboBox.SelectedIndexChanged += EncryptionAlgorithmComboBox_SelectedIndexChanged;
-            EncryptionAlgorithmComboBox.Click += EncryptionAlgorithmComboBox_Click;
+            EncryptionAlgorithmComboBox.Click += Control_Click;
             // 
             // AlgorithmLabel
             // 
@@ -141,7 +141,7 @@
             ConfirmPasswordMaskedTextBox.Size = new Size(277, 29);
             ConfirmPasswordMaskedTextBox.TabIndex = 27;
             ConfirmPasswordMaskedTextBox.UseSystemPasswordChar = true;
-            ConfirmPasswordMaskedTextBox.Click += ConfirmPasswordMaskedTextBox_Click;
+            ConfirmPasswordMaskedTextBox.Click += Control_Click;
             ConfirmPasswordMaskedTextBox.TextChanged += ConfirmPasswordMaskedTextBox_TextChanged;
             // 
             // ConfirmLabel
@@ -235,7 +235,7 @@
             PasswordMaskedTextBox.Size = new Size(277, 29);
             PasswordMaskedTextBox.TabIndex = 18;
             PasswordMaskedTextBox.UseSystemPasswordChar = true;
-            PasswordMaskedTextBox.Click += PasswordMaskedTextBox_Click;
+            PasswordMaskedTextBox.Click += Control_Click;
             PasswordMaskedTextBox.TextChanged += PasswordMaskedTextBox_TextChanged;
             // 
             // PasswordLabel

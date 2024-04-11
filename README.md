@@ -1,6 +1,6 @@
 # FileLocker
 
-A Windows desktop app to protect files in rest or in transit using cryptographic techniques and cybersecurity best practices.
+A Windows desktop app for cryptographically protecting files.
 
 ## Table of Contents
 
@@ -30,14 +30,14 @@ A Windows desktop app to protect files in rest or in transit using cryptographic
 The Dashboard Form also displays files within FileLocker's scope and allows addition and navigation of files.
 
 - **Guide 📖**: opens the GitHub repository in the default browser.
-- **Diagnostics 📊**: _Coming Soon_
-- **Settings ⚙**: _Coming Soon_
 - **Add ▼**: shows dropdown options to add files to the scope by manually selecting or importing an archive.
 - **File List**: right click on a file to display options or drag and drop files onto the list to add them.
 - **Search Bar**: filters files based on the search query.
 
 > [!TIP]
 > Filter by file type by searching `.txt` or `.png`, or filter by algorithm by searching `.aes` or `.3des`.
+
+<img src="./images/DashboardForm_NoFilesPanel.png" alt="Dashboard Form with Locked File Selected" width="1000">
 
 </details>
 
@@ -47,7 +47,7 @@ A locked file can be decrypted, shredded, shown in File Explorer, or exported.
 
 - **📋 Path**: copies the path to the clipboard.
 - **📋 SHA**: copies the SHA to the clipboard.
-- **Decrypt 🔑**: opens the [**Decrypt Form**](#decrypt-form).
+- **Decrypt 🔑**: opens the Decrypt Form.
 - **Shred 🗑️**: shreds the file by overwriting its contents with random data and then deleting.
 - **Explorer 📁**: launches File Explorer with the file selected.
 - **Export 📤**: exports the file to a .zip archive.
@@ -62,7 +62,7 @@ An unlocked file can be encrypted, shredded, or shown in File Explorer.
 
 - **📋 Path**: copies the path to the clipboard.
 - **📋 SHA**: copies the SHA to the clipboard.
-- **Encrypt 🔐**: opens the [**Encrypt Form**](#encrypt-form).
+- **Encrypt 🔐**: opens the Encrypt Form.
 - **Shred 🗑️**: shreds the file by overwriting its contents with random data and then deleting.
 - **Explorer 📁**: launches File Explorer with the file selected.
 
@@ -79,6 +79,17 @@ An moved or deleted file can be relocated or removed from scope.
 <img src="./images/DashboardForm_RelocationPanel.png" alt="Dashboard Form with Unlocked File Selected" width="1000">
 </details>
 
+<details>
+<summary><strong>Keys</strong></summary>
+Keys pairs can be created and public keys can be imported.
+
+- **Create**: opens the Create Key Pair Form.
+- **Import**: imports a selected public key archive.
+- **Key Lists**: right click on a key to display options.
+
+<img src="./images/DashboardForm_KeysPanel.png" alt="Dashboard Form with Unlocked File Selected" width="1000">
+</details>
+
 ---
 
 <details>
@@ -93,7 +104,7 @@ The Encrypt Form allows encryption by choosing an industry-standard encryption a
 - **👁**: shows or hides the password fields.
 
 > [!CAUTION]
-> If the password is lost the file cannot be decrypted. FileLocker maintains a zero-knowledge policy.
+> If the password is lost, the file cannot be decrypted. FileLocker maintains a zero-knowledge policy.
 
 </details>
 
@@ -124,6 +135,24 @@ The Import Form allows an import of a .zip archive.
 
 ---
 
+<details>
+<summary><strong>Create Key Pair Form</strong></summary>
+<img src="./images/CreateKeyPairForm.png" alt="Decrypt Form" width="400">
+
+The Create Key Pair Form allows creation of a public/private key pair.
+
+- **Generate Random**: generates a random password that satisfies the strength policy.
+- **Clear**: erases both password fields.
+- **→**: creates the key pair and encrypts the private key with the provided password.
+- **👁**: shows or hides the password fields.
+
+> [!CAUTION]
+> If the password is lost, the key cannot be used to sign. FileLocker maintains a zero-knowledge policy.
+
+</details>
+
+---
+
 ## Technologies
 
 - **OS**: Windows
@@ -132,22 +161,20 @@ The Import Form allows an import of a .zip archive.
 - **Framework**: .NET
 - **UI**: Windows Forms
 - **Version Control**: Git / GitHub
-- **Encryption Algorithm(s)**: AES, 3DES
-- **MAC Algorithm**: HMACSHA256
-- **Key Derivation Algorithm**: PBKDF2
-- **Logging Library**: Serilog
-- **Unit Testing Library**: xUnit
+- **Algorithms**: AES, 3DES, HMACSHA256, PBKDF2, RSA, ECDSA
+- **Logging**: Serilog
+- **Unit Testing**: xUnit
 
 ## Security Features
 
-- **Confidentiality**: Encrypts files with AES or 3DES.
-- **Integrity**: Generates HMACs to ensure the integrity of stored or transmitted data.
-- **Password Strength Policy**: Sets a strong password to mitigate brute-force attacks.
-- **Password Generator**: Generates a password without the need to manually type, mitigating the effect of keystroke logging malware.
-- **Password Management**: Clears password inputs after a set time if the device is left running.
-- **Password-Based Key Derivation**: Derives encryption keys from passwords.
-- **Logging**: Logs important events such as encryption and decryption with Serilog.
-- **Constant-Time Comparison**: Uses libraries with constant-time comparison to mitigate timing attacks.
-- **File Shredder**: Deletes files without leaving traces by overwriting with random data.
-- **Customization**: Allows selection of different encryption algorithms.
-- **SOLID Principles**: Follows SOLID principles to facilitate quick code updates in the case of a new exploit.
+- **Confidentiality**: AES and 3DES encryption.
+- **Integrity**: HMAC integrity checks of stored and transmitted data.
+- **Password Strength Policy**: strong passwords mitigate brute-force attacks.
+- **Password Generator**: passwords generated without the need to manually type, mitigating the effect of keystroke logging malware.
+- **Password Management**: password inputs cleared after a set time if the device is left running.
+- **Password-Based Key Derivation**: encryption keys derived from passwords.
+- **Logging**: important events logged such as encryption and decryption.
+- **Constant-Time Comparison**: libraries use constant-time comparison to mitigate timing attacks.
+- **File Shredder**: files deleted without leaving traces by overwriting with random data.
+- **Customization**: selection of different algorithms.
+- **SOLID Principles**: facilitate quick code updates in the case of a new exploit.

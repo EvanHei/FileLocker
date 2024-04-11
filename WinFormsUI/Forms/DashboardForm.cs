@@ -72,6 +72,17 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         RelocationPanel.Visible = false;
         KeysPanel.Visible = false;
 
+        if (GlobalConfig.DataAccessor.LoadAllPrivateKeyPairModels().Count < 1)
+        {
+            UnlockedPanel_SignButton.Enabled = false;
+            UnlockedPanel_SignButton.BackColor = Color.Silver;
+        }
+        else
+        {
+            UnlockedPanel_SignButton.Enabled = true;
+            UnlockedPanel_SignButton.BackColor = SystemColors.Highlight;
+        }
+
         UnlockedPanel_FileNameLabel.Text = selectedModel.FileName.Length > 50 ? selectedModel.FileName.Substring(0, 47) + "..." : selectedModel.FileName;
         UnlockedPanel_PathValueLabel.Text = selectedModel.Path.Length > 64 ? selectedModel.Path.Substring(0, 61) + "..." : selectedModel.Path;
         UnlockedPanel_SizeValueLabel.Text = FormatBytes(selectedModel.SizeInBytes);
@@ -87,6 +98,17 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         UnlockedPanel.Visible = false;
         RelocationPanel.Visible = false;
         KeysPanel.Visible = false;
+
+        if (GlobalConfig.DataAccessor.LoadAllPrivateKeyPairModels().Count < 1)
+        {
+            LockedPanel_SignButton.Enabled = false;
+            LockedPanel_SignButton.BackColor = Color.Silver;
+        }
+        else
+        {
+            LockedPanel_SignButton.Enabled = true;
+            LockedPanel_SignButton.BackColor = SystemColors.Highlight;
+        }
 
         LockedPanel_FileNameLabel.Text = selectedModel.FileName.Length > 50 ? selectedModel.FileName.Substring(0, 47) + "..." : selectedModel.FileName;
         LockedPanel_PathValueLabel.Text = selectedModel.Path.Length > 64 ? selectedModel.Path.Substring(0, 61) + "..." : selectedModel.Path;
@@ -422,12 +444,12 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
     public void EncryptionComplete()
     {
-        PopulateForm();
+        UpdateControls();
     }
 
     public void DecryptionComplete()
     {
-        PopulateForm();
+        UpdateControls();
     }
 
     private void ShredButton_Click(object sender, EventArgs e)
@@ -510,7 +532,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
     public void SigningComplete()
     {
-        PopulateForm();
+        UpdateControls();
     }
 
     private void CreateKeyPairToolStripMenuItem_Click(object sender, EventArgs e)
@@ -610,5 +632,11 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         {
             MessageBox.Show("Could not export, the file may be missing.", "Error", MessageBoxButtons.OK);
         }
+    }
+
+    private void TrashCanLabel_Click(object sender, EventArgs e)
+    {
+        selectedModel.RemoveDigSig();
+        UpdateControls();
     }
 }

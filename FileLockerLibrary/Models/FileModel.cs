@@ -101,7 +101,7 @@ public class FileModel
         get
         {
             if (DigSig == null)
-                return "No signature";
+                return "None";
 
             byte[] content = File.ReadAllBytes(Path);
             List<KeyPairModel> allKeyPairs = GlobalConfig.DataAccessor.LoadAllPublicKeyPairModels();
@@ -292,6 +292,7 @@ public class FileModel
     {
         Mac = new byte[0];
         MacKeySalt = new byte[0];
+        GlobalConfig.DataAccessor.SaveFileModel(this);
     }
 
     public void Sign(KeyPairModel keyPairModel, string password)
@@ -317,9 +318,10 @@ public class FileModel
         keyPairModel.PrivateKey = encryptedPrivateKey;
     }
 
-    private void RemoveDigSig()
+    public void RemoveDigSig()
     {
         DigSig = null;
+        GlobalConfig.DataAccessor.SaveFileModel(this);
     }
 
     public void ShredFile()

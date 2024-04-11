@@ -32,10 +32,7 @@ The Dashboard Form also displays files within FileLocker's scope and allows addi
 - **Guide 📖**: opens the GitHub repository in the default browser.
 - **Add ▼**: shows dropdown options to add files to the scope by manually selecting or importing an archive.
 - **File List**: right click on a file to display options or drag and drop files onto the list to add them.
-- **Search Bar**: filters files based on the search query.
-
-> [!TIP]
-> Filter by file type by searching `.txt` or `.png`, or filter by algorithm by searching `.aes` or `.3des`.
+- **Search Bar**: filters files based on the search query. Filter by file type by searching `.txt` or `.png`, or filter by algorithm by searching `.aes` or `.3des`.
 
 <img src="./images/DashboardForm_NoFilesPanel.png" alt="Dashboard Form with Locked File Selected" width="1000">
 
@@ -100,11 +97,8 @@ The Encrypt Form allows encryption by choosing an industry-standard encryption a
 
 - **Generate Random**: generates a random password that satisfies the strength policy.
 - **Clear**: erases both password fields.
-- **→**: encrypts the file with the provided password.
+- **→**: encrypts the file with the provided password. If lost, the file cannot be decrypted. FileLocker maintains a zero-knowledge policy.
 - **👁**: shows or hides the password fields.
-
-> [!CAUTION]
-> If the password is lost, the file cannot be decrypted. FileLocker maintains a zero-knowledge policy.
 
 </details>
 
@@ -143,11 +137,8 @@ The Create Key Pair Form allows creation of a public/private key pair.
 
 - **Generate Random**: generates a random password that satisfies the strength policy.
 - **Clear**: erases both password fields.
-- **→**: creates the key pair and encrypts the private key with the provided password.
+- **→**: creates the key pair and encrypts the private key with the provided password. If lost, the key cannot be used to sign. FileLocker maintains a zero-knowledge policy.
 - **👁**: shows or hides the password fields.
-
-> [!CAUTION]
-> If the password is lost, the key cannot be used to sign. FileLocker maintains a zero-knowledge policy.
 
 </details>
 

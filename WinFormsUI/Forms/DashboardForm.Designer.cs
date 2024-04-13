@@ -85,6 +85,7 @@
             RelocationPanel_LastSeenLabel = new Label();
             RelocationPanel_CantLocateFileLabel = new Label();
             UnlockedPanel = new Panel();
+            UnlockedPanel_TrashCanLabel = new Label();
             UnlockedPanel_SignatureValueLabel = new Label();
             UnlockedPanel_SignatureLabel = new Label();
             UnlockedPanel_SignGroupBox = new GroupBox();
@@ -129,7 +130,6 @@
             KeysPanel_CreateDescriptionLabel = new Label();
             KeysPanel_CreateButton = new Button();
             KeysPanel_KeysLabel = new Label();
-            UnlockedPanel_TrashCanLabel = new Label();
             FileListBoxContextMenuStrip.SuspendLayout();
             MenuStrip.SuspendLayout();
             AddButtonContextMenuStrip.SuspendLayout();
@@ -856,6 +856,21 @@
             UnlockedPanel.Size = new Size(864, 944);
             UnlockedPanel.TabIndex = 35;
             // 
+            // UnlockedPanel_TrashCanLabel
+            // 
+            UnlockedPanel_TrashCanLabel.AutoSize = true;
+            UnlockedPanel_TrashCanLabel.BackColor = Color.FromArgb(32, 32, 32);
+            UnlockedPanel_TrashCanLabel.Font = new Font("Segoe UI Emoji", 10F);
+            UnlockedPanel_TrashCanLabel.ForeColor = SystemColors.ButtonFace;
+            UnlockedPanel_TrashCanLabel.Location = new Point(19, 166);
+            UnlockedPanel_TrashCanLabel.Name = "UnlockedPanel_TrashCanLabel";
+            UnlockedPanel_TrashCanLabel.Size = new Size(32, 19);
+            UnlockedPanel_TrashCanLabel.TabIndex = 52;
+            UnlockedPanel_TrashCanLabel.Text = "🗑️ ";
+            UnlockedPanel_TrashCanLabel.Click += TrashCanLabel_Click;
+            UnlockedPanel_TrashCanLabel.MouseEnter += Label_MouseEnter;
+            UnlockedPanel_TrashCanLabel.MouseLeave += Label_MouseLeave;
+            // 
             // UnlockedPanel_SignatureValueLabel
             // 
             UnlockedPanel_SignatureValueLabel.AutoSize = true;
@@ -1389,21 +1404,6 @@
             KeysPanel_KeysLabel.TabIndex = 8;
             KeysPanel_KeysLabel.Text = "Keys";
             // 
-            // UnlockedPanel_TrashCanLabel
-            // 
-            UnlockedPanel_TrashCanLabel.AutoSize = true;
-            UnlockedPanel_TrashCanLabel.BackColor = Color.FromArgb(32, 32, 32);
-            UnlockedPanel_TrashCanLabel.Font = new Font("Segoe UI Emoji", 10F);
-            UnlockedPanel_TrashCanLabel.ForeColor = SystemColors.ButtonFace;
-            UnlockedPanel_TrashCanLabel.Location = new Point(19, 166);
-            UnlockedPanel_TrashCanLabel.Name = "UnlockedPanel_TrashCanLabel";
-            UnlockedPanel_TrashCanLabel.Size = new Size(32, 19);
-            UnlockedPanel_TrashCanLabel.TabIndex = 52;
-            UnlockedPanel_TrashCanLabel.Text = "🗑️ ";
-            UnlockedPanel_TrashCanLabel.Click += TrashCanLabel_Click;
-            UnlockedPanel_TrashCanLabel.MouseEnter += Label_MouseEnter;
-            UnlockedPanel_TrashCanLabel.MouseLeave += Label_MouseLeave;
-            // 
             // DashboardForm
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
@@ -1415,11 +1415,11 @@
             Controls.Add(SearchTextBox);
             Controls.Add(FileListBox);
             Controls.Add(MenuStrip);
+            Controls.Add(KeysPanel);
             Controls.Add(UnlockedPanel);
             Controls.Add(NoFilesPanel);
             Controls.Add(RelocationPanel);
             Controls.Add(LockedPanel);
-            Controls.Add(KeysPanel);
             Font = new Font("Segoe UI Emoji", 12F);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");

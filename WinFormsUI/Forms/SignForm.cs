@@ -36,7 +36,7 @@ public partial class SignForm : Form
             KeyPairModel keyPair = (KeyPairModel)KeyPairComboBox.SelectedItem;
             string password = PasswordMaskedTextBox.Text;
 
-            model.Sign(keyPair, password);
+            model.GenerateDigSig(keyPair, password);
             GlobalConfig.DataAccessor.SaveFileModel(model);
 
             this.Close();

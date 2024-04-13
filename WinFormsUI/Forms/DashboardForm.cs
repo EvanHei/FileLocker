@@ -35,6 +35,8 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
     private void UpdateControls()
     {
+        FileListBox.Refresh();
+
         if (FileListBox.SelectedItem == null)
         {
             ShowNoFilesPanel();
@@ -595,6 +597,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
     {
         using OpenFileDialog openFileDialog = new();
         openFileDialog.Title = "Select Archive";
+        openFileDialog.Filter = ".zip files (*.zip)|*.zip";
         openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         if (openFileDialog.ShowDialog() != DialogResult.OK)
             return;

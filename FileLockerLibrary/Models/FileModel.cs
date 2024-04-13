@@ -35,7 +35,6 @@ public class FileModel
         }
     }
 
-    [JsonIgnore]
     public EncryptionAlgorithm EncryptionAlgorithm { get; set; }
 
     [JsonIgnore]
@@ -295,7 +294,7 @@ public class FileModel
         GlobalConfig.DataAccessor.SaveFileModel(this);
     }
 
-    public void Sign(KeyPairModel keyPairModel, string password)
+    public void GenerateDigSig(KeyPairModel keyPairModel, string password)
     {
         if (!File.Exists(Path))
             throw new FileNotFoundException("The file was either moved or deleted.", Path);
@@ -355,16 +354,5 @@ public class FileModel
         encryptionKeySalt = new byte[0];
         macKeySalt = new byte[0];
         Mac = new byte[0];
-
-        string extension = System.IO.Path.GetExtension(path).ToLower();
-        switch (extension)
-        {
-            case Constants.AesExtension:
-                EncryptionAlgorithm = EncryptionAlgorithm.AES;
-                break;
-            case Constants.TripleDesExtension:
-                EncryptionAlgorithm = EncryptionAlgorithm.TripleDES;
-                break;
-        }
     }
 }

@@ -257,7 +257,7 @@
             SearchTextBox.Location = new Point(9, 31);
             SearchTextBox.Name = "SearchTextBox";
             SearchTextBox.Size = new Size(261, 29);
-            SearchTextBox.TabIndex = 18;
+            SearchTextBox.TabIndex = 81;
             SearchTextBox.TextChanged += SearchTextBox_TextChanged;
             // 
             // MagnifyingGlassLabel
@@ -284,7 +284,7 @@
             AddButton.Name = "AddButton";
             AddButton.Padding = new Padding(7, 0, 0, 0);
             AddButton.Size = new Size(77, 29);
-            AddButton.TabIndex = 21;
+            AddButton.TabIndex = 80;
             AddButton.Text = "&Add ▼";
             AddButton.UseVisualStyleBackColor = false;
             AddButton.MouseDown += AddButton_MouseDown;
@@ -294,6 +294,7 @@
             AddButtonContextMenuStrip.Items.AddRange(new ToolStripItem[] { AddExistingFilesToolStripMenuItem, ImportArchiveToolStripMenuItem });
             AddButtonContextMenuStrip.Name = "AddButtonContextMenuStrip";
             AddButtonContextMenuStrip.Size = new Size(173, 48);
+            AddButtonContextMenuStrip.TabStop = true;
             AddButtonContextMenuStrip.Tag = "";
             // 
             // AddExistingFilesToolStripMenuItem
@@ -580,7 +581,7 @@
             LockedPanel_ShredButton.Location = new Point(669, 45);
             LockedPanel_ShredButton.Name = "LockedPanel_ShredButton";
             LockedPanel_ShredButton.Size = new Size(105, 37);
-            LockedPanel_ShredButton.TabIndex = 6;
+            LockedPanel_ShredButton.TabIndex = 9;
             LockedPanel_ShredButton.Text = "Shred 🗑️";
             LockedPanel_ShredButton.UseVisualStyleBackColor = false;
             LockedPanel_ShredButton.Click += ShredButton_Click;
@@ -619,7 +620,7 @@
             LockedPanel_DecryptButton.Location = new Point(669, 42);
             LockedPanel_DecryptButton.Name = "LockedPanel_DecryptButton";
             LockedPanel_DecryptButton.Size = new Size(105, 37);
-            LockedPanel_DecryptButton.TabIndex = 29;
+            LockedPanel_DecryptButton.TabIndex = 8;
             LockedPanel_DecryptButton.Text = "Decrypt 🔑";
             LockedPanel_DecryptButton.UseVisualStyleBackColor = false;
             LockedPanel_DecryptButton.Click += DecryptButton_Click;
@@ -888,7 +889,7 @@
             UnlockedPanel_TrashCanLabel.Location = new Point(19, 166);
             UnlockedPanel_TrashCanLabel.Name = "UnlockedPanel_TrashCanLabel";
             UnlockedPanel_TrashCanLabel.Size = new Size(32, 19);
-            UnlockedPanel_TrashCanLabel.TabIndex = 52;
+            UnlockedPanel_TrashCanLabel.TabIndex = 7;
             UnlockedPanel_TrashCanLabel.Text = "🗑️ ";
             UnlockedPanel_TrashCanLabel.Click += TrashCanLabel_Click;
             UnlockedPanel_TrashCanLabel.MouseEnter += Label_MouseEnter;
@@ -950,7 +951,7 @@
             UnlockedPanel_SignButton.Location = new Point(669, 45);
             UnlockedPanel_SignButton.Name = "UnlockedPanel_SignButton";
             UnlockedPanel_SignButton.Size = new Size(105, 37);
-            UnlockedPanel_SignButton.TabIndex = 6;
+            UnlockedPanel_SignButton.TabIndex = 3;
             UnlockedPanel_SignButton.Text = "    Sign 🖋️ ";
             UnlockedPanel_SignButton.UseVisualStyleBackColor = false;
             UnlockedPanel_SignButton.Click += SignButton_Click;
@@ -1011,7 +1012,7 @@
             UnlockedPanel_ExplorerButton.Location = new Point(669, 45);
             UnlockedPanel_ExplorerButton.Name = "UnlockedPanel_ExplorerButton";
             UnlockedPanel_ExplorerButton.Size = new Size(105, 37);
-            UnlockedPanel_ExplorerButton.TabIndex = 6;
+            UnlockedPanel_ExplorerButton.TabIndex = 4;
             UnlockedPanel_ExplorerButton.Text = "Explorer 📁";
             UnlockedPanel_ExplorerButton.UseVisualStyleBackColor = false;
             UnlockedPanel_ExplorerButton.Click += ShowInExplorerButton_Click;
@@ -1025,7 +1026,7 @@
             UnlockedPanel_ShaClipboardLabel.Location = new Point(19, 123);
             UnlockedPanel_ShaClipboardLabel.Name = "UnlockedPanel_ShaClipboardLabel";
             UnlockedPanel_ShaClipboardLabel.Size = new Size(25, 19);
-            UnlockedPanel_ShaClipboardLabel.TabIndex = 42;
+            UnlockedPanel_ShaClipboardLabel.TabIndex = 6;
             UnlockedPanel_ShaClipboardLabel.Text = "📋";
             UnlockedPanel_ShaClipboardLabel.Click += ShaClipboardLabel_Click;
             UnlockedPanel_ShaClipboardLabel.MouseEnter += Label_MouseEnter;
@@ -1040,7 +1041,7 @@
             UnlockedPanel_PathClipboardLabel.Location = new Point(19, 102);
             UnlockedPanel_PathClipboardLabel.Name = "UnlockedPanel_PathClipboardLabel";
             UnlockedPanel_PathClipboardLabel.Size = new Size(25, 19);
-            UnlockedPanel_PathClipboardLabel.TabIndex = 41;
+            UnlockedPanel_PathClipboardLabel.TabIndex = 5;
             UnlockedPanel_PathClipboardLabel.Text = "📋";
             UnlockedPanel_PathClipboardLabel.Click += PathClipboardLabel_Click;
             UnlockedPanel_PathClipboardLabel.MouseEnter += Label_MouseEnter;
@@ -1080,7 +1081,7 @@
             UnlockedPanel_ShredButton.Location = new Point(669, 45);
             UnlockedPanel_ShredButton.Name = "UnlockedPanel_ShredButton";
             UnlockedPanel_ShredButton.Size = new Size(105, 37);
-            UnlockedPanel_ShredButton.TabIndex = 6;
+            UnlockedPanel_ShredButton.TabIndex = 2;
             UnlockedPanel_ShredButton.Text = "Shred 🗑️";
             UnlockedPanel_ShredButton.UseVisualStyleBackColor = false;
             UnlockedPanel_ShredButton.Click += ShredButton_Click;
@@ -1119,7 +1120,7 @@
             UnlockedPanel_EncryptButton.Location = new Point(669, 42);
             UnlockedPanel_EncryptButton.Name = "UnlockedPanel_EncryptButton";
             UnlockedPanel_EncryptButton.Size = new Size(105, 37);
-            UnlockedPanel_EncryptButton.TabIndex = 29;
+            UnlockedPanel_EncryptButton.TabIndex = 1;
             UnlockedPanel_EncryptButton.Text = "Encrypt 🔐";
             UnlockedPanel_EncryptButton.UseVisualStyleBackColor = false;
             UnlockedPanel_EncryptButton.Click += EncryptButton_Click;
@@ -1601,12 +1602,12 @@
             Controls.Add(SearchTextBox);
             Controls.Add(FileListBox);
             Controls.Add(MenuStrip);
-            Controls.Add(LogsPanel);
-            Controls.Add(KeysPanel);
             Controls.Add(UnlockedPanel);
             Controls.Add(NoFilesPanel);
             Controls.Add(RelocationPanel);
             Controls.Add(LockedPanel);
+            Controls.Add(LogsPanel);
+            Controls.Add(KeysPanel);
             Font = new Font("Segoe UI Emoji", 12F);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");

@@ -41,7 +41,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
     {
         FileListBox.Refresh();
 
-        // ShowKeysPanel()
+        // a non-file panel is shown
         if (FileListBox.SelectedIndex == -1)
             return;
 

@@ -249,6 +249,8 @@ public class JsonAccessor : IDataAccessor
         CreateArchiveFromExportDirectory(zipPath);
 
         Directory.Delete(TempExportDirectoryPath, recursive: true);
+
+        GlobalConfig.Logger.Log($"Public key exported - {model.Name}", LogLevel.Information);
     }
 
     private void GenerateKeyPairModelExportDirectory(KeyPairModel model)

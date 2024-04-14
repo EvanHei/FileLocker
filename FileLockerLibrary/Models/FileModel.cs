@@ -245,6 +245,8 @@ public class FileModel
         }
         catch (Exception ex)
         {
+            GlobalConfig.Logger.Log($"Failed decryption with {EncryptionAlgorithm} - {FileName}", LogLevel.Warning);
+
             throw new CryptographicException("Decryption Failed.", ex);
         }
 
@@ -315,6 +317,8 @@ public class FileModel
         DigSig = GlobalConfig.Signer(DigSigAlgorithm).Sign(keyPairModel.PrivateKey, content);
 
         keyPairModel.PrivateKey = encryptedPrivateKey;
+
+        GlobalConfig.Logger.Log($"File signed with {DigSigAlgorithm} - {FileName}", LogLevel.Information);
     }
 
     public void RemoveDigSig()

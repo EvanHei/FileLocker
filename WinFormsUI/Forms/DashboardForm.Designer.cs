@@ -114,16 +114,15 @@
             UnlockedPanel_StatusLabel = new Label();
             UnlockedPanel_FileNameLabel = new Label();
             KeysPanel = new Panel();
-            KeysPanel_PublicKeysLabel = new Label();
-            KeysPanel_MyKeysLabel = new Label();
-            PublicKeysListBox = new ListBox();
-            PublicKeysListBoxContextMenuStrip = new ContextMenuStrip(components);
-            PublicKeysListBox_DeleteItem = new ToolStripMenuItem();
+            KeysPanel_MagnifyingGlassLabel = new Label();
+            KeysPanel_SearchTextBox = new TextBox();
+            KeysPanel_OtherKeysRadioButton = new RadioButton();
+            KeysPanel_MyKeysRadioButton = new RadioButton();
             KeysPanel_ImportGroupBox = new GroupBox();
             KeysPanel_ImportDescriptionLabel = new Label();
             KeysPanel_ImportButton = new Button();
-            MyKeysListBox = new ListBox();
-            MyKeysListBoxContextMenuStrip = new ContextMenuStrip(components);
+            KeysListBox = new ListBox();
+            KeysListBoxContextMenuStrip = new ContextMenuStrip(components);
             MyKeysListBox_DeleteItem = new ToolStripMenuItem();
             MyKeysListBox_ExportItem = new ToolStripMenuItem();
             KeysPanel_CreateGroupBox = new GroupBox();
@@ -147,9 +146,8 @@
             UnlockedPanel_ShredGroupBox.SuspendLayout();
             UnlockedPanel_EncryptGroupBox.SuspendLayout();
             KeysPanel.SuspendLayout();
-            PublicKeysListBoxContextMenuStrip.SuspendLayout();
             KeysPanel_ImportGroupBox.SuspendLayout();
-            MyKeysListBoxContextMenuStrip.SuspendLayout();
+            KeysListBoxContextMenuStrip.SuspendLayout();
             KeysPanel_CreateGroupBox.SuspendLayout();
             SuspendLayout();
             // 
@@ -1204,11 +1202,12 @@
             // 
             KeysPanel.BackColor = Color.FromArgb(32, 32, 32);
             KeysPanel.BorderStyle = BorderStyle.FixedSingle;
-            KeysPanel.Controls.Add(KeysPanel_PublicKeysLabel);
-            KeysPanel.Controls.Add(KeysPanel_MyKeysLabel);
-            KeysPanel.Controls.Add(PublicKeysListBox);
+            KeysPanel.Controls.Add(KeysPanel_MagnifyingGlassLabel);
+            KeysPanel.Controls.Add(KeysPanel_SearchTextBox);
+            KeysPanel.Controls.Add(KeysPanel_OtherKeysRadioButton);
+            KeysPanel.Controls.Add(KeysPanel_MyKeysRadioButton);
             KeysPanel.Controls.Add(KeysPanel_ImportGroupBox);
-            KeysPanel.Controls.Add(MyKeysListBox);
+            KeysPanel.Controls.Add(KeysListBox);
             KeysPanel.Controls.Add(KeysPanel_CreateGroupBox);
             KeysPanel.Controls.Add(KeysPanel_KeysLabel);
             KeysPanel.Location = new Point(361, 31);
@@ -1216,61 +1215,55 @@
             KeysPanel.Size = new Size(864, 944);
             KeysPanel.TabIndex = 67;
             // 
-            // KeysPanel_PublicKeysLabel
+            // KeysPanel_MagnifyingGlassLabel
             // 
-            KeysPanel_PublicKeysLabel.AutoSize = true;
-            KeysPanel_PublicKeysLabel.BackColor = Color.FromArgb(32, 32, 32);
-            KeysPanel_PublicKeysLabel.ForeColor = SystemColors.ButtonFace;
-            KeysPanel_PublicKeysLabel.Location = new Point(423, 505);
-            KeysPanel_PublicKeysLabel.Name = "KeysPanel_PublicKeysLabel";
-            KeysPanel_PublicKeysLabel.Size = new Size(87, 21);
-            KeysPanel_PublicKeysLabel.TabIndex = 70;
-            KeysPanel_PublicKeysLabel.Text = "Public keys";
+            KeysPanel_MagnifyingGlassLabel.AutoSize = true;
+            KeysPanel_MagnifyingGlassLabel.BackColor = Color.FromArgb(32, 32, 32);
+            KeysPanel_MagnifyingGlassLabel.Font = new Font("Segoe UI Emoji", 12F);
+            KeysPanel_MagnifyingGlassLabel.ForeColor = SystemColors.ButtonFace;
+            KeysPanel_MagnifyingGlassLabel.Location = new Point(246, 500);
+            KeysPanel_MagnifyingGlassLabel.Name = "KeysPanel_MagnifyingGlassLabel";
+            KeysPanel_MagnifyingGlassLabel.Size = new Size(32, 21);
+            KeysPanel_MagnifyingGlassLabel.TabIndex = 68;
+            KeysPanel_MagnifyingGlassLabel.Text = "🔍";
             // 
-            // KeysPanel_MyKeysLabel
+            // KeysPanel_SearchTextBox
             // 
-            KeysPanel_MyKeysLabel.AutoSize = true;
-            KeysPanel_MyKeysLabel.BackColor = Color.FromArgb(32, 32, 32);
-            KeysPanel_MyKeysLabel.ForeColor = SystemColors.ButtonFace;
-            KeysPanel_MyKeysLabel.Location = new Point(22, 505);
-            KeysPanel_MyKeysLabel.Name = "KeysPanel_MyKeysLabel";
-            KeysPanel_MyKeysLabel.Size = new Size(67, 21);
-            KeysPanel_MyKeysLabel.TabIndex = 34;
-            KeysPanel_MyKeysLabel.Text = "My keys";
+            KeysPanel_SearchTextBox.BackColor = Color.FromArgb(32, 32, 32);
+            KeysPanel_SearchTextBox.BorderStyle = BorderStyle.FixedSingle;
+            KeysPanel_SearchTextBox.Font = new Font("Segoe UI Emoji", 12F);
+            KeysPanel_SearchTextBox.ForeColor = SystemColors.ButtonFace;
+            KeysPanel_SearchTextBox.Location = new Point(22, 498);
+            KeysPanel_SearchTextBox.Name = "KeysPanel_SearchTextBox";
+            KeysPanel_SearchTextBox.Size = new Size(261, 29);
+            KeysPanel_SearchTextBox.TabIndex = 68;
+            KeysPanel_SearchTextBox.TextChanged += KeysPanel_SearchTextBox_TextChanged;
             // 
-            // PublicKeysListBox
+            // KeysPanel_OtherKeysRadioButton
             // 
-            PublicKeysListBox.AllowDrop = true;
-            PublicKeysListBox.BackColor = Color.FromArgb(40, 40, 40);
-            PublicKeysListBox.BorderStyle = BorderStyle.FixedSingle;
-            PublicKeysListBox.ContextMenuStrip = PublicKeysListBoxContextMenuStrip;
-            PublicKeysListBox.DrawMode = DrawMode.OwnerDrawFixed;
-            PublicKeysListBox.Font = new Font("Segoe UI Emoji", 12F);
-            PublicKeysListBox.ForeColor = SystemColors.ButtonFace;
-            PublicKeysListBox.FormattingEnabled = true;
-            PublicKeysListBox.ItemHeight = 25;
-            PublicKeysListBox.Location = new Point(423, 533);
-            PublicKeysListBox.Name = "PublicKeysListBox";
-            PublicKeysListBox.Size = new Size(406, 352);
-            PublicKeysListBox.TabIndex = 69;
-            PublicKeysListBox.DrawItem += PublicKeysListBox_DrawItem;
+            KeysPanel_OtherKeysRadioButton.AutoSize = true;
+            KeysPanel_OtherKeysRadioButton.ForeColor = SystemColors.ButtonFace;
+            KeysPanel_OtherKeysRadioButton.Location = new Point(726, 498);
+            KeysPanel_OtherKeysRadioButton.Name = "KeysPanel_OtherKeysRadioButton";
+            KeysPanel_OtherKeysRadioButton.Size = new Size(103, 25);
+            KeysPanel_OtherKeysRadioButton.TabIndex = 70;
+            KeysPanel_OtherKeysRadioButton.Text = "Other keys";
+            KeysPanel_OtherKeysRadioButton.UseVisualStyleBackColor = true;
+            KeysPanel_OtherKeysRadioButton.CheckedChanged += KeysRadioButton_CheckedChanged;
             // 
-            // PublicKeysListBoxContextMenuStrip
+            // KeysPanel_MyKeysRadioButton
             // 
-            PublicKeysListBoxContextMenuStrip.Items.AddRange(new ToolStripItem[] { PublicKeysListBox_DeleteItem });
-            PublicKeysListBoxContextMenuStrip.Name = "FileListBoxItemContextMenuStrip";
-            PublicKeysListBoxContextMenuStrip.Size = new Size(108, 26);
-            PublicKeysListBoxContextMenuStrip.Tag = "FileListBox";
-            PublicKeysListBoxContextMenuStrip.Text = "Remove File";
-            // 
-            // PublicKeysListBox_DeleteItem
-            // 
-            PublicKeysListBox_DeleteItem.BackColor = Color.FromArgb(40, 40, 40);
-            PublicKeysListBox_DeleteItem.ForeColor = SystemColors.ButtonFace;
-            PublicKeysListBox_DeleteItem.Name = "PublicKeysListBox_DeleteItem";
-            PublicKeysListBox_DeleteItem.Size = new Size(107, 22);
-            PublicKeysListBox_DeleteItem.Text = "Delete";
-            PublicKeysListBox_DeleteItem.Click += PublicKeysListBox_DeleteItem_Click;
+            KeysPanel_MyKeysRadioButton.AutoSize = true;
+            KeysPanel_MyKeysRadioButton.Checked = true;
+            KeysPanel_MyKeysRadioButton.ForeColor = SystemColors.ButtonFace;
+            KeysPanel_MyKeysRadioButton.Location = new Point(635, 498);
+            KeysPanel_MyKeysRadioButton.Name = "KeysPanel_MyKeysRadioButton";
+            KeysPanel_MyKeysRadioButton.Size = new Size(85, 25);
+            KeysPanel_MyKeysRadioButton.TabIndex = 69;
+            KeysPanel_MyKeysRadioButton.TabStop = true;
+            KeysPanel_MyKeysRadioButton.Text = "My keys";
+            KeysPanel_MyKeysRadioButton.UseVisualStyleBackColor = true;
+            KeysPanel_MyKeysRadioButton.CheckedChanged += KeysRadioButton_CheckedChanged;
             // 
             // KeysPanel_ImportGroupBox
             // 
@@ -1311,30 +1304,30 @@
             KeysPanel_ImportButton.UseVisualStyleBackColor = false;
             KeysPanel_ImportButton.Click += KeysPanel_ImportButton_Click;
             // 
-            // MyKeysListBox
+            // KeysListBox
             // 
-            MyKeysListBox.AllowDrop = true;
-            MyKeysListBox.BackColor = Color.FromArgb(40, 40, 40);
-            MyKeysListBox.BorderStyle = BorderStyle.FixedSingle;
-            MyKeysListBox.ContextMenuStrip = MyKeysListBoxContextMenuStrip;
-            MyKeysListBox.DrawMode = DrawMode.OwnerDrawFixed;
-            MyKeysListBox.Font = new Font("Segoe UI Emoji", 12F);
-            MyKeysListBox.ForeColor = SystemColors.ButtonFace;
-            MyKeysListBox.FormattingEnabled = true;
-            MyKeysListBox.ItemHeight = 25;
-            MyKeysListBox.Location = new Point(22, 533);
-            MyKeysListBox.Name = "MyKeysListBox";
-            MyKeysListBox.Size = new Size(384, 352);
-            MyKeysListBox.TabIndex = 68;
-            MyKeysListBox.DrawItem += MyKeysListBox_DrawItem;
+            KeysListBox.AllowDrop = true;
+            KeysListBox.BackColor = Color.FromArgb(40, 40, 40);
+            KeysListBox.BorderStyle = BorderStyle.FixedSingle;
+            KeysListBox.ContextMenuStrip = KeysListBoxContextMenuStrip;
+            KeysListBox.DrawMode = DrawMode.OwnerDrawFixed;
+            KeysListBox.Font = new Font("Segoe UI Emoji", 12F);
+            KeysListBox.ForeColor = SystemColors.ButtonFace;
+            KeysListBox.FormattingEnabled = true;
+            KeysListBox.ItemHeight = 25;
+            KeysListBox.Location = new Point(22, 533);
+            KeysListBox.Name = "KeysListBox";
+            KeysListBox.Size = new Size(807, 377);
+            KeysListBox.TabIndex = 68;
+            KeysListBox.DrawItem += KeysListBox_DrawItem;
             // 
-            // MyKeysListBoxContextMenuStrip
+            // KeysListBoxContextMenuStrip
             // 
-            MyKeysListBoxContextMenuStrip.Items.AddRange(new ToolStripItem[] { MyKeysListBox_DeleteItem, MyKeysListBox_ExportItem });
-            MyKeysListBoxContextMenuStrip.Name = "FileListBoxItemContextMenuStrip";
-            MyKeysListBoxContextMenuStrip.Size = new Size(109, 48);
-            MyKeysListBoxContextMenuStrip.Tag = "FileListBox";
-            MyKeysListBoxContextMenuStrip.Text = "Remove File";
+            KeysListBoxContextMenuStrip.Items.AddRange(new ToolStripItem[] { MyKeysListBox_DeleteItem, MyKeysListBox_ExportItem });
+            KeysListBoxContextMenuStrip.Name = "FileListBoxItemContextMenuStrip";
+            KeysListBoxContextMenuStrip.Size = new Size(109, 48);
+            KeysListBoxContextMenuStrip.Tag = "FileListBox";
+            KeysListBoxContextMenuStrip.Text = "Remove File";
             // 
             // MyKeysListBox_DeleteItem
             // 
@@ -1343,7 +1336,7 @@
             MyKeysListBox_DeleteItem.Name = "MyKeysListBox_DeleteItem";
             MyKeysListBox_DeleteItem.Size = new Size(108, 22);
             MyKeysListBox_DeleteItem.Text = "Delete";
-            MyKeysListBox_DeleteItem.Click += MyKeysListBox_DeleteItem_Click;
+            MyKeysListBox_DeleteItem.Click += KeysListBox_DeleteItem_Click;
             // 
             // MyKeysListBox_ExportItem
             // 
@@ -1459,10 +1452,9 @@
             UnlockedPanel_EncryptGroupBox.PerformLayout();
             KeysPanel.ResumeLayout(false);
             KeysPanel.PerformLayout();
-            PublicKeysListBoxContextMenuStrip.ResumeLayout(false);
             KeysPanel_ImportGroupBox.ResumeLayout(false);
             KeysPanel_ImportGroupBox.PerformLayout();
-            MyKeysListBoxContextMenuStrip.ResumeLayout(false);
+            KeysListBoxContextMenuStrip.ResumeLayout(false);
             KeysPanel_CreateGroupBox.ResumeLayout(false);
             KeysPanel_CreateGroupBox.PerformLayout();
             ResumeLayout(false);
@@ -1564,18 +1556,14 @@
         private Label KeysPanel_CreateDescriptionLabel;
         private Button KeysPanel_CreateButton;
         private Label KeysPanel_KeysLabel;
-        private ListBox MyKeysListBox;
-        private ContextMenuStrip MyKeysListBoxContextMenuStrip;
+        private ListBox KeysListBox;
+        private ContextMenuStrip KeysListBoxContextMenuStrip;
         private ToolStripMenuItem MyKeysListBox_DeleteItem;
         private GroupBox KeysPanel_ImportGroupBox;
         private Label KeysPanel_ImportDescriptionLabel;
         private Button KeysPanel_ImportButton;
         private ToolStripMenuItem MyKeysListBox_ExportItem;
         private Label KeysPanel_MyKeysLabel;
-        private ListBox PublicKeysListBox;
-        private Label KeysPanel_PublicKeysLabel;
-        private ContextMenuStrip PublicKeysListBoxContextMenuStrip;
-        private ToolStripMenuItem PublicKeysListBox_DeleteItem;
         private GroupBox LockedPanel_SignGroupBox;
         private Label LockedPanel_SignDescriptionLabel;
         private Button LockedPanel_SignButton;
@@ -1585,5 +1573,9 @@
         private Label UnlockedPanel_SignatureLabel;
         private Label LockedPanel_TrashCanLabel;
         private Label UnlockedPanel_TrashCanLabel;
+        private RadioButton KeysPanel_MyKeysRadioButton;
+        private TextBox KeysPanel_SearchTextBox;
+        private RadioButton KeysPanel_OtherKeysRadioButton;
+        private Label KeysPanel_MagnifyingGlassLabel;
     }
 }

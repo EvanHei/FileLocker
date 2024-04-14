@@ -37,7 +37,11 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
     {
         FileListBox.Refresh();
 
-        if (FileListBox.SelectedItem == null)
+        // ShowKeysPanel()
+        if (FileListBox.SelectedIndex == -1)
+            return;
+
+        if (FileListBox.Items.Count < 1)
         {
             ShowNoFilesPanel();
             return;
@@ -142,12 +146,10 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         UnlockedPanel.Visible = false;
         RelocationPanel.Visible = false;
         KeysPanel.Visible = true;
+        KeysPanel_SearchTextBox.Text = "";
+        FileListBox.SelectedIndex = -1;
 
-        MyKeysListBox.DataSource = GlobalConfig.DataAccessor.LoadAllPrivateKeyPairModels();
-        MyKeysListBox.DisplayMember = "DisplayName";
-
-        PublicKeysListBox.DataSource = GlobalConfig.DataAccessor.LoadAllPublicKeyPairModels();
-        PublicKeysListBox.DisplayMember = "DisplayName";
+        KeysRadioButton_CheckedChanged(null, null);
     }
 
     private void FileListBox_DrawItem(object sender, DrawItemEventArgs row)
@@ -175,37 +177,12 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         row.Graphics.DrawString(model.DisplayName, row.Font, foregroundBrush, row.Bounds);
     }
 
-    private void PublicKeysListBox_DrawItem(object sender, DrawItemEventArgs row)
+    private void KeysListBox_DrawItem(object sender, DrawItemEventArgs row)
     {
-        if (row.Index < 0 || row.Index >= PublicKeysListBox.Items.Count)
+        if (row.Index < 0 || row.Index >= KeysListBox.Items.Count)
             return;
 
-        KeyPairModel model = (KeyPairModel)PublicKeysListBox.Items[row.Index];
-        Color backgroundColor;
-
-        if (row.State.HasFlag(DrawItemState.Selected))
-            backgroundColor = SystemColors.Highlight;
-        else
-            if (row.Index % 2 == 0)
-            backgroundColor = Color.FromArgb(50, 50, 50);
-        else
-            backgroundColor = Color.FromArgb(40, 40, 40);
-
-        row.DrawBackground();
-
-        using SolidBrush backgroundBrush = new(backgroundColor);
-        row.Graphics.FillRectangle(backgroundBrush, row.Bounds);
-
-        using SolidBrush foregroundBrush = new(row.ForeColor);
-        row.Graphics.DrawString(model.DisplayName, row.Font, foregroundBrush, row.Bounds);
-    }
-
-    private void MyKeysListBox_DrawItem(object sender, DrawItemEventArgs row)
-    {
-        if (row.Index < 0 || row.Index >= MyKeysListBox.Items.Count)
-            return;
-
-        KeyPairModel model = (KeyPairModel)MyKeysListBox.Items[row.Index];
+        KeyPairModel model = (KeyPairModel)KeysListBox.Items[row.Index];
         Color backgroundColor;
 
         if (row.State.HasFlag(DrawItemState.Selected))
@@ -366,7 +343,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
         FileListBox.DataSource = GlobalConfig.DataAccessor.LoadAllFileModels().Where(file => file.FileName.ToLower().Contains(searchText)).ToList();
 
-        UpdateControls();
+        FileListBox.Refresh();
     }
 
     private void EncryptButton_Click(object sender, EventArgs e)
@@ -442,6 +419,12 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
     {
         DecryptForm decryptForm = new(this, selectedModel);
         decryptForm.ShowDialog();
+    }
+
+    private void TrashCanLabel_Click(object sender, EventArgs e)
+    {
+        selectedModel.RemoveDigSig();
+        UpdateControls();
     }
 
     public void EncryptionComplete()
@@ -559,26 +542,9 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         createKeyPairForm.ShowDialog();
     }
 
-    private void MyKeysListBox_DeleteItem_Click(object sender, EventArgs e)
+    private void KeysListBox_DeleteItem_Click(object sender, EventArgs e)
     {
-        KeyPairModel model = (KeyPairModel)MyKeysListBox.SelectedItem;
-
-        try
-        {
-            GlobalConfig.DataAccessor.DeleteKeyPairModel(model);
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
-        }
-
-        ShowKeysPanel();
-    }
-
-    private void PublicKeysListBox_DeleteItem_Click(object sender, EventArgs e)
-    {
-        KeyPairModel model = (KeyPairModel)PublicKeysListBox.SelectedItem;
+        KeyPairModel model = (KeyPairModel)KeysListBox.SelectedItem;
 
         try
         {
@@ -616,7 +582,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
     private void KeyListBox_ExportItem_Click(object sender, EventArgs e)
     {
-        KeyPairModel model = (KeyPairModel)MyKeysListBox.SelectedItem;
+        KeyPairModel model = (KeyPairModel)KeysListBox.SelectedItem;
 
         using SaveFileDialog saveFileDialog = new();
         saveFileDialog.Title = "Save Archive";
@@ -637,9 +603,34 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         }
     }
 
-    private void TrashCanLabel_Click(object sender, EventArgs e)
+    private void KeysRadioButton_CheckedChanged(object sender, EventArgs e)
     {
-        selectedModel.RemoveDigSig();
-        UpdateControls();
+        if (KeysPanel_MyKeysRadioButton.Checked)
+            KeysListBox.DataSource = GlobalConfig.DataAccessor.LoadAllPrivateKeyPairModels();
+        else
+            KeysListBox.DataSource = GlobalConfig.DataAccessor.LoadAllPublicKeyPairModels();
+
+        KeysListBox.DisplayMember = "DisplayName";
+
+        KeysPanel_SearchTextBox_TextChanged(null, null);
+    }
+
+    private void KeysPanel_SearchTextBox_TextChanged(object sender, EventArgs e)
+    {
+        // show/hide magnifying glass label
+        if (KeysPanel_SearchTextBox.Text.Length > 0)
+            KeysPanel_MagnifyingGlassLabel.Visible = false;
+        else
+            KeysPanel_MagnifyingGlassLabel.Visible = true;
+
+        // filter KeysListBox
+        string searchText = KeysPanel_SearchTextBox.Text.Trim().ToLower();
+
+        if (KeysPanel_MyKeysRadioButton.Checked)
+            KeysListBox.DataSource = GlobalConfig.DataAccessor.LoadAllPrivateKeyPairModels().Where(keyPairModel => keyPairModel.Name.ToLower().Contains(searchText)).ToList();
+        else
+            KeysListBox.DataSource = GlobalConfig.DataAccessor.LoadAllPublicKeyPairModels().Where(keyPairModel => keyPairModel.Name.ToLower().Contains(searchText)).ToList();
+
+        KeysListBox.Refresh();
     }
 }

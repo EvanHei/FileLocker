@@ -34,6 +34,7 @@
             FileListBoxContextMenuStrip = new ContextMenuStrip(components);
             FileListBox_RemoveFromListItem = new ToolStripMenuItem();
             MenuStrip = new MenuStrip();
+            LogsMenuItem = new ToolStripMenuItem();
             KeysMenuItem = new ToolStripMenuItem();
             GuideMenuItem = new ToolStripMenuItem();
             SearchTextBox = new TextBox();
@@ -121,7 +122,7 @@
             KeysPanel_ImportGroupBox = new GroupBox();
             KeysPanel_ImportDescriptionLabel = new Label();
             KeysPanel_ImportButton = new Button();
-            KeysListBox = new ListBox();
+            KeysPanel_ListBox = new ListBox();
             KeysListBoxContextMenuStrip = new ContextMenuStrip(components);
             MyKeysListBox_DeleteItem = new ToolStripMenuItem();
             MyKeysListBox_ExportItem = new ToolStripMenuItem();
@@ -129,6 +130,19 @@
             KeysPanel_CreateDescriptionLabel = new Label();
             KeysPanel_CreateButton = new Button();
             KeysPanel_KeysLabel = new Label();
+            LogsPanel = new Panel();
+            LogsPanel_FilterGroupBox = new GroupBox();
+            LogsPanel_LevelLabel = new Label();
+            LogsPanel_LevelComboBox = new ComboBox();
+            LogsPanel_LastDayRadioButton = new RadioButton();
+            LogsPanel_LastWeekRadioButton = new RadioButton();
+            LogsPanel_LastMonthRadioButton = new RadioButton();
+            LogsPanel_AllTimeRadioButton = new RadioButton();
+            LogsPanel_FilterDescriptionLabel = new Label();
+            LogsPanel_MagnifyingGlassLabel = new Label();
+            LogsPanel_SearchTextBox = new TextBox();
+            LogsPanel_ListBox = new ListBox();
+            LogsPanel_LogsLabel = new Label();
             FileListBoxContextMenuStrip.SuspendLayout();
             MenuStrip.SuspendLayout();
             AddButtonContextMenuStrip.SuspendLayout();
@@ -149,6 +163,8 @@
             KeysPanel_ImportGroupBox.SuspendLayout();
             KeysListBoxContextMenuStrip.SuspendLayout();
             KeysPanel_CreateGroupBox.SuspendLayout();
+            LogsPanel.SuspendLayout();
+            LogsPanel_FilterGroupBox.SuspendLayout();
             SuspendLayout();
             // 
             // FileListBox
@@ -193,12 +209,21 @@
             // 
             MenuStrip.BackColor = Color.FromArgb(40, 40, 40);
             MenuStrip.Font = new Font("Segoe UI Emoji", 10F);
-            MenuStrip.Items.AddRange(new ToolStripItem[] { KeysMenuItem, GuideMenuItem });
+            MenuStrip.Items.AddRange(new ToolStripItem[] { LogsMenuItem, KeysMenuItem, GuideMenuItem });
             MenuStrip.Location = new Point(0, 0);
             MenuStrip.Name = "MenuStrip";
             MenuStrip.Size = new Size(1217, 29);
             MenuStrip.TabIndex = 17;
             MenuStrip.Text = "menuStrip1";
+            // 
+            // LogsMenuItem
+            // 
+            LogsMenuItem.Alignment = ToolStripItemAlignment.Right;
+            LogsMenuItem.ForeColor = SystemColors.AppWorkspace;
+            LogsMenuItem.Name = "LogsMenuItem";
+            LogsMenuItem.Size = new Size(73, 25);
+            LogsMenuItem.Text = "&Logs 📜";
+            LogsMenuItem.Click += LogsMenuItem_Click;
             // 
             // KeysMenuItem
             // 
@@ -1207,7 +1232,7 @@
             KeysPanel.Controls.Add(KeysPanel_OtherKeysRadioButton);
             KeysPanel.Controls.Add(KeysPanel_MyKeysRadioButton);
             KeysPanel.Controls.Add(KeysPanel_ImportGroupBox);
-            KeysPanel.Controls.Add(KeysListBox);
+            KeysPanel.Controls.Add(KeysPanel_ListBox);
             KeysPanel.Controls.Add(KeysPanel_CreateGroupBox);
             KeysPanel.Controls.Add(KeysPanel_KeysLabel);
             KeysPanel.Location = new Point(361, 31);
@@ -1304,22 +1329,22 @@
             KeysPanel_ImportButton.UseVisualStyleBackColor = false;
             KeysPanel_ImportButton.Click += KeysPanel_ImportButton_Click;
             // 
-            // KeysListBox
+            // KeysPanel_ListBox
             // 
-            KeysListBox.AllowDrop = true;
-            KeysListBox.BackColor = Color.FromArgb(40, 40, 40);
-            KeysListBox.BorderStyle = BorderStyle.FixedSingle;
-            KeysListBox.ContextMenuStrip = KeysListBoxContextMenuStrip;
-            KeysListBox.DrawMode = DrawMode.OwnerDrawFixed;
-            KeysListBox.Font = new Font("Segoe UI Emoji", 12F);
-            KeysListBox.ForeColor = SystemColors.ButtonFace;
-            KeysListBox.FormattingEnabled = true;
-            KeysListBox.ItemHeight = 25;
-            KeysListBox.Location = new Point(22, 533);
-            KeysListBox.Name = "KeysListBox";
-            KeysListBox.Size = new Size(807, 377);
-            KeysListBox.TabIndex = 68;
-            KeysListBox.DrawItem += KeysListBox_DrawItem;
+            KeysPanel_ListBox.AllowDrop = true;
+            KeysPanel_ListBox.BackColor = Color.FromArgb(40, 40, 40);
+            KeysPanel_ListBox.BorderStyle = BorderStyle.FixedSingle;
+            KeysPanel_ListBox.ContextMenuStrip = KeysListBoxContextMenuStrip;
+            KeysPanel_ListBox.DrawMode = DrawMode.OwnerDrawFixed;
+            KeysPanel_ListBox.Font = new Font("Segoe UI Emoji", 12F);
+            KeysPanel_ListBox.ForeColor = SystemColors.ButtonFace;
+            KeysPanel_ListBox.FormattingEnabled = true;
+            KeysPanel_ListBox.ItemHeight = 25;
+            KeysPanel_ListBox.Location = new Point(22, 533);
+            KeysPanel_ListBox.Name = "KeysPanel_ListBox";
+            KeysPanel_ListBox.Size = new Size(807, 377);
+            KeysPanel_ListBox.TabIndex = 68;
+            KeysPanel_ListBox.DrawItem += KeysPanel_ListBox_DrawItem;
             // 
             // KeysListBoxContextMenuStrip
             // 
@@ -1397,6 +1422,174 @@
             KeysPanel_KeysLabel.TabIndex = 8;
             KeysPanel_KeysLabel.Text = "Keys";
             // 
+            // LogsPanel
+            // 
+            LogsPanel.BackColor = Color.FromArgb(32, 32, 32);
+            LogsPanel.BorderStyle = BorderStyle.FixedSingle;
+            LogsPanel.Controls.Add(LogsPanel_FilterGroupBox);
+            LogsPanel.Controls.Add(LogsPanel_MagnifyingGlassLabel);
+            LogsPanel.Controls.Add(LogsPanel_SearchTextBox);
+            LogsPanel.Controls.Add(LogsPanel_ListBox);
+            LogsPanel.Controls.Add(LogsPanel_LogsLabel);
+            LogsPanel.Location = new Point(361, 31);
+            LogsPanel.Name = "LogsPanel";
+            LogsPanel.Size = new Size(864, 944);
+            LogsPanel.TabIndex = 71;
+            // 
+            // LogsPanel_FilterGroupBox
+            // 
+            LogsPanel_FilterGroupBox.BackColor = Color.FromArgb(32, 32, 32);
+            LogsPanel_FilterGroupBox.Controls.Add(LogsPanel_LevelLabel);
+            LogsPanel_FilterGroupBox.Controls.Add(LogsPanel_LevelComboBox);
+            LogsPanel_FilterGroupBox.Controls.Add(LogsPanel_LastDayRadioButton);
+            LogsPanel_FilterGroupBox.Controls.Add(LogsPanel_LastWeekRadioButton);
+            LogsPanel_FilterGroupBox.Controls.Add(LogsPanel_LastMonthRadioButton);
+            LogsPanel_FilterGroupBox.Controls.Add(LogsPanel_AllTimeRadioButton);
+            LogsPanel_FilterGroupBox.Controls.Add(LogsPanel_FilterDescriptionLabel);
+            LogsPanel_FilterGroupBox.FlatStyle = FlatStyle.Flat;
+            LogsPanel_FilterGroupBox.ForeColor = SystemColors.ButtonFace;
+            LogsPanel_FilterGroupBox.Location = new Point(22, 208);
+            LogsPanel_FilterGroupBox.Name = "LogsPanel_FilterGroupBox";
+            LogsPanel_FilterGroupBox.Size = new Size(807, 248);
+            LogsPanel_FilterGroupBox.TabIndex = 77;
+            LogsPanel_FilterGroupBox.TabStop = false;
+            LogsPanel_FilterGroupBox.Text = "Filter";
+            // 
+            // LogsPanel_LevelLabel
+            // 
+            LogsPanel_LevelLabel.AutoSize = true;
+            LogsPanel_LevelLabel.BackColor = Color.FromArgb(32, 32, 32);
+            LogsPanel_LevelLabel.ForeColor = SystemColors.ButtonFace;
+            LogsPanel_LevelLabel.Location = new Point(54, 98);
+            LogsPanel_LevelLabel.Name = "LogsPanel_LevelLabel";
+            LogsPanel_LevelLabel.Size = new Size(49, 21);
+            LogsPanel_LevelLabel.TabIndex = 76;
+            LogsPanel_LevelLabel.Text = "Level:";
+            // 
+            // LogsPanel_LevelComboBox
+            // 
+            LogsPanel_LevelComboBox.BackColor = Color.FromArgb(52, 52, 52);
+            LogsPanel_LevelComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            LogsPanel_LevelComboBox.ForeColor = SystemColors.ButtonFace;
+            LogsPanel_LevelComboBox.FormattingEnabled = true;
+            LogsPanel_LevelComboBox.Location = new Point(110, 95);
+            LogsPanel_LevelComboBox.Name = "LogsPanel_LevelComboBox";
+            LogsPanel_LevelComboBox.Size = new Size(197, 29);
+            LogsPanel_LevelComboBox.TabIndex = 75;
+            LogsPanel_LevelComboBox.SelectedIndexChanged += LogsPanel_LevelComboBox_SelectedIndexChanged;
+            // 
+            // LogsPanel_LastDayRadioButton
+            // 
+            LogsPanel_LastDayRadioButton.AutoSize = true;
+            LogsPanel_LastDayRadioButton.ForeColor = SystemColors.ButtonFace;
+            LogsPanel_LastDayRadioButton.Location = new Point(110, 208);
+            LogsPanel_LastDayRadioButton.Name = "LogsPanel_LastDayRadioButton";
+            LogsPanel_LastDayRadioButton.Size = new Size(87, 25);
+            LogsPanel_LastDayRadioButton.TabIndex = 74;
+            LogsPanel_LastDayRadioButton.Text = "Last Day";
+            LogsPanel_LastDayRadioButton.UseVisualStyleBackColor = true;
+            LogsPanel_LastDayRadioButton.CheckedChanged += LogsRadioButton_CheckedChanged;
+            // 
+            // LogsPanel_LastWeekRadioButton
+            // 
+            LogsPanel_LastWeekRadioButton.AutoSize = true;
+            LogsPanel_LastWeekRadioButton.ForeColor = SystemColors.ButtonFace;
+            LogsPanel_LastWeekRadioButton.Location = new Point(110, 183);
+            LogsPanel_LastWeekRadioButton.Name = "LogsPanel_LastWeekRadioButton";
+            LogsPanel_LastWeekRadioButton.Size = new Size(99, 25);
+            LogsPanel_LastWeekRadioButton.TabIndex = 73;
+            LogsPanel_LastWeekRadioButton.Text = "Last Week";
+            LogsPanel_LastWeekRadioButton.UseVisualStyleBackColor = true;
+            LogsPanel_LastWeekRadioButton.CheckedChanged += LogsRadioButton_CheckedChanged;
+            // 
+            // LogsPanel_LastMonthRadioButton
+            // 
+            LogsPanel_LastMonthRadioButton.AutoSize = true;
+            LogsPanel_LastMonthRadioButton.ForeColor = SystemColors.ButtonFace;
+            LogsPanel_LastMonthRadioButton.Location = new Point(110, 160);
+            LogsPanel_LastMonthRadioButton.Name = "LogsPanel_LastMonthRadioButton";
+            LogsPanel_LastMonthRadioButton.Size = new Size(106, 25);
+            LogsPanel_LastMonthRadioButton.TabIndex = 72;
+            LogsPanel_LastMonthRadioButton.Text = "Last Month";
+            LogsPanel_LastMonthRadioButton.UseVisualStyleBackColor = true;
+            LogsPanel_LastMonthRadioButton.CheckedChanged += LogsRadioButton_CheckedChanged;
+            // 
+            // LogsPanel_AllTimeRadioButton
+            // 
+            LogsPanel_AllTimeRadioButton.AutoSize = true;
+            LogsPanel_AllTimeRadioButton.Checked = true;
+            LogsPanel_AllTimeRadioButton.ForeColor = SystemColors.ButtonFace;
+            LogsPanel_AllTimeRadioButton.Location = new Point(110, 135);
+            LogsPanel_AllTimeRadioButton.Name = "LogsPanel_AllTimeRadioButton";
+            LogsPanel_AllTimeRadioButton.Size = new Size(81, 25);
+            LogsPanel_AllTimeRadioButton.TabIndex = 71;
+            LogsPanel_AllTimeRadioButton.TabStop = true;
+            LogsPanel_AllTimeRadioButton.Text = "All time";
+            LogsPanel_AllTimeRadioButton.UseVisualStyleBackColor = true;
+            LogsPanel_AllTimeRadioButton.CheckedChanged += LogsRadioButton_CheckedChanged;
+            // 
+            // LogsPanel_FilterDescriptionLabel
+            // 
+            LogsPanel_FilterDescriptionLabel.AutoSize = true;
+            LogsPanel_FilterDescriptionLabel.BackColor = Color.FromArgb(32, 32, 32);
+            LogsPanel_FilterDescriptionLabel.ForeColor = SystemColors.ButtonFace;
+            LogsPanel_FilterDescriptionLabel.Location = new Point(54, 50);
+            LogsPanel_FilterDescriptionLabel.Name = "LogsPanel_FilterDescriptionLabel";
+            LogsPanel_FilterDescriptionLabel.Size = new Size(297, 21);
+            LogsPanel_FilterDescriptionLabel.TabIndex = 33;
+            LogsPanel_FilterDescriptionLabel.Text = "Filter logs using the specified parameters.\r\n";
+            // 
+            // LogsPanel_MagnifyingGlassLabel
+            // 
+            LogsPanel_MagnifyingGlassLabel.AutoSize = true;
+            LogsPanel_MagnifyingGlassLabel.BackColor = Color.FromArgb(32, 32, 32);
+            LogsPanel_MagnifyingGlassLabel.Font = new Font("Segoe UI Emoji", 12F);
+            LogsPanel_MagnifyingGlassLabel.ForeColor = SystemColors.ButtonFace;
+            LogsPanel_MagnifyingGlassLabel.Location = new Point(246, 500);
+            LogsPanel_MagnifyingGlassLabel.Name = "LogsPanel_MagnifyingGlassLabel";
+            LogsPanel_MagnifyingGlassLabel.Size = new Size(32, 21);
+            LogsPanel_MagnifyingGlassLabel.TabIndex = 74;
+            LogsPanel_MagnifyingGlassLabel.Text = "🔍";
+            // 
+            // LogsPanel_SearchTextBox
+            // 
+            LogsPanel_SearchTextBox.BackColor = Color.FromArgb(32, 32, 32);
+            LogsPanel_SearchTextBox.BorderStyle = BorderStyle.FixedSingle;
+            LogsPanel_SearchTextBox.Font = new Font("Segoe UI Emoji", 12F);
+            LogsPanel_SearchTextBox.ForeColor = SystemColors.ButtonFace;
+            LogsPanel_SearchTextBox.Location = new Point(22, 498);
+            LogsPanel_SearchTextBox.Name = "LogsPanel_SearchTextBox";
+            LogsPanel_SearchTextBox.Size = new Size(261, 29);
+            LogsPanel_SearchTextBox.TabIndex = 75;
+            LogsPanel_SearchTextBox.TextChanged += LogsPanel_SearchTextBox_TextChanged;
+            // 
+            // LogsPanel_ListBox
+            // 
+            LogsPanel_ListBox.AllowDrop = true;
+            LogsPanel_ListBox.BackColor = Color.FromArgb(40, 40, 40);
+            LogsPanel_ListBox.BorderStyle = BorderStyle.FixedSingle;
+            LogsPanel_ListBox.DrawMode = DrawMode.OwnerDrawFixed;
+            LogsPanel_ListBox.Font = new Font("Segoe UI Emoji", 12F);
+            LogsPanel_ListBox.ForeColor = SystemColors.ButtonFace;
+            LogsPanel_ListBox.FormattingEnabled = true;
+            LogsPanel_ListBox.ItemHeight = 25;
+            LogsPanel_ListBox.Location = new Point(22, 533);
+            LogsPanel_ListBox.Name = "LogsPanel_ListBox";
+            LogsPanel_ListBox.Size = new Size(807, 377);
+            LogsPanel_ListBox.TabIndex = 76;
+            LogsPanel_ListBox.DrawItem += LogsPanel_ListBox_DrawItem;
+            // 
+            // LogsPanel_LogsLabel
+            // 
+            LogsPanel_LogsLabel.AutoSize = true;
+            LogsPanel_LogsLabel.Font = new Font("Segoe UI Emoji", 20.25F);
+            LogsPanel_LogsLabel.ForeColor = SystemColors.ButtonFace;
+            LogsPanel_LogsLabel.Location = new Point(391, 125);
+            LogsPanel_LogsLabel.Name = "LogsPanel_LogsLabel";
+            LogsPanel_LogsLabel.Size = new Size(71, 36);
+            LogsPanel_LogsLabel.TabIndex = 71;
+            LogsPanel_LogsLabel.Text = "Logs";
+            // 
             // DashboardForm
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
@@ -1408,6 +1601,7 @@
             Controls.Add(SearchTextBox);
             Controls.Add(FileListBox);
             Controls.Add(MenuStrip);
+            Controls.Add(LogsPanel);
             Controls.Add(KeysPanel);
             Controls.Add(UnlockedPanel);
             Controls.Add(NoFilesPanel);
@@ -1457,6 +1651,10 @@
             KeysListBoxContextMenuStrip.ResumeLayout(false);
             KeysPanel_CreateGroupBox.ResumeLayout(false);
             KeysPanel_CreateGroupBox.PerformLayout();
+            LogsPanel.ResumeLayout(false);
+            LogsPanel.PerformLayout();
+            LogsPanel_FilterGroupBox.ResumeLayout(false);
+            LogsPanel_FilterGroupBox.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1507,7 +1705,7 @@
         private GroupBox UnlockedPanel_ShredGroupBox;
         private Button ClearButton;
         private Label PasswordWarningLabel;
-        private ComboBox EncryptionAlgorithmComboBox;
+        private ComboBox LogsPanel_LevelComboBox;
         private Label ChooseAlgorithmLabel;
         private Button UnlockedPanel_EncryptButton;
         private Label EyeballLabel;
@@ -1556,7 +1754,7 @@
         private Label KeysPanel_CreateDescriptionLabel;
         private Button KeysPanel_CreateButton;
         private Label KeysPanel_KeysLabel;
-        private ListBox KeysListBox;
+        private ListBox KeysPanel_ListBox;
         private ContextMenuStrip KeysListBoxContextMenuStrip;
         private ToolStripMenuItem MyKeysListBox_DeleteItem;
         private GroupBox KeysPanel_ImportGroupBox;
@@ -1577,5 +1775,24 @@
         private TextBox KeysPanel_SearchTextBox;
         private RadioButton KeysPanel_OtherKeysRadioButton;
         private Label KeysPanel_MagnifyingGlassLabel;
+        private Panel LogsPanel;
+        private Label LogsPanel_MagnifyingGlassLabel;
+        private TextBox LogsPanel_SearchTextBox;
+        private GroupBox groupBox1;
+        private Label label2;
+        private Button button1;
+        private ListBox LogsPanel_ListBox;
+        private GroupBox groupBox2;
+        private Label label3;
+        private Button button2;
+        private Label LogsPanel_LogsLabel;
+        private ToolStripMenuItem LogsMenuItem;
+        private GroupBox LogsPanel_FilterGroupBox;
+        private Label LogsPanel_FilterDescriptionLabel;
+        private RadioButton LogsPanel_LastMonthRadioButton;
+        private RadioButton LogsPanel_AllTimeRadioButton;
+        private RadioButton LogsPanel_LastDayRadioButton;
+        private RadioButton LogsPanel_LastWeekRadioButton;
+        private Label LogsPanel_LevelLabel;
     }
 }

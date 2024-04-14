@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace FileLockerLibrary;
 
@@ -25,6 +28,14 @@ public class LogModel
     /// Gets or sets the message associated with the log entry.
     /// </summary>
     public string Message { get; set; }
+
+    public string DisplayName
+    {
+        get
+        {
+            return $"{Level} {Timestamp.ToShortDateString()} {Message}";
+        }
+    }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="LogModel"/> class with the current timestamp.

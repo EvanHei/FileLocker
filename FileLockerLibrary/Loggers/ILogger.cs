@@ -16,5 +16,5 @@ public interface ILogger
     /// Retrieves all logs stored by the logger.
     /// </summary>
     /// <returns>A list of log models containing log entries.</returns>
-    List<LogModel> GetAllLogs();
+    List<LogModel> LoadAllLogs();
 }

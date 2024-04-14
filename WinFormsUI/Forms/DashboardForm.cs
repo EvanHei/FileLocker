@@ -30,6 +30,10 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         FileListBox.DataSource = GlobalConfig.DataAccessor.LoadAllFileModels();
         FileListBox.DisplayMember = "DisplayName";
 
+        Array logLevelValues = Enum.GetValues(typeof(LogLevel));
+        List<object> items = [ "Any", .. logLevelValues,];
+        LogsPanel_LevelComboBox.DataSource = items;
+
         UpdateControls();
     }
 
@@ -68,6 +72,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         UnlockedPanel.Visible = false;
         RelocationPanel.Visible = false;
         KeysPanel.Visible = false;
+        LogsPanel.Visible = false;
     }
 
     private void ShowUnlockedPanel()
@@ -77,6 +82,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         UnlockedPanel.Visible = true;
         RelocationPanel.Visible = false;
         KeysPanel.Visible = false;
+        LogsPanel.Visible = false;
 
         if (GlobalConfig.DataAccessor.LoadAllPrivateKeyPairModels().Count < 1)
         {
@@ -104,6 +110,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         UnlockedPanel.Visible = false;
         RelocationPanel.Visible = false;
         KeysPanel.Visible = false;
+        LogsPanel.Visible = false;
 
         if (GlobalConfig.DataAccessor.LoadAllPrivateKeyPairModels().Count < 1)
         {
@@ -132,6 +139,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         UnlockedPanel.Visible = false;
         RelocationPanel.Visible = true;
         KeysPanel.Visible = false;
+        LogsPanel.Visible = false;
 
         string displayPath = selectedModel.Path.Length > 64 ? selectedModel.Path.Substring(0, 61) + "..." : selectedModel.Path;
         string fileDisplayName = selectedModel.FileName.Length > 50 ? selectedModel.FileName.Substring(0, 47) + "..." : selectedModel.FileName;
@@ -146,10 +154,25 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         UnlockedPanel.Visible = false;
         RelocationPanel.Visible = false;
         KeysPanel.Visible = true;
+        LogsPanel.Visible = false;
         KeysPanel_SearchTextBox.Text = "";
         FileListBox.SelectedIndex = -1;
 
         KeysRadioButton_CheckedChanged(null, null);
+    }
+
+    private void ShowLogsPanel()
+    {
+        NoFilesPanel.Visible = false;
+        LockedPanel.Visible = false;
+        UnlockedPanel.Visible = false;
+        RelocationPanel.Visible = false;
+        KeysPanel.Visible = false;
+        LogsPanel.Visible = true;
+        LogsPanel_SearchTextBox.Text = "";
+        FileListBox.SelectedIndex = -1;
+
+        LogsRadioButton_CheckedChanged(null, null);
     }
 
     private void FileListBox_DrawItem(object sender, DrawItemEventArgs row)
@@ -177,12 +200,37 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         row.Graphics.DrawString(model.DisplayName, row.Font, foregroundBrush, row.Bounds);
     }
 
-    private void KeysListBox_DrawItem(object sender, DrawItemEventArgs row)
+    private void KeysPanel_ListBox_DrawItem(object sender, DrawItemEventArgs row)
     {
-        if (row.Index < 0 || row.Index >= KeysListBox.Items.Count)
+        if (row.Index < 0 || row.Index >= KeysPanel_ListBox.Items.Count)
             return;
 
-        KeyPairModel model = (KeyPairModel)KeysListBox.Items[row.Index];
+        KeyPairModel model = (KeyPairModel)KeysPanel_ListBox.Items[row.Index];
+        Color backgroundColor;
+
+        if (row.State.HasFlag(DrawItemState.Selected))
+            backgroundColor = SystemColors.Highlight;
+        else
+            if (row.Index % 2 == 0)
+            backgroundColor = Color.FromArgb(50, 50, 50);
+        else
+            backgroundColor = Color.FromArgb(40, 40, 40);
+
+        row.DrawBackground();
+
+        using SolidBrush backgroundBrush = new(backgroundColor);
+        row.Graphics.FillRectangle(backgroundBrush, row.Bounds);
+
+        using SolidBrush foregroundBrush = new(row.ForeColor);
+        row.Graphics.DrawString(model.DisplayName, row.Font, foregroundBrush, row.Bounds);
+    }
+
+    private void LogsPanel_ListBox_DrawItem(object sender, DrawItemEventArgs row)
+    {
+        if (row.Index < 0 || row.Index >= LogsPanel_ListBox.Items.Count)
+            return;
+
+        LogModel model = (LogModel)LogsPanel_ListBox.Items[row.Index];
         Color backgroundColor;
 
         if (row.State.HasFlag(DrawItemState.Selected))
@@ -544,7 +592,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
     private void KeysListBox_DeleteItem_Click(object sender, EventArgs e)
     {
-        KeyPairModel model = (KeyPairModel)KeysListBox.SelectedItem;
+        KeyPairModel model = (KeyPairModel)KeysPanel_ListBox.SelectedItem;
 
         try
         {
@@ -582,7 +630,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
     private void KeyListBox_ExportItem_Click(object sender, EventArgs e)
     {
-        KeyPairModel model = (KeyPairModel)KeysListBox.SelectedItem;
+        KeyPairModel model = (KeyPairModel)KeysPanel_ListBox.SelectedItem;
 
         using SaveFileDialog saveFileDialog = new();
         saveFileDialog.Title = "Save Archive";
@@ -605,13 +653,6 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
     private void KeysRadioButton_CheckedChanged(object sender, EventArgs e)
     {
-        if (KeysPanel_MyKeysRadioButton.Checked)
-            KeysListBox.DataSource = GlobalConfig.DataAccessor.LoadAllPrivateKeyPairModels();
-        else
-            KeysListBox.DataSource = GlobalConfig.DataAccessor.LoadAllPublicKeyPairModels();
-
-        KeysListBox.DisplayMember = "DisplayName";
-
         KeysPanel_SearchTextBox_TextChanged(null, null);
     }
 
@@ -625,12 +666,87 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
         // filter KeysListBox
         string searchText = KeysPanel_SearchTextBox.Text.Trim().ToLower();
+        List<KeyPairModel> privateKeyPairs = GlobalConfig.DataAccessor.LoadAllPrivateKeyPairModels();
+        List<KeyPairModel> publicKeyPairs = GlobalConfig.DataAccessor.LoadAllPublicKeyPairModels();
 
         if (KeysPanel_MyKeysRadioButton.Checked)
-            KeysListBox.DataSource = GlobalConfig.DataAccessor.LoadAllPrivateKeyPairModels().Where(keyPairModel => keyPairModel.Name.ToLower().Contains(searchText)).ToList();
+            KeysPanel_ListBox.DataSource = privateKeyPairs.Where(keyPairModel => keyPairModel.DisplayName.ToLower().Contains(searchText)).ToList();
         else
-            KeysListBox.DataSource = GlobalConfig.DataAccessor.LoadAllPublicKeyPairModels().Where(keyPairModel => keyPairModel.Name.ToLower().Contains(searchText)).ToList();
+            KeysPanel_ListBox.DataSource = publicKeyPairs.Where(keyPairModel => keyPairModel.DisplayName.ToLower().Contains(searchText)).ToList();
 
-        KeysListBox.Refresh();
+        KeysPanel_ListBox.Refresh();
+    }
+
+    private void LogsMenuItem_Click(object sender, EventArgs e)
+    {
+        ShowLogsPanel();
+    }
+
+    private void LogsRadioButton_CheckedChanged(object sender, EventArgs e)
+    {
+        PopulateLogsListBox();
+    }
+
+    private void LogsPanel_SearchTextBox_TextChanged(object sender, EventArgs e)
+    {
+        // show/hide magnifying glass label
+        if (LogsPanel_SearchTextBox.Text.Length > 0)
+            LogsPanel_MagnifyingGlassLabel.Visible = false;
+        else
+            LogsPanel_MagnifyingGlassLabel.Visible = true;
+
+        PopulateLogsListBox();
+    }
+
+    private void LogsPanel_LevelComboBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        PopulateLogsListBox();
+    }
+
+    private void PopulateLogsListBox()
+    {
+        List<LogModel> logs = GlobalConfig.Logger.LoadAllLogs().OrderByDescending(model => model.Timestamp).ToList();
+
+        // filter by search
+        string searchText = LogsPanel_SearchTextBox.Text.Trim().ToLower();
+        logs = logs.Where(model => model.DisplayName.ToLower().Contains(searchText)).ToList();
+
+        // filter by time
+        if (LogsPanel_LastMonthRadioButton.Checked)
+            logs = logs.Where(model => model.Timestamp >= DateTime.Now.AddMonths(-1)).ToList();
+        else if (LogsPanel_LastWeekRadioButton.Checked)
+            logs = logs.Where(model => model.Timestamp >= DateTime.Now.AddDays(-7)).ToList();
+        else if (LogsPanel_LastDayRadioButton.Checked)
+            logs = logs.Where(model => model.Timestamp >= DateTime.Now.AddDays(-1)).ToList();
+
+        // filter by log level
+        if (LogsPanel_LevelComboBox.SelectedItem != null)
+        {
+            var selectedItem = LogsPanel_LevelComboBox.SelectedItem;
+
+            switch (selectedItem)
+            {
+                case "Any":
+                    break;
+                case LogLevel.Information:
+                    logs = logs.Where(model => model.Level == LogLevel.Information).ToList();
+                    break;
+                case LogLevel.Debug:
+                    logs = logs.Where(model => model.Level == LogLevel.Debug).ToList();
+                    break;
+                case LogLevel.Warning:
+                    logs = logs.Where(model => model.Level == LogLevel.Warning).ToList();
+                    break;
+                case LogLevel.Error:
+                    logs = logs.Where(model => model.Level == LogLevel.Error).ToList();
+                    break;
+                case LogLevel.Fatal:
+                    logs = logs.Where(model => model.Level == LogLevel.Fatal).ToList();
+                    break;
+            }
+        }
+
+        LogsPanel_ListBox.DataSource = logs;
+        LogsPanel_ListBox.Refresh();
     }
 }

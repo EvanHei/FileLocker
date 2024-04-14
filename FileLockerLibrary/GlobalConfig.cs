@@ -37,11 +37,6 @@ public static class GlobalConfig
     public static IHasher Hasher { get; set; } = new Sha256Hasher();
 
     /// <summary>
-    /// Gets the diagnostics utility for monitoring application performance.
-    /// </summary>
-    public static Diagnostics Diagnostics { get; } = new Diagnostics();
-
-    /// <summary>
     /// Returns an encryptor based on the specified encryption algorithm.
     /// </summary>
     /// <param name="algorithm">The encryption algorithm.</param>

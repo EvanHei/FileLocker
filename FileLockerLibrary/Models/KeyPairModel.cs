@@ -28,7 +28,7 @@ public class KeyPairModel
                 output += "ECDSA";
 
             string keyPairName = Name.Length > 35 ? Name.Substring(0, 32) + "..." : Name;
-            output += $"    {keyPairName}";
+            output += $" {keyPairName}";
 
             return output;
         }

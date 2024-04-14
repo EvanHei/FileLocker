@@ -18,7 +18,7 @@ public class SerilogLogger : ILogger
     /// Gets all logs stored in log files.
     /// </summary>
     /// <returns>A list of log models containing log entries.</returns>
-    public List<LogModel> GetAllLogs()
+    public List<LogModel> LoadAllLogs()
     {
         List<LogModel> logs = new();
 

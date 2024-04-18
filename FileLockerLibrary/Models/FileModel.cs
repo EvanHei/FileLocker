@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace FileLockerLibrary.Models;
 
 /// <summary>
-/// Metadata about a file.
+/// Represents metadata about a file.
 /// </summary>
 public class FileModel
 {
@@ -444,6 +444,10 @@ public class FileModel
         File.Delete(Path);
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="FileModel"/> class with the specified file path.
+    /// </summary>
+    /// <param name="path">The path of the file.</param>
     public FileModel(string path)
     {
         Path = path;

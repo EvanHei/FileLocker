@@ -117,7 +117,7 @@
             KeysPanel = new Panel();
             KeysPanel_MagnifyingGlassLabel = new Label();
             KeysPanel_SearchTextBox = new TextBox();
-            KeysPanel_OtherKeysRadioButton = new RadioButton();
+            KeysPanel_PublicKeysRadioButton = new RadioButton();
             KeysPanel_MyKeysRadioButton = new RadioButton();
             KeysPanel_ImportGroupBox = new GroupBox();
             KeysPanel_ImportDescriptionLabel = new Label();
@@ -1230,7 +1230,7 @@
             KeysPanel.BorderStyle = BorderStyle.FixedSingle;
             KeysPanel.Controls.Add(KeysPanel_MagnifyingGlassLabel);
             KeysPanel.Controls.Add(KeysPanel_SearchTextBox);
-            KeysPanel.Controls.Add(KeysPanel_OtherKeysRadioButton);
+            KeysPanel.Controls.Add(KeysPanel_PublicKeysRadioButton);
             KeysPanel.Controls.Add(KeysPanel_MyKeysRadioButton);
             KeysPanel.Controls.Add(KeysPanel_ImportGroupBox);
             KeysPanel.Controls.Add(KeysPanel_ListBox);
@@ -1265,17 +1265,17 @@
             KeysPanel_SearchTextBox.TabIndex = 3;
             KeysPanel_SearchTextBox.TextChanged += KeysPanel_SearchTextBox_TextChanged;
             // 
-            // KeysPanel_OtherKeysRadioButton
+            // KeysPanel_PublicKeysRadioButton
             // 
-            KeysPanel_OtherKeysRadioButton.AutoSize = true;
-            KeysPanel_OtherKeysRadioButton.ForeColor = SystemColors.ButtonFace;
-            KeysPanel_OtherKeysRadioButton.Location = new Point(726, 498);
-            KeysPanel_OtherKeysRadioButton.Name = "KeysPanel_OtherKeysRadioButton";
-            KeysPanel_OtherKeysRadioButton.Size = new Size(103, 25);
-            KeysPanel_OtherKeysRadioButton.TabIndex = 5;
-            KeysPanel_OtherKeysRadioButton.Text = "Other keys";
-            KeysPanel_OtherKeysRadioButton.UseVisualStyleBackColor = true;
-            KeysPanel_OtherKeysRadioButton.CheckedChanged += KeysRadioButton_CheckedChanged;
+            KeysPanel_PublicKeysRadioButton.AutoSize = true;
+            KeysPanel_PublicKeysRadioButton.ForeColor = SystemColors.ButtonFace;
+            KeysPanel_PublicKeysRadioButton.Location = new Point(726, 498);
+            KeysPanel_PublicKeysRadioButton.Name = "KeysPanel_PublicKeysRadioButton";
+            KeysPanel_PublicKeysRadioButton.Size = new Size(105, 25);
+            KeysPanel_PublicKeysRadioButton.TabIndex = 5;
+            KeysPanel_PublicKeysRadioButton.Text = "Public keys";
+            KeysPanel_PublicKeysRadioButton.UseVisualStyleBackColor = true;
+            KeysPanel_PublicKeysRadioButton.CheckedChanged += KeysRadioButton_CheckedChanged;
             // 
             // KeysPanel_MyKeysRadioButton
             // 
@@ -1602,12 +1602,12 @@
             Controls.Add(SearchTextBox);
             Controls.Add(FileListBox);
             Controls.Add(MenuStrip);
-            Controls.Add(LogsPanel);
             Controls.Add(KeysPanel);
             Controls.Add(UnlockedPanel);
             Controls.Add(NoFilesPanel);
             Controls.Add(RelocationPanel);
             Controls.Add(LockedPanel);
+            Controls.Add(LogsPanel);
             Font = new Font("Segoe UI Emoji", 12F);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -1774,7 +1774,7 @@
         private Label UnlockedPanel_TrashCanLabel;
         private RadioButton KeysPanel_MyKeysRadioButton;
         private TextBox KeysPanel_SearchTextBox;
-        private RadioButton KeysPanel_OtherKeysRadioButton;
+        private RadioButton KeysPanel_PublicKeysRadioButton;
         private Label KeysPanel_MagnifyingGlassLabel;
         private Panel LogsPanel;
         private Label LogsPanel_MagnifyingGlassLabel;

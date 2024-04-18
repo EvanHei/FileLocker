@@ -43,6 +43,9 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
     {
         FileListBox.Refresh();
 
+        if (FileListBox.Items.Count < 1)
+            ShowNoFilesPanel();
+
         // a non-file panel is shown
         if (FileListBox.SelectedIndex == -1)
             return;
@@ -428,6 +431,12 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
     private void RemoveFromListItem_Click(object sender, EventArgs e)
     {
+        if (FileListBox.Items.Count < 1)
+        {
+            ShowNoFilesPanel();
+            return;
+        }
+
         FileModel model = (FileModel)FileListBox.SelectedItem;
 
         if (model.EncryptionStatus == true)
@@ -578,6 +587,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
     public void KeyPairCreationComplete()
     {
+        KeysPanel_MyKeysRadioButton.Checked = true;
         ShowKeysPanel();
     }
 
@@ -623,10 +633,13 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
             GlobalConfig.DataAccessor.ImportZipKeyPairModel(openFileDialog.FileName);
             ShowKeysPanel();
         }
+        catch (InvalidOperationException ex)
+        {
+            MessageBox.Show("Key already added.", "Error", MessageBoxButtons.OK);
+        }
         catch (Exception ex)
         {
             MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
         }
     }
 

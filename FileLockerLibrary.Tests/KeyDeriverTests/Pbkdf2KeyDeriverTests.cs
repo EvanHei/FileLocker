@@ -57,4 +57,31 @@ public class Pbkdf2KeyDeriverTests
         // Act & Assert
         Assert.Throws<ArgumentNullException>(() => pbkdf2KeyDeriver.DeriveKey(password, null));
     }
+
+    [Fact]
+    public void DeriveKey_NoSalt_ValidInput_ReturnsDerivedKey()
+    {
+        // Arrange
+        Pbkdf2KeyDeriver pbkdf2KeyDeriver = new();
+        string password = "SecurePassword123";
+        byte[] salt = pbkdf2KeyDeriver.GenerateSalt();
+
+        // Act
+        byte[] derivedKey = pbkdf2KeyDeriver.DeriveKey(password);
+
+        // Assert
+        Assert.NotNull(derivedKey);
+        Assert.Equal(32, derivedKey.Length);
+    }
+
+    [Fact]
+    public void DeriveKey_NoSalt_NullPassword_ThrowsArgumentNullException()
+    {
+        // Arrange
+        Pbkdf2KeyDeriver pbkdf2KeyDeriver = new();
+        byte[] salt = new byte[32];
+
+        // Act & Assert
+        Assert.Throws<ArgumentNullException>(() => pbkdf2KeyDeriver.DeriveKey(null));
+    }
 }

@@ -451,7 +451,7 @@
             LockedPanel_SignButton.Location = new Point(669, 45);
             LockedPanel_SignButton.Name = "LockedPanel_SignButton";
             LockedPanel_SignButton.Size = new Size(105, 37);
-            LockedPanel_SignButton.TabIndex = 6;
+            LockedPanel_SignButton.TabIndex = 3;
             LockedPanel_SignButton.Text = "    S&ign 🖋️ ";
             LockedPanel_SignButton.UseVisualStyleBackColor = false;
             LockedPanel_SignButton.Click += SignButton_Click;
@@ -527,7 +527,7 @@
             LockedPanel_ExportButton.Location = new Point(669, 45);
             LockedPanel_ExportButton.Name = "LockedPanel_ExportButton";
             LockedPanel_ExportButton.Size = new Size(105, 37);
-            LockedPanel_ExportButton.TabIndex = 6;
+            LockedPanel_ExportButton.TabIndex = 5;
             LockedPanel_ExportButton.Text = "Ex&port 📤";
             LockedPanel_ExportButton.UseVisualStyleBackColor = false;
             LockedPanel_ExportButton.Click += ExportButton_Click;
@@ -581,7 +581,7 @@
             LockedPanel_ShredButton.Location = new Point(669, 45);
             LockedPanel_ShredButton.Name = "LockedPanel_ShredButton";
             LockedPanel_ShredButton.Size = new Size(105, 37);
-            LockedPanel_ShredButton.TabIndex = 9;
+            LockedPanel_ShredButton.TabIndex = 2;
             LockedPanel_ShredButton.Text = "&Shred 🗑️";
             LockedPanel_ShredButton.UseVisualStyleBackColor = false;
             LockedPanel_ShredButton.Click += ShredButton_Click;
@@ -620,7 +620,7 @@
             LockedPanel_DecryptButton.Location = new Point(669, 42);
             LockedPanel_DecryptButton.Name = "LockedPanel_DecryptButton";
             LockedPanel_DecryptButton.Size = new Size(105, 37);
-            LockedPanel_DecryptButton.TabIndex = 8;
+            LockedPanel_DecryptButton.TabIndex = 1;
             LockedPanel_DecryptButton.Text = "&Decrypt 🔑";
             LockedPanel_DecryptButton.UseVisualStyleBackColor = false;
             LockedPanel_DecryptButton.Click += DecryptButton_Click;
@@ -780,7 +780,7 @@
             LockedPanel_ExplorerButton.Location = new Point(669, 45);
             LockedPanel_ExplorerButton.Name = "LockedPanel_ExplorerButton";
             LockedPanel_ExplorerButton.Size = new Size(105, 37);
-            LockedPanel_ExplorerButton.TabIndex = 6;
+            LockedPanel_ExplorerButton.TabIndex = 4;
             LockedPanel_ExplorerButton.Text = "E&xplorer 📁";
             LockedPanel_ExplorerButton.UseVisualStyleBackColor = false;
             LockedPanel_ExplorerButton.Click += ShowInExplorerButton_Click;
@@ -807,7 +807,7 @@
             RelocationPanel_RemoveButton.Location = new Point(434, 460);
             RelocationPanel_RemoveButton.Name = "RelocationPanel_RemoveButton";
             RelocationPanel_RemoveButton.Size = new Size(83, 37);
-            RelocationPanel_RemoveButton.TabIndex = 20;
+            RelocationPanel_RemoveButton.TabIndex = 2;
             RelocationPanel_RemoveButton.Text = "Re&move";
             RelocationPanel_RemoveButton.UseVisualStyleBackColor = false;
             RelocationPanel_RemoveButton.Click += RemoveButton_Click;
@@ -821,7 +821,7 @@
             RelocationPanel_RelocateButton.Location = new Point(345, 460);
             RelocationPanel_RelocateButton.Name = "RelocationPanel_RelocateButton";
             RelocationPanel_RelocateButton.Size = new Size(83, 37);
-            RelocationPanel_RelocateButton.TabIndex = 19;
+            RelocationPanel_RelocateButton.TabIndex = 1;
             RelocationPanel_RelocateButton.Text = "&Relocate";
             RelocationPanel_RelocateButton.UseVisualStyleBackColor = false;
             RelocationPanel_RelocateButton.Click += RelocateButton_Click;
@@ -1262,7 +1262,7 @@
             KeysPanel_SearchTextBox.Location = new Point(22, 498);
             KeysPanel_SearchTextBox.Name = "KeysPanel_SearchTextBox";
             KeysPanel_SearchTextBox.Size = new Size(261, 29);
-            KeysPanel_SearchTextBox.TabIndex = 68;
+            KeysPanel_SearchTextBox.TabIndex = 3;
             KeysPanel_SearchTextBox.TextChanged += KeysPanel_SearchTextBox_TextChanged;
             // 
             // KeysPanel_OtherKeysRadioButton
@@ -1272,7 +1272,7 @@
             KeysPanel_OtherKeysRadioButton.Location = new Point(726, 498);
             KeysPanel_OtherKeysRadioButton.Name = "KeysPanel_OtherKeysRadioButton";
             KeysPanel_OtherKeysRadioButton.Size = new Size(103, 25);
-            KeysPanel_OtherKeysRadioButton.TabIndex = 70;
+            KeysPanel_OtherKeysRadioButton.TabIndex = 5;
             KeysPanel_OtherKeysRadioButton.Text = "Other keys";
             KeysPanel_OtherKeysRadioButton.UseVisualStyleBackColor = true;
             KeysPanel_OtherKeysRadioButton.CheckedChanged += KeysRadioButton_CheckedChanged;
@@ -1285,7 +1285,7 @@
             KeysPanel_MyKeysRadioButton.Location = new Point(635, 498);
             KeysPanel_MyKeysRadioButton.Name = "KeysPanel_MyKeysRadioButton";
             KeysPanel_MyKeysRadioButton.Size = new Size(85, 25);
-            KeysPanel_MyKeysRadioButton.TabIndex = 69;
+            KeysPanel_MyKeysRadioButton.TabIndex = 4;
             KeysPanel_MyKeysRadioButton.TabStop = true;
             KeysPanel_MyKeysRadioButton.Text = "My keys";
             KeysPanel_MyKeysRadioButton.UseVisualStyleBackColor = true;
@@ -1325,7 +1325,7 @@
             KeysPanel_ImportButton.Location = new Point(681, 42);
             KeysPanel_ImportButton.Name = "KeysPanel_ImportButton";
             KeysPanel_ImportButton.Size = new Size(93, 37);
-            KeysPanel_ImportButton.TabIndex = 29;
+            KeysPanel_ImportButton.TabIndex = 2;
             KeysPanel_ImportButton.Text = "&Import 📥 ";
             KeysPanel_ImportButton.UseVisualStyleBackColor = false;
             KeysPanel_ImportButton.Click += KeysPanel_ImportButton_Click;
@@ -1407,7 +1407,7 @@
             KeysPanel_CreateButton.Location = new Point(681, 42);
             KeysPanel_CreateButton.Name = "KeysPanel_CreateButton";
             KeysPanel_CreateButton.Size = new Size(93, 37);
-            KeysPanel_CreateButton.TabIndex = 29;
+            KeysPanel_CreateButton.TabIndex = 1;
             KeysPanel_CreateButton.Text = "&Create +";
             KeysPanel_CreateButton.UseVisualStyleBackColor = false;
             KeysPanel_CreateButton.Click += KeysPanel_CreateButton_Click;
@@ -1476,7 +1476,7 @@
             LogsPanel_LevelComboBox.Location = new Point(110, 95);
             LogsPanel_LevelComboBox.Name = "LogsPanel_LevelComboBox";
             LogsPanel_LevelComboBox.Size = new Size(197, 29);
-            LogsPanel_LevelComboBox.TabIndex = 75;
+            LogsPanel_LevelComboBox.TabIndex = 1;
             LogsPanel_LevelComboBox.SelectedIndexChanged += LogsPanel_LevelComboBox_SelectedIndexChanged;
             // 
             // LogsPanel_LastDayRadioButton
@@ -1486,7 +1486,7 @@
             LogsPanel_LastDayRadioButton.Location = new Point(110, 208);
             LogsPanel_LastDayRadioButton.Name = "LogsPanel_LastDayRadioButton";
             LogsPanel_LastDayRadioButton.Size = new Size(87, 25);
-            LogsPanel_LastDayRadioButton.TabIndex = 74;
+            LogsPanel_LastDayRadioButton.TabIndex = 5;
             LogsPanel_LastDayRadioButton.Text = "Last Day";
             LogsPanel_LastDayRadioButton.UseVisualStyleBackColor = true;
             LogsPanel_LastDayRadioButton.CheckedChanged += LogsRadioButton_CheckedChanged;
@@ -1498,7 +1498,7 @@
             LogsPanel_LastWeekRadioButton.Location = new Point(110, 183);
             LogsPanel_LastWeekRadioButton.Name = "LogsPanel_LastWeekRadioButton";
             LogsPanel_LastWeekRadioButton.Size = new Size(99, 25);
-            LogsPanel_LastWeekRadioButton.TabIndex = 73;
+            LogsPanel_LastWeekRadioButton.TabIndex = 4;
             LogsPanel_LastWeekRadioButton.Text = "Last Week";
             LogsPanel_LastWeekRadioButton.UseVisualStyleBackColor = true;
             LogsPanel_LastWeekRadioButton.CheckedChanged += LogsRadioButton_CheckedChanged;
@@ -1510,7 +1510,7 @@
             LogsPanel_LastMonthRadioButton.Location = new Point(110, 160);
             LogsPanel_LastMonthRadioButton.Name = "LogsPanel_LastMonthRadioButton";
             LogsPanel_LastMonthRadioButton.Size = new Size(106, 25);
-            LogsPanel_LastMonthRadioButton.TabIndex = 72;
+            LogsPanel_LastMonthRadioButton.TabIndex = 3;
             LogsPanel_LastMonthRadioButton.Text = "Last Month";
             LogsPanel_LastMonthRadioButton.UseVisualStyleBackColor = true;
             LogsPanel_LastMonthRadioButton.CheckedChanged += LogsRadioButton_CheckedChanged;
@@ -1523,7 +1523,7 @@
             LogsPanel_AllTimeRadioButton.Location = new Point(110, 135);
             LogsPanel_AllTimeRadioButton.Name = "LogsPanel_AllTimeRadioButton";
             LogsPanel_AllTimeRadioButton.Size = new Size(81, 25);
-            LogsPanel_AllTimeRadioButton.TabIndex = 71;
+            LogsPanel_AllTimeRadioButton.TabIndex = 2;
             LogsPanel_AllTimeRadioButton.TabStop = true;
             LogsPanel_AllTimeRadioButton.Text = "All time";
             LogsPanel_AllTimeRadioButton.UseVisualStyleBackColor = true;
@@ -1561,7 +1561,7 @@
             LogsPanel_SearchTextBox.Location = new Point(22, 498);
             LogsPanel_SearchTextBox.Name = "LogsPanel_SearchTextBox";
             LogsPanel_SearchTextBox.Size = new Size(261, 29);
-            LogsPanel_SearchTextBox.TabIndex = 75;
+            LogsPanel_SearchTextBox.TabIndex = 6;
             LogsPanel_SearchTextBox.TextChanged += LogsPanel_SearchTextBox_TextChanged;
             // 
             // LogsPanel_ListBox

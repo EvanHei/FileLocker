@@ -452,7 +452,7 @@
             LockedPanel_SignButton.Name = "LockedPanel_SignButton";
             LockedPanel_SignButton.Size = new Size(105, 37);
             LockedPanel_SignButton.TabIndex = 6;
-            LockedPanel_SignButton.Text = "    Sign 🖋️ ";
+            LockedPanel_SignButton.Text = "    S&ign 🖋️ ";
             LockedPanel_SignButton.UseVisualStyleBackColor = false;
             LockedPanel_SignButton.Click += SignButton_Click;
             // 
@@ -528,7 +528,7 @@
             LockedPanel_ExportButton.Name = "LockedPanel_ExportButton";
             LockedPanel_ExportButton.Size = new Size(105, 37);
             LockedPanel_ExportButton.TabIndex = 6;
-            LockedPanel_ExportButton.Text = "Export 📤";
+            LockedPanel_ExportButton.Text = "Ex&port 📤";
             LockedPanel_ExportButton.UseVisualStyleBackColor = false;
             LockedPanel_ExportButton.Click += ExportButton_Click;
             // 
@@ -582,7 +582,7 @@
             LockedPanel_ShredButton.Name = "LockedPanel_ShredButton";
             LockedPanel_ShredButton.Size = new Size(105, 37);
             LockedPanel_ShredButton.TabIndex = 9;
-            LockedPanel_ShredButton.Text = "Shred 🗑️";
+            LockedPanel_ShredButton.Text = "&Shred 🗑️";
             LockedPanel_ShredButton.UseVisualStyleBackColor = false;
             LockedPanel_ShredButton.Click += ShredButton_Click;
             // 
@@ -621,7 +621,7 @@
             LockedPanel_DecryptButton.Name = "LockedPanel_DecryptButton";
             LockedPanel_DecryptButton.Size = new Size(105, 37);
             LockedPanel_DecryptButton.TabIndex = 8;
-            LockedPanel_DecryptButton.Text = "Decrypt 🔑";
+            LockedPanel_DecryptButton.Text = "&Decrypt 🔑";
             LockedPanel_DecryptButton.UseVisualStyleBackColor = false;
             LockedPanel_DecryptButton.Click += DecryptButton_Click;
             // 
@@ -781,7 +781,7 @@
             LockedPanel_ExplorerButton.Name = "LockedPanel_ExplorerButton";
             LockedPanel_ExplorerButton.Size = new Size(105, 37);
             LockedPanel_ExplorerButton.TabIndex = 6;
-            LockedPanel_ExplorerButton.Text = "Explorer 📁";
+            LockedPanel_ExplorerButton.Text = "E&xplorer 📁";
             LockedPanel_ExplorerButton.UseVisualStyleBackColor = false;
             LockedPanel_ExplorerButton.Click += ShowInExplorerButton_Click;
             // 
@@ -808,7 +808,7 @@
             RelocationPanel_RemoveButton.Name = "RelocationPanel_RemoveButton";
             RelocationPanel_RemoveButton.Size = new Size(83, 37);
             RelocationPanel_RemoveButton.TabIndex = 20;
-            RelocationPanel_RemoveButton.Text = "Remove";
+            RelocationPanel_RemoveButton.Text = "Re&move";
             RelocationPanel_RemoveButton.UseVisualStyleBackColor = false;
             RelocationPanel_RemoveButton.Click += RemoveButton_Click;
             // 
@@ -822,7 +822,7 @@
             RelocationPanel_RelocateButton.Name = "RelocationPanel_RelocateButton";
             RelocationPanel_RelocateButton.Size = new Size(83, 37);
             RelocationPanel_RelocateButton.TabIndex = 19;
-            RelocationPanel_RelocateButton.Text = "Relocate";
+            RelocationPanel_RelocateButton.Text = "&Relocate";
             RelocationPanel_RelocateButton.UseVisualStyleBackColor = false;
             RelocationPanel_RelocateButton.Click += RelocateButton_Click;
             // 
@@ -952,7 +952,7 @@
             UnlockedPanel_SignButton.Name = "UnlockedPanel_SignButton";
             UnlockedPanel_SignButton.Size = new Size(105, 37);
             UnlockedPanel_SignButton.TabIndex = 3;
-            UnlockedPanel_SignButton.Text = "    Sign 🖋️ ";
+            UnlockedPanel_SignButton.Text = "    S&ign 🖋️ ";
             UnlockedPanel_SignButton.UseVisualStyleBackColor = false;
             UnlockedPanel_SignButton.Click += SignButton_Click;
             // 
@@ -1013,7 +1013,7 @@
             UnlockedPanel_ExplorerButton.Name = "UnlockedPanel_ExplorerButton";
             UnlockedPanel_ExplorerButton.Size = new Size(105, 37);
             UnlockedPanel_ExplorerButton.TabIndex = 4;
-            UnlockedPanel_ExplorerButton.Text = "Explorer 📁";
+            UnlockedPanel_ExplorerButton.Text = "E&xplorer 📁";
             UnlockedPanel_ExplorerButton.UseVisualStyleBackColor = false;
             UnlockedPanel_ExplorerButton.Click += ShowInExplorerButton_Click;
             // 
@@ -1082,7 +1082,7 @@
             UnlockedPanel_ShredButton.Name = "UnlockedPanel_ShredButton";
             UnlockedPanel_ShredButton.Size = new Size(105, 37);
             UnlockedPanel_ShredButton.TabIndex = 2;
-            UnlockedPanel_ShredButton.Text = "Shred 🗑️";
+            UnlockedPanel_ShredButton.Text = "&Shred 🗑️";
             UnlockedPanel_ShredButton.UseVisualStyleBackColor = false;
             UnlockedPanel_ShredButton.Click += ShredButton_Click;
             // 
@@ -1121,7 +1121,7 @@
             UnlockedPanel_EncryptButton.Name = "UnlockedPanel_EncryptButton";
             UnlockedPanel_EncryptButton.Size = new Size(105, 37);
             UnlockedPanel_EncryptButton.TabIndex = 1;
-            UnlockedPanel_EncryptButton.Text = "Encrypt 🔐";
+            UnlockedPanel_EncryptButton.Text = "&Encrypt 🔐";
             UnlockedPanel_EncryptButton.UseVisualStyleBackColor = false;
             UnlockedPanel_EncryptButton.Click += EncryptButton_Click;
             // 
@@ -1326,7 +1326,7 @@
             KeysPanel_ImportButton.Name = "KeysPanel_ImportButton";
             KeysPanel_ImportButton.Size = new Size(93, 37);
             KeysPanel_ImportButton.TabIndex = 29;
-            KeysPanel_ImportButton.Text = "Import 📥 ";
+            KeysPanel_ImportButton.Text = "&Import 📥 ";
             KeysPanel_ImportButton.UseVisualStyleBackColor = false;
             KeysPanel_ImportButton.Click += KeysPanel_ImportButton_Click;
             // 
@@ -1408,7 +1408,7 @@
             KeysPanel_CreateButton.Name = "KeysPanel_CreateButton";
             KeysPanel_CreateButton.Size = new Size(93, 37);
             KeysPanel_CreateButton.TabIndex = 29;
-            KeysPanel_CreateButton.Text = "Create +";
+            KeysPanel_CreateButton.Text = "&Create +";
             KeysPanel_CreateButton.UseVisualStyleBackColor = false;
             KeysPanel_CreateButton.Click += KeysPanel_CreateButton_Click;
             // 
@@ -1602,12 +1602,12 @@
             Controls.Add(SearchTextBox);
             Controls.Add(FileListBox);
             Controls.Add(MenuStrip);
+            Controls.Add(LogsPanel);
+            Controls.Add(KeysPanel);
             Controls.Add(UnlockedPanel);
             Controls.Add(NoFilesPanel);
             Controls.Add(RelocationPanel);
             Controls.Add(LockedPanel);
-            Controls.Add(LogsPanel);
-            Controls.Add(KeysPanel);
             Font = new Font("Segoe UI Emoji", 12F);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");

@@ -514,7 +514,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
     private void ExportButton_Click(object sender, EventArgs e)
     {
         using SaveFileDialog saveFileDialog = new();
-        saveFileDialog.Title = "Save Archive";
+        saveFileDialog.Title = "Export Archive";
         saveFileDialog.Filter = "Zip files (*.zip)|*.zip";
         saveFileDialog.FileName = selectedModel.FileName + ".zip";
         saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
@@ -612,7 +612,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
     private void KeysPanel_ImportButton_Click(object sender, EventArgs e)
     {
         using OpenFileDialog openFileDialog = new();
-        openFileDialog.Title = "Select Archive";
+        openFileDialog.Title = "Import Archive";
         openFileDialog.Filter = ".zip files (*.zip)|*.zip";
         openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         if (openFileDialog.ShowDialog() != DialogResult.OK)
@@ -635,7 +635,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         KeyPairModel model = (KeyPairModel)KeysPanel_ListBox.SelectedItem;
 
         using SaveFileDialog saveFileDialog = new();
-        saveFileDialog.Title = "Save Archive";
+        saveFileDialog.Title = "Export Archive";
         saveFileDialog.Filter = "Zip files (*.zip)|*.zip";
         saveFileDialog.FileName = model.Name + ".zip";
         saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);

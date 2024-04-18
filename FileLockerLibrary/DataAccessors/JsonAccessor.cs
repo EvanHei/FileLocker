@@ -14,6 +14,9 @@ using System.Threading.Tasks;
 
 namespace FileLockerLibrary.DataAccessors;
 
+/// <summary>
+/// Provides methods for accessing data stored in JSON format.
+/// </summary>
 public class JsonAccessor : IDataAccessor
 {
     // File structure:
@@ -31,6 +34,11 @@ public class JsonAccessor : IDataAccessor
     private string FileModelsDirectoryPath { get; set; }
     private string KeyPairModelsDirectoryPath { get; set; }
 
+    /// <summary>
+    /// Creates a new file model.
+    /// </summary>
+    /// <param name="model">The file model to create.</param>
+    /// <exception cref="InvalidOperationException">Thrown when the file name already exists.</exception>
     public void CreateFileModel(FileModel model)
     {
         if (GetAllFileNames().Contains(model.FileName))
@@ -40,6 +48,11 @@ public class JsonAccessor : IDataAccessor
         SaveFileModel(model);
     }
 
+    /// <summary>
+    /// Saves a file model to a JSON file.
+    /// </summary>
+    /// <param name="model">The file model to save.</param>
+    /// <exception cref="ArgumentNullException">Thrown when the model is null.</exception>
     public void SaveFileModel(FileModel model)
     {
         if (model == null)
@@ -51,6 +64,10 @@ public class JsonAccessor : IDataAccessor
         File.WriteAllText(jsonPath, jsonString);
     }
 
+    /// <summary>
+    /// Deletes a file model.
+    /// </summary>
+    /// <param name="model">The file model to delete.</param>
     public void DeleteFileModel(FileModel model)
     {
         string jsonPath = GetFileModelJsonPath(model.FileName);
@@ -61,6 +78,10 @@ public class JsonAccessor : IDataAccessor
         GlobalConfig.Logger.Log($"File removed from scope - {model.FileName}", LogLevel.Information);
     }
 
+    /// <summary>
+    /// Loads all file models from JSON files.
+    /// </summary>
+    /// <returns>A list of file models.</returns>
     public List<FileModel> LoadAllFileModels()
     {
         List<FileModel> output = new();
@@ -78,12 +99,22 @@ public class JsonAccessor : IDataAccessor
         return output;
     }
 
+    /// <summary>
+    /// Relocates a file.
+    /// </summary>
+    /// <param name="model">The file model to relocate.</param>
+    /// <param name="newPath">The new path for the file.</param>
     public void RelocateFile(FileModel model, string newPath)
     {
         model.Path = newPath;
         SaveFileModel(model);
     }
 
+    /// <summary>
+    /// Exports a file model to a ZIP archive.
+    /// </summary>
+    /// <param name="model">The file model to export.</param>
+    /// <param name="zipPath">The path where the ZIP archive will be saved.</param>
     public void ExportZipFileModel(FileModel model, string zipPath)
     {
         if (model == null)
@@ -141,6 +172,11 @@ public class JsonAccessor : IDataAccessor
         ZipFile.CreateFromDirectory(TempExportDirectoryPath, zipPath);
     }
 
+    /// <summary>
+    /// Imports a file model from a ZIP archive.
+    /// </summary>
+    /// <param name="zipPath">The path to the ZIP archive.</param>
+    /// <param name="savePath">The path where the file will be saved.</param>
     public void ImportZipFileModel(string zipPath, string savePath)
     {
         if (string.IsNullOrEmpty(zipPath))
@@ -186,6 +222,12 @@ public class JsonAccessor : IDataAccessor
         CreateFileModel(model);
     }
 
+    /// <summary>
+    /// Creates a new key pair model.
+    /// </summary>
+    /// <param name="model">The key pair model to create.</param>
+    /// <param name="password">The password for encrypting the private key.</param>
+    /// <exception cref="InvalidOperationException">Thrown when the model name already exists.</exception>
     public void CreateKeyPairModel(KeyPairModel model, string password)
     {
         if (LoadAllKeyPairModels().Any(keyPairModel => keyPairModel.Name == model.Name))
@@ -205,6 +247,10 @@ public class JsonAccessor : IDataAccessor
         GlobalConfig.Logger.Log($"Key pair created - {model.Name}", LogLevel.Information);
     }
 
+    /// <summary>
+    /// Deletes a key pair model.
+    /// </summary>
+    /// <param name="model">The key pair model to delete.</param>
     public void DeleteKeyPairModel(KeyPairModel model)
     {
         string jsonPath = Path.Combine(KeyPairModelsDirectoryPath, model.Name + Constants.JsonExtension);
@@ -215,16 +261,28 @@ public class JsonAccessor : IDataAccessor
         GlobalConfig.Logger.Log($"Key pair deleted - {model.Name}", LogLevel.Information);
     }
 
+    /// <summary>
+    /// Loads all private key pair models from JSON files.
+    /// </summary>
+    /// <returns>A list of key pair models.</returns>
     public List<KeyPairModel> LoadAllPrivateKeyPairModels()
     {
         return LoadAllKeyPairModels().Where(model => model.PrivateKey != null).ToList();
     }
 
+    /// <summary>
+    /// Loads all public key pair models from JSON files.
+    /// </summary>
+    /// <returns>A list of key pair models.</returns>
     public List<KeyPairModel> LoadAllPublicKeyPairModels()
     {
         return LoadAllKeyPairModels().Where(model => model.PrivateKey == null).ToList();
     }
 
+    /// <summary>
+    /// Loads all key pair models from JSON files.
+    /// </summary>
+    /// <returns>A list of key pair models.</returns>
     public List<KeyPairModel> LoadAllKeyPairModels()
     {
         List<KeyPairModel> output = new();
@@ -240,6 +298,11 @@ public class JsonAccessor : IDataAccessor
         return output;
     }
 
+    /// <summary>
+    /// Exports a key pair model to a ZIP archive.
+    /// </summary>
+    /// <param name="model">The key pair model to export.</param>
+    /// <param name="zipPath">The path where the ZIP archive will be saved.</param>
     public void ExportZipKeyPairModel(KeyPairModel model, string zipPath)
     {
         if (model == null)
@@ -275,6 +338,13 @@ public class JsonAccessor : IDataAccessor
         File.WriteAllText(tempJsonPath, jsonString);
     }
 
+    /// <summary>
+    /// Imports a key pair model from a ZIP archive.
+    /// </summary>
+    /// <param name="zipPath">The path to the ZIP archive containing the key pair model.</param>
+    /// <exception cref="ArgumentException">Thrown when the ZIP path is null or empty.</exception>
+    /// <exception cref="FileNotFoundException">Thrown when the archive does not contain the necessary file.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when the key pair model already exists.</exception>
     public void ImportZipKeyPairModel(string zipPath)
     {
         if (string.IsNullOrEmpty(zipPath))

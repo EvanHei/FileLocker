@@ -10,12 +10,21 @@ using System.Threading.Tasks;
 
 namespace FileLockerLibrary.Models;
 
+/// <summary>
+/// Metadata about a file.
+/// </summary>
 public class FileModel
 {
+    /// <summary>
+    /// Gets or sets the path to the file.
+    /// </summary>
     public string Path { get; set; }
 
     private string password;
 
+    /// <summary>
+    /// Gets or sets the password associated with the file.
+    /// </summary>
     [JsonIgnore]
     public string Password
     {
@@ -35,13 +44,22 @@ public class FileModel
         }
     }
 
+    /// <summary>
+    /// Gets or sets the encryption algorithm used for encrypting the file.
+    /// </summary>
     public EncryptionAlgorithm EncryptionAlgorithm { get; set; }
 
+    /// <summary>
+    /// Gets or sets the encryption key used to encrypt the file content.
+    /// </summary>
     [JsonIgnore]
     public byte[] EncryptionKey { get; set; }
 
     private byte[] encryptionKeySalt;
 
+    /// <summary>
+    /// Gets or sets the salt used in the derivation of the encryption key.
+    /// </summary>
     public byte[] EncryptionKeySalt
     {
         get { return encryptionKeySalt; }
@@ -57,6 +75,9 @@ public class FileModel
         }
     }
 
+    /// <summary>
+    /// Gets a value indicating whether the file is encrypted.
+    /// </summary>
     [JsonIgnore]
     public bool EncryptionStatus
     {
@@ -73,6 +94,10 @@ public class FileModel
     }
 
     private byte[] macKeySalt;
+
+    /// <summary>
+    /// Gets or sets the salt used in the derivation of the MAC key.
+    /// </summary>
     public byte[] MacKeySalt
     {
         get { return macKeySalt; }
@@ -85,15 +110,30 @@ public class FileModel
         }
     }
 
+    /// <summary>
+    /// Gets or sets the MAC key used for file integrity verification.
+    /// </summary>
     [JsonIgnore]
     public byte[] MacKey { get; set; }
 
+    /// <summary>
+    /// Gets or sets the MAC (Message Authentication Code) for file integrity verification.
+    /// </summary>
     public byte[] Mac { get; set; }
 
+    /// <summary>
+    /// Gets or sets the digital signature of the file.
+    /// </summary>
     public byte[] DigSig { get; set; }
 
+    /// <summary>
+    /// Gets or sets the digital signature algorithm used for signing the file.
+    /// </summary>
     public DigSigAlgorithm DigSigAlgorithm { get; set; }
 
+    /// <summary>
+    /// Gets a display string describing the digital signature status of the file.
+    /// </summary>
     [JsonIgnore]
     public string DigSigDisplay
     {
@@ -114,6 +154,9 @@ public class FileModel
         }
     }
 
+    /// <summary>
+    /// Gets a display name for the file, including encryption status and file name.
+    /// </summary>
     [JsonIgnore]
     public string DisplayName
     {
@@ -133,6 +176,9 @@ public class FileModel
         }
     }
 
+    /// <summary>
+    /// Gets the name of the file.
+    /// </summary>
     [JsonIgnore]
     public string FileName
     {
@@ -142,6 +188,9 @@ public class FileModel
         }
     }
 
+    /// <summary>
+    /// Gets the SHA hash of the file content.
+    /// </summary>
     [JsonIgnore]
     public byte[] Sha
     {
@@ -152,6 +201,10 @@ public class FileModel
         }
     }
 
+
+    /// <summary>
+    /// Gets the size of the file in bytes.
+    /// </summary>
     [JsonIgnore]
     public int SizeInBytes
     {
@@ -162,8 +215,15 @@ public class FileModel
         }
     }
 
+    /// <summary>
+    /// Gets or sets the date when the file was added.
+    /// </summary>
     public DateTime DateAdded { get; set; }
 
+    /// <summary>
+    /// Locks the file by encrypting it, generating a MAC, and removing any digital signature.
+    /// </summary>
+    /// <param name="encryptionAlgorithm">The encryption algorithm to use for encryption.</param>
     public void Lock(EncryptionAlgorithm encryptionAlgorithm)
     {
         Encrypt(encryptionAlgorithm);
@@ -171,6 +231,9 @@ public class FileModel
         RemoveDigSig();
     }
 
+    /// <summary>
+    /// Unlocks the file by decrypting it, removing the MAC, and removing any digital signature.
+    /// </summary>
     public void Unlock()
     {
         Decrypt();
@@ -178,6 +241,10 @@ public class FileModel
         RemoveDigSig();
     }
 
+    /// <summary>
+    /// Encrypts the file using the specified encryption algorithm.
+    /// </summary>
+    /// <param name="encryptionAlgorithm">The encryption algorithm to use.</param>
     private void Encrypt(EncryptionAlgorithm encryptionAlgorithm)
     {
         if (!File.Exists(Path))
@@ -215,6 +282,9 @@ public class FileModel
         GlobalConfig.Logger.Log($"File encrypted with {encryptionAlgorithm} - {System.IO.Path.GetFileNameWithoutExtension(FileName)}", LogLevel.Information);
     }
 
+    /// <summary>
+    /// Decrypts the file.
+    /// </summary>
     private void Decrypt()
     {
         if (!File.Exists(Path))
@@ -253,6 +323,10 @@ public class FileModel
         GlobalConfig.Logger.Log($"File decrypted with {EncryptionAlgorithm} - {FileName}", LogLevel.Information);
     }
 
+    /// <summary>
+    /// Validates the integrity of the file by verifying its MAC.
+    /// </summary>
+    /// <returns>True if the integrity check succeeds; otherwise, false.</returns>
     public bool ValidateIntegrity()
     {
         if (!File.Exists(Path))
@@ -273,6 +347,9 @@ public class FileModel
         return output;
     }
 
+    /// <summary>
+    /// Generates the MAC (Message Authentication Code) for the file.
+    /// </summary>
     private void GenerateMac()
     {
         if (!File.Exists(Path))
@@ -289,6 +366,9 @@ public class FileModel
         Mac = GlobalConfig.MacGenerator.GenerateMac(content);
     }
 
+    /// <summary>
+    /// Removes the MAC from the file.
+    /// </summary>
     private void RemoveMac()
     {
         Mac = new byte[0];
@@ -296,6 +376,11 @@ public class FileModel
         GlobalConfig.DataAccessor.SaveFileModel(this);
     }
 
+    /// <summary>
+    /// Generates a digital signature for the file using the specified key pair model and password.
+    /// </summary>
+    /// <param name="keyPairModel">The key pair model containing the private key for signing.</param>
+    /// <param name="password">The password used to decrypt the private key.</param>
     public void GenerateDigSig(KeyPairModel keyPairModel, string password)
     {
         if (!File.Exists(Path))
@@ -321,12 +406,19 @@ public class FileModel
         GlobalConfig.Logger.Log($"File signed with {DigSigAlgorithm} - {FileName}", LogLevel.Information);
     }
 
+    /// <summary>
+    /// Removes the digital signature from the file.
+    /// </summary>
     public void RemoveDigSig()
     {
         DigSig = null;
         GlobalConfig.DataAccessor.SaveFileModel(this);
     }
 
+    /// <summary>
+    /// Overwrites the file with random data and then deletes it, making it unrecoverable.
+    /// </summary>
+    /// <exception cref="ArgumentException">Thrown when the file path is null or empty.</exception>
     public void ShredFile()
     {
         if (string.IsNullOrEmpty(Path))

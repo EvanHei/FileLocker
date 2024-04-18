@@ -1,7 +1,8 @@
-﻿using System;
+﻿using FileLockerLibrary.KeyDerivers;
+using System;
 using Xunit;
 
-namespace FileLockerLibrary.Tests.EncryptorTests;
+namespace FileLockerLibrary.Tests.KeyDeriverTests;
 
 public class Pbkdf2KeyDeriverTests
 {

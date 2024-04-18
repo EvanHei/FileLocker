@@ -1,4 +1,6 @@
-﻿namespace FileLockerLibrary;
+﻿using FileLockerLibrary.Models;
+
+namespace FileLockerLibrary.Loggers;
 
 /// <summary>
 /// Represents a logger interface for logging messages with different log levels.

@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using FileLockerLibrary.Encryptors;
+using System.Security.Cryptography;
 using System.Text;
 using Xunit;
 

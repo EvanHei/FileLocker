@@ -1,4 +1,12 @@
-﻿using System;
+﻿using FileLockerLibrary.DataAccessors;
+using FileLockerLibrary.Encryptors;
+using FileLockerLibrary.Hashers;
+using FileLockerLibrary.KeyDerivers;
+using FileLockerLibrary.Loggers;
+using FileLockerLibrary.MacGenerators;
+using FileLockerLibrary.Signers;
+using FileLockerLibrary.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

@@ -1,4 +1,4 @@
-﻿namespace FileLockerLibrary;
+﻿namespace FileLockerLibrary.KeyDerivers;
 
 /// <summary>
 /// Interface for deriving cryptographic keys.

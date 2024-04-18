@@ -1,4 +1,5 @@
 ﻿using FileLockerLibrary;
+using FileLockerLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,8 +10,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinFormsUI.Interfaces;
 
-namespace WinFormsUI;
+namespace WinFormsUI.Forms;
 
 public partial class DecryptForm : Form
 {

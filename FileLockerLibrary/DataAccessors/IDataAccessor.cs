@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using FileLockerLibrary.Models;
+using System.Collections.Generic;
 using System.Reflection;
 
-namespace FileLockerLibrary;
+namespace FileLockerLibrary.DataAccessors;
 
 /// <summary>
 /// Interface for accessing file-related data and operations.

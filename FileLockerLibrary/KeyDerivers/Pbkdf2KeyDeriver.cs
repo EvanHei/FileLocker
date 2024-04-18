@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 
-namespace FileLockerLibrary;
+namespace FileLockerLibrary.KeyDerivers;
 
 /// <summary>
 /// Implementation of <see cref="IKeyDeriver"/> interface using the PBKDF2 key derivation algorithm.

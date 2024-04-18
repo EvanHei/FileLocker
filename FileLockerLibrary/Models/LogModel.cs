@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace FileLockerLibrary;
+namespace FileLockerLibrary.Models;
 
 /// <summary>
 /// Represents a log entry containing information about the timestamp, log level, and message.

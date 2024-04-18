@@ -1,4 +1,4 @@
-﻿namespace WinFormsUI
+﻿namespace WinFormsUI.Forms
 {
     partial class DashboardForm
     {

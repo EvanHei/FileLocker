@@ -8,7 +8,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace FileLockerLibrary;
+namespace FileLockerLibrary.Models;
 
 public class FileModel
 {

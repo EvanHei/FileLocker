@@ -1,4 +1,5 @@
 ﻿using FileLockerLibrary;
+using FileLockerLibrary.Encryptors;
 using System;
 using System.IO;
 using System.Linq;

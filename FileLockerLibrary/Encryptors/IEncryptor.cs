@@ -1,4 +1,4 @@
-﻿namespace FileLockerLibrary;
+﻿namespace FileLockerLibrary.Encryptors;
 
 /// <summary>
 /// Represents an interface for encryption and decryption operations.

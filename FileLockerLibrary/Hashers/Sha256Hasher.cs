@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileLockerLibrary;
+namespace FileLockerLibrary.Hashers;
 
 /// <summary>
 /// Implementation of <see cref="IHasher"/> interface using SHA-256 hashing algorithm.

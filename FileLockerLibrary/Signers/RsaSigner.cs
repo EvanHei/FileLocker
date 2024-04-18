@@ -1,11 +1,12 @@
-﻿using System;
+﻿using FileLockerLibrary.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileLockerLibrary;
+namespace FileLockerLibrary.Signers;
 
 public class RsaSigner : ISigner
 {

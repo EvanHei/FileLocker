@@ -1,7 +1,8 @@
-﻿using System;
+﻿using FileLockerLibrary.MacGenerators;
+using System;
 using Xunit;
 
-namespace FileLockerLibrary.Tests.EncryptorTests;
+namespace FileLockerLibrary.Tests.HmacGeneratorTests;
 
 public class HmacGeneratorTests
 {

@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileLockerLibrary;
+namespace FileLockerLibrary.Encryptors;
 
 /// <summary>
 /// Provides functionality to encrypt and decrypt data using TripleDES encryption algorithm.

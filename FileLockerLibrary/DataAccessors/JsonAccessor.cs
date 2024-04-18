@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FileLockerLibrary.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Formats.Tar;
@@ -11,7 +12,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace FileLockerLibrary;
+namespace FileLockerLibrary.DataAccessors;
 
 public class JsonAccessor : IDataAccessor
 {

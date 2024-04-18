@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WinFormsUI;
+namespace WinFormsUI.Interfaces;
 
 /// <summary>
 /// Represents a caller for a create key pair form.

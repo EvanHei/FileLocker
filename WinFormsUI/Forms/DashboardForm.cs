@@ -7,8 +7,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
+using WinFormsUI.Interfaces;
+using FileLockerLibrary.Models;
 
-namespace WinFormsUI;
+namespace WinFormsUI.Forms;
 
 public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCaller, IImportFormCaller, ISignFormCaller, ICreateKeyPairFormCaller
 {

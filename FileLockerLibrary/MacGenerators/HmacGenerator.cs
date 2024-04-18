@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 
-namespace FileLockerLibrary;
+namespace FileLockerLibrary.MacGenerators;
 
 /// <summary>
 /// Implementation of the <see cref="IMacGenerator"/> interface using HMAC-SHA256.

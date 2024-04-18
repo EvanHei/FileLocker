@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using FileLockerLibrary.Models;
 
-namespace FileLockerLibrary;
+namespace FileLockerLibrary.Signers;
 
 public class EcdsaSigner : ISigner
 {

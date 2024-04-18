@@ -8,8 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinFormsUI.Interfaces;
 
-namespace WinFormsUI;
+namespace WinFormsUI.Forms;
 
 public partial class ImportForm : Form
 {

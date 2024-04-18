@@ -1,4 +1,4 @@
-﻿namespace FileLockerLibrary;
+﻿namespace FileLockerLibrary.MacGenerators;
 
 /// <summary>
 /// Interface for generating and validating message authentication codes (MACs).

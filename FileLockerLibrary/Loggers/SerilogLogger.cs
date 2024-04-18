@@ -1,8 +1,9 @@
 ﻿using System;
 using System.IO;
+using FileLockerLibrary.Models;
 using Serilog;
 
-namespace FileLockerLibrary;
+namespace FileLockerLibrary.Loggers;
 
 /// <summary>
 /// Implementation of the <see cref="ILogger"/> interface using Serilog.

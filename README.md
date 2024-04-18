@@ -12,13 +12,24 @@ A Windows desktop app for cryptographically protecting files.
 ## Getting Started
 
 <details>
-<summary><strong>Download</strong></summary>
+<summary><strong>From installer</strong></summary>
 <em>Coming Soon</em>
 </details>
 
 <details>
-<summary><strong>Installation</strong></summary>
-<em>Coming Soon</em>
+<summary><strong>From source code</strong></summary>
+Download the .NET SDK from Microsoft's website <a href="https://dotnet.microsoft.com/download"> here</a>. Verify installation by running the following command:
+
+```bash
+dotnet --version
+```
+
+Navigate to FileLocker\WinFormsUI\ and launch the app with the following command:
+
+```bash
+dotnet run
+```
+
 </details>
 
 ## Guide
@@ -27,19 +38,21 @@ A Windows desktop app for cryptographically protecting files.
 
 <details>
 <summary><strong>Summary</strong></summary>
-The Dashboard Form also displays files within FileLocker's scope and allows addition and navigation of files.
+The Dashboard Form displays files added to FileLocker's scope, allows addition of files, provides a key generation service, and log navigation feature.
 
 - **Guide 📖**: opens the GitHub repository in the default browser.
+- **Keys 🔑**: displays the key panel.
+- **Logs 📜**: displays the log panel.
 - **Add ▼**: shows dropdown options to add files to the scope by manually selecting or importing an archive.
 - **File List**: right click on a file to display options or drag and drop files onto the list to add them.
-- **Search Bar**: filters files based on the search query. Filter by file type by searching `.txt` or `.png`, or filter by algorithm by searching `.aes` or `.3des`.
+- **Search Box**: filters files based on the search query. Filter by file type by searching `.txt` or `.png`, or filter by algorithm by searching `.aes` or `.3des`.
 
-<img src="./images/DashboardForm_NoFilesPanel.png" alt="Dashboard Form with Locked File Selected" width="1000">
+<img src="./images/DashboardForm_NoFilesPanel.png" alt="Dashboard with no files" width="1000">
 
 </details>
 
 <details>
-<summary><strong>Locked File</strong></summary>
+<summary><strong>Locked File Panel</strong></summary>
 A locked file can be decrypted, shredded, shown in File Explorer, or exported.
 
 - **📋 Path**: copies the path to the clipboard.
@@ -49,12 +62,12 @@ A locked file can be decrypted, shredded, shown in File Explorer, or exported.
 - **Explorer 📁**: launches File Explorer with the file selected.
 - **Export 📤**: exports the file to a .zip archive.
 
-<img src="./images/DashboardForm_LockedPanel.png" alt="Dashboard Form with Locked File Selected" width="1000">
+<img src="./images/DashboardForm_LockedPanel.png" alt="Dashboard with locked file selected" width="1000">
 
 </details>
 
 <details>
-<summary><strong>Unlocked File</strong></summary>
+<summary><strong>Unlocked File Panel</strong></summary>
 An unlocked file can be encrypted, shredded, or shown in File Explorer.
 
 - **📋 Path**: copies the path to the clipboard.
@@ -63,28 +76,42 @@ An unlocked file can be encrypted, shredded, or shown in File Explorer.
 - **Shred 🗑️**: shreds the file by overwriting its contents with random data and then deleting.
 - **Explorer 📁**: launches File Explorer with the file selected.
 
-<img src="./images/DashboardForm_UnlockedPanel.png" alt="Dashboard Form with Unlocked File Selected" width="1000">
+<img src="./images/DashboardForm_UnlockedPanel.png" alt="Dashboard with unlocked file selected" width="1000">
 </details>
 
 <details>
-<summary><strong>Moved/Deleted File</strong></summary>
+<summary><strong>Moved/Deleted File Panel</strong></summary>
 An moved or deleted file can be relocated or removed from scope.
 
 - **Relocate**: find the moved file.
 - **Remove**: remove file from scope.
 
-<img src="./images/DashboardForm_RelocationPanel.png" alt="Dashboard Form with Unlocked File Selected" width="1000">
+<img src="./images/DashboardForm_RelocationPanel.png" alt="Relocation Panel" width="1000">
 </details>
 
 <details>
-<summary><strong>Keys</strong></summary>
+<summary><strong>Keys Panel</strong></summary>
 Keys pairs can be created and public keys can be imported.
 
 - **Create**: opens the Create Key Pair Form.
 - **Import**: imports a selected public key archive.
 - **Key Lists**: right click on a key to display options.
 
-<img src="./images/DashboardForm_KeysPanel.png" alt="Dashboard Form with Unlocked File Selected" width="1000">
+<img src="./images/DashboardForm_KeysPanel.png" alt="Keys panel" width="1000">
+</details>
+
+<details>
+<summary><strong>Logs Panel</strong></summary>
+Logs can be viewed and navigated using the various filters.
+
+- **Level**: filter by log level.
+- **All time**: display all logs.
+- **Last Month**: display logs within the last month.
+- **Last Week**: display logs within the last week.
+- **Last Day**: display logs within the last day.
+- **Search Box**: filters logs based on the search query.
+
+<img src="./images/DashboardForm_LogsPanel.png" alt="Logs panel" width="1000">
 </details>
 
 ---
@@ -161,11 +188,10 @@ The Create Key Pair Form allows creation of a public/private key pair.
 - **Confidentiality**: AES and 3DES encryption.
 - **Integrity**: HMAC integrity checks of stored and transmitted data.
 - **Password Strength Policy**: strong passwords mitigate brute-force attacks.
-- **Password Generator**: passwords generated without the need to manually type, mitigating the effect of keystroke logging malware.
+- **Password Generation**: passwords generated without the need to manually type, mitigating the effect of keystroke logging malware.
 - **Password Management**: password inputs cleared after a set time if the device is left running.
 - **Password-Based Key Derivation**: encryption keys derived from passwords.
 - **Logging**: important events logged such as encryption and decryption.
 - **Constant-Time Comparison**: libraries use constant-time comparison to mitigate timing attacks.
-- **File Shredder**: files deleted without leaving traces by overwriting with random data.
-- **Customization**: selection of different algorithms.
+- **File Shredding**: files deleted without leaving traces by overwriting with random data.
 - **SOLID Principles**: facilitate quick code updates in the case of a new exploit.

@@ -439,6 +439,9 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
         FileModel model = (FileModel)FileListBox.SelectedItem;
 
+        if (model == null)
+            return;
+
         if (model.EncryptionStatus == true)
         {
             if (MessageBox.Show("Removing a locked file means it can never be unlocked. Are you sure you want to proceed?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)

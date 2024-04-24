@@ -1,6 +1,5 @@
 ﻿using FileLockerLibrary;
 using FileLockerLibrary.Models;
-using OxyPlot;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

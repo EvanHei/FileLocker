@@ -1,7 +1,4 @@
 using FileLockerLibrary;
-using OxyPlot.Series;
-using OxyPlot.WindowsForms;
-using OxyPlot;
 using System.Collections;
 using System.Diagnostics;
 using System.IO;

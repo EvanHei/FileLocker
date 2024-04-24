@@ -45,6 +45,8 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
 
         if (FileListBox.Items.Count < 1)
             ShowNoFilesPanel();
+        else
+            FileListBox.ContextMenuStrip = FileListBoxContextMenuStrip;
 
         // a non-file panel is shown
         if (FileListBox.SelectedIndex == -1)
@@ -78,6 +80,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         RelocationPanel.Visible = false;
         KeysPanel.Visible = false;
         LogsPanel.Visible = false;
+        FileListBox.ContextMenuStrip = null;
     }
 
     private void ShowUnlockedPanel()
@@ -405,15 +408,6 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         encryptForm.ShowDialog();
     }
 
-    private void FileListBox_MouseDown(object sender, MouseEventArgs e)
-    {
-        if (e.Button == MouseButtons.Right)
-        {
-            FileListBox.SelectedIndex = FileListBox.IndexFromPoint(e.Location);
-            FileListBox.ContextMenuStrip.Show(FileListBox, e.Location);
-        }
-    }
-
     private void FileListBox_DragDrop(object? sender, DragEventArgs e)
     {
         FileListBox.BackColor = Color.FromArgb(40, 40, 40);
@@ -609,6 +603,9 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
     {
         KeyPairModel model = (KeyPairModel)KeysPanel_ListBox.SelectedItem;
 
+        if (model == null)
+            return;            
+
         try
         {
             GlobalConfig.DataAccessor.DeleteKeyPairModel(model);
@@ -635,6 +632,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         {
             GlobalConfig.DataAccessor.ImportZipKeyPairModel(openFileDialog.FileName);
             ShowKeysPanel();
+            KeysPanel_PublicKeysRadioButton.Checked = true;
         }
         catch (InvalidOperationException ex)
         {
@@ -649,6 +647,9 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
     private void KeyListBox_ExportItem_Click(object sender, EventArgs e)
     {
         KeyPairModel model = (KeyPairModel)KeysPanel_ListBox.SelectedItem;
+
+        if (model == null)
+            return;
 
         using SaveFileDialog saveFileDialog = new();
         saveFileDialog.Title = "Export Archive";
@@ -687,10 +688,17 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         List<KeyPairModel> privateKeyPairs = GlobalConfig.DataAccessor.LoadAllPrivateKeyPairModels();
         List<KeyPairModel> publicKeyPairs = GlobalConfig.DataAccessor.LoadAllPublicKeyPairModels();
 
+        // update list
         if (KeysPanel_MyKeysRadioButton.Checked)
             KeysPanel_ListBox.DataSource = privateKeyPairs.Where(keyPairModel => keyPairModel.DisplayName.ToLower().Contains(searchText)).ToList();
         else
             KeysPanel_ListBox.DataSource = publicKeyPairs.Where(keyPairModel => keyPairModel.DisplayName.ToLower().Contains(searchText)).ToList();
+
+        // toggle ContextMenuStrip on/off
+        if (KeysPanel_ListBox.Items.Count < 1)
+            KeysPanel_ListBox.ContextMenuStrip = null;
+        else
+            KeysPanel_ListBox.ContextMenuStrip = KeysListBoxContextMenuStrip;
 
         KeysPanel_ListBox.Refresh();
     }

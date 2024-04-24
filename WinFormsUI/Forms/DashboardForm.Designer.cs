@@ -186,7 +186,6 @@
             FileListBox.SelectedIndexChanged += FileListBox_SelectedIndexChanged;
             FileListBox.DragDrop += FileListBox_DragDrop;
             FileListBox.DragEnter += FileListBox_DragEnter;
-            FileListBox.MouseDown += FileListBox_MouseDown;
             // 
             // FileListBoxContextMenuStrip
             // 

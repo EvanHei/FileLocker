@@ -33,7 +33,7 @@ A Windows desktop app for cryptographically protecting files.
 
    <img src="./images/CertificateImportWizard.png" width="400">
 
-4. Select "Place all certificates in the following store" and click "Browse"
+4. Select "Place all certificates in the following store" and click "Browse..."
 
    <img src="./images/CertificateStore.png" width="400">
 

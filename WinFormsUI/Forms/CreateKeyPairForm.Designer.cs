@@ -97,7 +97,7 @@
             ClearButton.Location = new Point(302, 377);
             ClearButton.Name = "ClearButton";
             ClearButton.Size = new Size(148, 37);
-            ClearButton.TabIndex = 51;
+            ClearButton.TabIndex = 8;
             ClearButton.Text = "Clear";
             ClearButton.UseVisualStyleBackColor = false;
             ClearButton.Click += ClearButton_Click;
@@ -123,7 +123,7 @@
             SigningAlgorithmComboBox.Location = new Point(162, 196);
             SigningAlgorithmComboBox.Name = "SigningAlgorithmComboBox";
             SigningAlgorithmComboBox.Size = new Size(277, 29);
-            SigningAlgorithmComboBox.TabIndex = 49;
+            SigningAlgorithmComboBox.TabIndex = 4;
             SigningAlgorithmComboBox.SelectedIndexChanged += SigningAlgorithmComboBox_SelectedIndexChanged;
             SigningAlgorithmComboBox.Click += Control_Click;
             // 
@@ -147,7 +147,7 @@
             GenerateRandomButton.Location = new Point(148, 377);
             GenerateRandomButton.Name = "GenerateRandomButton";
             GenerateRandomButton.Size = new Size(148, 37);
-            GenerateRandomButton.TabIndex = 47;
+            GenerateRandomButton.TabIndex = 7;
             GenerateRandomButton.Text = "Generate Random";
             GenerateRandomButton.UseVisualStyleBackColor = false;
             GenerateRandomButton.Click += GenerateRandomButton_Click;
@@ -161,7 +161,7 @@
             EyeballLabel.Location = new Point(405, 164);
             EyeballLabel.Name = "EyeballLabel";
             EyeballLabel.Size = new Size(32, 21);
-            EyeballLabel.TabIndex = 37;
+            EyeballLabel.TabIndex = 6;
             EyeballLabel.Text = "👁";
             EyeballLabel.Click += EyeballLabel_Click;
             // 
@@ -173,7 +173,7 @@
             ConfirmPasswordMaskedTextBox.Location = new Point(162, 161);
             ConfirmPasswordMaskedTextBox.Name = "ConfirmPasswordMaskedTextBox";
             ConfirmPasswordMaskedTextBox.Size = new Size(277, 29);
-            ConfirmPasswordMaskedTextBox.TabIndex = 45;
+            ConfirmPasswordMaskedTextBox.TabIndex = 3;
             ConfirmPasswordMaskedTextBox.UseSystemPasswordChar = true;
             ConfirmPasswordMaskedTextBox.Click += Control_Click;
             ConfirmPasswordMaskedTextBox.TextChanged += ConfirmPasswordMaskedTextBox_TextChanged;
@@ -199,7 +199,7 @@
             EnterButton.Location = new Point(445, 157);
             EnterButton.Name = "EnterButton";
             EnterButton.Size = new Size(34, 37);
-            EnterButton.TabIndex = 44;
+            EnterButton.TabIndex = 5;
             EnterButton.Text = "→\n";
             EnterButton.UseVisualStyleBackColor = false;
             EnterButton.Click += EnterButton_Click;
@@ -267,7 +267,7 @@
             PasswordMaskedTextBox.Location = new Point(162, 128);
             PasswordMaskedTextBox.Name = "PasswordMaskedTextBox";
             PasswordMaskedTextBox.Size = new Size(277, 29);
-            PasswordMaskedTextBox.TabIndex = 36;
+            PasswordMaskedTextBox.TabIndex = 2;
             PasswordMaskedTextBox.UseSystemPasswordChar = true;
             PasswordMaskedTextBox.Click += Control_Click;
             PasswordMaskedTextBox.TextChanged += PasswordMaskedTextBox_TextChanged;
@@ -297,7 +297,7 @@
             NameMaskedTextBox.Location = new Point(160, 49);
             NameMaskedTextBox.Name = "NameMaskedTextBox";
             NameMaskedTextBox.Size = new Size(277, 29);
-            NameMaskedTextBox.TabIndex = 52;
+            NameMaskedTextBox.TabIndex = 1;
             NameMaskedTextBox.Click += Control_Click;
             NameMaskedTextBox.TextChanged += NameMaskedTextBox_TextChanged;
             // 

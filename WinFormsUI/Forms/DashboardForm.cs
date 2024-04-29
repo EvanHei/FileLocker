@@ -278,7 +278,7 @@ public partial class DashboardForm : Form, IEncryptFormCaller, IDecryptFormCalle
         for (i = 0; Math.Round(dblBytes / 1024) >= 1; i++)
             dblBytes /= 1024;
 
-        return $"{dblBytes:n1} {suffixes[i]}";
+        return $"{(int)dblBytes} {suffixes[i]}";
     }
 
     private void AddButton_MouseDown(object sender, MouseEventArgs e)

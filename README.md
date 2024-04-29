@@ -53,7 +53,7 @@ A Windows desktop app for cryptographically protecting files.
 1. Download the .msixbundle file from [Releases](https://github.com/EvanHei/FileLocker/releases) (SHA256 below)
 
    ```SHA256
-   77bd9a0ce98171bf5335f21b3ff38a2a0a81b85e4d4f7f5baa2361cdf304257a
+   2ef7caa746e817e205399af2237f7c2734c91cea8d429b2831d5c2e5ac6f8522
    ```
 
 2. Double-click the file and click "Install"

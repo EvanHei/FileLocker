@@ -9,7 +9,7 @@
   <Identity
     Name="63fb33b6-a9f3-4fcb-8019-ffccd149eb9d"
     Publisher="CN=Evan Heidebrink"
-    Version="1.0.3.0" />
+    Version="1.0.0.0" />
 
   <Properties>
     <DisplayName>FileLockerInstaller</DisplayName>

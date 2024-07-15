@@ -1,6 +1,6 @@
 # FileLocker
 
-A Windows desktop app for cryptographically protecting files.
+A Windows desktop app for cryptographically protecting files using symmetric and asymmetric techniques.
 
 ## Table of Contents
 
@@ -12,76 +12,17 @@ A Windows desktop app for cryptographically protecting files.
 ## Getting Started
 
 <details>
-<summary><strong>Run from installer</strong></summary>
+<summary><strong>Run from executable</strong></summary>
 
-<strong>Import Certificate</strong>
-
----
-
-1. Download the .cer file from [Releases](https://github.com/EvanHei/FileLocker/releases)
-   (SHA256 below)
+1. Download [FileLocker.exe](https://github.com/EvanHei/FileLocker/releases/download/v1.0.1/FileLocker.exe) (SHA256 below)
 
    ```SHA256
-   3f21fed3bb718a54e5e0beddf99e02429032a3ca38a696f09894620201db125a
+   af609e3f97af864e44cdee241bad2fe951c7758d2393b2226c9b0f5724b4df53
    ```
 
-2. Right-click the file and click "Install Certificate"
+2. Double-click FileLocker.exe, click "More info", and then click "Run anyway". This prompt will disappear the next time FileLocker is run.
 
-   <img src="./images/InstallCertificate.png" width="200">
-
-3. Select "Local Machine" and click "Next" (you may need to grant permission in a popup window)
-
-   <img src="./images/CertificateImportWizard.png" width="400">
-
-4. Select "Place all certificates in the following store" and click "Browse..."
-
-   <img src="./images/CertificateStore.png" width="400">
-
-5. Select "Trusted Root Certification Authorities", click "OK", and click "Next" on the Certificate Import Wizard
-
-   <img src="./images/SelectCertificateStore.png" width="300">
-
-6. Click "Finish"
-
-   <img src="./images/CompleteCertificateImport.png" width="400">
-
-<br>
-<strong>Installation</strong>
-
----
-
-1. Download the .msixbundle file from [Releases](https://github.com/EvanHei/FileLocker/releases) (SHA256 below)
-
-   ```SHA256
-   2ef7caa746e817e205399af2237f7c2734c91cea8d429b2831d5c2e5ac6f8522
-   ```
-
-2. Double-click the file and click "Install"
-
-   <img src="./images/InstallFileLocker.png" width="400">
-
-3. Search "FileLocker" in the Windows search bar
-4. Click "Open" to run and "Uninstall" to uninstall
-
-   <img src="./images/OpenFileLocker.png" width="300">
-
-<br>
-<strong>Remove Certificate</strong>
-
----
-
-1. Search "certificates" in the Windows search bar
-
-   <img src="./images/SearchCertificates.png" width="400">
-
-2. Open "Manage user certificates"
-3. Navigate to "Trusted Root Certification Authorities/Certificates," find the certificate issued by "Evan Heidebrink" to "Evan Heidebrink", right-click, and click "Delete"
-
-   <img src="./images/DeleteCertificate.png" width="800">
-
-4. Click "Yes"
-
-   <img src="./images/ConfirmDeleteCertificate.png" width="300">
+   <img src="./images/MoreInfo.png" width="350"><img src="./images/RunAnyway.png" width="350">
 
 </details>
 

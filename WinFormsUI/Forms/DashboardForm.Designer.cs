@@ -67,7 +67,7 @@
             LockedPanel_DecryptDescriptionLabel = new Label();
             LockedPanel_DecryptButton = new Button();
             LockedPanel_ShaValueLabel = new Label();
-            LockedPanel_ShaLabel = new Label();
+            LockedPanel_Sha256Label = new Label();
             LockedPanel_SizeValueLabel = new Label();
             LockedPanel_SizeLabel = new Label();
             LockedPanel_PathValueLabel = new Label();
@@ -106,7 +106,7 @@
             UnlockedPanel_EncryptDescriptionLabel = new Label();
             UnlockedPanel_EncryptButton = new Button();
             UnlockedPanel_ShaValueLabel = new Label();
-            UnlockedPanel_ShaLabel = new Label();
+            UnlockedPanel_Sha256Label = new Label();
             UnlockedPanel_SizeValueLabel = new Label();
             UnlockedPanel_SizeLabel = new Label();
             UnlockedPanel_PathValueLabel = new Label();
@@ -363,7 +363,7 @@
             LockedPanel.Controls.Add(LockedPanel_ShredGroupBox);
             LockedPanel.Controls.Add(LockedPanel_DecryptGroupBox);
             LockedPanel.Controls.Add(LockedPanel_ShaValueLabel);
-            LockedPanel.Controls.Add(LockedPanel_ShaLabel);
+            LockedPanel.Controls.Add(LockedPanel_Sha256Label);
             LockedPanel.Controls.Add(LockedPanel_SizeValueLabel);
             LockedPanel.Controls.Add(LockedPanel_SizeLabel);
             LockedPanel.Controls.Add(LockedPanel_PathValueLabel);
@@ -635,16 +635,16 @@
             LockedPanel_ShaValueLabel.TabIndex = 34;
             LockedPanel_ShaValueLabel.Text = "<sha>";
             // 
-            // LockedPanel_ShaLabel
+            // LockedPanel_Sha256Label
             // 
-            LockedPanel_ShaLabel.AutoSize = true;
-            LockedPanel_ShaLabel.BackColor = Color.FromArgb(32, 32, 32);
-            LockedPanel_ShaLabel.ForeColor = SystemColors.ButtonFace;
-            LockedPanel_ShaLabel.Location = new Point(46, 122);
-            LockedPanel_ShaLabel.Name = "LockedPanel_ShaLabel";
-            LockedPanel_ShaLabel.Size = new Size(43, 21);
-            LockedPanel_ShaLabel.TabIndex = 33;
-            LockedPanel_ShaLabel.Text = "SHA:";
+            LockedPanel_Sha256Label.AutoSize = true;
+            LockedPanel_Sha256Label.BackColor = Color.FromArgb(32, 32, 32);
+            LockedPanel_Sha256Label.ForeColor = SystemColors.ButtonFace;
+            LockedPanel_Sha256Label.Location = new Point(46, 122);
+            LockedPanel_Sha256Label.Name = "LockedPanel_Sha256Label";
+            LockedPanel_Sha256Label.Size = new Size(70, 21);
+            LockedPanel_Sha256Label.TabIndex = 33;
+            LockedPanel_Sha256Label.Text = "SHA256:";
             // 
             // LockedPanel_SizeValueLabel
             // 
@@ -866,7 +866,7 @@
             UnlockedPanel.Controls.Add(UnlockedPanel_ShredGroupBox);
             UnlockedPanel.Controls.Add(UnlockedPanel_EncryptGroupBox);
             UnlockedPanel.Controls.Add(UnlockedPanel_ShaValueLabel);
-            UnlockedPanel.Controls.Add(UnlockedPanel_ShaLabel);
+            UnlockedPanel.Controls.Add(UnlockedPanel_Sha256Label);
             UnlockedPanel.Controls.Add(UnlockedPanel_SizeValueLabel);
             UnlockedPanel.Controls.Add(UnlockedPanel_SizeLabel);
             UnlockedPanel.Controls.Add(UnlockedPanel_PathValueLabel);
@@ -1135,16 +1135,16 @@
             UnlockedPanel_ShaValueLabel.TabIndex = 30;
             UnlockedPanel_ShaValueLabel.Text = "<sha>";
             // 
-            // UnlockedPanel_ShaLabel
+            // UnlockedPanel_Sha256Label
             // 
-            UnlockedPanel_ShaLabel.AutoSize = true;
-            UnlockedPanel_ShaLabel.BackColor = Color.FromArgb(32, 32, 32);
-            UnlockedPanel_ShaLabel.ForeColor = SystemColors.ButtonFace;
-            UnlockedPanel_ShaLabel.Location = new Point(46, 122);
-            UnlockedPanel_ShaLabel.Name = "UnlockedPanel_ShaLabel";
-            UnlockedPanel_ShaLabel.Size = new Size(43, 21);
-            UnlockedPanel_ShaLabel.TabIndex = 29;
-            UnlockedPanel_ShaLabel.Text = "SHA:";
+            UnlockedPanel_Sha256Label.AutoSize = true;
+            UnlockedPanel_Sha256Label.BackColor = Color.FromArgb(32, 32, 32);
+            UnlockedPanel_Sha256Label.ForeColor = SystemColors.ButtonFace;
+            UnlockedPanel_Sha256Label.Location = new Point(46, 122);
+            UnlockedPanel_Sha256Label.Name = "UnlockedPanel_Sha256Label";
+            UnlockedPanel_Sha256Label.Size = new Size(70, 21);
+            UnlockedPanel_Sha256Label.TabIndex = 29;
+            UnlockedPanel_Sha256Label.Text = "SHA256:";
             // 
             // UnlockedPanel_SizeValueLabel
             // 
@@ -1592,8 +1592,8 @@
             // 
             // DashboardForm
             // 
-            AutoScaleDimensions = new SizeF(9F, 21F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(40, 40, 40);
             ClientSize = new Size(1217, 971);
             Controls.Add(AddButton);
@@ -1601,14 +1601,13 @@
             Controls.Add(SearchTextBox);
             Controls.Add(FileListBox);
             Controls.Add(MenuStrip);
+            Controls.Add(LockedPanel);
+            Controls.Add(LogsPanel);
             Controls.Add(KeysPanel);
             Controls.Add(UnlockedPanel);
             Controls.Add(NoFilesPanel);
             Controls.Add(RelocationPanel);
-            Controls.Add(LockedPanel);
-            Controls.Add(LogsPanel);
             Font = new Font("Segoe UI Emoji", 12F);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4);
             Name = "DashboardForm";
@@ -1680,7 +1679,7 @@
         private Label LockedPanel_FileNameLabel;
         private Label LockedPanel_StatusValueLabel;
         private Label LockedPanel_ShaValueLabel;
-        private Label LockedPanel_ShaLabel;
+        private Label LockedPanel_Sha256Label;
         private Label LockedPanel_SizeValueLabel;
         private Label LockedPanel_SizeLabel;
         private Label LockedPanel_PathValueLabel;
@@ -1694,7 +1693,7 @@
         private Button RelocationPanel_RelocateButton;
         private Panel UnlockedPanel;
         private Label UnlockedPanel_ShaValueLabel;
-        private Label UnlockedPanel_ShaLabel;
+        private Label UnlockedPanel_Sha256Label;
         private Label UnlockedPanel_SizeValueLabel;
         private Label UnlockedPanel_SizeLabel;
         private Label UnlockedPanel_PathValueLabel;
